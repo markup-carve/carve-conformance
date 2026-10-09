@@ -56,7 +56,7 @@ test('generated source evidence records measured byte lengths and PHP positions'
   await expect(page.getByLabel('Generated source case')).toHaveValue('nested-quotes/1/crlf')
   await expect(page.locator('#source-results')).toContainText(`${findingCount} sources with structural, byte-length or validation findings`)
   const row=generated.rows.find(r=>r.id==='nested-quotes/1/crlf')
-  for(const engine of ['rust','php']) { const result=row.results[engine]; if(!result) continue; if(result.error) await expect(page.locator('#source-results')).toContainText(result.error); else {if(engine==='php') expect(result.positions.positioned).toBeGreaterThan(0); await expect(page.locator('#source-results')).toContainText(`"positioned": ${result.positions.positioned}`)} }
+  for(const engine of ['rust','php']) { const result=row.results[engine]; if(!result) continue; if(result.error) await expect(page.locator('#source-results')).toContainText(JSON.stringify(result.error)); else {if(engine==='php') expect(result.positions.positioned).toBeGreaterThan(0); await expect(page.locator('#source-results')).toContainText(`"positioned": ${result.positions.positioned}`)} }
 })
 test('proof navigation moves focus to the heading and skip link reaches main',async({page})=>{
   await page.goto('/proofs/');await expect(page.locator('h1')).toBeVisible()
