@@ -192,7 +192,7 @@ function fillHtmlSuite(data, {id,kind,label,sourceKey,sourceLabel,sectionLabel})
   }
   for(const [key,rows] of groups) {
     const item = node('li'), button = node('button',`${key}: ${new Set(rows.map(r=>r.example)).size} examples`); button.type = 'button'
-    button.addEventListener('click',()=>{ section.value=rows[0].section; assessment.value=rows[0].honesty ?? ''; status.value=rows[0].honesty==='false-loss'?'':rows[0].status; limit=30; updateSelection(); renderExamples(); select('examples').scrollIntoView() }); item.append(button); queue.append(item)
+    button.addEventListener('click',()=>{ filter.value=''; search.value=''; section.value=rows[0].section; assessment.value=rows[0].honesty ?? ''; status.value=rows[0].honesty==='false-loss'?'':rows[0].status; limit=30; updateSelection(); renderExamples(); select('examples').scrollIntoView() }); item.append(button); queue.append(item)
   }
   issueQueue.append(queue); controls.before(issueQueue)
   const renderExamples = () => {
@@ -296,7 +296,7 @@ async function loadSourceAgreement() {
       updateQuery({sourceCase:row.id,sourceFamily:family.value})
       try {
         const full=await fetchJson(row.evidenceUrl);if(current!==version)return
-        results.append(copyButton('Copy source',full.source),copyButton('Copy link',()=>location.href),pane('Carve source',full.source,true),pane('Reproduce the generated suite',`npm run compat:source-agreement -- --report=/tmp/source-agreement.json`))
+        results.append(copyButton('Copy source',full.source),copyButton('Copy link',()=>{const url=new URL(location.href);url.hash='source-agreement';return url.href}),pane('Carve source',full.source,true),pane('Reproduce the generated suite',`npm run compat:source-agreement -- --report=/tmp/source-agreement.json`))
         for(const [engine,result]of Object.entries(full.results)) results.append(pane(`${engine}: position availability, byte length and schema`,{positions:result.positions,schemaValid:result.schemaValid,schemaErrors:result.schemaErrors,error:result.error},true),pane(`${engine}: full AST`,result.ast),pane(`${engine}: rendered HTML`,result.html))
         for(const [engine,diff]of Object.entries(full.differences)) results.append(pane(`${engine}: semantic changes at JSON paths`,diff.semantic,true),pane(`${engine}: full AST and position changes`,diff.positioned))
       }catch(error){results.append(node('p',error.message))}

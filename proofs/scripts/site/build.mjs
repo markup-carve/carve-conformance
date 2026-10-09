@@ -15,7 +15,7 @@ if (previous.suiteSha256 !== current.suiteSha256) throw new Error('History requi
 const oldRows = new Map(previous.rows.map(row => [row.id, row]));
 if (oldRows.size !== current.rows.length || current.rows.some(row => oldRows.get(row.id)?.source !== row.source)) throw new Error('History requires identical case IDs and sources');
 const changes = current.rows.filter(row => JSON.stringify(row.outputs) !== JSON.stringify(oldRows.get(row.id)?.outputs)).map(row => ({ before: oldRows.get(row.id), after: row }));
-for (const name of ['ownership-results', 'ownership-current-results']) for (const row of reports[name].rows) row.finding = finding(row);
+for (const name of ['ownership-results', 'ownership-current-results']) for (const row of reports[name].rows) row.finding = finding(row, {allowUnknown: name === 'ownership-current-results'});
 const inventory = async file => {
   const source = await readFile(new URL(`proofs/layout/${file}`, root), 'utf8');
   return validateProofSource(source).map(name => {

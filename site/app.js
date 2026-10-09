@@ -122,7 +122,7 @@ async function main() {
   $('proofs-prose').append(
     `${proofs.theorems.ownership} theorems describe how indentation decides which container owns a line, and ${proofs.theorems.stack} more cover choosing among candidate frames. Across ${fmt(proofs.ownershipCases)} current ownership cases the spec and the JavaScript, PHP and Rust readers `,
     el('strong', { textContent: proofs.disagreements === 0 ? 'produce identical HTML' : `disagree on ${proofs.disagreements}` }),
-    `. The historical ${proofs.historicalCases}-case suite went from ${proofs.disagreementsBefore} disagreements to zero. Another ${proofs.contracts} observations check versioned edit contracts.`)
+    `. The historical ${proofs.historicalCases}-case suite went from ${proofs.disagreementsBefore} disagreements to ${proofs.disagreementsAfter}. Another ${proofs.contracts} observations check versioned edit contracts.`)
 
   figure('f-targets', compat.targets.length)
   figure('f-compared', compat.passed + compat.failed)

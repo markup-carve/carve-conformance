@@ -1,5 +1,6 @@
 import { copyButton, structuralDiff, updateQuery, restoreSelect } from './evidence-tools.js';
 const main = document.querySelector('main');
+document.querySelector('.skip').addEventListener('click', event => { event.preventDefault(); main.tabIndex = -1; main.focus(); });
 const repo = 'https://github.com/markup-carve/carve-conformance';
 // Commits recorded before the merge live in the archived source repository.
 const legacyRepo = 'https://github.com/markup-carve/carve-proofs';
@@ -27,7 +28,7 @@ function select(title, values, chosen) {
   const label = el('label', title), input = el('select');
   input.setAttribute('aria-label', title);
   for (const value of values) { const [key, text] = Array.isArray(value) ? value : [value, value]; const option = el('option', text); option.value = key; input.append(option); }
-  if (chosen !== undefined) input.value = chosen;
+  if (chosen !== undefined) restoreSelect(input, chosen);
   label.append(input); return { label, input };
 }
 function button(text, action) { const node = el('button', text); node.type = 'button'; node.onclick = action; return node; }

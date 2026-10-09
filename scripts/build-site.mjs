@@ -68,7 +68,7 @@ const importRows = (label, detail, suite) => {
   const values = Object.entries(suite.totals), keys = ['match','mismatch','declared','notComparable','failed'];
   const shared = values.every(([,t])=>keys.every(key=>t[key] === values[0][1][key]));
   const selected = shared ? [values[0]] : values;
-  return selected.map(([engine,t])=>({ label:shared ? label : `${label} (${engine})`, detail:shared ? `${detail}, all importer engines` : detail, kept:t.match,declared:t.declared,differs:t.mismatch+t.failed,outOfScope:t.notComparable }));
+  return selected.map(([engine,t])=>({ label:shared ? label : `${label} (${engine})`, detail:shared ? `${detail}, measured engines: ${values.map(([id])=>id).join(', ')}` : detail, kept:t.match,declared:t.declared,differs:t.mismatch+t.failed,outOfScope:t.notComparable }));
 }
 const imports = []
 if (commonmark) {
@@ -84,7 +84,7 @@ const summary = {
   proofs: {
     ownershipCases: ownership.rows.length,
     disagreements: ownership.rows.filter(r => r.groups.length > 1).length,
-    disagreementsBefore: evidence.history.before,
+    disagreementsAfter: evidence.history.after, disagreementsBefore: evidence.history.before,
     theorems: { ownership: theoremCount('Ownership.v'), stack: theoremCount('StackSelection.v') },
     traces: evidence.layoutExamples.trace,
     contracts: evidence.reports['ownership-current-contracts'].rows.length,

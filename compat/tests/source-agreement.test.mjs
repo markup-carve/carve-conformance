@@ -21,6 +21,7 @@ test('position observations distinguish codepoints, bytes and omitted coordinate
   assert.deepEqual(positionSummary({type:'text',pos:{startOffset:0,endOffset:2}},'🙂').invalid,['/pos'])
   assert.equal(positionSummary({type:'text',srcByteLength:3},'a\r\n').positioned,0)
   assert.equal(positionSummary({type:'text',srcByteLength:2},'a\r\n').sourceByteLengthMatches,false)
+  assert.equal(positionSummary({type:'document',children:[]},'').reportedBytes,null)
 })
 
 test('site rejects altered generated sources, position assessments and engine pins',()=>{
@@ -37,4 +38,14 @@ test('site rejects altered generated sources, position assessments and engine pi
     alter(changed)
     assert.throws(() => validateSourceAgreement(changed, adapter))
   }
+  const paired = structuredClone(report)
+  paired.selectedEngines.push('php')
+  paired.engines.php = {...paired.engines.javascript}
+  for(const row of paired.rows) {
+    row.results.php = structuredClone(row.results.javascript)
+    row.differences.php = {semantic:[],positioned:[],html:'match'}
+  }
+  validateSourceAgreement(paired, {engines:paired.engines})
+  paired.rows[0].differences.php.semantic.push({path:'/children',expected:[],actual:[]})
+  assert.throws(() => validateSourceAgreement(paired, {engines:paired.engines}), /Incorrect generated source differences/)
 })

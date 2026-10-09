@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
+import { finding } from '../scripts/ownership/findings.mjs'
 import { cases } from '../scripts/ownership/cases.mjs'
 import { project, partition } from '../scripts/ownership/projection.mjs'
 
@@ -105,5 +106,12 @@ test('resolved and consensus-change cases retain their reviewed HTML structure',
     for (const [reader, html] of Object.entries(row.outputs)) {
       assert.deepEqual(project(html), project(fixture.html), `${row.id}/${reader}`)
     }
+  }
+})
+
+test('current ownership findings retain disagreements outside historical families', () => {
+  for (const row of [{id:'new-tab',family:'tab-marker',groups:[['js'],['php']]},{id:'new-shape',family:'unknown',parameters:{},groups:[['js'],['rs']]}]) {
+    assert.equal(finding(row,{allowUnknown:true}),`unclassified/${row.family}`)
+    assert.throws(()=>finding(row), /Unclassified disagreement/)
   }
 })

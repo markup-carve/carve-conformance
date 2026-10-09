@@ -46,7 +46,7 @@ export function positionSummary(ast, source) {
     for(const [key,child] of Object.entries(value)) if(key!=='pos') visit(child,`${path}/${key}`)
   }
   visit(ast)
-  return {nodes,positioned,invalid,coordinateUnit:'Unicode codepoints; offsets checked against raw-source bounds',sourceBytes:Buffer.byteLength(source),reportedBytes:ast.srcByteLength,sourceByteLengthMatches:ast.srcByteLength===Buffer.byteLength(source)}
+  return {nodes,positioned,invalid,coordinateUnit:'Unicode codepoints; offsets checked against raw-source bounds',sourceBytes:Buffer.byteLength(source),reportedBytes:ast.srcByteLength ?? null,sourceByteLengthMatches:ast.srcByteLength===Buffer.byteLength(source)}
 }
 export function runSourceAgreement(selectedEngines=engineNames) {
   assert.ok(selectedEngines.length && selectedEngines.every(e=>engineNames.includes(e)))
@@ -96,7 +96,7 @@ export function validateSourceAgreement(report, adapterReport) {
       assert.equal(typeof result.html, 'string')
       assert.equal(result.schemaValid, validate(result.ast), 'Incorrect AST schema assessment')
       assert.deepEqual(result.schemaErrors, result.schemaValid ? [] : validate.errors)
-      assert.deepEqual(result.positions, positionSummary(result.ast, row.source), 'Incorrect position assessment')
+      assert.deepEqual(result.positions, JSON.parse(JSON.stringify(positionSummary(result.ast, row.source))), 'Incorrect position assessment')
       if (engine === report.referenceEngine || reference.error) continue
       assert.deepEqual(row.differences[engine], JSON.parse(JSON.stringify({
         semantic: structuralDiff(semanticAst(reference.ast), semanticAst(result.ast)),
