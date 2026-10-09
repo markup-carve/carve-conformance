@@ -150,6 +150,8 @@ jobs:
   ownership:
     runs-on: ubuntu-24.04
     timeout-minutes: 25
+    env:
+      CARGO_TARGET_DIR: ${{ github.workspace }}/proofs/.cache/ownership-target
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -158,12 +160,27 @@ jobs:
           cache: npm
           cache-dependency-path: proofs/package-lock.json
       - uses: dtolnay/rust-toolchain@stable
+        id: rust
+      # The runner image ships PHP; apt only runs when mbstring is missing.
       - name: Install PHP
-        run: sudo apt-get update && sudo apt-get install -y php-cli php-mbstring
+        run: php -m | grep -qx mbstring || { sudo apt-get update && sudo apt-get install -y php-cli php-mbstring; }
       - name: Use HTTPS for Git dependencies
         run: |
           git config --global --add url."https://github.com/".insteadOf ssh://git@github.com/
           git config --global --add url."https://github.com/".insteadOf git@github.com:
+      # build.mjs reuses a checkout already at its pin, and cargo rebuilds only what a pin bump changed.
+      - name: Restore pinned readers
+        uses: actions/cache@v4
+        with:
+          path: |
+            proofs/.cache/ownership
+            proofs/.cache/ownership-current
+            proofs/.cache/ownership-target
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: proofs-readers-v1-rust-${{ steps.rust.outputs.cachekey }}-${{ hashFiles('proofs/scripts/ownership/pins.json', 'proofs/scripts/ownership/current-pins.json', 'proofs/scripts/ownership/build.mjs') }}
+          restore-keys: proofs-readers-v1-rust-${{ steps.rust.outputs.cachekey }}-
       - name: Restore node modules
         id: node-modules
         uses: actions/cache@v4
