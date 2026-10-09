@@ -18,8 +18,8 @@ const commonmark = {
   ],
 }
 test('CommonMark measurement shows totals, section counts, failures and engine filtering', async ({ page }) => {
-  await page.route('**/commonmark.json', route => route.fulfill({json:commonmark}))
-  await page.goto('/')
+  await page.route('**/commonmark-summary.json', route => route.fulfill({json:commonmark}))
+  await page.goto('/#commonmark')
   await expect(page.locator('#commonmark-title')).toHaveText('CommonMark spec examples')
   await expect(page.getByRole('link', {name:'Download CommonMark report'})).toHaveAttribute('href', 'commonmark.json')
   await expect(page.getByRole('link', {name:'Download CommonMark report'})).toHaveAttribute('download', '')
@@ -49,7 +49,7 @@ test('CommonMark measurement shows totals, section counts, failures and engine f
   await page.locator('#commonmark-examples>li>details>summary').click()
   await expect(page.locator('#commonmark-examples a')).toHaveAttribute('href', 'https://spec.commonmark.org/0.31.2/#example-485')
   await expect(page.locator('#commonmark-examples')).toContainText('link-loss')
-  await expect(page.locator('#commonmark-examples pre')).toHaveCount(4)
+  await expect(page.locator('#commonmark-examples pre')).toHaveCount(6)
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
 })
 
@@ -65,10 +65,10 @@ test('CommonMark Markdown and HTML evidence stays text', async ({ page }) => {
   changed.baselines['pandoc-djot'].rows[1].output = payload
   changed.baselines['pandoc-djot'].rows[1].html = payload
   changed.sections[0].baselines['pandoc-djot'].match = payload
-  await page.route('**/commonmark.json', route => route.fulfill({json:changed}))
-  await page.goto('/'); await page.selectOption('#commonmark-engine-filter', 'javascript')
+  await page.route('**/commonmark-summary.json', route => route.fulfill({json:changed}))
+  await page.goto('/#commonmark'); await page.selectOption('#commonmark-engine-filter', 'javascript')
   await page.locator('#commonmark-examples>li>details>summary').first().click()
-  for (const pre of await page.locator('#commonmark-examples>li').first().locator('pre').all()) await expect(pre).toHaveText(payload)
+  for (const pre of await page.locator('#commonmark-examples>li').first().locator('pre').all().then(rows=>rows.slice(0,4))) await expect(pre).toHaveText(payload)
   await expect(page.locator('#commonmark-disagreements')).toContainText(payload)
   await expect(page.locator('#commonmark-totals tbody tr').last()).toContainText(payload)
   await expect(page.locator('#commonmark-sections tbody td').last()).toContainText(payload)
@@ -76,15 +76,15 @@ test('CommonMark Markdown and HTML evidence stays text', async ({ page }) => {
   expect(await page.evaluate(() => window.commonmarkInjected)).toBeUndefined()
 })
 
-test('CommonMark declarations show counts and warnings while excluding declared rows from mismatches', async ({ page }) => {
+test('CommonMark declarations show counts and warnings and lets readers inspect declared rows', async ({ page }) => {
   const changed = structuredClone(commonmark)
   changed.totals.javascript.declared = 1
   changed.sections[0].results.javascript.declared = 1
   changed.rows.push({engine:'javascript',example:520,section:'Links',status:'declared',markdown:'![alt](a.png)',expectedHtml:'<p><img src="a.png" alt="alt"></p>',carveHtml:'<img src="a.png" alt="alt">',diagnostics:[],reportClass:'clean',declaration:{id:'lone-image-block'}})
   const payload = '<img src=x onerror="window.commonmarkInjected=true"><script>window.commonmarkInjected=true</script>'
   changed.declarations = [{id:'lone-image-block',reason:payload,reference:'https://example.com/rendering',examples:[520,572,573],declared:{javascript:1,php:0},stale:{javascript:[572],php:[]},insufficient:{javascript:[],php:[573]}}]
-  await page.route('**/commonmark.json', route => route.fulfill({json:changed}))
-  await page.goto('/')
+  await page.route('**/commonmark-summary.json', route => route.fulfill({json:changed}))
+  await page.goto('/#commonmark')
   await expect(page.locator('#commonmark-totals thead th').nth(3)).toHaveText('Declared')
   await expect(page.locator('#commonmark-totals tbody tr').first().locator('td').nth(2)).toHaveText('1')
   await expect(page.locator('#commonmark-totals tbody tr').last().locator('td').nth(2)).toHaveText('n/a')
@@ -95,8 +95,8 @@ test('CommonMark declarations show counts and warnings while excluding declared 
   await expect(page.locator('#commonmark-declarations')).toContainText('Carve JavaScript stale: examples 572')
   await expect(page.locator('#commonmark-declarations')).toContainText('Carve PHP insufficient: examples 573')
   await expect(page.locator('#commonmark-declarations a')).toHaveAttribute('href', 'https://example.com/rendering')
-  await expect(page.locator('#commonmark-examples>li')).toHaveCount(3)
-  await expect(page.locator('#commonmark-examples')).not.toContainText('Example 520')
+  await expect(page.locator('#commonmark-examples>li')).toHaveCount(4)
+  await expect(page.locator('#commonmark-examples')).toContainText('Example 520')
   await expect(page.locator('#commonmark img, #commonmark script')).toHaveCount(0)
   expect(await page.evaluate(() => window.commonmarkInjected)).toBeUndefined()
 })
@@ -105,23 +105,23 @@ test('CommonMark reports without baselines retain the engine tables', async ({ p
   const changed = structuredClone(commonmark)
   delete changed.baselines
   for (const section of changed.sections) delete section.baselines
-  await page.route('**/commonmark.json', route => route.fulfill({json:changed}))
-  await page.goto('/')
+  await page.route('**/commonmark-summary.json', route => route.fulfill({json:changed}))
+  await page.goto('/#commonmark')
   await expect(page.locator('#commonmark-totals tbody tr')).toHaveCount(2)
   await expect(page.locator('#commonmark-sections thead th')).toHaveCount(3)
   await expect(page.locator('#commonmark-baseline-note')).toBeHidden()
 })
 
 test('missing CommonMark evidence is marked as not measured', async ({ page }) => {
-  await page.route('**/commonmark.json', route => route.fulfill({status:404,body:'Not found'}))
-  await page.goto('/')
+  await page.route('**/commonmark-summary.json', route => route.fulfill({status:404,body:'Not found'}))
+  await page.goto('/#commonmark')
   await expect(page.locator('#commonmark-note')).toHaveText('Not measured in this report.')
   await expect(page.locator('#commonmark-results')).toBeHidden()
   await expect(page.locator('#load-error')).toBeHidden()
 })
 test('dashboard renders measured totals, versions, evidence and filters', async ({ page }) => {
   const errors = []; page.on('pageerror', error => errors.push(error.message))
-  await page.route('**/report.json', route => route.fulfill({ json: report }))
+  await page.route('**/matrix.json', route => route.fulfill({ json: report }))
   await page.goto('/')
   await expect(page.locator('#stat-tools')).toHaveText(String(report.selected.length))
   await expect(page.locator('#stat-failed')).toHaveText(String(report.failed))
@@ -156,19 +156,19 @@ test('failure evidence and source text are shown without executing HTML', async 
   row.status = 'failed'; row.error = 'Deliberate browser-test failure'; row.evidence.source = '<img src=x onerror="window.fixtureExecuted=true">'
   row.importer = {reportClass:'names-loss',honesty:'false-loss',codes:['<img src=x onerror=window.fixtureExecuted=true>']}
   changed.passed--; changed.failed++
-  await page.route('**/report.json', route => route.fulfill({ json:changed }))
+  await page.route('**/matrix.json', route => route.fulfill({ json:changed }))
   await page.goto('/')
   await expect(page.locator('#stat-failed')).toHaveText(String(changed.failed))
   await page.selectOption('#status-filter', 'failed')
   await page.locator('#matrix tbody button').first().click()
   await expect(page.locator('#detail-summary')).toHaveText(row.error)
-  await expect(page.locator('#detail-panes pre').first()).toContainText('<img src=x')
+  await expect(page.locator('#detail-panes details').filter({has:page.locator('summary', {hasText:'Input source'})}).locator('pre')).toContainText('<img src=x')
   await expect(page.locator('#detail-panes')).toContainText(row.importer.codes[0])
   await expect(page.locator('#detail img')).toHaveCount(0)
   expect(await page.evaluate(() => window.fixtureExecuted)).toBeUndefined()
 })
 test('an unavailable report is explicit', async ({ page }) => {
-  await page.route('**/report.json', route => route.fulfill({ status:503, body:'unavailable' }))
+  await page.route('**/matrix.json', route => route.fulfill({ status:503, body:'unavailable' }))
   await page.goto('/')
   await expect(page.locator('#load-error')).toBeVisible()
   await expect(page.locator('#run-status')).toHaveText('Report unavailable')
@@ -185,7 +185,7 @@ test('failed losses retain required evidence without a mapped AST', async ({ pag
   row.status = 'failed'; row.error = 'Missing expected loss'; delete row.evidence.ast
   row.errorDetails = { operator: '==', actual: false, expected: true }
   changed.passed--; changed.failed++
-  await page.route('**/report.json', route => route.fulfill({ json: changed }))
+  await page.route('**/matrix.json', route => route.fulfill({ json: changed }))
   await page.goto('/'); await page.selectOption('#kind-filter', 'loss'); await page.locator('#matrix tbody button').click()
   await expect(page.locator('#detail-summary')).toHaveText(row.error)
   await expect(page.locator('#detail-panes')).toContainText('Required loss diagnostic')
@@ -194,7 +194,7 @@ test('failed losses retain required evidence without a mapped AST', async ({ pag
 })
 test('target handoff clears permalinks and unmeasured targets stay explicit', async ({ page }) => {
   const changed = { ...report, generatedAt: '2020-01-01T00:00:00Z' }
-  await page.route('**/report.json', route => route.fulfill({ json: changed }))
+  await page.route('**/matrix.json', route => route.fulfill({ json: changed }))
   await page.goto('/?case=unknown&tool=unknown&kind=unknown')
   await expect(page.locator('#detail')).toBeHidden()
   await expect(page.locator('#run-status')).toContainText('report older than 48 hours')
@@ -217,7 +217,7 @@ test('engine selection and permalinks preserve separate engine evidence', async 
   changed.engines={javascript:{name:'Carve JavaScript',version:'fixture'},php:{name:'Carve PHP',version:'fixture'}}
   const row={...structuredClone(changed.rows[0]),engine:'php',status:'failed',error:'Authored ID lost',evidence:{...changed.rows[0].evidence,engineAst:{type:'document',children:[]},engineCarve:'[word]{.token}',independentAst:{type:'document',children:[]},independentSource:'<article/>'}}
   changed.rows.push(row);changed.failed++
-  await page.route('**/report.json',route=>route.fulfill({json:changed}))
+  await page.route('**/matrix.json',route=>route.fulfill({json:changed}))
   await page.goto('/');await page.selectOption('#engine-filter','php')
   await expect(page.locator('#matrix tbody button')).toHaveCount(1)
   await page.locator('#matrix tbody button').click()
@@ -236,10 +236,10 @@ test('cached report and application assets refresh when the website loads', asyn
   let current = old, reads = 0, scriptReads = 0
   const server = createServer((request, response) => {
     const path = new URL(request.url, 'http://localhost').pathname
-    if (path === '/report.json') { reads++; response.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'max-age=600' }); response.end(JSON.stringify(current)); return }
+    if (path === '/matrix.json') { reads++; response.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'max-age=600' }); response.end(JSON.stringify(current)); return }
     if(path==='/app.js'){scriptReads++;const app=readFileSync('dist/app.js','utf8');response.writeHead(200,{'Content-Type':'text/javascript','Cache-Control':'max-age=600'});response.end(request.url.includes('?')?app:app.replace("fetch(path, {cache:'no-store'})",'fetch(path)'));return}
     if (path === '/warm') { response.writeHead(200, { 'Content-Type': 'text/html' }); response.end('<html><body>Warm cache</body></html>'); return }
-    const files = { '/': ['index.html', 'text/html'], '/app.js': ['app.js', 'text/javascript'], '/style.css': ['style.css', 'text/css'], '/icon.svg': ['icon.svg', 'image/svg+xml'], '/manifest.json': ['manifest.json', 'application/json'] }
+    const files = { '/': ['index.html', 'text/html'], '/app.js': ['app.js', 'text/javascript'], '/style.css': ['style.css', 'text/css'], '/icon.svg': ['icon.svg', 'image/svg+xml'], '/manifest.json': ['manifest.json', 'application/json'], '/evidence-tools.js':['evidence-tools.js','text/javascript'] }
     const file = files[path]
     if (!file) { response.writeHead(404); response.end(); return }
     response.writeHead(200, { 'Content-Type': file[1] }); response.end(readFileSync(`dist/${file[0]}`))
@@ -248,12 +248,12 @@ test('cached report and application assets refresh when the website loads', asyn
   try {
     const base = `http://127.0.0.1:${server.address().port}`
     await page.goto(`${base}/warm`)
-    await page.evaluate(async () => { await (await fetch('/report.json')).json(); await (await fetch('/report.json')).json(); await (await fetch('/app.js')).text() })
+    await page.evaluate(async () => { await (await fetch('/matrix.json')).json(); await (await fetch('/matrix.json')).json(); await (await fetch('/app.js')).text() })
     expect(reads).toBe(1)
     expect(scriptReads).toBe(1)
     current = report
     await page.goto(base)
-    await expect(page.locator('#run-status')).toContainText('2 passed · 0 failed')
+    await expect(page.locator('#run-status')).toContainText('2 adapter assertions passed · 0 assertion failures')
     expect(reads).toBe(2)
     expect(scriptReads).toBe(2)
     await expect(page.locator('#load-error')).toBeHidden()
@@ -275,7 +275,7 @@ test('AST interchange cases show their source-conversion boundaries', async ({ p
 
 test('failed AST interchange rows retain their error message', async ({ page }) => {
   const failed={...report,passed:0,failed:1,rows:[{...report.rows[0],case:'interchange-failure',status:'failed',error:'Source conversion boundary failed',evidence:{scope:'AST interchange',sourceChanges:[]}}]}
-  await page.route('**/report.json',route=>route.fulfill({json:failed}))
+  await page.route('**/matrix.json',route=>route.fulfill({json:failed}))
   await page.goto('/')
   await page.locator('#matrix tbody button').click()
   await expect(page.locator('#detail-summary')).toHaveText('Source conversion boundary failed')
@@ -304,8 +304,8 @@ const djot = {
 }
 
 test('Djot measurement reuses totals, per-file results, examples and importer filtering', async ({page}) => {
-  await page.route('**/djot.json',route=>route.fulfill({json:djot}))
-  await page.goto('/')
+  await page.route('**/djot-summary.json',route=>route.fulfill({json:djot}))
+  await page.goto('/#djot')
   await expect(page.locator('#djot-title')).toHaveText('Djot test examples')
   await expect(page.getByRole('link',{name:'Download Djot report'})).toHaveAttribute('href','djot.json')
   await expect(page.getByRole('link',{name:'Download Djot report'})).toHaveAttribute('download','')
@@ -321,7 +321,7 @@ test('Djot measurement reuses totals, per-file results, examples and importer fi
   await page.locator('#djot-examples>li>details>summary').click()
   await expect(page.locator('#djot-examples a')).toHaveAttribute('href',djotLink)
   await expect(page.locator('#djot-disagreements a')).toHaveAttribute('href',djotLink)
-  await expect(page.locator('#djot-examples pre')).toHaveCount(4)
+  await expect(page.locator('#djot-examples pre')).toHaveCount(6)
   await expect(page.locator('#djot-examples')).toContainText('link-loss')
   await expect(page.locator('#djot-examples')).toContainText('Djot')
   await expect(page.locator('#djot-baseline-note')).toHaveCount(0)
@@ -335,11 +335,11 @@ test('Djot source and rendered HTML remain text, including report codes and unsa
   changed.rows[0].link='javascript:window.djotInjected=true'
   changed.rows[0].diagnostics=[{code:payload}]
   changed.reportDisagreements[0].codes.javascript=[payload]
-  await page.route('**/djot.json',route=>route.fulfill({json:changed}))
-  await page.goto('/')
+  await page.route('**/djot-summary.json',route=>route.fulfill({json:changed}))
+  await page.goto('/#djot')
   await page.selectOption('#djot-engine-filter','javascript')
   await page.locator('#djot-examples>li>details>summary').first().click()
-  for (const pre of await page.locator('#djot-examples>li').first().locator('pre').all()) await expect(pre).toHaveText(payload)
+  for (const pre of await page.locator('#djot-examples>li').first().locator('pre').all().then(rows=>rows.slice(0,4))) await expect(pre).toHaveText(payload)
   await expect(page.locator('#djot-examples>li').first().locator('a')).not.toHaveAttribute('href',/javascript:/)
   await expect(page.locator('#djot-examples')).toContainText(payload)
   await expect(page.locator('#djot-disagreements')).toContainText(payload)
@@ -348,8 +348,8 @@ test('Djot source and rendered HTML remain text, including report codes and unsa
 })
 
 test('missing Djot evidence is marked as not measured', async ({page}) => {
-  await page.route('**/djot.json',route=>route.fulfill({status:404,body:'Not found'}))
-  await page.goto('/')
+  await page.route('**/djot-summary.json',route=>route.fulfill({status:404,body:'Not found'}))
+  await page.goto('/#djot')
   await expect(page.locator('#djot-note')).toHaveText('Not measured in this report.')
   await expect(page.locator('#djot-results')).toBeHidden()
 })

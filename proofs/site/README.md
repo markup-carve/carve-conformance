@@ -2,6 +2,11 @@
 
 The [public report](https://markup-carve.github.io/carve-conformance/proofs/) presents committed observations as an ownership explorer, language comparison, chart collection, proof map and change history.
 
+The default ownership profile contains 535 current cases. The historical profile
+retains the 472-case transition. Both model inventories expose their statements
+and recorded checks. Selected cases, chart settings and recorded-run comparisons
+are retained in explorer URLs.
+
 Build and preview with Node 24 and Python 3:
 
 ```sh

@@ -14,6 +14,19 @@ export function validateHtmlSuite(measurement, {label,examples,differences,sourc
   assert.deepEqual(Object.keys(measurement.totals).sort(), [...measurement.selectedEngines].sort())
   const statuses = [['match','match'],['mismatch','mismatch'],['not-comparable','notComparable'],['failed','failed']]
   const engineStatuses = [...statuses,['declared','declared']]
+  if(measurement.nativeRendering) {
+    assert.deepEqual(Object.keys(measurement.nativeRendering.totals).sort(), [...measurement.selectedEngines].sort(), 'Invalid native engine totals')
+    for(const engine of measurement.selectedEngines) {
+      const rows = measurement.rows.filter(row=>row.engine===engine), totals = measurement.nativeRendering.totals[engine]
+      for(const row of rows) {
+        assert.ok(engineStatuses.some(([status])=>status===row.nativeComparison?.status), 'Invalid native comparison outcome')
+        if(row.nativeComparison.status==='failed') assert.equal(typeof row.nativeComparison.error,'string')
+        else { assert.equal(typeof row.nativeHtml,'string'); assert.ok(typeof row.nativeComparison.referenceAgreement==='boolean' || row.nativeComparison.referenceAgreement===null, 'Missing native reference comparison') }
+      }
+      for(const [status,key] of engineStatuses) assert.equal(totals[key],rows.filter(row=>row.nativeComparison.status===status).length, 'Inconsistent native rendering totals')
+      assert.equal(totals.referenceDisagreements,rows.filter(row=>row.nativeComparison.referenceAgreement===false).length,'Inconsistent native reference disagreement count')
+    }
+  }
   assert.ok(label === 'CommonMark' || !Object.hasOwn(measurement, 'baselines'), 'Djot reports have no baselines')
   assert.ok(measurement.baselines === undefined || (measurement.baselines !== null && typeof measurement.baselines === 'object' && !Array.isArray(measurement.baselines)), `Invalid ${label} baselines`)
   const baselines = Object.keys(measurement.baselines ?? {})

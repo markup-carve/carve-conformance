@@ -55,3 +55,37 @@ Reports recorded before the merge link to commits in those repositories.
 ## License
 
 MIT
+
+## Exploring the evidence
+
+Current ownership is the default profile: 535 cases and 68 versioned contract
+observations. The original 472-case profile remains available for historical
+comparisons. The proof inventory includes both ownership and candidate-stack
+selection, with statements, source links and recorded compiler evidence.
+
+Explorer URLs preserve filters, selected cases and chart settings. Import
+examples include matches, declared differences and non-comparable inputs as
+well as mismatches. Diagnostic assessment filters expose false loss reports
+and losses that still need explanation. Each example provides source, diagnostic
+and structural-difference evidence. Adapter assertion failures and import
+mismatches are separate results; expected-loss assertions can pass.
+
+Reference import totals use the JavaScript renderer. Native totals parse and
+render each importer's output through its own engine. Foreign AST adapters
+remain shared JavaScript infrastructure. The generated source suite compares
+identical Carve inputs across engines, including Unicode, CRLF, tabs, comments,
+empty slots and nesting to depth 16. It records semantic AST differences,
+position availability and source byte lengths. These are finite observations
+without a normative oracle. Semantic or byte-length differences remain visible;
+execution failures, invalid schemas and invalid position bounds fail the command.
+
+Run the generated suite after provisioning the compatibility engines:
+
+```sh
+npm --prefix compat run compat:provision
+npm --prefix compat run compat:source-agreement
+```
+
+Site summaries load first. Detailed cases, import suites and chart points load
+when opened. Complete JSON downloads remain available. Browser checks cover
+Chromium on desktop and mobile, Firefox and WebKit.

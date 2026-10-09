@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Do Carve's readers agree? Checked models of the spec, four readers compared case by case, and nine foreign formats mapped through three engines.">
+<meta name="description" content="Do Carve's readers agree? Checked models of the spec, four readers compared case by case, and nine parser targets mapped through three engines.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'">
 <meta name="theme-color" content="#1d2233">
 <title>Carve conformance</title>
@@ -42,6 +42,7 @@
         </div>
       </div>
       <div class="specimen-foot">
+        <a id="case-link" href="proofs/#ownership">Inspect this case</a>
         <p id="case-note" class="case-note" aria-live="polite"></p>
         <div class="stepper">
           <button id="prev" type="button" aria-label="Previous case">Previous</button>
@@ -69,11 +70,12 @@
       <h2><a href="compat/">Compatibility</a></h2>
       <p class="question">What survives when a document crosses into another format and back?</p>
       <dl class="figures">
-        <div><dt>Foreign formats</dt><dd id="f-targets">–</dd></div>
+        <div><dt>Parser targets</dt><dd id="f-targets">–</dd></div>
         <div><dt>Comparisons</dt><dd id="f-compared">–</dd></div>
-        <div><dt>Failed</dt><dd id="f-failed">–</dd></div>
+        <div><dt>Adapter assertion failures</dt><dd id="f-failed">–</dd></div>
       </dl>
       <ul id="targets" class="targets" aria-label="Formats measured"></ul>
+      <p id="import-status" class="prose" role="status"></p>
       <p id="compat-prose" class="prose"></p>
       <a class="go" href="compat/">Open the compatibility report</a>
     </article>
@@ -108,12 +110,12 @@
   <section class="pins" aria-labelledby="pins-title">
     <div class="pins-copy">
       <h2 id="pins-title">Measured at these commits</h2>
-      <p>Results only hold for the commits that produced them. Where the two lanes measured different commits of the same reader, the row is marked.</p>
+      <p>Current ownership and adapter results use the commits below. Behavior and scaling datasets retain their own pins and measurement dates. Where the two lanes measured different commits of the same reader, the row is marked.</p>
       <p id="pin-drift" class="drift" hidden></p>
     </div>
     <div class="table-wrap" tabindex="0" aria-label="Reader pins per lane">
       <table>
-        <thead><tr><th scope="col">Reader</th><th scope="col">Proofs</th><th scope="col">Compatibility</th></tr></thead>
+        <thead><tr><th scope="col">Reader</th><th scope="col">Current ownership</th><th scope="col">Compatibility</th></tr></thead>
         <tbody id="pin-rows"></tbody>
       </table>
     </div>

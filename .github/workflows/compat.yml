@@ -86,6 +86,10 @@ jobs:
         run: npm run compat:commonmark -- --report=reports/commonmark.json
       - name: Measure djot.js test examples (measurement, no gate)
         run: npm run compat:djot -- --report=reports/djot.json
+      - name: Measure generated source and AST agreement
+        id: source_comparison
+        continue-on-error: true
+        run: npm run compat:source-agreement
       - name: Build report website
         id: site
         run: |
@@ -106,6 +110,7 @@ jobs:
           name: compatibility-evidence
           path: |
             compat/reports/latest.json
+            compat/reports/source-agreement.json
             compat/reports/commonmark.json
             compat/reports/djot.json
             compat/test-results/
@@ -119,5 +124,5 @@ jobs:
         id: ready
         run: echo 'ready=true' >> "$GITHUB_OUTPUT"
       - name: Fail the check when a comparison fails
-        if: steps.comparison.outcome == 'failure'
+        if: steps.comparison.outcome == 'failure' || steps.source_comparison.outcome == 'failure'
         run: exit 1

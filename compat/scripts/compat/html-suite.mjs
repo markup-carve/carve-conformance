@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict'
+import {isDeepStrictEqual} from 'node:util'
 import { readFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { parse, resolve, renderHtml } from '@markup-carve/carve'
-import { engineNames, engineMetadata } from './engines.mjs'
+import { engineNames, engineMetadata, renderSourceBatch } from './engines.mjs'
 import { reportClass, honesty, honestyOutcomes, runImportBatch } from './importer-report.mjs'
 
 const counts = () => ({ match:0, mismatch:0, notComparable:0, failed:0 })
@@ -36,9 +37,11 @@ export function runHtmlSuite(selectedEngines, { examples, format, sourceKey, dif
   const totals = Object.fromEntries(selectedEngines.map(engine => [engine,{ ...engineCounts(), honesty:Object.fromEntries(honestyOutcomes.map(outcome => [outcome,0])), mismatchByReport:{ 'names-loss':0, 'unverified-only':0, clean:0 } }]))
   const sections = [...new Set(examples.map(e => e.section))].map(section => ({ section, examples:examples.filter(e => e.section === section).length, results:Object.fromEntries(selectedEngines.map(engine => [engine,engineCounts()])), ...(baselines ? {baselines:Object.fromEntries(Object.keys(baselines).map(baseline => [baseline,counts()]))} : {}) }))
   for (const [baseline,result] of Object.entries(baselines ?? {})) for (const row of result.rows) sections.find(s => s.section === row.section).baselines[baseline][countKey(row.status)]++
-  const rows = []
+  const rows = [], nativeTotals = {}
   for (const engine of selectedEngines) {
     const batch = runImportBatch(engine, examples.map(e => ({format,source:e[sourceKey]})))
+    const native = renderSourceBatch(engine, batch.map(result => result.value ?? ''))
+    nativeTotals[engine] = {match:0,mismatch:0,declared:0,notComparable:0,failed:0,referenceDisagreements:0}
     for (const [i,e] of examples.entries()) {
       const result = batch[i], diagnostics = result.report?.diagnostics ?? []
       const row = { engine, example:e.example, section:e.section, ...(e.link ? {link:e.link} : {}), status:'failed', [sourceKey]:e[sourceKey], expectedHtml:e.html, carve:result.value ?? '', carveHtml:'', diagnostics, reportClass:reportClass(diagnostics) }
@@ -48,9 +51,19 @@ export function runHtmlSuite(selectedEngines, { examples, format, sourceKey, dif
           row.carveHtml = renderHtml(resolve(parse(result.value)))
           const comparison = compare({expectedHtml:e.html,carveHtml:row.carveHtml,difference:byExample.get(e.example)})
           row.status = comparison.status
+          row.comparison = {expected:comparison.expected,actual:comparison.actual}
           if (comparison.declaration) row.declaration = comparison.declaration
         } catch (error) { row.error = `Rendering the imported Carve failed: ${error.message}` }
       }
+      if (Object.hasOwn(result,'error') || native[i].error) {
+        row.nativeComparison = {status:'failed',error:result.error ?? native[i].error}
+      } else {
+        row.nativeHtml = native[i].html
+        const comparison = compare({expectedHtml:e.html,carveHtml:row.nativeHtml,difference:byExample.get(e.example)})
+        row.nativeComparison = {status:comparison.status,expected:comparison.expected,actual:comparison.actual,referenceAgreement:row.comparison ? isDeepStrictEqual(row.comparison.actual,comparison.actual) : null}
+      }
+      nativeTotals[engine][countKey(row.nativeComparison.status)]++
+      if(row.nativeComparison.referenceAgreement === false) nativeTotals[engine].referenceDisagreements++
       row.honesty = ['match','mismatch','declared'].includes(row.status) ? honesty(row.status !== 'mismatch', row.reportClass) : null
       if (row.honesty !== null) totals[engine].honesty[row.honesty]++
       rows.push(row)
@@ -61,5 +74,5 @@ export function runHtmlSuite(selectedEngines, { examples, format, sourceKey, dif
   }
   let suiteRevision
   try { suiteRevision = execFileSync('git', ['rev-parse','HEAD'], { encoding:'utf8' }).trim() } catch { suiteRevision = 'unavailable' }
-  return { renderer:{ name:pkg.name, version:reference.version, dependency:reference.dependency }, engines, selectedEngines, notMeasuredEngines:engineNames.filter(e => !selectedEngines.includes(e)), engineConfigSha256:createHash('sha256').update(readFileSync(new URL('../../resources/engines.json', import.meta.url))).digest('hex'), suiteRevision, declarations:declarationSummaries(differences, rows, selectedEngines), totals, ...(baselines ? {baselines} : {}), sections, rows, reportDisagreements:reportDisagreements(examples, rows) }
+  return { nativeRendering:{totals:nativeTotals,scope:'Each importer output is parsed and rendered by its own engine. Reference totals retain the shared JavaScript renderer; native totals are separate measurements.'}, renderer:{ name:pkg.name, version:reference.version, dependency:reference.dependency }, engines, selectedEngines, notMeasuredEngines:engineNames.filter(e => !selectedEngines.includes(e)), engineConfigSha256:createHash('sha256').update(readFileSync(new URL('../../resources/engines.json', import.meta.url))).digest('hex'), suiteRevision, declarations:declarationSummaries(differences, rows, selectedEngines), totals, ...(baselines ? {baselines} : {}), sections, rows, reportDisagreements:reportDisagreements(examples, rows) }
 }

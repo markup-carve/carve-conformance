@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto'
 import { validateHtmlSuite } from './compat/validate-html-suite.mjs'
 import { validateDjotTests, loadDjotDeclarations, djotCommit, djotSha256 } from './compat/djot-tests.mjs'
 import { validateDeclarations } from './compat/commonmark-spec.mjs'
+import { validateSourceAgreement } from './compat/source-agreement.mjs'
 let reportPath = 'reports/latest.json', commonmarkPath = 'reports/commonmark.json', djotPath = 'reports/djot.json', positional = false
 for (const arg of process.argv.slice(2)) {
   if (arg.startsWith('--commonmark=') && arg.slice('--commonmark='.length)) commonmarkPath = arg.slice('--commonmark='.length)
@@ -23,6 +24,9 @@ assert.equal(report.schema.sha256, hash('resources/ast-schema.json'), 'Schema ch
 for (const file of ['cases.json', 'losses.json']) assert.equal(report.fixtureHashes?.[file], hash(`tests/external-compat/${file}`), `${file} changed after this report was measured`)
 if(report.engineConfigSha256)assert.equal(report.engineConfigSha256,hash('resources/engines.json'),'Engine pins changed after this report was measured')
 if (Object.hasOwn(report, 'importerAssessmentSha256')) assert.equal(report.importerAssessmentSha256, hash('resources/importer-assessment.json'), 'Importer assessment changed after this report was measured')
+const sourceAgreementPath = 'reports/source-agreement.json'
+const sourceAgreement = existsSync(sourceAgreementPath) ? JSON.parse(readFileSync(sourceAgreementPath)) : null
+if(sourceAgreement) validateSourceAgreement(sourceAgreement, report)
 let commonmark
 if (existsSync(commonmarkPath)) {
   commonmark = JSON.parse(readFileSync(commonmarkPath))
@@ -52,16 +56,36 @@ const tools = JSON.parse(readFileSync('site/tools.json'))
 assert.ok([...report.selected, ...report.notMeasured].every(t => tools.some(tool => tool.id === t)))
 mkdirSync('dist', { recursive: true })
 cpSync('site', 'dist', { recursive: true })
+cpSync(new URL('../../site/shared/evidence-tools.js', import.meta.url), 'dist/evidence-tools.js')
 assert.ok(readFileSync('site/index.html','utf8').includes('src="app.js"'),'Application script reference missing')
 assert.ok(readFileSync('site/index.html','utf8').includes('href="style.css"'),'Stylesheet reference missing')
 const html=readFileSync('site/index.html','utf8').replace('src="app.js"',`src="app.js?v=${hash('site/app.js').slice(0,12)}"`).replace('href="style.css"',`href="style.css?v=${hash('site/style.css').slice(0,12)}"`)
 writeFileSync('dist/index.html',html)
 writeFileSync('dist/report.json', JSON.stringify(report, null, 2) + '\n')
+const splitRows = (name, data) => {
+  mkdirSync(`dist/evidence/${name}`, {recursive:true})
+  return { ...data, rows: data.rows.map((row, index) => {
+    const bytes = JSON.stringify(row), digest = createHash('sha256').update(bytes).digest('hex').slice(0,16)
+    const evidenceUrl = `evidence/${name}/${index}-${digest}.json`
+    writeFileSync(`dist/${evidenceUrl}`, bytes)
+    const { evidence, errorDetails, markdown, source, expectedHtml, carve, carveHtml, comparison, nativeHtml, nativeComparison, results, differences, ...summary } = row
+    return { ...summary, evidenceUrl, ...(nativeComparison ? {nativeStatus:nativeComparison.status,nativeReferenceAgreement:nativeComparison.referenceAgreement} : {}), ...(results ? {results:Object.fromEntries(Object.entries(results).map(([engine,{ast,html,...result}])=>[engine,result]))} : {}), ...(evidence?.scope ? {scope:evidence.scope} : {}) }
+  }) }
+}
+rmSync('dist/evidence', {recursive:true,force:true})
+writeFileSync('dist/matrix.json', JSON.stringify(splitRows('adapter', report)))
+for (const [name, data] of [['commonmark', commonmark], ['djot', djot], ['source-agreement',sourceAgreement]]) {
+  if (data) writeFileSync(`dist/${name}-summary.json`, JSON.stringify(splitRows(name, data)))
+  else rmSync(`dist/${name}-summary.json`, {force:true})
+}
+
 if (commonmark) writeFileSync('dist/commonmark.json', JSON.stringify(commonmark, null, 2) + '\n')
 else rmSync('dist/commonmark.json', { force:true })
 if (djot) writeFileSync('dist/djot.json', JSON.stringify(djot, null, 2) + '\n')
 else rmSync('dist/djot.json', { force:true })
 writeFileSync('dist/manifest.json', JSON.stringify({ generatedAt: report.generatedAt, runUrl: process.env.GITHUB_RUN_ID ? `https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}` : null, tools }, null, 2) + '\n')
+if(sourceAgreement) writeFileSync('dist/source-agreement.json',JSON.stringify(sourceAgreement))
+else rmSync('dist/source-agreement.json',{force:true})
 cpSync('resources/engines.json','dist/engines.json')
 cpSync('resources/ast-schema.json', 'dist/ast-schema.json')
 cpSync('tests/external-compat/cases.json', 'dist/cases.json')

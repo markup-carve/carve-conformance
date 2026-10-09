@@ -13,14 +13,14 @@ test('all views load without browser errors', async ({ page }) => {
 });
 test('ownership filters reproduce recorded counts and render safe outputs', async ({ page }) => {
   await page.goto('/#ownership');
-  await expect(page.locator('.result-count')).toHaveText('0 of 472 cases');
+  await expect(page.locator('.result-count')).toHaveText('535 of 535 cases');
   await page.getByLabel('Fixture family').selectOption('fences');
-  await expect(page.locator('.result-count')).toHaveText('0 of 472 cases');
+  await expect(page.locator('.result-count')).toHaveText('42 of 535 cases');
   await page.getByLabel('Result', { exact: true }).selectOption('all');
-  await expect(page.locator('.result-count')).toHaveText('42 of 472 cases');
+  await expect(page.locator('.result-count')).toHaveText('42 of 535 cases');
   await expect(page.locator('iframe').first()).toHaveAttribute('sandbox', '');
   await page.getByLabel('Search case or source').fill('no-such-fixture');
-  await expect(page.locator('.result-count')).toHaveText('0 of 472 cases');
+  await expect(page.locator('.result-count')).toHaveText('0 of 535 cases');
 });
 test('language cases retain each reader and separate native views', async ({ page }) => {
   await page.goto('/#behavior');
@@ -79,13 +79,13 @@ test('mobile layout fits the viewport', async ({ page }) => {
   }
 });
 test('fixture HTML cannot execute scripts or load external images', async ({ page }) => {
-  const poisoned = structuredClone(evidence);
-  const row = poisoned.reports['ownership-results'].rows[0];
+  const poisoned = structuredClone(evidence.reports['ownership-current-results']);
+  const row = poisoned.rows[0];
   row.groups = [['spec'], ['js', 'php', 'rs']];
   row.outputs.spec = '<script>parent.document.body.dataset.injected="yes"</script><img src="https://example.invalid/tracker">';
   const failures = [];
   page.on('requestfailed', r => { if (r.url().includes('example.invalid')) failures.push(r.failure().errorText); });
-  await page.route('**/data/evidence.json', route => route.fulfill({ json: poisoned }));
+  await page.route('**/reports/ownership-current-results.json', route => route.fulfill({ json: poisoned }));
   await page.goto('/#ownership');
   await expect(page.locator('iframe').first()).toBeVisible();
   expect(await page.locator('body').getAttribute('data-injected')).toBeNull();
