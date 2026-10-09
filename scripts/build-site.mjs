@@ -19,7 +19,7 @@ cpSync(path('proofs/_site'), path('_site/proofs'), { recursive: true })
 cpSync(path('compat/dist'), path('_site/compat'), { recursive: true })
 writeFileSync(path('_site/.nojekyll'), '')
 
-// The shared bar goes on top of each lane's own page.
+// The shared bar goes on top of each lane's own page; lane.css aligns both lanes to one frame.
 const lanes = ['proofs', 'compat']
 const bar = current => `<div class="cc-bar" role="navigation" aria-label="Carve conformance">` +
   `<a class="cc-home" href="../">carve <span>conformance</span></a>` +
@@ -30,8 +30,8 @@ for (const lane of lanes) {
   const file = path(`_site/${lane}/index.html`)
   let html = readFileSync(file, 'utf8')
   if (!/<body[^>]*>/.test(html)) throw new Error(`${lane}/index.html has no <body>`)
-  html = html.replace('</head>', '<link rel="stylesheet" href="../shared/bar.css"></head>')
-  html = html.replace(/<body[^>]*>/, m => `${m}${bar(lane)}`)
+  html = html.replace('</head>', '<link rel="stylesheet" href="../shared/lane.css"></head>')
+  html = html.replace(/<body([^>]*)>/, (m, attrs) => `<body${attrs} data-cc-lane="${lane}">${bar(lane)}`)
   writeFileSync(file, html)
 }
 

@@ -1,0 +1,26 @@
+@font-face{font-family:"Instrument Sans";src:url(../fonts/instrument-sans.woff2) format("woff2");font-weight:400 700;font-stretch:75% 100%;font-display:swap}
+/* Percent padding resolves against the body width, so every row shares the compat content edge without counting the scrollbar. */
+:root{--cc-gutter:max(16px,calc(50% - 592px))}
+.cc-bar{position:relative;z-index:50;display:flex;align-items:center;gap:4px;min-height:48px;padding:0 var(--cc-gutter);background:#1d2233;color:#d9deee;font:500 14px/1 "Instrument Sans",system-ui,sans-serif;letter-spacing:0;overflow-x:auto;white-space:nowrap}
+.cc-bar a{color:#b8c0da;text-decoration:none;padding:9px 12px;border-radius:7px}
+.cc-bar a:hover{color:#fff;background:#2b3248}
+.cc-bar a:focus-visible{outline:2px solid #8fd1b2;outline-offset:1px}
+.cc-bar a[aria-current="page"]{color:#fff;box-shadow:inset 0 -2px 0 #6cc39a;border-radius:0}
+.cc-bar .cc-home{color:#fff;font-weight:650;padding-left:0;margin-right:14px}
+.cc-bar .cc-home span{font-weight:450;color:#8f99b8}
+.cc-bar .cc-repo{margin-left:auto;padding-right:0}
+@media (max-width:520px){.cc-bar .cc-home span{display:none}.cc-bar a{padding:9px 8px}}
+
+/* One frame for both lanes: font, lane header and footer edges. */
+body[data-cc-lane]{font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+body[data-cc-lane]>header{box-sizing:border-box;max-width:none;min-height:76px;margin:0;padding:14px var(--cc-gutter);display:flex;align-items:center;justify-content:space-between;gap:24px;background:transparent;border-bottom:1px solid #dcdfd8}
+body[data-cc-lane]>header .brand{display:flex;align-items:center;gap:10px;font-size:1.25rem;font-weight:750;letter-spacing:-.5px;line-height:1.2}
+body[data-cc-lane]>header .brand img{width:32px;height:32px}
+body[data-cc-lane]>header .brand span{font-weight:450}
+body[data-cc-lane="proofs"]>header .brand::before{content:"";width:32px;height:32px;background:url(../icon.svg) center/contain no-repeat}
+body[data-cc-lane]>header nav{gap:24px}
+body[data-cc-lane]>header nav a{padding:6px 0;font-size:.88rem}
+body[data-cc-lane]>footer{box-sizing:border-box;max-width:none;margin:0;padding:26px var(--cc-gutter)}
+body[data-cc-lane="compat"] main{padding-top:28px}
+body[data-cc-lane="proofs"] main{max-width:none;margin:0;padding:32px var(--cc-gutter) 60px}
+@media (max-width:640px){body[data-cc-lane]>header{flex-direction:column;align-items:flex-start;gap:12px}}
