@@ -64,6 +64,26 @@ const specimens = curated.map(([id, expect, note]) => {
 const suiteTotals = suite => suite && Object.fromEntries(Object.entries(suite.totals).map(([engine, t]) => [engine, { match: t.match, mismatch: t.mismatch, declared: t.declared, failed: t.failed, silentLoss: t.honesty?.['silent-loss'] ?? null }]))
 const short = sha => sha?.slice(0, 7) ?? null
 
+// Importing CommonMark and Djot into Carve. Every engine must report the same
+// totals, since the landing page shows one row per source format.
+const importRow = (label, detail, suite) => {
+  const totals = Object.values(suite.totals)
+  const t = totals[0]
+  for (const other of totals) {
+    for (const key of ['match', 'mismatch', 'declared', 'notComparable', 'failed']) {
+      if (other[key] !== t[key]) throw new Error(`${label}: engines disagree on ${key}; the landing page needs a row per engine`)
+    }
+  }
+  return { label, detail, kept: t.match, declared: t.declared, differs: t.mismatch + t.failed, outOfScope: t.notComparable }
+}
+const imports = []
+if (commonmark) {
+  imports.push(importRow('CommonMark into Carve', `${commonmark.spec.examples} spec examples`, commonmark))
+  const pandoc = commonmark.baselines?.['pandoc-djot']?.totals
+  if (pandoc) imports.push({ label: 'Pandoc: CommonMark into Djot', detail: `${commonmark.spec.examples} spec examples, for reference`, reference: true, kept: pandoc.match, declared: null, differs: pandoc.mismatch + pandoc.failed, outOfScope: pandoc.notComparable })
+}
+if (djot) imports.push(importRow('Djot into Carve', `${djot.suite.examples} djot.js test examples`, djot))
+
 const summary = {
   revision: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: path(''), encoding: 'utf8' }).trim(),
   proofs: {
@@ -84,6 +104,7 @@ const summary = {
     commonmark: commonmark && { examples: commonmark.spec.examples, totals: suiteTotals(commonmark) },
     djot: djot && { examples: djot.suite.examples, totals: suiteTotals(djot) },
   },
+  versus: { edits: evidence.comparisonSummary, imports },
   pins: [
     { reader: 'Spec', proofs: short(ownership.pins.spec?.commit), compat: null },
     { reader: 'JavaScript', proofs: short(ownership.pins.js?.commit), compat: short(report.engines.javascript?.revision) },

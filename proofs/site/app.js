@@ -45,6 +45,13 @@ function outputs(row, target) {
   for (const [reader, html] of Object.entries(row.outputs)) { const item = el('article', undefined, 'card'); item.append(el('h3', labels[reader] || reader), preview(html, `${reader} rendered output`), details('HTML output', html)); grid.append(item); }
   target.append(grid);
 }
+function comparisonSummary() {
+  const readers = ['carve', 'djot', 'commonmark'];
+  const intro = el('p', 'Each edit is applied to the same document in each language, and the output before and after is compared. The counts show how often the edit left the rest of the document unchanged. With 12 to 40 edits per row this is a sample of specific situations, not a ranking of the languages.');
+  const rows = data.comparisonSummary.map(r => [r.edit, ...readers.map(reader => `${r.counts[reader].unchanged}\u00a0of\u00a0${r.counts[reader].total}`), r.note]);
+  const more = el('p'); more.append(link('Every observation, with source and trees', '#behavior'));
+  return [el('h2', 'Carve next to Djot and CommonMark'), intro, table(['Edit', 'Carve', 'Djot', 'CommonMark', 'What changes'], rows), more];
+}
 function overview() {
   heading('What the evidence says', 'Explore recorded reader behavior and the models used to reason about it. Results describe the pinned versions and fixtures shown here.');
   const ownership = data.reports['ownership-results'], h = data.history, cards = el('div', undefined, 'cards');
@@ -54,7 +61,7 @@ function overview() {
     ['Layout theorems', 'Rocq statements about a partial ownership model.', data.theorems.length, '#proofs'],
     ['After the ownership fixes', `${h.before} disagreements became ${h.after} on the same suite.`, `${h.before} → ${h.after}`, '#history']
   ]) { const c = card(title, body, count); c.append(link('Explore →', href)); cards.append(c); }
-  main.append(cards, el('h2', 'Three kinds of evidence'), table(['Evidence', 'What it establishes', 'Limit'], [
+  main.append(cards, ...comparisonSummary(), el('h2', 'Three kinds of evidence'), table(['Evidence', 'What it establishes', 'Limit'], [
     ['Checked model', 'A theorem follows from its definitions and hypotheses.', 'No refinement proof connects the complete Carve implementations to the model.'],
     ['Reader tests', 'The recorded output agrees or differs for these fixtures and pins.', 'Finite samples do not establish a universal language property.'],
     ['Measurements', 'Time, allocation and selected operation counts in recorded runs.', 'Historical runs with different APIs and host load do not establish a speed ranking or complexity bound.']
