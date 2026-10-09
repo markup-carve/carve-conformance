@@ -35,7 +35,14 @@ jobs:
         run: |
           git config --global --add url."https://github.com/".insteadOf ssh://git@github.com/
           git config --global --add url."https://github.com/".insteadOf git@github.com:
-      - run: npm ci
+      - name: Restore node modules
+        id: node-modules
+        uses: actions/cache@v4
+        with:
+          path: compat/node_modules
+          key: compat-node-modules-v1-${{ runner.os }}-${{ hashFiles('.nvmrc', 'compat/package-lock.json') }}
+      - if: steps.node-modules.outputs.cache-hit != 'true'
+        run: npm ci
       - name: Unit and JavaScript compatibility tests
         run: npm test
       - name: Provision native readers
@@ -83,8 +90,13 @@ jobs:
         id: site
         run: |
           npm run site:build
-      - name: Install browser
-        run: npx playwright install --with-deps chromium
+      - name: Restore Playwright browser
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('compat/package-lock.json') }}
+      # No --with-deps: the runner image already carries Chrome's system libraries, and apt cost 20s to 3 minutes.
+      - run: npx playwright install chromium
       - name: Browser checks
         run: npm run test:site
       - name: Save full evidence

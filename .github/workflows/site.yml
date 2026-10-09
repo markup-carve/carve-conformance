@@ -72,8 +72,21 @@ jobs:
           name: compat-site
           path: compat/dist
       - run: node scripts/build-site.mjs
-      - run: npm ci --no-audit --no-fund
-      - run: npx playwright install --with-deps chromium
+      - name: Restore node modules
+        id: node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: site-node-modules-v1-${{ runner.os }}-${{ hashFiles('.nvmrc', 'package-lock.json') }}
+      - if: steps.node-modules.outputs.cache-hit != 'true'
+        run: npm ci --no-audit --no-fund
+      - name: Restore Playwright browser
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      # No --with-deps: the runner image already carries Chrome's system libraries, and apt cost 20s to 3 minutes.
+      - run: npx playwright install chromium
       - run: npm run test:site
       - uses: actions/upload-artifact@v4
         if: failure()

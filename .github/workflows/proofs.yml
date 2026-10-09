@@ -33,6 +33,7 @@ jobs:
       ROCQ_CORE: '9.2.0'
       ROCQ_STDLIB: '9.1.0'
       DUNE: '3.23.1'
+      DUNE_CACHE: enabled
     steps:
       - uses: actions/checkout@v6
         with:
@@ -68,7 +69,14 @@ jobs:
         run: |
           git config --global --add url."https://github.com/".insteadOf ssh://git@github.com/
           git config --global --add url."https://github.com/".insteadOf git@github.com:
-      - run: npm ci --no-audit --no-fund
+      - name: Restore node modules
+        id: node-modules
+        uses: actions/cache@v4
+        with:
+          path: proofs/node_modules
+          key: proofs-node-modules-v1-${{ runner.os }}-${{ hashFiles('.nvmrc', 'proofs/package-lock.json') }}
+      - if: steps.node-modules.outputs.cache-hit != 'true'
+        run: npm ci --no-audit --no-fund
       - run: npm test
       - name: Check deterministic scaling work
         run: |
@@ -82,6 +90,13 @@ jobs:
         run: |
           npm run check:contracts -- --check reports/comparison-contracts.json
           npm run check:containers -- --check reports/container-regressions.json
+      # dune's shared cache skips Rocq files whose sources and toolchain are unchanged.
+      - name: Restore dune cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/dune
+          key: proofs-dune-v1-rocq-${{ env.ROCQ_CORE }}-${{ github.sha }}
+          restore-keys: proofs-dune-v1-rocq-${{ env.ROCQ_CORE }}-
       - name: Check pinned djot.v package
         run: |
           npm run build:djot-v
@@ -149,7 +164,14 @@ jobs:
         run: |
           git config --global --add url."https://github.com/".insteadOf ssh://git@github.com/
           git config --global --add url."https://github.com/".insteadOf git@github.com:
-      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Restore node modules
+        id: node-modules
+        uses: actions/cache@v4
+        with:
+          path: proofs/node_modules
+          key: proofs-node-modules-v1-noscripts-${{ runner.os }}-${{ hashFiles('.nvmrc', 'proofs/package-lock.json') }}
+      - if: steps.node-modules.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm run build:ownership
       - name: Check current ownership and versioned contracts
         run: |
@@ -217,7 +239,14 @@ jobs:
         run: |
           git config --global --add url."https://github.com/".insteadOf ssh://git@github.com/
           git config --global --add url."https://github.com/".insteadOf git@github.com:
-      - run: npm ci --no-audit --no-fund
+      - name: Restore node modules
+        id: node-modules
+        uses: actions/cache@v4
+        with:
+          path: proofs/node_modules
+          key: proofs-node-modules-v1-${{ runner.os }}-${{ hashFiles('.nvmrc', 'proofs/package-lock.json') }}
+      - if: steps.node-modules.outputs.cache-hit != 'true'
+        run: npm ci --no-audit --no-fund
       - run: pip install -r proofs/site/requirements.txt
         working-directory: .
       # charts.py redraws only charts whose data record changed. The drawing code and
@@ -229,7 +258,13 @@ jobs:
           key: proofs-charts-v1-${{ hashFiles('proofs/scripts/site/charts.py', 'proofs/site/requirements.txt') }}-${{ hashFiles('proofs/reports/**') }}
           restore-keys: proofs-charts-v1-${{ hashFiles('proofs/scripts/site/charts.py', 'proofs/site/requirements.txt') }}-
       - run: npm run build:site
-      - run: npx playwright install --with-deps chromium
+      - name: Restore Playwright browser
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('proofs/package-lock.json') }}
+      # No --with-deps: the runner image already carries Chrome's system libraries, and apt cost 20s to 3 minutes.
+      - run: npx playwright install chromium
       - run: npm run test:site
       - uses: actions/upload-artifact@v4
         if: failure()
