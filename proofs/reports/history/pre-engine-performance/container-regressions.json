@@ -1,0 +1,5889 @@
+{
+  "metadata": {
+    "specCommit": "d20ebd942f91470485332cec925fa0717f20a58a",
+    "specDirty": false,
+    "engine": "github:markup-carve/carve-js#88754ac8cb4b2ebfdd3dfb07f1edc396db11f336",
+    "installedEngine": "git+ssh://git@github.com/markup-carve/carve-js.git#88754ac8cb4b2ebfdd3dfb07f1edc396db11f336",
+    "proofEngine": "github:markup-carve/carve-js#c5df77f658c80a3a80a4d31ec1855d854e5da648",
+    "parsers": {
+      "@markup-carve/carve": {
+        "version": "0.1.8",
+        "resolved": "git+ssh://git@github.com/markup-carve/carve-js.git#88754ac8cb4b2ebfdd3dfb07f1edc396db11f336",
+        "integrity": "sha512-dsVYyunk88C2lOooUxQNIXXHxVdm0JQ0H1EqC/SOMI7p9Xt7RkYnjDevp+MTJzWSSFWAFKD+q63uK+89Lkkfsw=="
+      },
+      "@djot/djot": {
+        "version": "0.3.2",
+        "resolved": "https://registry.npmjs.org/@djot/djot/-/djot-0.3.2.tgz",
+        "integrity": "sha512-joMKR24B8rxueyFiJbpZAqEiypjvOyzTxzkhyr0q5mM/sUBaOD3unna/9IxtOotFugViyYlkIRaiXg3xM//zxg=="
+      },
+      "commonmark": {
+        "version": "0.31.2",
+        "resolved": "https://registry.npmjs.org/commonmark/-/commonmark-0.31.2.tgz",
+        "integrity": "sha512-2fRLTyb9r/2835k5cwcAwOj0DEc44FARnMp5veGsJ+mEAZdi52sNopLu07ZyElQUz058H43whzlERDIaaSw4rg=="
+      }
+    },
+    "suiteSha256": "b3ea3cdcb39a72950a5d07f0347550348c6ecdb246585bdd46e1975e669e7118"
+  },
+  "rows": [
+    {
+      "id": "lazy/quotes/1",
+      "family": "lazy",
+      "shape": "quotes",
+      "depth": 1,
+      "source": "> > first\n> lazy continuation\n>\n> sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "81600aeff6f5bc074733188db50ef6518a2625ebd616e3440b56b96164be4e9d",
+      "htmlSha256": "c547157fce846a9f118b79291659f9e2fbb09be9a42adb2e63abbc45fe1a6060",
+      "work": {
+        "calls": 170,
+        "inputChars": 1581
+      }
+    },
+    {
+      "id": "lazy/lists/1",
+      "family": "lazy",
+      "shape": "lists",
+      "depth": 1,
+      "source": "- > first\n  lazy continuation\n\n  sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "3e239b6cd4830872c7757519c3d8c2052dde942beeb7c5cb65638a76e25cfdf4",
+      "htmlSha256": "0713158ee481f89cf2d4ff3f1fc4c5c83ca4eef12b0b0d901ad3c498f3ccde70",
+      "work": {
+        "calls": 550,
+        "inputChars": 5285
+      }
+    },
+    {
+      "id": "lazy/quotes/2",
+      "family": "lazy",
+      "shape": "quotes",
+      "depth": 2,
+      "source": "> > > first\n> > lazy continuation\n> >\n> > sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "9c0fc03f8632cc9cdc693c71dec71e00fa57d8c062cda0744c5ff2b332b743fe",
+      "htmlSha256": "3ffa0d0b9007a08831cf433216aaa9d383fc03b7bab9aeaad9d3139b933a680d",
+      "work": {
+        "calls": 190,
+        "inputChars": 1832
+      }
+    },
+    {
+      "id": "lazy/lists/2",
+      "family": "lazy",
+      "shape": "lists",
+      "depth": 2,
+      "source": "- - > first\n    lazy continuation\n\n    sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "3c73ac7c451f34ff45cc3e5ddabc4fb1ef3ebfb8156541bce3a11916ad309fa8",
+      "htmlSha256": "f2731f764f4f842feaec84978f44e0aea0ace29628a9fd0eed715a3e9742c9d3",
+      "work": {
+        "calls": 843,
+        "inputChars": 8590
+      }
+    },
+    {
+      "id": "lazy/mixed/2",
+      "family": "lazy",
+      "shape": "mixed",
+      "depth": 2,
+      "source": "- > > first\n  > lazy continuation\n  >\n  > sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "6f69990b82b06beb668e4801ea3258e16d58fdf2dcc63243f6417d5170c92f14",
+      "htmlSha256": "cf8ac0205002a75106a5b3529c9de2382db94b8990a03d7eaa63c18a5a25393d",
+      "work": {
+        "calls": 409,
+        "inputChars": 3891
+      }
+    },
+    {
+      "id": "lazy/quotes/4",
+      "family": "lazy",
+      "shape": "quotes",
+      "depth": 4,
+      "source": "> > > > > first\n> > > > lazy continuation\n> > > >\n> > > > sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "93ff82cb91b911eeb1e8d8918ece3f8f05d9a2519c7fdb29e423b1dc70814473",
+      "htmlSha256": "66c68bd838d02fea3b28eb504158974bc9f3008e2a01c2c65ac9374185756fa2",
+      "work": {
+        "calls": 230,
+        "inputChars": 2454
+      }
+    },
+    {
+      "id": "lazy/lists/4",
+      "family": "lazy",
+      "shape": "lists",
+      "depth": 4,
+      "source": "- - - - > first\n        lazy continuation\n\n        sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "205e8be9fc47de9117920ede9e5f50575c89caa795ecc0988e0aecfec74c6ea6",
+      "htmlSha256": "35ed7014d2c376b98d5868e9c57f4248b8bffc38201b60ba663a64ecf96a65fc",
+      "work": {
+        "calls": 1429,
+        "inputChars": 16646
+      }
+    },
+    {
+      "id": "lazy/mixed/4",
+      "family": "lazy",
+      "shape": "mixed",
+      "depth": 4,
+      "source": "- > - > > first\n  >   > lazy continuation\n  >   >\n  >   > sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "959d4d37502dfb93eeeb620625fd3c75b5e9691d463ca109a430d5a1bd1e14d8",
+      "htmlSha256": "7b692c1ecbe75ecb9cf2ba88adc8604bf99530774250f6368ea78944fbec97e5",
+      "work": {
+        "calls": 689,
+        "inputChars": 7339
+      }
+    },
+    {
+      "id": "lazy/quotes/8",
+      "family": "lazy",
+      "shape": "quotes",
+      "depth": 8,
+      "source": "> > > > > > > > > first\n> > > > > > > > lazy continuation\n> > > > > > > >\n> > > > > > > > sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "021cda43fd2862d03008791a31c9eb61f9eec14b3400109f4255c3f30cc92fe6",
+      "htmlSha256": "3a9584a5e207ee383a278ccb5b8598edcca33b79810c8a4653d8a46ccc801e55",
+      "work": {
+        "calls": 310,
+        "inputChars": 4178
+      }
+    },
+    {
+      "id": "lazy/lists/8",
+      "family": "lazy",
+      "shape": "lists",
+      "depth": 8,
+      "source": "- - - - - - - - > first\n                lazy continuation\n\n                sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "bf9f8b427338a865d5284ea451ac177ec754b4e2db6c1006cb6d08913711c76d",
+      "htmlSha256": "377581a844bc98cabfd946a6432f82daddb7d707dd769c31b9cb4a3609a94d1c",
+      "work": {
+        "calls": 2601,
+        "inputChars": 38542
+      }
+    },
+    {
+      "id": "lazy/mixed/8",
+      "family": "lazy",
+      "shape": "mixed",
+      "depth": 8,
+      "source": "- > - > - > - > > first\n  >   >   >   > lazy continuation\n  >   >   >   >\n  >   >   >   > sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "bf90752d431564b4edcd598c2a4f7daa37a596314be0079e573c642e53e7bb2b",
+      "htmlSha256": "6a3c324bb52a5712d33170797654ff56a5e9a09325e0aceb9eb540e99680eb0f",
+      "work": {
+        "calls": 1249,
+        "inputChars": 17295
+      }
+    },
+    {
+      "id": "lazy/quotes/16",
+      "family": "lazy",
+      "shape": "quotes",
+      "depth": 16,
+      "source": "> > > > > > > > > > > > > > > > > first\n> > > > > > > > > > > > > > > > lazy continuation\n> > > > > > > > > > > > > > > >\n> > > > > > > > > > > > > > > > sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "07e671a190d04a7ab1b9cd6ff13b60a3684f7b42fcdb923cce50cb287d8f789e",
+      "htmlSha256": "3ed29005d6435554d678bae6c65836356da30cc3a546273b3d551fba0206e471",
+      "work": {
+        "calls": 470,
+        "inputChars": 9546
+      }
+    },
+    {
+      "id": "lazy/lists/16",
+      "family": "lazy",
+      "shape": "lists",
+      "depth": 16,
+      "source": "- - - - - - - - - - - - - - - - > first\n                                lazy continuation\n\n                                sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "2d969ad6659a200c7c76c9109fd625f3cd299d8f478e3e053f087ad5d108027d",
+      "htmlSha256": "6b9d4f6368e136808a0d1d904cf40f2eb8228234a488a7fc1437c039b866d52a",
+      "work": {
+        "calls": 4945,
+        "inputChars": 105425
+      }
+    },
+    {
+      "id": "lazy/mixed/16",
+      "family": "lazy",
+      "shape": "mixed",
+      "depth": 16,
+      "source": "- > - > - > - > - > - > - > - > > first\n  >   >   >   >   >   >   >   > lazy continuation\n  >   >   >   >   >   >   >   >\n  >   >   >   >   >   >   >   > sentinel\n",
+      "payload": "> first\nlazy continuation\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "block_quote",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "first"
+                },
+                {
+                  "type": "soft_break"
+                },
+                {
+                  "type": "text",
+                  "value": "lazy continuation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "e405a90d6effb60ca067743a9008de409d1338f5d74aa505e262a2d061d26e12",
+      "htmlSha256": "9af121af3c11dcf43bc2083c582a03cf3a03761927e54382c20ccc5f26415dfe",
+      "work": {
+        "calls": 2389,
+        "inputChars": 50054
+      }
+    },
+    {
+      "id": "table/quotes/1",
+      "family": "table",
+      "shape": "quotes",
+      "depth": 1,
+      "source": "> | one | two |\n> | a | b |\n>\n> sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "f5f841c22da5ee195f629136ea57ff38e9d14281964bdcec58a03f32fccd0169",
+      "htmlSha256": "b0fd923b4419b2124450e0be8bd7aaa7cff18ada976221075dc2c35bfd2dd8ec",
+      "work": {
+        "calls": 102,
+        "inputChars": 1117
+      }
+    },
+    {
+      "id": "table/lists/1",
+      "family": "table",
+      "shape": "lists",
+      "depth": 1,
+      "source": "- | one | two |\n  | a | b |\n\n  sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "d1384d6e74e4822fb3bb81adac22714d0ce3ddbcb09ec1970a65ff8a2d3da2a3",
+      "htmlSha256": "39e38b3303768daf61b5ba084e7d293c26ce3c27578c86d5153cd9a969e59e6d",
+      "work": {
+        "calls": 357,
+        "inputChars": 3514
+      }
+    },
+    {
+      "id": "table/quotes/2",
+      "family": "table",
+      "shape": "quotes",
+      "depth": 2,
+      "source": "> > | one | two |\n> > | a | b |\n> >\n> > sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "fef5849105b1780b678973b8a7d92a8ad994234aeeb4e445da7395c48d8f0768",
+      "htmlSha256": "6b4ebe4c76e32672b8d5728e40d240d638bbfe1051f7cd8d3df35abb7cbb3434",
+      "work": {
+        "calls": 122,
+        "inputChars": 1462
+      }
+    },
+    {
+      "id": "table/lists/2",
+      "family": "table",
+      "shape": "lists",
+      "depth": 2,
+      "source": "- - | one | two |\n    | a | b |\n\n    sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "ecacf9aa2b3adaf1f2543cbf0bcea0809fea4c4e69ed8b393280ca10582dd416",
+      "htmlSha256": "d329c53f19780029ef248d33a3c3f8a525723b3f2b20344caa18a1c5f4d5627f",
+      "work": {
+        "calls": 658,
+        "inputChars": 7063
+      }
+    },
+    {
+      "id": "table/mixed/2",
+      "family": "table",
+      "shape": "mixed",
+      "depth": 2,
+      "source": "- > | one | two |\n  > | a | b |\n  >\n  > sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "200a2ff7dd44d4233b592dd37630237ce198a5a806f6b5093f6a49fabd7929e0",
+      "htmlSha256": "57d9fc8c96d2fc7a666ba4862f7d9a5c57b35da05274cc7c34fd803d2973b58d",
+      "work": {
+        "calls": 323,
+        "inputChars": 3565
+      }
+    },
+    {
+      "id": "table/quotes/4",
+      "family": "table",
+      "shape": "quotes",
+      "depth": 4,
+      "source": "> > > > | one | two |\n> > > > | a | b |\n> > > >\n> > > > sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "1aaa990a325d50795fee90735d3392f0b62bf54ad273d362b5606f8bbd3af29d",
+      "htmlSha256": "9f116724d136f4331f2ebea4a97eb494a4a56158cb92302d6efc5498f3ca9c14",
+      "work": {
+        "calls": 162,
+        "inputChars": 2272
+      }
+    },
+    {
+      "id": "table/lists/4",
+      "family": "table",
+      "shape": "lists",
+      "depth": 4,
+      "source": "- - - - | one | two |\n        | a | b |\n\n        sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "caf3b109bcb784d6f701ef80d98d2be73a8b51c2ab0128863d57a80559034f66",
+      "htmlSha256": "d945fee8bd6984a83d88d0648f913c3850ee9defd716c6e8e884fbe8db01fe31",
+      "work": {
+        "calls": 1260,
+        "inputChars": 15619
+      }
+    },
+    {
+      "id": "table/mixed/4",
+      "family": "table",
+      "shape": "mixed",
+      "depth": 4,
+      "source": "- > - > | one | two |\n  >   > | a | b |\n  >   >\n  >   > sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "937f5a2266350f634debc35c62af2c264096b96f527824ce801dc212346598c0",
+      "htmlSha256": "39f125fb35cdf7b966c11518df57662a8c7ab61985d9c8edeb546fec861a116d",
+      "work": {
+        "calls": 614,
+        "inputChars": 7666
+      }
+    },
+    {
+      "id": "table/quotes/8",
+      "family": "table",
+      "shape": "quotes",
+      "depth": 8,
+      "source": "> > > > > > > > | one | two |\n> > > > > > > > | a | b |\n> > > > > > > >\n> > > > > > > > sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "7e7701c458b90b43bfb422d598e443644d84a30e0e91c5b0db4dfb7fecdf5886",
+      "htmlSha256": "d4cbce92515039cd192fbfcff8cb16e5d7197fadd4c48caa7dd2beb09baf136f",
+      "work": {
+        "calls": 242,
+        "inputChars": 4372
+      }
+    },
+    {
+      "id": "table/lists/8",
+      "family": "table",
+      "shape": "lists",
+      "depth": 8,
+      "source": "- - - - - - - - | one | two |\n                | a | b |\n\n                sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "7efd9b6231a599fcb445433cbfe208289325977fcfc1200328821cf58318458c",
+      "htmlSha256": "08cbf4c279942e7fe2128256bb697b58d1804285b46a3d1d91a1f33112dbde43",
+      "work": {
+        "calls": 2464,
+        "inputChars": 38563
+      }
+    },
+    {
+      "id": "table/mixed/8",
+      "family": "table",
+      "shape": "mixed",
+      "depth": 8,
+      "source": "- > - > - > - > | one | two |\n  >   >   >   > | a | b |\n  >   >   >   >\n  >   >   >   > sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "3041438af2fea58f4ca06fe9b52166fbd4bde113718f9124f900983203581a38",
+      "htmlSha256": "b42f19e63390bdb7f2a883a0f508a609f3b029f475f6aac0dc851e098d835e7f",
+      "work": {
+        "calls": 1196,
+        "inputChars": 19024
+      }
+    },
+    {
+      "id": "table/quotes/16",
+      "family": "table",
+      "shape": "quotes",
+      "depth": 16,
+      "source": "> > > > > > > > > > > > > > > > | one | two |\n> > > > > > > > > > > > > > > > | a | b |\n> > > > > > > > > > > > > > > >\n> > > > > > > > > > > > > > > > sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "1dd8720cb4409f9760420a2889a74139fe2020a48b4bc3d3c8a8204fa72ab8bf",
+      "htmlSha256": "59c1035a3f56f7f7b7349ba10d4b0926a70f240f9385d46cbb8bd42e2fdaa3bf",
+      "work": {
+        "calls": 402,
+        "inputChars": 10492
+      }
+    },
+    {
+      "id": "table/lists/16",
+      "family": "table",
+      "shape": "lists",
+      "depth": 16,
+      "source": "- - - - - - - - - - - - - - - - | one | two |\n                                | a | b |\n\n                                sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "e400ae17ad9d8a7b5c610a2a4d2dabeff456e51551623ef80c225b711cfd9640",
+      "htmlSha256": "c6f693ca59b08c6c9ebcc18b429aebd2258826ec8ae5e39390a7b8b92c9a0a64",
+      "work": {
+        "calls": 4872,
+        "inputChars": 107599
+      }
+    },
+    {
+      "id": "table/mixed/16",
+      "family": "table",
+      "shape": "mixed",
+      "depth": 16,
+      "source": "- > - > - > - > - > - > - > - > | one | two |\n  >   >   >   >   >   >   >   > | a | b |\n  >   >   >   >   >   >   >   >\n  >   >   >   >   >   >   >   > sentinel\n",
+      "payload": "| one | two |\n| a | b |\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "table",
+          "rows": [
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "one"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "two"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "table_row",
+              "cells": [
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "a"
+                    }
+                  ]
+                },
+                {
+                  "type": "table_cell",
+                  "header": false,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "b"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "e2f2ff3d4fa60148c23a9df2010eb5a8e97328812c3846cea4f2b7bac781d4e8",
+      "htmlSha256": "9b3d07d58b5f6bd8a392d5e025e102be82eff490a28fe85d2f4a3134eace84a5",
+      "work": {
+        "calls": 2376,
+        "inputChars": 54720
+      }
+    },
+    {
+      "id": "fence/quotes/1",
+      "family": "fence",
+      "shape": "quotes",
+      "depth": 1,
+      "source": "> ```\n> > literal\n> - literal\n> ```\n>\n> sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "52a56e8ac4911c90dc7596898b72c967289e91c03f565a3e425dc2deffc9e4e3",
+      "htmlSha256": "3640293dfeb98795d81b3e79ce74a9e1084145ca86fe75566bbb61c0dd37089d",
+      "work": {
+        "calls": 69,
+        "inputChars": 526
+      }
+    },
+    {
+      "id": "fence/lists/1",
+      "family": "fence",
+      "shape": "lists",
+      "depth": 1,
+      "source": "- ```\n  > literal\n  - literal\n  ```\n\n  sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "c4c732d3c61bb6c331945b7cbcbbe25e949947bac9cd431dd6bc15ac6aaa1a44",
+      "htmlSha256": "bee699b7d67459d8d53e6f43b9febbb94bcc63ce02497d5cf0054669b1e317ad",
+      "work": {
+        "calls": 282,
+        "inputChars": 1793
+      }
+    },
+    {
+      "id": "fence/quotes/2",
+      "family": "fence",
+      "shape": "quotes",
+      "depth": 2,
+      "source": "> > ```\n> > > literal\n> > - literal\n> > ```\n> >\n> > sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "1c33ada7ae89966815e644e4112f8a9f7ffb06f5b36fa1aff563484edb8ceb6b",
+      "htmlSha256": "6eee492cee586591f3d7d98dd7a36173a90707344641863df0ba31cec423a80d",
+      "work": {
+        "calls": 91,
+        "inputChars": 733
+      }
+    },
+    {
+      "id": "fence/lists/2",
+      "family": "fence",
+      "shape": "lists",
+      "depth": 2,
+      "source": "- - ```\n    > literal\n    - literal\n    ```\n\n    sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "1e9621ac8095135631262077e008dc56b933b824ba3348a7a6e62c49f646d8dc",
+      "htmlSha256": "1b38bc27d0fe1207f01b4af1060ee73ef8ddc653d8123407206b6d056e5b154f",
+      "work": {
+        "calls": 770,
+        "inputChars": 5588
+      }
+    },
+    {
+      "id": "fence/mixed/2",
+      "family": "fence",
+      "shape": "mixed",
+      "depth": 2,
+      "source": "- > ```\n  > > literal\n  > - literal\n  > ```\n  >\n  > sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "ad058e80a55b5daff4ba9dbee63cd418d31c384b6ef983b79adba0933ecf02e4",
+      "htmlSha256": "36e4d2f9255c7db5791324457feede2f01f9e6afa1e57cc8b0d667e3820d960b",
+      "work": {
+        "calls": 308,
+        "inputChars": 2238
+      }
+    },
+    {
+      "id": "fence/quotes/4",
+      "family": "fence",
+      "shape": "quotes",
+      "depth": 4,
+      "source": "> > > > ```\n> > > > > literal\n> > > > - literal\n> > > > ```\n> > > >\n> > > > sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "d601e287d19f95242f3246714e5c79ccc1a3e35d442296d2bafe15191c579294",
+      "htmlSha256": "056d8b40b7f1caf6a5564fc69bf9033561e3b722c141fbd366051c876e938e87",
+      "work": {
+        "calls": 135,
+        "inputChars": 1279
+      }
+    },
+    {
+      "id": "fence/lists/4",
+      "family": "fence",
+      "shape": "lists",
+      "depth": 4,
+      "source": "- - - - ```\n        > literal\n        - literal\n        ```\n\n        sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "187d1a05b5e4392b645b13c201035fdcb3d874f4e7d8da55944264d25af956f2",
+      "htmlSha256": "32e3d574d92ce0f19ad56bbaacd5e6c5adbf614d02c875f0b78fe2b465d657fd",
+      "work": {
+        "calls": 1736,
+        "inputChars": 15394
+      }
+    },
+    {
+      "id": "fence/mixed/4",
+      "family": "fence",
+      "shape": "mixed",
+      "depth": 4,
+      "source": "- > - > ```\n  >   > > literal\n  >   > - literal\n  >   > ```\n  >   >\n  >   > sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "e4c9f957511288a6e3cd2b933400f0d1511a59e3705321eb567a67a7eee1a762",
+      "htmlSha256": "3e954317a9c5203589d511af0037d51ada9bad5da9d306f50b600624e908639c",
+      "work": {
+        "calls": 662,
+        "inputChars": 5714
+      }
+    },
+    {
+      "id": "fence/quotes/8",
+      "family": "fence",
+      "shape": "quotes",
+      "depth": 8,
+      "source": "> > > > > > > > ```\n> > > > > > > > > literal\n> > > > > > > > - literal\n> > > > > > > > ```\n> > > > > > > >\n> > > > > > > > sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "0818afc12cdf792c4e83e61a1ec09d5f5d5e609cec6dd57aca62e23fd676bb75",
+      "htmlSha256": "ae59e73d4d29d63f9cbd64f23802f40a3f408c812e15ad013ec735da63b9d42f",
+      "work": {
+        "calls": 223,
+        "inputChars": 2899
+      }
+    },
+    {
+      "id": "fence/lists/8",
+      "family": "fence",
+      "shape": "lists",
+      "depth": 8,
+      "source": "- - - - - - - - ```\n                > literal\n                - literal\n                ```\n\n                sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "e3f4952170fe252d073c36d598cbba0024f0a31ca92bf7a10535afa9544782e1",
+      "htmlSha256": "72f5d3d70ed14a4ef6bdc7b767e1e691016f0fca6324f54b04342f0be457e987",
+      "work": {
+        "calls": 3668,
+        "inputChars": 44150
+      }
+    },
+    {
+      "id": "fence/mixed/8",
+      "family": "fence",
+      "shape": "mixed",
+      "depth": 8,
+      "source": "- > - > - > - > ```\n  >   >   >   > > literal\n  >   >   >   > - literal\n  >   >   >   > ```\n  >   >   >   >\n  >   >   >   > sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "802f5fb2508820935d4f8769095eefe668526f3f332ad221cda13a8a77408484",
+      "htmlSha256": "870c7fd9f615b738c3ca9191f45e4ff477af217b7c4876129fed8b13e1229b56",
+      "work": {
+        "calls": 1370,
+        "inputChars": 16782
+      }
+    },
+    {
+      "id": "fence/quotes/16",
+      "family": "fence",
+      "shape": "quotes",
+      "depth": 16,
+      "source": "> > > > > > > > > > > > > > > > ```\n> > > > > > > > > > > > > > > > > literal\n> > > > > > > > > > > > > > > > - literal\n> > > > > > > > > > > > > > > > ```\n> > > > > > > > > > > > > > > >\n> > > > > > > > > > > > > > > > sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "9b784db08cc03287523dbc65086ce029d34c5e2c2d0de865c450a8322cb14ca0",
+      "htmlSha256": "d308b5c195847c5b0895831da1cca45b606ff0513be85c23211524cf7d2b8faa",
+      "work": {
+        "calls": 399,
+        "inputChars": 8251
+      }
+    },
+    {
+      "id": "fence/lists/16",
+      "family": "fence",
+      "shape": "lists",
+      "depth": 16,
+      "source": "- - - - - - - - - - - - - - - - ```\n                                > literal\n                                - literal\n                                ```\n\n                                sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "cb1b6a33866512ca723ecba79d91ae6066895a88083ca5653cd08f84bf06ceef",
+      "htmlSha256": "b42c510722eaec4625250c2f53b4325915968852bdaf769182a8b6e0cad3ed2a",
+      "work": {
+        "calls": 7536,
+        "inputChars": 138309
+      }
+    },
+    {
+      "id": "fence/mixed/16",
+      "family": "fence",
+      "shape": "mixed",
+      "depth": 16,
+      "source": "- > - > - > - > - > - > - > - > ```\n  >   >   >   >   >   >   >   > > literal\n  >   >   >   >   >   >   >   > - literal\n  >   >   >   >   >   >   >   > ```\n  >   >   >   >   >   >   >   >\n  >   >   >   >   >   >   >   > sentinel\n",
+      "payload": "```\n> literal\n- literal\n```\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "code_block",
+          "content": "> literal\n- literal\n"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "06af4902cd0c9745b005427b27aa598639d8355438588777cbd097606e4e2b1a",
+      "htmlSha256": "6bb79653e0747af7d6082aa2ffa9e0330baab75e4f76c102c07a04fc84d4042d",
+      "work": {
+        "calls": 2798,
+        "inputChars": 55765
+      }
+    },
+    {
+      "id": "definition/quotes/1",
+      "family": "definition",
+      "shape": "quotes",
+      "depth": 1,
+      "source": "> [label][ref]\n>\n> [ref]: /target\n>\n> sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "2e94e4c0e3f25331e645f513d12fb9019a3e8837e3d7e8e34e9f0e34a7fa642c",
+      "htmlSha256": "36de68dd7adf74f46bc139f5edea5bb919ff0d06de0d76aa41ba206e27916ee0",
+      "work": {
+        "calls": 391,
+        "inputChars": 3204
+      }
+    },
+    {
+      "id": "definition/lists/1",
+      "family": "definition",
+      "shape": "lists",
+      "depth": 1,
+      "source": "- [label][ref]\n\n  [ref]: /target\n\n  sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "36b759b82d03c6c7b0111628754d214736287151bd57c16b275e003b34ca4202",
+      "htmlSha256": "6bd81edafbfb1d49f6a9150b4497e237f8f4442cc0e8cc755acd41054433bd54",
+      "work": {
+        "calls": 693,
+        "inputChars": 6203
+      }
+    },
+    {
+      "id": "definition/quotes/2",
+      "family": "definition",
+      "shape": "quotes",
+      "depth": 2,
+      "source": "> > [label][ref]\n> >\n> > [ref]: /target\n> >\n> > sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "ec7bdf38f1fcf4c5c6596c1f49cf3c6022e6a307d2c9ee8210514dbe56a423a8",
+      "htmlSha256": "4b4e188a173e9b49f8ded1a5afd80d00b5ee8abc54935ace79957778bae6bc4c",
+      "work": {
+        "calls": 445,
+        "inputChars": 3984
+      }
+    },
+    {
+      "id": "definition/lists/2",
+      "family": "definition",
+      "shape": "lists",
+      "depth": 2,
+      "source": "- - [label][ref]\n\n    [ref]: /target\n\n    sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "06573d0de9c5443a84074290266819fb55ba11221b856ce85ae3447d6cbc4d16",
+      "htmlSha256": "3d32e6b81d50695003fca33cb29d534ce740a103d3cb409914969655a59d796a",
+      "work": {
+        "calls": 1025,
+        "inputChars": 10123
+      }
+    },
+    {
+      "id": "definition/mixed/2",
+      "family": "definition",
+      "shape": "mixed",
+      "depth": 2,
+      "source": "- > [label][ref]\n  >\n  > [ref]: /target\n  >\n  > sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "31ea97a84b545b439fc2b742d141d08b07353e4d0c171a6c081875bc7c24c87b",
+      "htmlSha256": "db072ce67790d0627511ea0c9204dfd0df6d6aa139cd6c990a85ff55c4373532",
+      "work": {
+        "calls": 656,
+        "inputChars": 6289
+      }
+    },
+    {
+      "id": "definition/quotes/4",
+      "family": "definition",
+      "shape": "quotes",
+      "depth": 4,
+      "source": "> > > > [label][ref]\n> > > >\n> > > > [ref]: /target\n> > > >\n> > > > sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "cbe3f039ec1fcd97d95de0e3810dcb3f5949a656b000071fd9922bafad17db2a",
+      "htmlSha256": "1cf2c1d7486182eb5772e3341a624e71f1effa7d1ddaf378353b2278731e8f0a",
+      "work": {
+        "calls": 553,
+        "inputChars": 5898
+      }
+    },
+    {
+      "id": "definition/lists/4",
+      "family": "definition",
+      "shape": "lists",
+      "depth": 4,
+      "source": "- - - - [label][ref]\n\n        [ref]: /target\n\n        sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "f039032b03b0b094b16cc58940cdac2398082b8e04d5e23c132e4ac2a4aff8a4",
+      "htmlSha256": "81363a2c5701b8c7f92c20e7810f9925ebe1c124f1a134143fb39bc29f8fa248",
+      "work": {
+        "calls": 1689,
+        "inputChars": 19397
+      }
+    },
+    {
+      "id": "definition/mixed/4",
+      "family": "definition",
+      "shape": "mixed",
+      "depth": 4,
+      "source": "- > - > [label][ref]\n  >   >\n  >   > [ref]: /target\n  >   >\n  >   > sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "9d14a196fb3593cc6f727e8809fa747742b3762100e3f3a15ab7df8eaa082bac",
+      "htmlSha256": "6b91f661b9514f083af0eb42ed4cb96bd9ce60b3c17d1451a45a31f072a64ef0",
+      "work": {
+        "calls": 1019,
+        "inputChars": 11339
+      }
+    },
+    {
+      "id": "definition/quotes/8",
+      "family": "definition",
+      "shape": "quotes",
+      "depth": 8,
+      "source": "> > > > > > > > [label][ref]\n> > > > > > > >\n> > > > > > > > [ref]: /target\n> > > > > > > >\n> > > > > > > > sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "1861c9ac799b8a7e048c3928f6d5182333cb3a39c4c5bd9dcebd56d94af5f8e5",
+      "htmlSha256": "1301005da2e6a6f33bcbc3a96e36395c6e338ef53cd8325976098b4142565947",
+      "work": {
+        "calls": 769,
+        "inputChars": 11142
+      }
+    },
+    {
+      "id": "definition/lists/8",
+      "family": "definition",
+      "shape": "lists",
+      "depth": 8,
+      "source": "- - - - - - - - [label][ref]\n\n                [ref]: /target\n\n                sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "69c3112f682b788eed4521f7a802a11347ef075247a058abad92b1a21dea7d2b",
+      "htmlSha256": "488d4af2f3292748b1d17dcafd8b194bfa1182e80514d9c7c13c495d6dc1b4d2",
+      "work": {
+        "calls": 3017,
+        "inputChars": 43681
+      }
+    },
+    {
+      "id": "definition/mixed/8",
+      "family": "definition",
+      "shape": "mixed",
+      "depth": 8,
+      "source": "- > - > - > - > [label][ref]\n  >   >   >   >\n  >   >   >   > [ref]: /target\n  >   >   >   >\n  >   >   >   > sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "5199482985549f8233f3b6e5f9d287bb354208d624e0e382c7fe5f63ab362f09",
+      "htmlSha256": "acb383b721e149446846e57615946f536b6fb3f67c1059f1787dbc89af9e8dd3",
+      "work": {
+        "calls": 1745,
+        "inputChars": 25519
+      }
+    },
+    {
+      "id": "definition/quotes/16",
+      "family": "definition",
+      "shape": "quotes",
+      "depth": 16,
+      "source": "> > > > > > > > > > > > > > > > [label][ref]\n> > > > > > > > > > > > > > > >\n> > > > > > > > > > > > > > > > [ref]: /target\n> > > > > > > > > > > > > > > >\n> > > > > > > > > > > > > > > > sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "9388bdedacb64c24c4a665f2d5bb5c74e8b6f11709b9c8811b10f1d5eb798ee5",
+      "htmlSha256": "545d69e89a5ffe29e420a75619e802b7dc86371c8b8e769deb51bba53cc0f9bb",
+      "work": {
+        "calls": 1201,
+        "inputChars": 27294
+      }
+    },
+    {
+      "id": "definition/lists/16",
+      "family": "definition",
+      "shape": "lists",
+      "depth": 16,
+      "source": "- - - - - - - - - - - - - - - - [label][ref]\n\n                                [ref]: /target\n\n                                sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "0bf2e9d6bd7cf986d65b473c1164d83400271ac9c63894940d6c759c11390957",
+      "htmlSha256": "aba05fe7fcd4a1108ac852ea6da4d608d4d20c805d5e5b0f41546ddbeb2f81f1",
+      "work": {
+        "calls": 5673,
+        "inputChars": 115043
+      }
+    },
+    {
+      "id": "definition/mixed/16",
+      "family": "definition",
+      "shape": "mixed",
+      "depth": 16,
+      "source": "- > - > - > - > - > - > - > - > [label][ref]\n  >   >   >   >   >   >   >   >\n  >   >   >   >   >   >   >   > [ref]: /target\n  >   >   >   >   >   >   >   >\n  >   >   >   >   >   >   >   > sentinel\n",
+      "payload": "[label][ref]\n\n[ref]: /target\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "link",
+              "href": "/target",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "label"
+                }
+              ],
+              "ref": "ref",
+              "rawRef": "[label][ref]"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "b9c7ea9c452cc2fbd8bae69cd243e3d5cf45a11a86a924fc85e27b2a29898c9b",
+      "htmlSha256": "a70450e57d2b5753d2fe79f9fa8cb747a4fa605693ba4a7b610a9323a9fcbec9",
+      "work": {
+        "calls": 3217,
+        "inputChars": 70713
+      }
+    },
+    {
+      "id": "tabs/quotes/1",
+      "family": "tabs",
+      "shape": "quotes",
+      "depth": 1,
+      "source": "> - first\n> \tcontinued\n>\n> sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "3015068018ffe4e1029f01243297bff64bcb0f0315c6a546de2d83fc15d8994a",
+      "htmlSha256": "d757bc578ac3559f15d4ce34ede8b387ca1b07ec99e8b2dee40d6fa7fd55e9e9",
+      "work": {
+        "calls": 238,
+        "inputChars": 1916
+      }
+    },
+    {
+      "id": "tabs/lists/1",
+      "family": "tabs",
+      "shape": "lists",
+      "depth": 1,
+      "source": "- - first\n  \tcontinued\n\n  sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "bc52badab3a4ed44874477ad1ad95a900e6e2d8948e63dd551d51ad86070dfd3",
+      "htmlSha256": "ab58309c96676c3f5ae9dcf08ceed6635ffb0dc0ab499c3e595f8cc3dd91330e",
+      "work": {
+        "calls": 565,
+        "inputChars": 4421
+      }
+    },
+    {
+      "id": "tabs/quotes/2",
+      "family": "tabs",
+      "shape": "quotes",
+      "depth": 2,
+      "source": "> > - first\n> > \tcontinued\n> >\n> > sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "5e0a4db7c15c5c534d57b24ebf2d41ac7f5f057559626110bb58bd9b328e0e3f",
+      "htmlSha256": "3d4ea03bbfd9c0bd12892ab95e17d05fa7dae90e1adc24f95999a2aeda995e56",
+      "work": {
+        "calls": 258,
+        "inputChars": 2160
+      }
+    },
+    {
+      "id": "tabs/lists/2",
+      "family": "tabs",
+      "shape": "lists",
+      "depth": 2,
+      "source": "- - - first\n    \tcontinued\n\n    sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "f1f71bfd9522832d03b87dc15573ae0a9ed169737cdf20586eb949e8eebfcd59",
+      "htmlSha256": "896417c8278f24e60e46007c69adaf5dbd196adccf22dfc1a2b597e555a6a0e1",
+      "work": {
+        "calls": 858,
+        "inputChars": 7183
+      }
+    },
+    {
+      "id": "tabs/mixed/2",
+      "family": "tabs",
+      "shape": "mixed",
+      "depth": 2,
+      "source": "- > - first\n  > \tcontinued\n  >\n  > sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "913b2db51f68b2d48bed163fc3c9481ffe69f92c116f95c068e70bd92b76340f",
+      "htmlSha256": "9e19ab47ff44ece2698ccab3587d27541032c68fd02866962add6bdd3ce64da7",
+      "work": {
+        "calls": 484,
+        "inputChars": 3953
+      }
+    },
+    {
+      "id": "tabs/quotes/4",
+      "family": "tabs",
+      "shape": "quotes",
+      "depth": 4,
+      "source": "> > > > - first\n> > > > \tcontinued\n> > > >\n> > > > sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "1b2809c8b062d0b3aa4c8467dd2131dba90aad9ac9977f63087e1574fa7ce392",
+      "htmlSha256": "821ae0ac6e750577d7435d403975728aca39c2413c253cb5f399d16af7eda3e5",
+      "work": {
+        "calls": 298,
+        "inputChars": 2768
+      }
+    },
+    {
+      "id": "tabs/lists/4",
+      "family": "tabs",
+      "shape": "lists",
+      "depth": 4,
+      "source": "- - - - - first\n        \tcontinued\n\n        sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "e94f2957c375ae2dbe0a5160d527d6de98d18d1677d18062be24da7df990a735",
+      "htmlSha256": "b714c56b26327b47122189944c4f3a5ef772df618299a32cd847fd9b7b8b8e8c",
+      "work": {
+        "calls": 1444,
+        "inputChars": 14153
+      }
+    },
+    {
+      "id": "tabs/mixed/4",
+      "family": "tabs",
+      "shape": "mixed",
+      "depth": 4,
+      "source": "- > - > - first\n  >   > \tcontinued\n  >   >\n  >   > sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "55a43fca074a902382ecaf2fa266a69828e4237fcf270ac2451376b1141048d0",
+      "htmlSha256": "45f1f5b9496c9318f80af4dbca8d470a8e1aa3103ed0d16673724e76ddaaba63",
+      "work": {
+        "calls": 764,
+        "inputChars": 7065
+      }
+    },
+    {
+      "id": "tabs/quotes/8",
+      "family": "tabs",
+      "shape": "quotes",
+      "depth": 8,
+      "source": "> > > > > > > > - first\n> > > > > > > > \tcontinued\n> > > > > > > >\n> > > > > > > > sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "8a1c30bcf5824dc43da616437e4c4e35686e644bcd48199e6b3b83b211f79afd",
+      "htmlSha256": "2f25ea23b201a9b344f4c419f6c3a3db20439fa5ce383281d1ff4ab664b8c119",
+      "work": {
+        "calls": 378,
+        "inputChars": 4464
+      }
+    },
+    {
+      "id": "tabs/lists/8",
+      "family": "tabs",
+      "shape": "lists",
+      "depth": 8,
+      "source": "- - - - - - - - - first\n                \tcontinued\n\n                sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "f59544184126aefcf1c223c802ef3fcc4f40aef1a63cd515d75e0b76e1285711",
+      "htmlSha256": "89e0c3938058141a138747a20908ec64c8e931162dd541a17df0472b09a8f53a",
+      "work": {
+        "calls": 2616,
+        "inputChars": 33877
+      }
+    },
+    {
+      "id": "tabs/mixed/8",
+      "family": "tabs",
+      "shape": "mixed",
+      "depth": 8,
+      "source": "- > - > - > - > - first\n  >   >   >   > \tcontinued\n  >   >   >   >\n  >   >   >   > sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "d6f186073767cb20e5955fd9bc117fda78f5b3a8e0d8d930bd3f9c20812af63b",
+      "htmlSha256": "48fd7743f1fab932872c887c4589693b1433a62cad727efec05e8b938a3a2a74",
+      "work": {
+        "calls": 1324,
+        "inputChars": 16349
+      }
+    },
+    {
+      "id": "tabs/quotes/16",
+      "family": "tabs",
+      "shape": "quotes",
+      "depth": 16,
+      "source": "> > > > > > > > > > > > > > > > - first\n> > > > > > > > > > > > > > > > \tcontinued\n> > > > > > > > > > > > > > > >\n> > > > > > > > > > > > > > > > sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "eadec05c4bfa5ee36146e2d8d8d3e14295e874b2d230b14cf46dcfbaf29996a3",
+      "htmlSha256": "33d616f0c8bd86ec2cb322493ceee5e5fa9b427a33b50cedaf21b58683a448f7",
+      "work": {
+        "calls": 538,
+        "inputChars": 9776
+      }
+    },
+    {
+      "id": "tabs/lists/16",
+      "family": "tabs",
+      "shape": "lists",
+      "depth": 16,
+      "source": "- - - - - - - - - - - - - - - - - first\n                                \tcontinued\n\n                                sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "69baaafb541b20d68063d2e3571843218f57ffccbf876d12a758dfc34ea8798b",
+      "htmlSha256": "abc1821eafee4501873fc5e82e43694701cda0b5cd0a4550f0432daef973906c",
+      "work": {
+        "calls": 4960,
+        "inputChars": 96416
+      }
+    },
+    {
+      "id": "tabs/mixed/16",
+      "family": "tabs",
+      "shape": "mixed",
+      "depth": 16,
+      "source": "- > - > - > - > - > - > - > - > - first\n  >   >   >   >   >   >   >   > \tcontinued\n  >   >   >   >   >   >   >   >\n  >   >   >   >   >   >   >   > sentinel\n",
+      "payload": "- first\n\tcontinued\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "list",
+          "ordered": false,
+          "tight": true,
+          "items": [
+            {
+              "type": "list_item",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "first"
+                    },
+                    {
+                      "type": "soft_break"
+                    },
+                    {
+                      "type": "text",
+                      "value": "continued"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bulletChar": "-"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "05b38880dd504f8d3e6adbb57961a18869388fee60c91e9c831a30f197e61e57",
+      "htmlSha256": "a5aa509bebcf39cc0e1c044ad337eeec0d9d05fea86da5ded7d170fe3e12ce20",
+      "work": {
+        "calls": 2456,
+        "inputChars": 47508
+      }
+    },
+    {
+      "id": "unicode/quotes/1",
+      "family": "unicode",
+      "shape": "quotes",
+      "depth": 1,
+      "source": "> café 日本語 😀\n>\n> sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "dc598590f4218c97f7a8a9135697e175a42f1dead9c0b5c6c92e73c7e3831c80",
+      "htmlSha256": "cc3c119b985e45524af0ce25277a4654273263109a1e987e5e9ad7dd358be874",
+      "work": {
+        "calls": 78,
+        "inputChars": 811
+      }
+    },
+    {
+      "id": "unicode/lists/1",
+      "family": "unicode",
+      "shape": "lists",
+      "depth": 1,
+      "source": "- café 日本語 😀\n\n  sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "b28b4ed0ac97e695aa39ae349ac99eb98f89c760c710df3675198b8dffc4c5e0",
+      "htmlSha256": "fcaf65938de37438f4f61100cc157b4ce02f407edaa38a30c1598a818460b7c5",
+      "work": {
+        "calls": 285,
+        "inputChars": 2597
+      }
+    },
+    {
+      "id": "unicode/quotes/2",
+      "family": "unicode",
+      "shape": "quotes",
+      "depth": 2,
+      "source": "> > café 日本語 😀\n> >\n> > sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "a71e836c5f9e25c79b1e2b74362cba43d93ca2acbaf57dcdf6d83aec542938d3",
+      "htmlSha256": "af7ff4fdc978396d4456dd69648a3e92f43554f4f43d51a05527374701ab1160",
+      "work": {
+        "calls": 97,
+        "inputChars": 1103
+      }
+    },
+    {
+      "id": "unicode/lists/2",
+      "family": "unicode",
+      "shape": "lists",
+      "depth": 2,
+      "source": "- - café 日本語 😀\n\n    sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "bd3fba6675fdd0a62476d97704abc155cadd415a7482f86a69911433413c9372",
+      "htmlSha256": "e60dbe51168bef91f1272f111eb58b739da4d2244031c6f6257632e04a8c39e0",
+      "work": {
+        "calls": 512,
+        "inputChars": 5039
+      }
+    },
+    {
+      "id": "unicode/mixed/2",
+      "family": "unicode",
+      "shape": "mixed",
+      "depth": 2,
+      "source": "- > café 日本語 😀\n  >\n  > sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "d8c3db88dd277286601a4824a8c4c0145d59ce95d434952def2db33726908d7e",
+      "htmlSha256": "5887cf4fe55115545d54f56ebc1be17c3e5b87181a6834d3f15fc34c5a25302e",
+      "work": {
+        "calls": 265,
+        "inputChars": 2711
+      }
+    },
+    {
+      "id": "unicode/quotes/4",
+      "family": "unicode",
+      "shape": "quotes",
+      "depth": 4,
+      "source": "> > > > café 日本語 😀\n> > > >\n> > > > sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "59e4943545f89720c6f0306aa6b72c4bf547be1339948fb46744904a46a27d90",
+      "htmlSha256": "8e2d1848474af44637d4b56c4cc85dc79cefb25082e7d74cc7e7debbf34c997f",
+      "work": {
+        "calls": 135,
+        "inputChars": 1801
+      }
+    },
+    {
+      "id": "unicode/lists/4",
+      "family": "unicode",
+      "shape": "lists",
+      "depth": 4,
+      "source": "- - - - café 日本語 😀\n\n        sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "b131f89f0c1e1651fa36c2822ba7db9ba75bb874234b4c63783aa6e8effa106b",
+      "htmlSha256": "2996da5e33112521893e90c11789ce4287d831542415f82fcd97ae38fa643a32",
+      "work": {
+        "calls": 966,
+        "inputChars": 10985
+      }
+    },
+    {
+      "id": "unicode/mixed/4",
+      "family": "unicode",
+      "shape": "mixed",
+      "depth": 4,
+      "source": "- > - > café 日本語 😀\n  >   >\n  >   > sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "427950cf4d614c31478568279e5a32b6650ec5ecdc74dc3711305b1c8df9d28e",
+      "htmlSha256": "8b7191bfb1fbfd95a085655418e24ab32bd3b1ae0e7862ce3cc0db9e1f4f8c09",
+      "work": {
+        "calls": 501,
+        "inputChars": 5727
+      }
+    },
+    {
+      "id": "unicode/quotes/8",
+      "family": "unicode",
+      "shape": "quotes",
+      "depth": 8,
+      "source": "> > > > > > > > café 日本語 😀\n> > > > > > > >\n> > > > > > > > sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "23ec65cca88455980684140ede0e34d340f23755d59707b342e7bc275b45699f",
+      "htmlSha256": "4788a7f1b287bf89c70f28246ea1e73582203b3c33d622ba4f8f06944f8298dc",
+      "work": {
+        "calls": 211,
+        "inputChars": 3653
+      }
+    },
+    {
+      "id": "unicode/lists/8",
+      "family": "unicode",
+      "shape": "lists",
+      "depth": 8,
+      "source": "- - - - - - - - café 日本語 😀\n\n                sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "5ac72084f83e3d23d67e06153838f2a3b30fd65595faf2262fc401aaefaab4d6",
+      "htmlSha256": "7fab3f075e410894d6ff5e56f8ea7d62d5064610114b63a0acdf83f46306e5ab",
+      "work": {
+        "calls": 1874,
+        "inputChars": 27125
+      }
+    },
+    {
+      "id": "unicode/mixed/8",
+      "family": "unicode",
+      "shape": "mixed",
+      "depth": 8,
+      "source": "- > - > - > - > café 日本語 😀\n  >   >   >   >\n  >   >   >   > sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "b8fdbf815f13cd6075323a1810d6724225b100a4aeb2ee2b69c3211a898a2bda",
+      "htmlSha256": "245f550ce17ba30cb00b20912060cb3b9c3201161c4ac98b86f434a681510851",
+      "work": {
+        "calls": 973,
+        "inputChars": 14291
+      }
+    },
+    {
+      "id": "unicode/quotes/16",
+      "family": "unicode",
+      "shape": "quotes",
+      "depth": 16,
+      "source": "> > > > > > > > > > > > > > > > café 日本語 😀\n> > > > > > > > > > > > > > > >\n> > > > > > > > > > > > > > > > sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "b7898eea128d4cba37439fc5a317c5abdc481bf8aed63251a8bdc5bbde69702d",
+      "htmlSha256": "92e85583aa98ad0678ad0750c8cf373e49b1fe376ce508e3c8a5afd102e62374",
+      "work": {
+        "calls": 363,
+        "inputChars": 9181
+      }
+    },
+    {
+      "id": "unicode/lists/16",
+      "family": "unicode",
+      "shape": "lists",
+      "depth": 16,
+      "source": "- - - - - - - - - - - - - - - - café 日本語 😀\n\n                                sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "d4247bebcc496995d57bbde6635b0bbb1dc9b89166e001a4b0fbec0aa070c046",
+      "htmlSha256": "3aeda19e4d68ec440fe116d296c6f59c27534a822e1e7268e2dcf9defe60a7b4",
+      "work": {
+        "calls": 3690,
+        "inputChars": 76272
+      }
+    },
+    {
+      "id": "unicode/mixed/16",
+      "family": "unicode",
+      "shape": "mixed",
+      "depth": 16,
+      "source": "- > - > - > - > - > - > - > - > café 日本語 😀\n  >   >   >   >   >   >   >   >\n  >   >   >   >   >   >   >   > sentinel\n",
+      "payload": "café 日本語 😀\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "café 日本語 😀"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "49a77c41a15db4d6ec3d32b22445b8b978759068264921b75a41c44d9c6929d0",
+      "htmlSha256": "547b76354b4d9f7a2fef6c938910de0fc878b9a65cffdf6db4f6714f28922e40",
+      "work": {
+        "calls": 1929,
+        "inputChars": 41826
+      }
+    },
+    {
+      "id": "comment/quotes/1",
+      "family": "comment",
+      "shape": "quotes",
+      "depth": 1,
+      "source": "> %%%\n> > hidden\n> %%%\n>\n> sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "8793b86010670f9eac9277c0a2c242abddcb8bba04ada4a7d6a748efcf803acd",
+      "htmlSha256": "7b3490188899d1e2bddbfd1d87b05b30acd6b32b4bc0bd15459569a5e982efee",
+      "work": {
+        "calls": 79,
+        "inputChars": 519
+      }
+    },
+    {
+      "id": "comment/lists/1",
+      "family": "comment",
+      "shape": "lists",
+      "depth": 1,
+      "source": "- %%%\n  > hidden\n  %%%\n\n  sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "ce566c12f01be8347717261424abb457911e6e50b98013c98337cee658757c8f",
+      "htmlSha256": "a91fd89469d2be6e360fbb1f726dea9433f9f1f645cd4a81d96118326bc3c153",
+      "work": {
+        "calls": 297,
+        "inputChars": 1751
+      }
+    },
+    {
+      "id": "comment/quotes/2",
+      "family": "comment",
+      "shape": "quotes",
+      "depth": 2,
+      "source": "> > %%%\n> > > hidden\n> > %%%\n> >\n> > sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "81ab09a0caeeb31d8589b25ec16ae6532b5028195824b741a8858328b92e9892",
+      "htmlSha256": "f5ffaeacb95c60ade3f864c5447afab0800e7df67fb59342fff9ea90bbdf7e17",
+      "work": {
+        "calls": 100,
+        "inputChars": 706
+      }
+    },
+    {
+      "id": "comment/lists/2",
+      "family": "comment",
+      "shape": "lists",
+      "depth": 2,
+      "source": "- - %%%\n    > hidden\n    %%%\n\n    sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "8c232b7b5c1e16102f0fc8e086937a6e8d88736824f848a56b830a3b690829f6",
+      "htmlSha256": "912ef9cda49777d926a97f28ca4af3329459da63e3b01745160ea312224aca52",
+      "work": {
+        "calls": 617,
+        "inputChars": 4010
+      }
+    },
+    {
+      "id": "comment/mixed/2",
+      "family": "comment",
+      "shape": "mixed",
+      "depth": 2,
+      "source": "- > %%%\n  > > hidden\n  > %%%\n  >\n  > sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "665865b32382fe931c84145763b0d28f9e243159d8d1f9ef2f27691075fb9e41",
+      "htmlSha256": "00e5f24638b185bd85129400ef459d05f80e89251ce3f155f914cfb9c7d9df10",
+      "work": {
+        "calls": 311,
+        "inputChars": 1985
+      }
+    },
+    {
+      "id": "comment/quotes/4",
+      "family": "comment",
+      "shape": "quotes",
+      "depth": 4,
+      "source": "> > > > %%%\n> > > > > hidden\n> > > > %%%\n> > > >\n> > > > sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "ac273a9dcc7cc6ebd24d67b18107e904e1fe8a9bb6e22642365d1a039d3f5f8d",
+      "htmlSha256": "9ab5d4a683e2172ae4a93677729db750c6ef32efdcfe09fb85e74e1696dbea7a",
+      "work": {
+        "calls": 142,
+        "inputChars": 1206
+      }
+    },
+    {
+      "id": "comment/lists/4",
+      "family": "comment",
+      "shape": "lists",
+      "depth": 4,
+      "source": "- - - - %%%\n        > hidden\n        %%%\n\n        sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "63fe5d3f9b428cba40c777ba987671affb796c0c11ed8aad713e9cf6890b8a03",
+      "htmlSha256": "294dc13d6cd78893a67fd8b7090c84a3e7e1aa45e102334fa740ba2a1a5593fd",
+      "work": {
+        "calls": 1257,
+        "inputChars": 10118
+      }
+    },
+    {
+      "id": "comment/mixed/4",
+      "family": "comment",
+      "shape": "mixed",
+      "depth": 4,
+      "source": "- > - > %%%\n  >   > > hidden\n  >   > %%%\n  >   >\n  >   > sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "4a1e222ace031900034044fc208f7139c7d7b2951bca5518bc2ae7fe3e5467bd",
+      "htmlSha256": "89d3b6788284c957be06051ff9f96104b06bae6bfcd484c887c308590cb1bf6f",
+      "work": {
+        "calls": 639,
+        "inputChars": 4945
+      }
+    },
+    {
+      "id": "comment/quotes/8",
+      "family": "comment",
+      "shape": "quotes",
+      "depth": 8,
+      "source": "> > > > > > > > %%%\n> > > > > > > > > hidden\n> > > > > > > > %%%\n> > > > > > > >\n> > > > > > > > sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "dccbf7545b2d8f032328a11042e154c96312ed51618bedc44b7bc28559f7ec67",
+      "htmlSha256": "804b90147e37070cdcbd21857b72f8f41ee190d8bf4ebdee3aab13f4b97613c9",
+      "work": {
+        "calls": 226,
+        "inputChars": 2710
+      }
+    },
+    {
+      "id": "comment/lists/8",
+      "family": "comment",
+      "shape": "lists",
+      "depth": 8,
+      "source": "- - - - - - - - %%%\n                > hidden\n                %%%\n\n                sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "fa6acacb5c17fa48080ccb300d023c1e5c73c7d573693fdb00ee268a06665904",
+      "htmlSha256": "673a324eb63a217cbc3ed053771769a428309debf9c2261a03c16d6313d0ff45",
+      "work": {
+        "calls": 2537,
+        "inputChars": 28694
+      }
+    },
+    {
+      "id": "comment/mixed/8",
+      "family": "comment",
+      "shape": "mixed",
+      "depth": 8,
+      "source": "- > - > - > - > %%%\n  >   >   >   > > hidden\n  >   >   >   > %%%\n  >   >   >   >\n  >   >   >   > sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "2c225b01c40dc9513893861ae08e4eabecd019f9ac6f18f3b62cd74033124081",
+      "htmlSha256": "32df9640818a1bef0a983f076f9172f904d24c3a3ffff7d52a1d7372198ebff9",
+      "work": {
+        "calls": 1295,
+        "inputChars": 14549
+      }
+    },
+    {
+      "id": "comment/quotes/16",
+      "family": "comment",
+      "shape": "quotes",
+      "depth": 16,
+      "source": "> > > > > > > > > > > > > > > > %%%\n> > > > > > > > > > > > > > > > > hidden\n> > > > > > > > > > > > > > > > %%%\n> > > > > > > > > > > > > > > >\n> > > > > > > > > > > > > > > > sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "16ae68979f7fd6778e704d3695ba5cf5964300b7b0213093a1e56852eb9b5795",
+      "htmlSha256": "6716711a1d53009cde9b6916b791d90eda3ae17f26c7cdcdc168fb5969aeae20",
+      "work": {
+        "calls": 394,
+        "inputChars": 7734
+      }
+    },
+    {
+      "id": "comment/lists/16",
+      "family": "comment",
+      "shape": "lists",
+      "depth": 16,
+      "source": "- - - - - - - - - - - - - - - - %%%\n                                > hidden\n                                %%%\n\n                                sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "4867edb56410853f214e7698bd274a899b84af008c848ce7031b6e320bd3efae",
+      "htmlSha256": "9a184e7ed62bfc8b119533cd010f5ba8714b1359aafbbfd16767f56c2b6788ac",
+      "work": {
+        "calls": 5097,
+        "inputChars": 91281
+      }
+    },
+    {
+      "id": "comment/mixed/16",
+      "family": "comment",
+      "shape": "mixed",
+      "depth": 16,
+      "source": "- > - > - > - > - > - > - > - > %%%\n  >   >   >   >   >   >   >   > > hidden\n  >   >   >   >   >   >   >   > %%%\n  >   >   >   >   >   >   >   >\n  >   >   >   >   >   >   >   > sentinel\n",
+      "payload": "%%%\n> hidden\n%%%\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "comment",
+          "block": true,
+          "content": "> hidden"
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "5b6f5a6718456f488e643e5f6c950d7c82a2b82732e7bca04ff5e4b190eea849",
+      "htmlSha256": "c8550500d9bc2f64512c32f714e8de9a2b815b167b7b85b07f5e77bd80484d63",
+      "work": {
+        "calls": 2615,
+        "inputChars": 48748
+      }
+    },
+    {
+      "id": "heading/quotes/1",
+      "family": "heading",
+      "shape": "quotes",
+      "depth": 1,
+      "source": "> # Heading\n>\n> sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "cd562b07db0882ddbdaa8c98dfe6dc64dbea87cbdda7252880189b86604d75f0",
+      "htmlSha256": "1c881ac83eaf2142ba647298a87f45d52e99d9449d728db15506edac0e0aa148",
+      "work": {
+        "calls": 72,
+        "inputChars": 668
+      }
+    },
+    {
+      "id": "heading/lists/1",
+      "family": "heading",
+      "shape": "lists",
+      "depth": 1,
+      "source": "- # Heading\n\n  sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "b1193c3949c1f615bbeb18356e1866ab8d310d8bcdd81069d48cf7ed62cf9ac7",
+      "htmlSha256": "f951e7deb5b5c435dc5e7f1209bf1e6a89f8a18a8c2eb9669215c487a16814af",
+      "work": {
+        "calls": 259,
+        "inputChars": 2102
+      }
+    },
+    {
+      "id": "heading/quotes/2",
+      "family": "heading",
+      "shape": "quotes",
+      "depth": 2,
+      "source": "> > # Heading\n> >\n> > sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "db8871282af4412c5e0120a3bd6969f492f9ab1f63d88b43a00a4caaaed23a32",
+      "htmlSha256": "688dfed03d7122904c4c751251057a1dd8cfb96eecef53ad876b72fac67721a7",
+      "work": {
+        "calls": 91,
+        "inputChars": 926
+      }
+    },
+    {
+      "id": "heading/lists/2",
+      "family": "heading",
+      "shape": "lists",
+      "depth": 2,
+      "source": "- - # Heading\n\n    sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "daf73f71f6a50317649c1453e5525a58c0d69e83c19d750d4eea2b7ed51dbb36",
+      "htmlSha256": "517005cb2f3a500ee0fcbe21c03507469d6f09adf59ad01bedd73a9adb195858",
+      "work": {
+        "calls": 476,
+        "inputChars": 4214
+      }
+    },
+    {
+      "id": "heading/mixed/2",
+      "family": "heading",
+      "shape": "mixed",
+      "depth": 2,
+      "source": "- > # Heading\n  >\n  > sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "bc3266a928f4575fe08ef4e34241baacb51c9af214897ca6f46b077c54931459",
+      "htmlSha256": "f36b0bec97b30d6b6a9971e9e8237df7cf8f0000dd18016a9678dd998b23f172",
+      "work": {
+        "calls": 240,
+        "inputChars": 2163
+      }
+    },
+    {
+      "id": "heading/quotes/4",
+      "family": "heading",
+      "shape": "quotes",
+      "depth": 4,
+      "source": "> > > > # Heading\n> > > >\n> > > > sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "468595de62b2af2855d31e744638b484584287a1d6954c575cc60515eafc309a",
+      "htmlSha256": "46bf83e41d0cd0eb48380c8d000d83efeedb3d6546c7f05979cb964283253d8c",
+      "work": {
+        "calls": 129,
+        "inputChars": 1556
+      }
+    },
+    {
+      "id": "heading/lists/4",
+      "family": "heading",
+      "shape": "lists",
+      "depth": 4,
+      "source": "- - - - # Heading\n\n        sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "358df424d6ef488e4cd1f03274eae8399ca0e7bf810ce57c152b0b7c29a8df27",
+      "htmlSha256": "edb57f2a2f48f0d2965229c86587a0c64fc8be2cb6e36098c4dc80e5706c31c0",
+      "work": {
+        "calls": 910,
+        "inputChars": 9500
+      }
+    },
+    {
+      "id": "heading/mixed/4",
+      "family": "heading",
+      "shape": "mixed",
+      "depth": 4,
+      "source": "- > - > # Heading\n  >   >\n  >   > sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "6e106062adbf887a73f277570a57ec556b1255788a1815d84ad07c6e07b48ad4",
+      "htmlSha256": "2d537c6596151230b19fb935bdab7786acde7d7015e5f4db3e82bb47be393176",
+      "work": {
+        "calls": 474,
+        "inputChars": 4853
+      }
+    },
+    {
+      "id": "heading/quotes/8",
+      "family": "heading",
+      "shape": "quotes",
+      "depth": 8,
+      "source": "> > > > > > > > # Heading\n> > > > > > > >\n> > > > > > > > sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "abcec1cc3eefb1d1205bed2af6812531e39265878c2a9ffc57a562b39b6c90f3",
+      "htmlSha256": "df870fb9a98bc8443f3059df45b9a63fb527626ced65873aa27b09315aef17d8",
+      "work": {
+        "calls": 205,
+        "inputChars": 3272
+      }
+    },
+    {
+      "id": "heading/lists/8",
+      "family": "heading",
+      "shape": "lists",
+      "depth": 8,
+      "source": "- - - - - - - - # Heading\n\n                sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "327710192a0ce604208a405ea7ad94f0d902c800dc2667c7bcbe10732ef6e33c",
+      "htmlSha256": "266e7e0083b852a3b13f5d6210f70152a67804faf9dd6782ac9d458df978be09",
+      "work": {
+        "calls": 1778,
+        "inputChars": 24320
+      }
+    },
+    {
+      "id": "heading/mixed/8",
+      "family": "heading",
+      "shape": "mixed",
+      "depth": 8,
+      "source": "- > - > - > - > # Heading\n  >   >   >   >\n  >   >   >   > sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "b2eebdf1324faa36496c10ad949675b9e707ba44182890cb7dfa44692ca1e27e",
+      "htmlSha256": "e48ecbca3dfb9309f55705f8246de98103b85bc95742bcb0602d21285fd603e5",
+      "work": {
+        "calls": 942,
+        "inputChars": 12861
+      }
+    },
+    {
+      "id": "heading/quotes/16",
+      "family": "heading",
+      "shape": "quotes",
+      "depth": 16,
+      "source": "> > > > > > > > > > > > > > > > # Heading\n> > > > > > > > > > > > > > > >\n> > > > > > > > > > > > > > > > sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "c745bd8af4dc5aa25e01b250e8cd13ebb1aecb60f0402c87037b2fa88217cd12",
+      "htmlSha256": "cf629f1db30ca51a03e83c1da61866238c1e3843a62701c8e67de56d25868a83",
+      "work": {
+        "calls": 357,
+        "inputChars": 8528
+      }
+    },
+    {
+      "id": "heading/lists/16",
+      "family": "heading",
+      "shape": "lists",
+      "depth": 16,
+      "source": "- - - - - - - - - - - - - - - - # Heading\n\n                                sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list",
+        "list"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "989878582346378e5b9b5ea7e70e5d26e146967aae43efe90924e5594c5b0770",
+      "htmlSha256": "c40cab0cb4a6a03f35da8d8eacfb5e77e175da19e7d9b0636ac18cd236f09260",
+      "work": {
+        "calls": 3514,
+        "inputChars": 70872
+      }
+    },
+    {
+      "id": "heading/mixed/16",
+      "family": "heading",
+      "shape": "mixed",
+      "depth": 16,
+      "source": "- > - > - > - > - > - > - > - > # Heading\n  >   >   >   >   >   >   >   >\n  >   >   >   >   >   >   >   > sentinel\n",
+      "payload": "# Heading\n\nsentinel\n",
+      "path": [
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote",
+        "list",
+        "quote"
+      ],
+      "payloadProjection": [
+        {
+          "type": "heading",
+          "level": 1,
+          "children": [
+            {
+              "type": "text",
+              "value": "Heading"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "sentinel"
+            }
+          ]
+        }
+      ],
+      "astSha256": "7e093d269936985f18dc4e55ec8da1b272f899f11ed9df04b2f40df78015769a",
+      "htmlSha256": "09752d648bafd4dcf9c5f462202ee7775ed5dde6dedfe7f0bdd9a52807ce5da0",
+      "work": {
+        "calls": 1886,
+        "inputChars": 39581
+      }
+    }
+  ]
+}

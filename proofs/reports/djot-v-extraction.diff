@@ -1,0 +1,95 @@
+diff -ru '--exclude=dune' packaged/kernel/BinNat.ml fresh/kernel/BinNat.ml
+--- packaged/kernel/BinNat.ml
++++ fresh/kernel/BinNat.ml
+@@ -374,6 +374,12 @@
+     | N0 -> x
+     | Npos p -> Pos.iter f x p
+ 
++  (** val iter_op : ('a1 -> 'a1 -> 'a1) -> 'a1 -> 'a1 -> coq_N -> 'a1 **)
++
++  let iter_op op z x = function
++  | N0 -> z
++  | Npos p -> Pos.iter_op op p x
++
+   (** val of_uint : Decimal.uint -> coq_N **)
+ 
+   let of_uint =
+diff -ru '--exclude=dune' packaged/kernel/BinNat.mli fresh/kernel/BinNat.mli
+--- packaged/kernel/BinNat.mli
++++ fresh/kernel/BinNat.mli
+@@ -105,6 +105,8 @@
+ 
+   val iter : coq_N -> ('a1 -> 'a1) -> 'a1 -> 'a1
+ 
++  val iter_op : ('a1 -> 'a1 -> 'a1) -> 'a1 -> 'a1 -> coq_N -> 'a1
++
+   val of_uint : Decimal.uint -> coq_N
+ 
+   val of_hex_uint : Hexadecimal.uint -> coq_N
+diff -ru '--exclude=dune' packaged/kernel/FMapAVL.ml fresh/kernel/FMapAVL.ml
+--- packaged/kernel/FMapAVL.ml
++++ fresh/kernel/FMapAVL.ml
+@@ -15,19 +15,19 @@
+       'a2 -> ('a1 tree -> 'a2 -> key -> 'a1 -> 'a1 tree -> 'a2 -> I.t -> 'a2)
+       -> 'a1 tree -> 'a2 **)
+ 
+-  let rec tree_rect f f0 = function
+-  | Leaf -> f
+-  | Node (t1, k, y, t2, t3) ->
+-    f0 t1 (tree_rect f f0 t1) k y t2 (tree_rect f f0 t2) t3
++  let rec tree_rect leaf node = function
++  | Leaf -> leaf
++  | Node (t1, k, e, t2, t3) ->
++    node t1 (tree_rect leaf node t1) k e t2 (tree_rect leaf node t2) t3
+ 
+   (** val tree_rec :
+       'a2 -> ('a1 tree -> 'a2 -> key -> 'a1 -> 'a1 tree -> 'a2 -> I.t -> 'a2)
+       -> 'a1 tree -> 'a2 **)
+ 
+-  let rec tree_rec f f0 = function
+-  | Leaf -> f
+-  | Node (t1, k, y, t2, t3) ->
+-    f0 t1 (tree_rec f f0 t1) k y t2 (tree_rec f f0 t2) t3
++  let rec tree_rec leaf node = function
++  | Leaf -> leaf
++  | Node (t1, k, e, t2, t3) ->
++    node t1 (tree_rec leaf node t1) k e t2 (tree_rec leaf node t2) t3
+ 
+   (** val height : 'a1 tree -> I.t **)
+ 
+@@ -237,17 +237,17 @@
+       'a2 -> (key -> 'a1 -> 'a1 tree -> 'a1 enumeration -> 'a2 -> 'a2) -> 'a1
+       enumeration -> 'a2 **)
+ 
+-  let rec enumeration_rect f f0 = function
+-  | End -> f
+-  | More (k, e0, t0, e1) -> f0 k e0 t0 e1 (enumeration_rect f f0 e1)
++  let rec enumeration_rect end0 more = function
++  | End -> end0
++  | More (k, e0, t0, e1) -> more k e0 t0 e1 (enumeration_rect end0 more e1)
+ 
+   (** val enumeration_rec :
+       'a2 -> (key -> 'a1 -> 'a1 tree -> 'a1 enumeration -> 'a2 -> 'a2) -> 'a1
+       enumeration -> 'a2 **)
+ 
+-  let rec enumeration_rec f f0 = function
+-  | End -> f
+-  | More (k, e0, t0, e1) -> f0 k e0 t0 e1 (enumeration_rec f f0 e1)
++  let rec enumeration_rec end0 more = function
++  | End -> end0
++  | More (k, e0, t0, e1) -> more k e0 t0 e1 (enumeration_rec end0 more e1)
+ 
+   (** val cons : 'a1 tree -> 'a1 enumeration -> 'a1 enumeration **)
+ 
+diff -ru '--exclude=dune' packaged/kernel/OrdersEx.mli fresh/kernel/OrdersEx.mli
+--- packaged/kernel/OrdersEx.mli
++++ fresh/kernel/OrdersEx.mli
+@@ -104,6 +104,8 @@
+ 
+   val iter : coq_N -> ('a1 -> 'a1) -> 'a1 -> 'a1
+ 
++  val iter_op : ('a1 -> 'a1 -> 'a1) -> 'a1 -> 'a1 -> coq_N -> 'a1
++
+   val of_uint : Decimal.uint -> coq_N
+ 
+   val of_hex_uint : Hexadecimal.uint -> coq_N

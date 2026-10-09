@@ -1,0 +1,95 @@
+{
+  "recordedAt": "2026-10-02T10:38:55.039822+00:00",
+  "baseCommit": "203c77c06a6b5bd8b8ed3ca0435198917775a8de",
+  "compiler": "The Rocq Prover, version 9.2\ncompiled with OCaml 4.14.2",
+  "checks": [
+    {
+      "name": "layout",
+      "command": "opam exec --switch=carve-proofs -- node scripts/layout-proof-check.mjs",
+      "closedTheoremsOrWitnesses": 26,
+      "exitCode": 0,
+      "transcriptSha256": "976cf22cd7d4cc1589344d51488a8742027aadf9787fab45cf525be2e2d60a89",
+      "transcript": "Compared 17 ownership traces with the executable spec and pinned JS engine.\nFile \"./Ownership.v\", line 1, characters 5-8:\nWarning: \"From Coq\" has been replaced by \"From Stdlib\".\n[deprecated-from-Coq,deprecated-since-9.0,deprecated,default]\nCARVE_ASSUMPTIONS:boundary_keeps_container\nClosed under the global context\nCARVE_ASSUMPTIONS:comment_closes_only_paragraph\nClosed under the global context\nCARVE_ASSUMPTIONS:closed_frame_stays_closed\nClosed under the global context\nCARVE_ASSUMPTIONS:boundary_uniformity\nClosed under the global context\nCARVE_ASSUMPTIONS:owner_ignores_paragraph\nClosed under the global context\nCARVE_ASSUMPTIONS:at_or_below_base_selects_ancestor\nClosed under the global context\nCARVE_ASSUMPTIONS:past_base_selects_innermost\nClosed under the global context\nCARVE_ASSUMPTIONS:content_column_selects_innermost\nClosed under the global context\nCARVE_ASSUMPTIONS:run_append\nClosed under the global context\nCARVE_ASSUMPTIONS:same_state_same_suffix\nClosed under the global context\nCARVE_ASSUMPTIONS:end_input_absorbs\nClosed under the global context\nCARVE_ASSUMPTIONS:indent_consumes_exactly\nClosed under the global context\nCARVE_ASSUMPTIONS:indent_success_reconstructs\nClosed under the global context\nCARVE_ASSUMPTIONS:prefix_failure_stops\nClosed under the global context\nCARVE_ASSUMPTIONS:prefix_count_bounded\nClosed under the global context\nCARVE_ASSUMPTIONS:ordinary_stores_owner\nClosed under the global context\nCARVE_ASSUMPTIONS:boundary_clears_claim\nClosed under the global context\nCARVE_ASSUMPTIONS:interrupt_rejects_claim\nClosed under the global context\nCARVE_ASSUMPTIONS:stale_claim_rejected\nClosed under the global context\nCARVE_ASSUMPTIONS:claim_selects_live_owner\nClosed under the global context\nCARVE_ASSUMPTIONS:post_blank_item_requires_content\nClosed under the global context\nCARVE_ASSUMPTIONS:line_comment_retains_item\nClosed under the global context\nCARVE_ASSUMPTIONS:closed_frame_cannot_be_selected\nClosed under the global context\nCARVE_ASSUMPTIONS:matched_prefix_selects_frame\nClosed under the global context\nCARVE_ASSUMPTIONS:outside_boundary_closes_frame\nClosed under the global context\nCARVE_ASSUMPTIONS:retained_comment_selects_item\nClosed under the global context\nFile \"./CorpusChecks.v\", line 1, characters 5-8:\nWarning: \"From Coq\" has been replaced by \"From Stdlib\".\n[deprecated-from-Coq,deprecated-since-9.0,deprecated,default]\nModel theorems and table/trace/prefix examples checked.\n"
+    },
+    {
+      "name": "djot-assumptions",
+      "command": "DJOT_V_OPAM_SWITCH=carve-proofs node scripts/djot-v/proofs.mjs",
+      "closedTheoremsOrWitnesses": 11,
+      "exitCode": 1,
+      "limitation": "All eleven assumption checks pass; fresh extraction differs in four library files under this toolchain, so the combined command exits 1.",
+      "artifact": "reports/djot-v-proofs.json",
+      "artifactSha256": "2fb3e4c39a52d15331e262172b0942f4acba86bef4338675c54c7a226c816041",
+      "transcript": "hard_wrap_one_para\n     : forall (T : InlineTable.dtable) (K : Step.bconfig),\n       wrap_neutral K ->\n       forall (a : String.string) (ls : list String.string),\n       Line.classify a = Line.KText ->\n       List.forallb Strings.nonblank ls = true ->\n       Step.parse_lines (a :: ls) (Step.PPara nil) =\n       (Ast.mk\n          (Ast.Para\n             (para_inlines (ListDef.map Strings.drop_leading_ws (a :: ls))))\n        :: nil)%list\nClosed under the global context\nhard_wrap_para_then_rest\n     : forall (T : InlineTable.dtable) (K : Step.bconfig),\n       wrap_neutral K ->\n       forall (a : String.string) (ls : list String.string)\n         (b : String.string) (rest : list String.string),\n       Line.classify a = Line.KText ->\n       List.forallb Strings.nonblank ls = true ->\n       Strings.is_blank b = true ->\n       Step.parse_lines ((a :: ls) ++ b :: rest) (Step.PPara nil) =\n       (Ast.mk\n          (Ast.Para\n             (para_inlines (ListDef.map Strings.drop_leading_ws (a :: ls))))\n        :: Step.parse_lines rest (Step.PPara nil))%list\nClosed under the global context\nquote_uniformity\n     : forall (l : String.string) (lines : list String.string),\n       Step.quote_header l = None ->\n       Step.parse_lines\n         (ListDef.map\n            (fun x : String.string =>\n             String.append\n               (String.String\n                  (Ascii.Ascii false true true true true true false false)\n                  (String.String\n                     (Ascii.Ascii false false false false false true false\n                        false)\n                     String.EmptyString))\n               x)\n            (l :: lines))\n         (Step.PPara nil) =\n       (Ast.mk\n          (Ast.BlockQuote (Step.parse_lines (l :: lines) (Step.PPara nil)))\n        :: nil)%list\nwhere\n?T : [ |- InlineTable.dtable]\n?K : [ |- Step.bconfig]\nClosed under the global context\nlist_uniformity\n     : forall (m0 : Line.marker) (sp : Ast.list_spacing)\n         (L0 : list String.string)\n         (tail : list (Line.marker * list String.string)),\n       Line.marker_ok m0 = true ->\n       items_ok m0 ((m0, L0) :: tail) = true ->\n       Step.parse_lines\n         (list_lines sp (ListDef.map litem_lines ((m0, L0) :: tail)))\n         (Step.PPara nil) =\n       (Step.marker_list_checked m0\n          (list_spacing_of sp (ListDef.map snd ((m0, L0) :: tail)))\n          (ListDef.map\n             (fun it : Line.marker * list String.string =>\n              Line.mk_check (fst it))\n             ((m0, L0) :: tail))\n          (ListDef.map\n             (fun it : Line.marker * list String.string =>\n              Step.parse_lines (snd it) (Step.PPara nil))\n             ((m0, L0) :: tail))\n        :: nil)%list\nwhere\n?T : [ |- InlineTable.dtable]\n?K : [ |- Step.bconfig]\nClosed under the global context\nprefix_determinism\n     : forall (xs ys : list String.string) (st : Step.pstate),\n       Step.parse_lines (xs ++ ys) st =\n       (committed xs st ++ Step.parse_lines ys (snd (run_lines xs st)))%list\nwhere\n?T : [ |- InlineTable.dtable]\n?K : [ |- Step.bconfig]\nClosed under the global context\nno_future_line_dependence\n     : forall (xs ys ys' : list String.string) (st : Step.pstate),\n       ListDef.firstn (length (committed xs st))\n         (Step.parse_lines (xs ++ ys) st) =\n       ListDef.firstn (length (committed xs st))\n         (Step.parse_lines (xs ++ ys') st)\nwhere\n?T : [ |- InlineTable.dtable]\n?K : [ |- Step.bconfig]\nClosed under the global context\nclassify_inlines_locality\n     : forall (a b : inline_env) (l : list String.string),\n       classify_inlines a l = classify_inlines b l\nwhere\n?T : [ |- InlineTable.dtable]\nClosed under the global context\niscan_str_no_reread\n     : forall (s : String.string) (st : iscan),\n       iscan_str_fuel (String.length s) s st = Some (iscan_str s st)\nwhere\n?T : [ |- InlineTable.dtable]\nClosed under the global context\nlazy_stack_line\n     : forall (l : String.string) (st : Step.pstate),\n       lazy_stack st ->\n       Line.classify l = Line.KText ->\n       Step.bunderline_of l = None ->\n       Step.step l st = (nil, Step.feed_lazy l st) /\\\n       Step.step (String.append (Step.spine_prefix 0 st) l) st =\n       Step.step l st\nwhere\n?T : [ |- InlineTable.dtable]\n?K : [ |- Step.bconfig]\nClosed under the global context\nlist_spacing_separates\n     : forall (sp : Ast.list_spacing) (itemss : list (list String.string)),\n       List.forallb\n         (fun L : list String.string =>\n          (run_safe L (Step.PPara nil) &&\n           negb (Strings.is_blank (List.hd String.EmptyString L)))%bool)\n         itemss =\n       true ->\n       list_spacing_of sp itemss = Ast.Loose ->\n       (exists L : list String.string,\n          List.In L itemss /\\ (exists i : nat, separates L i)) \\/\n       sp = Ast.Loose /\\\n       (exists\n          (pre : list (list String.string)) (L M : list String.string) \n        (post : list (list String.string)),\n          itemss = (pre ++ L :: M :: post)%list /\\ separates_after L)\nwhere\n?T : [ |- InlineTable.dtable]\n?K : [ |- Step.bconfig]\nClosed under the global context\nblock_shape_independent\n     : forall (T T' : InlineTable.dtable) (K : Step.bconfig)\n         (LI : Step.LineIx) (P : Ast.PosPolicy) (s : String.string),\n       @Step.bkeyed K = false ->\n       Shape.of_blocks (@Step.parse_blocks T K LI P s) =\n       Shape.of_blocks (@Step.parse_blocks T' K LI P s)\nClosed under the global context",
+      "transcriptSha256": "52c820d003761b7dfd42f9c32ce259e9c829d2ffd98091f401269ddcd8c1f45a",
+      "assumptionChecksPassed": true,
+      "closedUnderGlobalContext": 11,
+      "extractionMatches": false,
+      "extractionConsistencyExitCode": 2
+    },
+    {
+      "name": "footnote-witnesses",
+      "command": "DJOT_V_OPAM_SWITCH=carve-proofs node scripts/differential/proof.mjs --output reports/djot-differential-proofs.json",
+      "closedTheoremsOrWitnesses": 4,
+      "exitCode": 0,
+      "artifact": "reports/djot-differential-proofs.json",
+      "artifactSha256": "8bab6d7a96323b4d0548dbba466e9cfca62f10a6a07a17901e68da47519439c2",
+      "transcript": "Closed under the global context\nClosed under the global context\nClosed under the global context\nClosed under the global context",
+      "transcriptSha256": "2d259da2d302a3738368e9d27d381805a806d0929126661d32fa53c8f7e1a0e3"
+    },
+    {
+      "name": "extension-witnesses",
+      "command": "DJOT_V_OPAM_SWITCH=carve-proofs node scripts/djot-v/extensions-proof.mjs --output reports/djot-extension-proofs.json",
+      "closedTheoremsOrWitnesses": 8,
+      "exitCode": 0,
+      "artifact": "reports/djot-extension-proofs.json",
+      "artifactSha256": "1508eca8d60b41548a82be002c5a717480b48ca5ae0aeed61234cf483acb458d",
+      "transcript": "Closed under the global context\nClosed under the global context\nClosed under the global context\nClosed under the global context\nClosed under the global context\nClosed under the global context\nClosed under the global context\nClosed under the global context",
+      "transcriptSha256": "8a1aa8a97a7a9806a370065a9c6095c1ac7e9842b6a26bbfddca4cf54d9c577c"
+    }
+  ],
+  "extractionMismatchUnchanged": true,
+  "ownership": {
+    "inputs": 472,
+    "disagreements": 0,
+    "outputsEqualToPrevious": true
+  },
+  "comparison": {
+    "observations": 420,
+    "outputsEqualToPrevious": true
+  },
+  "contracts": {
+    "observations": 525,
+    "outputsEqualToPrevious": true
+  },
+  "containers": {
+    "cases": 112,
+    "outputsEqualToPrevious": true
+  },
+  "evidenceCommit": "56b6a68bbd50c7c221901b5a9777f2f3da76ba5a",
+  "readerPins": {
+    "spec": {
+      "repository": "https://github.com/markup-carve/carve.git",
+      "commit": "9db91206d1a4a8a8cf795c48210bca49d66f14d6"
+    },
+    "js": {
+      "repository": "https://github.com/markup-carve/carve-js.git",
+      "commit": "6d02fa7062dd03024e7c092016459602e9a7aeec"
+    },
+    "php": {
+      "repository": "https://github.com/markup-carve/carve-php.git",
+      "commit": "7033d04b1d942263508eadf9b699a77ee656bfda"
+    },
+    "rs": {
+      "repository": "https://github.com/markup-carve/carve-rs.git",
+      "commit": "9f3f334c7d5c91c57e4e6269b32599af1062fdde"
+    }
+  },
+  "comparisonEngine": "github:markup-carve/carve-js#6d02fa7062dd03024e7c092016459602e9a7aeec",
+  "modelEngine": "github:markup-carve/carve-js#c5df77f658c80a3a80a4d31ec1855d854e5da648",
+  "modelSpec": "d20ebd942f91470485332cec925fa0717f20a58a",
+  "proofSources": {
+    "proofs/layout/Ownership.v": "c9e2183f9b999daec7fda33fb77e161fbac13ea0252da8d3202b8a2fe012cd50",
+    "scripts/djot-v/ExtensionWitness.v": "3d10fd7e3a88b149f46aecee95e752cd1b2073ea263fda5df3522ebb697cdee6",
+    "scripts/differential/FootnoteWitness.v": "903385b8392afc63594d6d12ce09e37ef395acecfb489949ee7702717d1aba41"
+  }
+}

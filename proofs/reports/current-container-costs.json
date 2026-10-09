@@ -1,0 +1,6681 @@
+{
+  "schema": 1,
+  "generatedAt": "2026-10-04T00:20:55.960Z",
+  "sources": {
+    "rs": {
+      "baseline": {
+        "commit": "9f3f334c7d5c91c57e4e6269b32599af1062fdde",
+        "sourceSha256": "ee8b845d80807ab586c5094d81f020951d4c7cc47d930f0facd5a9848b0babba",
+        "sourceFiles": 86
+      },
+      "current": {
+        "commit": "c8ef7dffc6e61b58cdb92c1ed081048b0dc999a5",
+        "sourceSha256": "155666bad96db97ab5d287a54238048a5564a715a19a4bb64b1a3af904b2eb09",
+        "sourceFiles": 93
+      }
+    },
+    "php": {
+      "baseline": {
+        "commit": "7033d04b1d942263508eadf9b699a77ee656bfda",
+        "sourceSha256": "cf21716571ec13128b3a7f9ec3f61e3be1155ae4c600b0dff94e1a0bfae1a99d",
+        "sourceFiles": 277
+      },
+      "current": {
+        "commit": "fba5f377a72771b164b638ef9997b7caf4850ede",
+        "sourceSha256": "7e7b841cd3a4616cb716ef2f29b24b3a9055c347c068d876017e88b063eb3eb5",
+        "sourceFiles": 311
+      }
+    }
+  },
+  "host": {
+    "platform": "linux",
+    "cpu": "AMD Ryzen 9 PRO 7940HS w/ Radeon 780M Graphics",
+    "logicalCpus": 16,
+    "loadStart": [
+      12.96,
+      10.45,
+      7.96
+    ],
+    "loadEnd": [
+      8.48,
+      9.65,
+      7.84
+    ]
+  },
+  "method": "Shared-host observations. Two fresh-process rounds, baseline/current then current/baseline. Each fixture/phase warms for 200ms and records five batches of at least 20ms. Rust counts allocation/reallocation calls and requested bytes across five separate operations; PHP records five managed-heap peaks. Rendering reuses a parsed AST, including any internal borrowed-API clone. No timing thresholds or cross-language speed ranking.",
+  "build": {
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "workerFlags": [
+      "--edition=2021",
+      "-O"
+    ],
+    "libraryProfile": "release",
+    "binarySha256": {
+      "baseline": "ea242e5bdfa31d9f0f515dc96d887787c594c37dc72c85d36aa65966868f0f9d",
+      "current": "1e6bf10a8b01ba270711cd42495465de1771fe5ca4a7d5d652fb870247753126"
+    }
+  },
+  "runnerSha256": "7c68c4d2a020579a054a7a0b6ed72821ae15e89b4b7ac4eedceef1279af4d4db",
+  "roundOrder": [
+    [
+      "baseline",
+      "current"
+    ],
+    [
+      "current",
+      "baseline"
+    ]
+  ],
+  "phpFlags": [
+    "-n",
+    "-d",
+    "extension=mbstring",
+    "-d",
+    "extension=ctype"
+  ],
+  "phpRuntime": [
+    {
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "parse",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "render",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "html",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "parse",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "render",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "html",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "parse",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "render",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "html",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "parse",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "render",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "html",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "parse",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "render",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "html",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "parse",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "render",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "html",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "parse",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "render",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "html",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "parse",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "render",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    },
+    {
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "html",
+      "event": "runtime",
+      "version": "8.5.11",
+      "extensions": [
+        "Core",
+        "date",
+        "lexbor",
+        "openssl",
+        "pcre",
+        "zlib",
+        "filter",
+        "hash",
+        "json",
+        "uri",
+        "Zend OPcache",
+        "pcntl",
+        "random",
+        "Reflection",
+        "SPL",
+        "session",
+        "standard",
+        "sodium",
+        "libxml",
+        "mbstring",
+        "ctype"
+      ],
+      "opcache": false,
+      "jit": "disable",
+      "memoryLimit": "128M",
+      "assertions": "1"
+    }
+  ],
+  "observations": [
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "depth": 48,
+      "phase": "parse",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.04159108731808732,
+        0.04146016770186336,
+        0.041201806584362136,
+        0.0426061085106383,
+        0.03933253831041257
+      ],
+      "batchIterations": [
+        481,
+        483,
+        486,
+        470,
+        509
+      ],
+      "samplesAllocatedBytes": [
+        161185,
+        161185,
+        161185,
+        161185,
+        161185
+      ],
+      "samplesAllocationCalls": [
+        558,
+        558,
+        558,
+        558,
+        558
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "depth": 48,
+      "phase": "render",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.019818172277227722,
+        0.02099104092339979,
+        0.019830088206144694,
+        0.020165939516129033,
+        0.020030703703703703
+      ],
+      "batchIterations": [
+        1010,
+        953,
+        1009,
+        992,
+        999
+      ],
+      "samplesAllocatedBytes": [
+        543368,
+        543368,
+        543368,
+        543368,
+        543368
+      ],
+      "samplesAllocationCalls": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "depth": 48,
+      "phase": "html",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.05373956568364611,
+        0.053736233243967826,
+        0.05635288169014084,
+        0.06370021337579618,
+        0.055850164345403894
+      ],
+      "batchIterations": [
+        373,
+        373,
+        355,
+        314,
+        359
+      ],
+      "samplesAllocatedBytes": [
+        690570,
+        690570,
+        690570,
+        690570,
+        690570
+      ],
+      "samplesAllocationCalls": [
+        902,
+        902,
+        902,
+        902,
+        902
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "depth": 96,
+      "phase": "parse",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.08689038095238094,
+        0.08627021551724139,
+        0.08895640444444446,
+        0.08780886403508771,
+        0.08559340598290599
+      ],
+      "batchIterations": [
+        231,
+        232,
+        225,
+        228,
+        234
+      ],
+      "samplesAllocatedBytes": [
+        328401,
+        328401,
+        328401,
+        328401,
+        328401
+      ],
+      "samplesAllocationCalls": [
+        1087,
+        1087,
+        1087,
+        1087,
+        1087
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "depth": 96,
+      "phase": "render",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.06465820967741935,
+        0.0635576253968254,
+        0.06359900634920634,
+        0.06292900628930817,
+        0.06612240594059406
+      ],
+      "batchIterations": [
+        310,
+        315,
+        315,
+        318,
+        303
+      ],
+      "samplesAllocatedBytes": [
+        3898752,
+        3898752,
+        3898752,
+        3898752,
+        3898752
+      ],
+      "samplesAllocationCalls": [
+        869,
+        869,
+        869,
+        869,
+        869
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "depth": 96,
+      "phase": "html",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.186925738317757,
+        0.19741697058823526,
+        0.1954008058252427,
+        0.200337495049505,
+        0.20245609
+      ],
+      "batchIterations": [
+        107,
+        102,
+        103,
+        101,
+        100
+      ],
+      "samplesAllocatedBytes": [
+        4200018,
+        4200018,
+        4200018,
+        4200018,
+        4200018
+      ],
+      "samplesAllocationCalls": [
+        1852,
+        1852,
+        1852,
+        1852,
+        1852
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "depth": 192,
+      "phase": "parse",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        0.20985676041666668,
+        0.20458841836734695,
+        0.2105601894736842,
+        0.20205756565656566,
+        0.20413470408163265
+      ],
+      "batchIterations": [
+        96,
+        98,
+        95,
+        99,
+        98
+      ],
+      "samplesAllocatedBytes": [
+        690481,
+        690481,
+        690481,
+        690481,
+        690481
+      ],
+      "samplesAllocationCalls": [
+        2144,
+        2144,
+        2144,
+        2144,
+        2144
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "depth": 192,
+      "phase": "render",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        0.510730675,
+        0.4820354285714285,
+        0.4613192727272727,
+        0.45179755555555556,
+        0.5225174615384615
+      ],
+      "batchIterations": [
+        40,
+        42,
+        44,
+        45,
+        39
+      ],
+      "samplesAllocatedBytes": [
+        29665904,
+        29665904,
+        29665904,
+        29665904,
+        29665904
+      ],
+      "samplesAllocationCalls": [
+        1899,
+        1899,
+        1899,
+        1899,
+        1899
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "depth": 192,
+      "phase": "html",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        1.1123513333333335,
+        1.2480661176470589,
+        1.1002474210526316,
+        1.100346,
+        1.0570854210526317
+      ],
+      "batchIterations": [
+        18,
+        17,
+        19,
+        19,
+        19
+      ],
+      "samplesAllocatedBytes": [
+        30302946,
+        30302946,
+        30302946,
+        30302946,
+        30302946
+      ],
+      "samplesAllocationCalls": [
+        3843,
+        3843,
+        3843,
+        3843,
+        3843
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "depth": 48,
+      "phase": "parse",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.36818247272727267,
+        0.3795831132075471,
+        0.3724025740740741,
+        0.3646331818181818,
+        0.39057074999999997
+      ],
+      "batchIterations": [
+        55,
+        53,
+        54,
+        55,
+        52
+      ],
+      "samplesAllocatedBytes": [
+        300357,
+        300357,
+        300357,
+        300357,
+        300357
+      ],
+      "samplesAllocationCalls": [
+        882,
+        882,
+        882,
+        882,
+        882
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "depth": 48,
+      "phase": "render",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.019513828292682927,
+        0.01933938357487923,
+        0.019659731827111986,
+        0.02049880552712385,
+        0.026632507323568574
+      ],
+      "batchIterations": [
+        1025,
+        1035,
+        1018,
+        977,
+        751
+      ],
+      "samplesAllocatedBytes": [
+        61903,
+        61903,
+        61903,
+        61903,
+        61903
+      ],
+      "samplesAllocationCalls": [
+        119,
+        119,
+        119,
+        119,
+        119
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "depth": 48,
+      "phase": "html",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.34946951724137937,
+        0.3513941578947368,
+        0.3460056896551724,
+        0.3478732068965517,
+        0.3477181034482758
+      ],
+      "batchIterations": [
+        58,
+        57,
+        58,
+        58,
+        58
+      ],
+      "samplesAllocatedBytes": [
+        339061,
+        339061,
+        339061,
+        339061,
+        339061
+      ],
+      "samplesAllocationCalls": [
+        897,
+        897,
+        897,
+        897,
+        897
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "depth": 96,
+      "phase": "parse",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        1.263538875,
+        1.2684908124999998,
+        1.268442625,
+        1.2791748125,
+        1.3503824666666666
+      ],
+      "batchIterations": [
+        16,
+        16,
+        16,
+        16,
+        15
+      ],
+      "samplesAllocatedBytes": [
+        661013,
+        661013,
+        661013,
+        661013,
+        661013
+      ],
+      "samplesAllocationCalls": [
+        1829,
+        1829,
+        1829,
+        1829,
+        1829
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "depth": 96,
+      "phase": "render",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        0.05372298391420911,
+        0.05449943324250681,
+        0.0501040475,
+        0.05187903626943005,
+        0.05124934271099745
+      ],
+      "batchIterations": [
+        373,
+        367,
+        400,
+        386,
+        391
+      ],
+      "samplesAllocatedBytes": [
+        196543,
+        196543,
+        196543,
+        196543,
+        196543
+      ],
+      "samplesAllocationCalls": [
+        216,
+        216,
+        216,
+        216,
+        216
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "depth": 96,
+      "phase": "html",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        1.2685897499999998,
+        1.285538125,
+        1.251180375,
+        1.2485752352941175,
+        1.2735753749999998
+      ],
+      "batchIterations": [
+        16,
+        16,
+        16,
+        17,
+        16
+      ],
+      "samplesAllocatedBytes": [
+        811989,
+        811989,
+        811989,
+        811989,
+        811989
+      ],
+      "samplesAllocationCalls": [
+        1845,
+        1845,
+        1845,
+        1845,
+        1845
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "depth": 192,
+      "phase": "parse",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        5.3556307499999996,
+        5.0462352500000005,
+        4.8857208,
+        4.8559944,
+        4.885216
+      ],
+      "batchIterations": [
+        4,
+        4,
+        5,
+        5,
+        5
+      ],
+      "samplesAllocatedBytes": [
+        1559989,
+        1559989,
+        1559989,
+        1559989,
+        1559989
+      ],
+      "samplesAllocationCalls": [
+        3816,
+        3816,
+        3816,
+        3816,
+        3816
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "depth": 192,
+      "phase": "render",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        0.17357383620689654,
+        0.18260248181818184,
+        0.1907696,
+        0.18933756603773585,
+        0.1756414298245614
+      ],
+      "batchIterations": [
+        116,
+        110,
+        105,
+        106,
+        114
+      ],
+      "samplesAllocatedBytes": [
+        687007,
+        687007,
+        687007,
+        687007,
+        687007
+      ],
+      "samplesAllocationCalls": [
+        409,
+        409,
+        409,
+        409,
+        409
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "depth": 192,
+      "phase": "html",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        5.1179715,
+        5.27068925,
+        5.4336815,
+        5.5987725,
+        5.64604475
+      ],
+      "batchIterations": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "samplesAllocatedBytes": [
+        2156693,
+        2156693,
+        2156693,
+        2156693,
+        2156693
+      ],
+      "samplesAllocationCalls": [
+        3833,
+        3833,
+        3833,
+        3833,
+        3833
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 48,
+      "samplesMs": [
+        0.8004612400000001,
+        0.9849318095238095,
+        0.8570838333333333,
+        0.82953088,
+        0.8452104583333333
+      ],
+      "samplesCpuMs": [
+        0.8008799999999997,
+        0.9853333333333337,
+        0.8573333333333343,
+        0.8298400000000015,
+        0.8438749999999994
+      ],
+      "batchIterations": [
+        25,
+        21,
+        24,
+        25,
+        24
+      ],
+      "samplesPeakManagedBytes": [
+        406512,
+        406512,
+        406512,
+        406512,
+        406512
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 96,
+      "samplesMs": [
+        2.3544845555555556,
+        2.467140666666667,
+        2.2807632222222223,
+        2.2586891111111114,
+        1.991000090909091
+      ],
+      "samplesCpuMs": [
+        2.352111111111109,
+        2.454666666666665,
+        2.2760000000000042,
+        2.2594444444444486,
+        1.9874545454545425
+      ],
+      "batchIterations": [
+        9,
+        9,
+        9,
+        9,
+        11
+      ],
+      "samplesPeakManagedBytes": [
+        813904,
+        813904,
+        813904,
+        813904,
+        813904
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 192,
+      "samplesMs": [
+        6.282143,
+        5.90804475,
+        6.10058075,
+        6.14566625,
+        7.239715
+      ],
+      "samplesCpuMs": [
+        6.27849999999998,
+        5.908999999999992,
+        6.102000000000004,
+        6.146500000000003,
+        7.241666666666674
+      ],
+      "batchIterations": [
+        4,
+        4,
+        4,
+        4,
+        3
+      ],
+      "samplesPeakManagedBytes": [
+        1643952,
+        1643952,
+        1643952,
+        1643952,
+        1643952
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "render",
+      "depth": 48,
+      "samplesMs": [
+        0.22764671590909089,
+        0.21285078723404255,
+        0.22224535555555558,
+        0.21366828723404255,
+        0.21024516666666668
+      ],
+      "samplesCpuMs": [
+        0.22775,
+        0.2128936170212766,
+        0.22227777777777774,
+        0.2137021276595747,
+        0.20992708333333354
+      ],
+      "batchIterations": [
+        88,
+        94,
+        90,
+        94,
+        96
+      ],
+      "samplesPeakManagedBytes": [
+        34584,
+        34584,
+        34584,
+        34584,
+        34584
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "render",
+      "depth": 96,
+      "samplesMs": [
+        0.8005628846153846,
+        0.7757642307692307,
+        0.7874109615384615,
+        0.793855576923077,
+        0.7900159615384615
+      ],
+      "samplesCpuMs": [
+        0.8013076923076903,
+        0.7759999999999974,
+        0.7875384615384615,
+        0.7941923076923078,
+        0.7902307692307711
+      ],
+      "batchIterations": [
+        26,
+        26,
+        26,
+        26,
+        26
+      ],
+      "samplesPeakManagedBytes": [
+        91592,
+        91592,
+        91592,
+        91592,
+        91592
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "render",
+      "depth": 192,
+      "samplesMs": [
+        5.1058205,
+        5.650811,
+        5.80471075,
+        6.02790475,
+        5.8884575
+      ],
+      "samplesCpuMs": [
+        5.106499999999983,
+        5.6440000000000055,
+        5.806750000000022,
+        6.029250000000019,
+        5.889749999999992
+      ],
+      "batchIterations": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "samplesPeakManagedBytes": [
+        320968,
+        320968,
+        320968,
+        320968,
+        320968
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "html",
+      "depth": 48,
+      "samplesMs": [
+        1.0548667368421052,
+        1.0533447,
+        1.0808112631578948,
+        1.0674516842105264,
+        1.0528708421052633
+      ],
+      "samplesCpuMs": [
+        1.0554210526315788,
+        1.0536999999999979,
+        1.0811052631578946,
+        1.067736842105262,
+        1.0531578947368416
+      ],
+      "batchIterations": [
+        19,
+        20,
+        19,
+        19,
+        19
+      ],
+      "samplesPeakManagedBytes": [
+        406512,
+        406512,
+        406512,
+        406512,
+        406512
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "html",
+      "depth": 96,
+      "samplesMs": [
+        3.480354,
+        3.267668,
+        3.571839333333333,
+        3.189012857142857,
+        3.2357747142857143
+      ],
+      "samplesCpuMs": [
+        3.4798333333333176,
+        3.2655714285714175,
+        3.5688333333333353,
+        3.1827142857142854,
+        3.2300000000000018
+      ],
+      "batchIterations": [
+        6,
+        7,
+        6,
+        7,
+        7
+      ],
+      "samplesPeakManagedBytes": [
+        813904,
+        813904,
+        813904,
+        813904,
+        813904
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "quote",
+      "phase": "html",
+      "depth": 192,
+      "samplesMs": [
+        11.963013,
+        12.4543115,
+        11.929274,
+        11.5964065,
+        11.5073675
+      ],
+      "samplesCpuMs": [
+        11.962999999999965,
+        12.440499999999986,
+        11.931499999999971,
+        11.59899999999999,
+        11.508999999999958
+      ],
+      "batchIterations": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "samplesPeakManagedBytes": [
+        1643952,
+        1643952,
+        1643952,
+        1643952,
+        1643952
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "parse",
+      "depth": 48,
+      "samplesMs": [
+        4.1653414,
+        4.4652652,
+        3.4025991666666666,
+        4.045257,
+        3.7968116666666667
+      ],
+      "samplesCpuMs": [
+        4.168199999999996,
+        4.466599999999994,
+        3.403500000000008,
+        4.048000000000002,
+        3.7976666666666667
+      ],
+      "batchIterations": [
+        5,
+        5,
+        6,
+        6,
+        6
+      ],
+      "samplesPeakManagedBytes": [
+        641680,
+        641680,
+        641680,
+        641680,
+        641680
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "parse",
+      "depth": 96,
+      "samplesMs": [
+        11.841552,
+        12.0171405,
+        12.400504,
+        11.8292335,
+        12.1671105
+      ],
+      "samplesCpuMs": [
+        11.846499999999992,
+        12.019499999999994,
+        12.399499999999989,
+        11.831500000000005,
+        12.16900000000004
+      ],
+      "batchIterations": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "samplesPeakManagedBytes": [
+        1551472,
+        1551472,
+        1551472,
+        1551472,
+        1551472
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "parse",
+      "depth": 192,
+      "samplesMs": [
+        41.658752,
+        42.55761,
+        43.451308,
+        43.356518,
+        42.290493
+      ],
+      "samplesCpuMs": [
+        41.66799999999989,
+        42.5619999999999,
+        43.45499999999993,
+        43.360999999999876,
+        42.29600000000005
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        3401552,
+        3401552,
+        3401552,
+        3401552,
+        3401552
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "render",
+      "depth": 48,
+      "samplesMs": [
+        0.7643955185185185,
+        0.7370355714285715,
+        0.7636671111111112,
+        0.7781991923076923,
+        0.7757152307692308
+      ],
+      "samplesCpuMs": [
+        0.7632962962962956,
+        0.7358571428571443,
+        0.7638148148148145,
+        0.7784615384615388,
+        0.7761153846153858
+      ],
+      "batchIterations": [
+        27,
+        28,
+        27,
+        26,
+        26
+      ],
+      "samplesPeakManagedBytes": [
+        266376,
+        266376,
+        266376,
+        266376,
+        266376
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "render",
+      "depth": 96,
+      "samplesMs": [
+        5.0727008,
+        5.26403025,
+        5.28250275,
+        5.19399975,
+        5.2862575
+      ],
+      "samplesCpuMs": [
+        5.063799999999992,
+        5.246250000000003,
+        5.274000000000001,
+        5.172500000000014,
+        5.258250000000004
+      ],
+      "batchIterations": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "samplesPeakManagedBytes": [
+        533464,
+        533464,
+        533464,
+        533464,
+        533464
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "render",
+      "depth": 192,
+      "samplesMs": [
+        36.181696,
+        35.338223,
+        35.074953,
+        37.070585,
+        34.548563
+      ],
+      "samplesCpuMs": [
+        36.19800000000009,
+        35.34299999999985,
+        35.07900000000018,
+        37.05399999999986,
+        34.55300000000011
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        1081160,
+        1081160,
+        1081160,
+        1081160,
+        1081160
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "html",
+      "depth": 48,
+      "samplesMs": [
+        4.3876274,
+        4.5022910000000005,
+        5.06558325,
+        4.5200708,
+        4.7630224
+      ],
+      "samplesCpuMs": [
+        4.389800000000003,
+        4.5031999999999925,
+        5.0625,
+        4.509600000000001,
+        4.761799999999994
+      ],
+      "batchIterations": [
+        5,
+        5,
+        4,
+        5,
+        5
+      ],
+      "samplesPeakManagedBytes": [
+        641680,
+        641680,
+        641680,
+        641680,
+        641680
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "html",
+      "depth": 96,
+      "samplesMs": [
+        16.7486375,
+        16.780563,
+        15.98129,
+        16.982261,
+        15.727487
+      ],
+      "samplesCpuMs": [
+        16.747500000000002,
+        16.78249999999997,
+        15.984000000000037,
+        16.98449999999997,
+        15.728999999999985
+      ],
+      "batchIterations": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "samplesPeakManagedBytes": [
+        1551472,
+        1551472,
+        1551472,
+        1551472,
+        1551472
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 0,
+      "family": "list",
+      "phase": "html",
+      "depth": 192,
+      "samplesMs": [
+        73.82302,
+        77.327668,
+        78.268965,
+        73.768736,
+        73.121096
+      ],
+      "samplesCpuMs": [
+        73.82099999999991,
+        77.31799999999998,
+        78.27200000000016,
+        73.77500000000009,
+        73.12599999999998
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        3401552,
+        3401552,
+        3401552,
+        3401552,
+        3401552
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "depth": 48,
+      "phase": "parse",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.040211184738955824,
+        0.03813438476190477,
+        0.03734274626865672,
+        0.03806455323193917,
+        0.0394553057199211
+      ],
+      "batchIterations": [
+        498,
+        525,
+        536,
+        526,
+        507
+      ],
+      "samplesAllocatedBytes": [
+        161186,
+        161186,
+        161186,
+        161186,
+        161186
+      ],
+      "samplesAllocationCalls": [
+        559,
+        559,
+        559,
+        559,
+        559
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "depth": 48,
+      "phase": "render",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.007875760629921258,
+        0.008080252423263328,
+        0.007826624021909234,
+        0.010233076214833759,
+        0.00786716633896972
+      ],
+      "batchIterations": [
+        2540,
+        2476,
+        2556,
+        1955,
+        2543
+      ],
+      "samplesAllocatedBytes": [
+        33373,
+        33373,
+        33373,
+        33373,
+        33373
+      ],
+      "samplesAllocationCalls": [
+        64,
+        64,
+        64,
+        64,
+        64
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "depth": 48,
+      "phase": "html",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.045828544622425624,
+        0.04432450884955752,
+        0.04564027562642369,
+        0.04511044369369369,
+        0.048492188861985475
+      ],
+      "batchIterations": [
+        437,
+        452,
+        439,
+        444,
+        413
+      ],
+      "samplesAllocatedBytes": [
+        180576,
+        180576,
+        180576,
+        180576,
+        180576
+      ],
+      "samplesAllocationCalls": [
+        567,
+        567,
+        567,
+        567,
+        567
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "depth": 96,
+      "phase": "parse",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.09134589497716895,
+        0.09143135159817352,
+        0.09359630373831776,
+        0.09359204205607477,
+        0.09922482673267327
+      ],
+      "batchIterations": [
+        219,
+        219,
+        214,
+        214,
+        202
+      ],
+      "samplesAllocatedBytes": [
+        328402,
+        328402,
+        328402,
+        328402,
+        328402
+      ],
+      "samplesAllocationCalls": [
+        1088,
+        1088,
+        1088,
+        1088,
+        1088
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "depth": 96,
+      "phase": "render",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.019486480038948394,
+        0.01944900583090379,
+        0.019581208414872802,
+        0.01981691089108911,
+        0.020447708886619
+      ],
+      "batchIterations": [
+        1027,
+        1029,
+        1022,
+        1010,
+        979
+      ],
+      "samplesAllocatedBytes": [
+        102733,
+        102733,
+        102733,
+        102733,
+        102733
+      ],
+      "samplesAllocationCalls": [
+        113,
+        113,
+        113,
+        113,
+        113
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "depth": 96,
+      "phase": "html",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.13050953896103898,
+        0.13235075,
+        0.12050645508982036,
+        0.12136824242424243,
+        0.12677968987341773
+      ],
+      "batchIterations": [
+        154,
+        152,
+        167,
+        165,
+        158
+      ],
+      "samplesAllocatedBytes": [
+        404000,
+        404000,
+        404000,
+        404000,
+        404000
+      ],
+      "samplesAllocationCalls": [
+        1097,
+        1097,
+        1097,
+        1097,
+        1097
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "depth": 192,
+      "phase": "parse",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        0.23899625,
+        0.256473717948718,
+        0.24661896341463413,
+        0.27040067567567566,
+        0.24878467901234566
+      ],
+      "batchIterations": [
+        84,
+        78,
+        82,
+        74,
+        81
+      ],
+      "samplesAllocatedBytes": [
+        690482,
+        690482,
+        690482,
+        690482,
+        690482
+      ],
+      "samplesAllocationCalls": [
+        2145,
+        2145,
+        2145,
+        2145,
+        2145
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "depth": 192,
+      "phase": "render",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        0.06986706968641115,
+        0.06945909374999999,
+        0.07088642049469965,
+        0.07409649259259259,
+        0.07864217254901962
+      ],
+      "batchIterations": [
+        287,
+        288,
+        283,
+        270,
+        255
+      ],
+      "samplesAllocatedBytes": [
+        352045,
+        352045,
+        352045,
+        352045,
+        352045
+      ],
+      "samplesAllocationCalls": [
+        210,
+        210,
+        210,
+        210,
+        210
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "depth": 192,
+      "phase": "html",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        0.38304366037735854,
+        0.4325058085106383,
+        0.3876041538461538,
+        0.3883817692307692,
+        0.38821203846153846
+      ],
+      "batchIterations": [
+        53,
+        47,
+        52,
+        52,
+        52
+      ],
+      "samplesAllocatedBytes": [
+        989088,
+        989088,
+        989088,
+        989088,
+        989088
+      ],
+      "samplesAllocationCalls": [
+        2155,
+        2155,
+        2155,
+        2155,
+        2155
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "depth": 48,
+      "phase": "parse",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.33416576666666664,
+        0.3627379642857143,
+        0.3552040175438596,
+        0.34268671186440675,
+        0.3293214590163935
+      ],
+      "batchIterations": [
+        60,
+        56,
+        57,
+        59,
+        61
+      ],
+      "samplesAllocatedBytes": [
+        300358,
+        300358,
+        300358,
+        300358,
+        300358
+      ],
+      "samplesAllocationCalls": [
+        883,
+        883,
+        883,
+        883,
+        883
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "depth": 48,
+      "phase": "render",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.016787954697986576,
+        0.01717070214592275,
+        0.018255205291970805,
+        0.022815802736602053,
+        0.022755750853242322
+      ],
+      "batchIterations": [
+        1192,
+        1165,
+        1096,
+        877,
+        879
+      ],
+      "samplesAllocatedBytes": [
+        61797,
+        61797,
+        61797,
+        61797,
+        61797
+      ],
+      "samplesAllocationCalls": [
+        114,
+        114,
+        114,
+        114,
+        114
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "depth": 48,
+      "phase": "html",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.33512325,
+        0.3412753898305085,
+        0.34612005172413796,
+        0.3558742456140351,
+        0.3622465
+      ],
+      "batchIterations": [
+        60,
+        59,
+        58,
+        57,
+        56
+      ],
+      "samplesAllocatedBytes": [
+        338956,
+        338956,
+        338956,
+        338956,
+        338956
+      ],
+      "samplesAllocationCalls": [
+        893,
+        893,
+        893,
+        893,
+        893
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "depth": 96,
+      "phase": "parse",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        1.1186805,
+        1.1392573888888888,
+        1.1472452777777777,
+        1.1575593333333334,
+        1.2065276470588235
+      ],
+      "batchIterations": [
+        18,
+        18,
+        18,
+        18,
+        17
+      ],
+      "samplesAllocatedBytes": [
+        661014,
+        661014,
+        661014,
+        661014,
+        661014
+      ],
+      "samplesAllocationCalls": [
+        1830,
+        1830,
+        1830,
+        1830,
+        1830
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "depth": 96,
+      "phase": "render",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        0.054522585831062675,
+        0.061181810397553514,
+        0.051749385012919896,
+        0.05461251226158038,
+        0.052807802110817946
+      ],
+      "batchIterations": [
+        367,
+        327,
+        387,
+        367,
+        379
+      ],
+      "samplesAllocatedBytes": [
+        196437,
+        196437,
+        196437,
+        196437,
+        196437
+      ],
+      "samplesAllocationCalls": [
+        211,
+        211,
+        211,
+        211,
+        211
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "depth": 96,
+      "phase": "html",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        1.2318157058823527,
+        1.2537283125,
+        1.28386125,
+        1.26152,
+        1.2653929375000001
+      ],
+      "batchIterations": [
+        17,
+        16,
+        16,
+        16,
+        16
+      ],
+      "samplesAllocatedBytes": [
+        811884,
+        811884,
+        811884,
+        811884,
+        811884
+      ],
+      "samplesAllocationCalls": [
+        1841,
+        1841,
+        1841,
+        1841,
+        1841
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "depth": 192,
+      "phase": "parse",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        4.8315754,
+        4.8492809999999995,
+        4.8736634,
+        4.77295,
+        4.837534799999999
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "samplesAllocatedBytes": [
+        1559990,
+        1559990,
+        1559990,
+        1559990,
+        1559990
+      ],
+      "samplesAllocationCalls": [
+        3817,
+        3817,
+        3817,
+        3817,
+        3817
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "depth": 192,
+      "phase": "render",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        0.160964712,
+        0.1673477,
+        0.16873757142857143,
+        0.15384274809160303,
+        0.15761788976377955
+      ],
+      "batchIterations": [
+        125,
+        120,
+        119,
+        131,
+        127
+      ],
+      "samplesAllocatedBytes": [
+        686901,
+        686901,
+        686901,
+        686901,
+        686901
+      ],
+      "samplesAllocationCalls": [
+        404,
+        404,
+        404,
+        404,
+        404
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "depth": 192,
+      "phase": "html",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        5.072820500000001,
+        5.169469250000001,
+        5.30481125,
+        5.41059475,
+        5.35197325
+      ],
+      "batchIterations": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "samplesAllocatedBytes": [
+        2156588,
+        2156588,
+        2156588,
+        2156588,
+        2156588
+      ],
+      "samplesAllocationCalls": [
+        3829,
+        3829,
+        3829,
+        3829,
+        3829
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 48,
+      "samplesMs": [
+        0.8028228799999999,
+        0.805063,
+        0.8064930800000001,
+        0.8595222083333334,
+        0.7965606923076923
+      ],
+      "samplesCpuMs": [
+        0.8018799999999999,
+        0.8039999999999998,
+        0.8055999999999994,
+        0.8597916666666686,
+        0.7961923076923085
+      ],
+      "batchIterations": [
+        25,
+        26,
+        25,
+        24,
+        26
+      ],
+      "samplesPeakManagedBytes": [
+        388480,
+        388480,
+        388480,
+        388480,
+        388480
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 96,
+      "samplesMs": [
+        1.9538803636363637,
+        1.9753939090909092,
+        2.0911801,
+        1.9695829090909092,
+        2.0074560000000004
+      ],
+      "samplesCpuMs": [
+        1.9544545454545477,
+        1.9758181818181852,
+        2.0916999999999915,
+        1.9701818181818205,
+        2.008300000000008
+      ],
+      "batchIterations": [
+        11,
+        11,
+        10,
+        11,
+        10
+      ],
+      "samplesPeakManagedBytes": [
+        778208,
+        778208,
+        778208,
+        778208,
+        778208
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 192,
+      "samplesMs": [
+        6.066771,
+        5.9996935,
+        6.64162025,
+        5.75331325,
+        5.46210475
+      ],
+      "samplesCpuMs": [
+        6.0692499999999825,
+        5.981750000000005,
+        6.633250000000004,
+        5.752499999999998,
+        5.456000000000017
+      ],
+      "batchIterations": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "samplesPeakManagedBytes": [
+        1835072,
+        1835072,
+        1835072,
+        1835072,
+        1835072
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "render",
+      "depth": 48,
+      "samplesMs": [
+        0.10383572538860104,
+        0.0992415693069307,
+        0.1021837806122449,
+        0.10120328787878788,
+        0.10113047474747475
+      ],
+      "samplesCpuMs": [
+        0.10337823834196891,
+        0.09925742574257418,
+        0.10220408163265297,
+        0.10122727272727276,
+        0.10108585858585852
+      ],
+      "batchIterations": [
+        193,
+        202,
+        196,
+        198,
+        198
+      ],
+      "samplesPeakManagedBytes": [
+        21936,
+        21936,
+        21936,
+        21936,
+        21936
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "render",
+      "depth": 96,
+      "samplesMs": [
+        0.19221738095238097,
+        0.19035391509433963,
+        0.1902277358490566,
+        0.19085020952380952,
+        0.18704808411214952
+      ],
+      "samplesCpuMs": [
+        0.19228571428571373,
+        0.1903867924528295,
+        0.19025471698113128,
+        0.19048571428571406,
+        0.18606542056074865
+      ],
+      "batchIterations": [
+        105,
+        106,
+        106,
+        105,
+        107
+      ],
+      "samplesPeakManagedBytes": [
+        64048,
+        64048,
+        64048,
+        64048,
+        64048
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "render",
+      "depth": 192,
+      "samplesMs": [
+        0.3936219607843137,
+        0.4103847959183673,
+        0.3899818846153846,
+        0.36900961818181816,
+        0.36432110714285715
+      ],
+      "samplesCpuMs": [
+        0.39347058823529424,
+        0.4102040816326512,
+        0.3892115384615391,
+        0.3674363636363627,
+        0.3631607142857141
+      ],
+      "batchIterations": [
+        51,
+        49,
+        52,
+        55,
+        56
+      ],
+      "samplesPeakManagedBytes": [
+        199472,
+        199472,
+        199472,
+        199472,
+        199472
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "html",
+      "depth": 48,
+      "samplesMs": [
+        0.9255219545454545,
+        0.8696951666666667,
+        0.9150083636363636,
+        0.9037273913043479,
+        0.8659138333333334
+      ],
+      "samplesCpuMs": [
+        0.9269999999999989,
+        0.8699166666666661,
+        0.9153636363636353,
+        0.9030000000000002,
+        0.8657916666666665
+      ],
+      "batchIterations": [
+        22,
+        24,
+        22,
+        23,
+        24
+      ],
+      "samplesPeakManagedBytes": [
+        388480,
+        388480,
+        388480,
+        388480,
+        388480
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "html",
+      "depth": 96,
+      "samplesMs": [
+        2.1345704000000003,
+        2.1828931000000003,
+        2.3637173333333332,
+        2.1809464,
+        2.2096077999999997
+      ],
+      "samplesCpuMs": [
+        2.135299999999995,
+        2.1833999999999945,
+        2.3595555555555543,
+        2.181499999999994,
+        2.206599999999992
+      ],
+      "batchIterations": [
+        10,
+        10,
+        9,
+        10,
+        10
+      ],
+      "samplesPeakManagedBytes": [
+        778208,
+        778208,
+        778208,
+        778208,
+        778208
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "quote",
+      "phase": "html",
+      "depth": 192,
+      "samplesMs": [
+        6.424843,
+        6.8618863333333335,
+        6.53239975,
+        6.27914125,
+        6.475071
+      ],
+      "samplesCpuMs": [
+        6.426749999999998,
+        6.851333333333325,
+        6.533500000000004,
+        6.278749999999974,
+        6.472999999999985
+      ],
+      "batchIterations": [
+        4,
+        3,
+        4,
+        4,
+        4
+      ],
+      "samplesPeakManagedBytes": [
+        1835072,
+        1835072,
+        1835072,
+        1835072,
+        1835072
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "parse",
+      "depth": 48,
+      "samplesMs": [
+        3.4423798333333333,
+        3.700775666666667,
+        3.4437325,
+        3.4181505,
+        3.4693009999999997
+      ],
+      "samplesCpuMs": [
+        3.444999999999998,
+        3.7015000000000007,
+        3.4444999999999957,
+        3.4176666666666713,
+        3.462666666666659
+      ],
+      "batchIterations": [
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "samplesPeakManagedBytes": [
+        863872,
+        863872,
+        863872,
+        863872,
+        863872
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "parse",
+      "depth": 96,
+      "samplesMs": [
+        11.421644,
+        12.012776,
+        11.5117895,
+        11.4217435,
+        10.8167845
+      ],
+      "samplesCpuMs": [
+        11.426499999999976,
+        11.922000000000025,
+        11.500499999999988,
+        11.415500000000009,
+        10.797500000000014
+      ],
+      "batchIterations": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "samplesPeakManagedBytes": [
+        1729024,
+        1729024,
+        1729024,
+        1729024,
+        1729024
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "parse",
+      "depth": 192,
+      "samplesMs": [
+        42.135468,
+        40.198749,
+        41.50462,
+        42.528394,
+        39.975335
+      ],
+      "samplesCpuMs": [
+        42.11500000000001,
+        40.184999999999945,
+        41.509000000000015,
+        42.434999999999945,
+        39.807000000000244
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        3516864,
+        3567744,
+        3516864,
+        3567744,
+        3516864
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "render",
+      "depth": 48,
+      "samplesMs": [
+        0.6465004838709677,
+        0.6560414838709677,
+        0.6519601935483871,
+        0.7084362068965517,
+        0.7408166428571429
+      ],
+      "samplesCpuMs": [
+        0.6434193548387105,
+        0.6524193548387104,
+        0.6518387096774192,
+        0.7085172413793093,
+        0.7392142857142849
+      ],
+      "batchIterations": [
+        31,
+        31,
+        31,
+        29,
+        28
+      ],
+      "samplesPeakManagedBytes": [
+        266376,
+        266376,
+        266376,
+        266376,
+        266376
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "render",
+      "depth": 96,
+      "samplesMs": [
+        4.7944016,
+        4.7370848,
+        4.6264128,
+        4.7730572,
+        4.7440082
+      ],
+      "samplesCpuMs": [
+        4.795399999999995,
+        4.737799999999993,
+        4.627200000000016,
+        4.774000000000001,
+        4.7450000000000045
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "samplesPeakManagedBytes": [
+        533000,
+        533000,
+        533000,
+        533000,
+        533000
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "render",
+      "depth": 192,
+      "samplesMs": [
+        33.08154,
+        32.257936,
+        31.114845,
+        31.99119,
+        30.191852
+      ],
+      "samplesCpuMs": [
+        33.039999999999964,
+        32.23900000000003,
+        31.09699999999998,
+        31.968000000000075,
+        30.195999999999913
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        1081160,
+        1081160,
+        1081160,
+        1081160,
+        1081160
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "html",
+      "depth": 48,
+      "samplesMs": [
+        4.352827,
+        4.2524182,
+        4.5191086,
+        4.588162,
+        4.3367384
+      ],
+      "samplesCpuMs": [
+        4.354399999999998,
+        4.253600000000006,
+        4.519800000000009,
+        4.58900000000001,
+        4.337400000000002
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "samplesPeakManagedBytes": [
+        863872,
+        863872,
+        863872,
+        863872,
+        863872
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "html",
+      "depth": 96,
+      "samplesMs": [
+        16.894742,
+        17.477103,
+        16.671443,
+        15.9448475,
+        16.0741535
+      ],
+      "samplesCpuMs": [
+        16.900999999999954,
+        17.478999999999985,
+        16.674000000000035,
+        15.946500000000015,
+        16.071000000000026
+      ],
+      "batchIterations": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "samplesPeakManagedBytes": [
+        1729024,
+        1729024,
+        1729024,
+        1729024,
+        1729024
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 0,
+      "family": "list",
+      "phase": "html",
+      "depth": 192,
+      "samplesMs": [
+        75.398746,
+        76.277776,
+        73.117984,
+        77.076061,
+        71.416062
+      ],
+      "samplesCpuMs": [
+        75.39999999999986,
+        76.07600000000002,
+        72.97000000000003,
+        77.05699999999979,
+        71.40499999999997
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        3516864,
+        3567744,
+        3516864,
+        3567744,
+        3516864
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "depth": 48,
+      "phase": "parse",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.04477093288590605,
+        0.044323203539823004,
+        0.04432528539823009,
+        0.043471973969631234,
+        0.04331475108225108
+      ],
+      "batchIterations": [
+        447,
+        452,
+        452,
+        461,
+        462
+      ],
+      "samplesAllocatedBytes": [
+        161186,
+        161186,
+        161186,
+        161186,
+        161186
+      ],
+      "samplesAllocationCalls": [
+        559,
+        559,
+        559,
+        559,
+        559
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "depth": 48,
+      "phase": "render",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.008202177941779416,
+        0.007890179881656805,
+        0.007777305598755833,
+        0.00785083202511774,
+        0.007404220947446335
+      ],
+      "batchIterations": [
+        2439,
+        2535,
+        2572,
+        2548,
+        2702
+      ],
+      "samplesAllocatedBytes": [
+        33373,
+        33373,
+        33373,
+        33373,
+        33373
+      ],
+      "samplesAllocationCalls": [
+        64,
+        64,
+        64,
+        64,
+        64
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "depth": 48,
+      "phase": "html",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.04312342672413793,
+        0.04472811383928572,
+        0.044187779249448125,
+        0.043452281995661604,
+        0.04269733475479744
+      ],
+      "batchIterations": [
+        464,
+        448,
+        453,
+        461,
+        469
+      ],
+      "samplesAllocatedBytes": [
+        180576,
+        180576,
+        180576,
+        180576,
+        180576
+      ],
+      "samplesAllocationCalls": [
+        567,
+        567,
+        567,
+        567,
+        567
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "depth": 96,
+      "phase": "parse",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.12759990445859873,
+        0.0935383878504673,
+        0.0932647488372093,
+        0.09015143243243244,
+        0.09218350230414746
+      ],
+      "batchIterations": [
+        157,
+        214,
+        215,
+        222,
+        217
+      ],
+      "samplesAllocatedBytes": [
+        328402,
+        328402,
+        328402,
+        328402,
+        328402
+      ],
+      "samplesAllocationCalls": [
+        1088,
+        1088,
+        1088,
+        1088,
+        1088
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "depth": 96,
+      "phase": "render",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.018836487758945388,
+        0.019929492031872508,
+        0.01905312761904762,
+        0.018844488700564974,
+        0.018381493112947657
+      ],
+      "batchIterations": [
+        1062,
+        1004,
+        1050,
+        1062,
+        1089
+      ],
+      "samplesAllocatedBytes": [
+        102733,
+        102733,
+        102733,
+        102733,
+        102733
+      ],
+      "samplesAllocationCalls": [
+        113,
+        113,
+        113,
+        113,
+        113
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "depth": 96,
+      "phase": "html",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.11392493181818182,
+        0.15210969696969695,
+        0.167928825,
+        0.17522938260869567,
+        0.17182553846153845
+      ],
+      "batchIterations": [
+        176,
+        132,
+        120,
+        115,
+        117
+      ],
+      "samplesAllocatedBytes": [
+        404000,
+        404000,
+        404000,
+        404000,
+        404000
+      ],
+      "samplesAllocationCalls": [
+        1097,
+        1097,
+        1097,
+        1097,
+        1097
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "depth": 192,
+      "phase": "parse",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        0.24438398780487805,
+        0.24202468674698796,
+        0.24611287804878051,
+        0.27105408108108103,
+        0.24955972839506171
+      ],
+      "batchIterations": [
+        82,
+        83,
+        82,
+        74,
+        81
+      ],
+      "samplesAllocatedBytes": [
+        690482,
+        690482,
+        690482,
+        690482,
+        690482
+      ],
+      "samplesAllocationCalls": [
+        2145,
+        2145,
+        2145,
+        2145,
+        2145
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "depth": 192,
+      "phase": "render",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        0.06430163461538461,
+        0.06643289438943895,
+        0.06758138175675676,
+        0.06868286643835617,
+        0.08311273443983402
+      ],
+      "batchIterations": [
+        312,
+        303,
+        296,
+        292,
+        241
+      ],
+      "samplesAllocatedBytes": [
+        352045,
+        352045,
+        352045,
+        352045,
+        352045
+      ],
+      "samplesAllocationCalls": [
+        210,
+        210,
+        210,
+        210,
+        210
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "depth": 192,
+      "phase": "html",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        0.38217275471698114,
+        0.38496453846153844,
+        0.359721875,
+        0.34451542372881355,
+        0.37982566037735854
+      ],
+      "batchIterations": [
+        53,
+        52,
+        56,
+        59,
+        53
+      ],
+      "samplesAllocatedBytes": [
+        989088,
+        989088,
+        989088,
+        989088,
+        989088
+      ],
+      "samplesAllocationCalls": [
+        2155,
+        2155,
+        2155,
+        2155,
+        2155
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "depth": 48,
+      "phase": "parse",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.33072083606557373,
+        0.3405207288135593,
+        0.3274263064516129,
+        0.3454470517241379,
+        0.32976803278688527
+      ],
+      "batchIterations": [
+        61,
+        59,
+        62,
+        58,
+        61
+      ],
+      "samplesAllocatedBytes": [
+        300358,
+        300358,
+        300358,
+        300358,
+        300358
+      ],
+      "samplesAllocationCalls": [
+        883,
+        883,
+        883,
+        883,
+        883
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "depth": 48,
+      "phase": "render",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.016496248969497116,
+        0.016612861295681066,
+        0.016223209245742092,
+        0.016562330298013246,
+        0.01715789279588336
+      ],
+      "batchIterations": [
+        1213,
+        1204,
+        1233,
+        1208,
+        1166
+      ],
+      "samplesAllocatedBytes": [
+        61797,
+        61797,
+        61797,
+        61797,
+        61797
+      ],
+      "samplesAllocationCalls": [
+        114,
+        114,
+        114,
+        114,
+        114
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "depth": 48,
+      "phase": "html",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.3568559298245614,
+        0.35095475862068964,
+        0.3405949322033898,
+        0.32996611475409837,
+        0.34029454237288137
+      ],
+      "batchIterations": [
+        57,
+        58,
+        59,
+        61,
+        59
+      ],
+      "samplesAllocatedBytes": [
+        338956,
+        338956,
+        338956,
+        338956,
+        338956
+      ],
+      "samplesAllocationCalls": [
+        893,
+        893,
+        893,
+        893,
+        893
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "depth": 96,
+      "phase": "parse",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        1.1210544444444444,
+        1.1190812222222222,
+        1.1800191176470587,
+        1.1450645,
+        1.2233496470588234
+      ],
+      "batchIterations": [
+        18,
+        18,
+        17,
+        18,
+        17
+      ],
+      "samplesAllocatedBytes": [
+        661014,
+        661014,
+        661014,
+        661014,
+        661014
+      ],
+      "samplesAllocationCalls": [
+        1830,
+        1830,
+        1830,
+        1830,
+        1830
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "depth": 96,
+      "phase": "render",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        0.04730889361702128,
+        0.04728755082742316,
+        0.04728599054373522,
+        0.04579797711670481,
+        0.046947866510538644
+      ],
+      "batchIterations": [
+        423,
+        423,
+        423,
+        437,
+        427
+      ],
+      "samplesAllocatedBytes": [
+        196437,
+        196437,
+        196437,
+        196437,
+        196437
+      ],
+      "samplesAllocationCalls": [
+        211,
+        211,
+        211,
+        211,
+        211
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "depth": 96,
+      "phase": "html",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        1.170579611111111,
+        1.1799253529411764,
+        1.1663721666666664,
+        1.156314222222222,
+        1.1559735555555557
+      ],
+      "batchIterations": [
+        18,
+        17,
+        18,
+        18,
+        18
+      ],
+      "samplesAllocatedBytes": [
+        811884,
+        811884,
+        811884,
+        811884,
+        811884
+      ],
+      "samplesAllocationCalls": [
+        1841,
+        1841,
+        1841,
+        1841,
+        1841
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "depth": 192,
+      "phase": "parse",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        4.2662756,
+        4.2557094,
+        4.2389296000000005,
+        4.2866344,
+        4.339663
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "samplesAllocatedBytes": [
+        1559990,
+        1559990,
+        1559990,
+        1559990,
+        1559990
+      ],
+      "samplesAllocationCalls": [
+        3817,
+        3817,
+        3817,
+        3817,
+        3817
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "depth": 192,
+      "phase": "render",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        0.1470216715328467,
+        0.14830065925925925,
+        0.14290415714285712,
+        0.14073572027972026,
+        0.1443363237410072
+      ],
+      "batchIterations": [
+        137,
+        135,
+        140,
+        143,
+        139
+      ],
+      "samplesAllocatedBytes": [
+        686901,
+        686901,
+        686901,
+        686901,
+        686901
+      ],
+      "samplesAllocationCalls": [
+        404,
+        404,
+        404,
+        404,
+        404
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "rs",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "depth": 192,
+      "phase": "html",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        4.486662000000001,
+        4.489205,
+        4.5196348,
+        4.6193,
+        4.5524812
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "samplesAllocatedBytes": [
+        2156588,
+        2156588,
+        2156588,
+        2156588,
+        2156588
+      ],
+      "samplesAllocationCalls": [
+        3829,
+        3829,
+        3829,
+        3829,
+        3829
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 48,
+      "samplesMs": [
+        0.7236767142857143,
+        0.7454778518518518,
+        0.7649885925925927,
+        0.7506788518518519,
+        0.7490587037037038
+      ],
+      "samplesCpuMs": [
+        0.7240357142857151,
+        0.7457407407407404,
+        0.7651851851851861,
+        0.7508518518518528,
+        0.74925925925926
+      ],
+      "batchIterations": [
+        28,
+        27,
+        27,
+        27,
+        27
+      ],
+      "samplesPeakManagedBytes": [
+        388480,
+        388480,
+        388480,
+        388480,
+        388480
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 96,
+      "samplesMs": [
+        1.9473807272727273,
+        2.023256,
+        2.1025146,
+        2.003112909090909,
+        2.2720645
+      ],
+      "samplesCpuMs": [
+        1.9480909090909067,
+        2.024000000000001,
+        2.1019000000000005,
+        2.0031818181818255,
+        2.2727999999999953
+      ],
+      "batchIterations": [
+        11,
+        10,
+        10,
+        11,
+        10
+      ],
+      "samplesPeakManagedBytes": [
+        778208,
+        778208,
+        778208,
+        778208,
+        778208
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 192,
+      "samplesMs": [
+        5.80818925,
+        6.35698425,
+        5.99140475,
+        5.7528195,
+        7.712552333333334
+      ],
+      "samplesCpuMs": [
+        5.810500000000019,
+        6.358499999999992,
+        5.98275000000001,
+        5.752499999999998,
+        7.7113333333333385
+      ],
+      "batchIterations": [
+        4,
+        4,
+        4,
+        4,
+        3
+      ],
+      "samplesPeakManagedBytes": [
+        1835072,
+        1835072,
+        1835072,
+        1835072,
+        1835072
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "render",
+      "depth": 48,
+      "samplesMs": [
+        0.10133884848484849,
+        0.09547945238095239,
+        0.09966373134328357,
+        0.12961276774193548,
+        0.1356821081081081
+      ],
+      "samplesCpuMs": [
+        0.10136363636363632,
+        0.09534761904761889,
+        0.099686567164179,
+        0.1286709677419356,
+        0.13573648648648648
+      ],
+      "batchIterations": [
+        198,
+        210,
+        201,
+        155,
+        148
+      ],
+      "samplesPeakManagedBytes": [
+        21936,
+        21936,
+        21936,
+        21936,
+        21936
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "render",
+      "depth": 96,
+      "samplesMs": [
+        0.19752920588235293,
+        0.1840715504587156,
+        0.18911609433962265,
+        0.1879137476635514,
+        0.19223465714285715
+      ],
+      "samplesCpuMs": [
+        0.19747058823529465,
+        0.18400000000000036,
+        0.18916981132075383,
+        0.1879532710280373,
+        0.1922761904761912
+      ],
+      "batchIterations": [
+        102,
+        109,
+        106,
+        107,
+        105
+      ],
+      "samplesPeakManagedBytes": [
+        64048,
+        64048,
+        64048,
+        64048,
+        64048
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "render",
+      "depth": 192,
+      "samplesMs": [
+        0.3846585192307692,
+        0.368207,
+        0.3799031132075472,
+        0.38423056603773587,
+        0.4151601836734694
+      ],
+      "samplesCpuMs": [
+        0.3848269230769246,
+        0.36838181818181964,
+        0.3799999999999997,
+        0.3843018867924538,
+        0.4152653061224504
+      ],
+      "batchIterations": [
+        52,
+        55,
+        53,
+        53,
+        49
+      ],
+      "samplesPeakManagedBytes": [
+        199472,
+        199472,
+        199472,
+        199472,
+        199472
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "html",
+      "depth": 48,
+      "samplesMs": [
+        0.9145830454545454,
+        1.024803,
+        0.9646956666666666,
+        0.924164,
+        0.9657705238095238
+      ],
+      "samplesCpuMs": [
+        0.9150454545454533,
+        1.025,
+        0.9644761904761887,
+        0.9243636363636344,
+        0.9660000000000001
+      ],
+      "batchIterations": [
+        22,
+        20,
+        21,
+        22,
+        21
+      ],
+      "samplesPeakManagedBytes": [
+        388480,
+        388480,
+        388480,
+        388480,
+        388480
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "html",
+      "depth": 96,
+      "samplesMs": [
+        2.256868888888889,
+        2.4085045555555555,
+        2.047024,
+        2.1199084,
+        2.1754089
+      ],
+      "samplesCpuMs": [
+        2.2578888888888917,
+        2.4090000000000042,
+        2.0447999999999977,
+        2.120399999999995,
+        2.1759000000000013
+      ],
+      "batchIterations": [
+        9,
+        9,
+        10,
+        10,
+        10
+      ],
+      "samplesPeakManagedBytes": [
+        778208,
+        778208,
+        778208,
+        778208,
+        778208
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "quote",
+      "phase": "html",
+      "depth": 192,
+      "samplesMs": [
+        6.615502,
+        7.303815666666666,
+        6.57246275,
+        7.732840666666667,
+        6.859572
+      ],
+      "samplesCpuMs": [
+        6.617999999999995,
+        7.305666666666639,
+        6.573750000000018,
+        7.734666666666688,
+        6.861666666666641
+      ],
+      "batchIterations": [
+        4,
+        3,
+        4,
+        3,
+        3
+      ],
+      "samplesPeakManagedBytes": [
+        1835072,
+        1835072,
+        1835072,
+        1835072,
+        1835072
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "parse",
+      "depth": 48,
+      "samplesMs": [
+        3.518644666666667,
+        3.3739933333333334,
+        3.372609,
+        3.548868666666667,
+        3.306345428571429
+      ],
+      "samplesCpuMs": [
+        3.518500000000003,
+        3.375333333333335,
+        3.3734999999999977,
+        3.5464999999999995,
+        3.307142857142854
+      ],
+      "batchIterations": [
+        6,
+        6,
+        6,
+        6,
+        7
+      ],
+      "samplesPeakManagedBytes": [
+        863872,
+        863872,
+        863872,
+        863872,
+        863872
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "parse",
+      "depth": 96,
+      "samplesMs": [
+        11.0272135,
+        10.7293535,
+        10.9238025,
+        10.4523425,
+        10.966684
+      ],
+      "samplesCpuMs": [
+        11.002499999999998,
+        10.731499999999983,
+        10.915500000000009,
+        10.451000000000022,
+        10.968499999999949
+      ],
+      "batchIterations": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "samplesPeakManagedBytes": [
+        1729024,
+        1729024,
+        1729024,
+        1729024,
+        1729024
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "parse",
+      "depth": 192,
+      "samplesMs": [
+        38.553756,
+        39.831592,
+        41.332112,
+        41.365174,
+        39.648055
+      ],
+      "samplesCpuMs": [
+        38.52300000000014,
+        39.83600000000001,
+        41.33600000000001,
+        41.355999999999995,
+        39.651999999999816
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        3516864,
+        3567744,
+        3516864,
+        3567744,
+        3516864
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "render",
+      "depth": 48,
+      "samplesMs": [
+        0.6630897419354839,
+        0.6801177333333333,
+        0.6676407,
+        0.6668812666666667,
+        0.6603567741935484
+      ],
+      "samplesCpuMs": [
+        0.6618387096774183,
+        0.6783999999999992,
+        0.6649999999999996,
+        0.6657999999999996,
+        0.6599354838709668
+      ],
+      "batchIterations": [
+        31,
+        30,
+        30,
+        30,
+        31
+      ],
+      "samplesPeakManagedBytes": [
+        266376,
+        266376,
+        266376,
+        266376,
+        266376
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "render",
+      "depth": 96,
+      "samplesMs": [
+        4.3910756,
+        4.422319,
+        4.3588484,
+        4.3187344,
+        4.3434192000000005
+      ],
+      "samplesCpuMs": [
+        4.390800000000013,
+        4.423000000000002,
+        4.3596,
+        4.319399999999996,
+        4.344200000000001
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "samplesPeakManagedBytes": [
+        533000,
+        533000,
+        533000,
+        533000,
+        533000
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "render",
+      "depth": 192,
+      "samplesMs": [
+        29.911596,
+        28.840952,
+        28.998311,
+        29.84581,
+        29.109072
+      ],
+      "samplesCpuMs": [
+        29.87999999999988,
+        28.802999999999884,
+        28.922000000000025,
+        29.764999999999873,
+        29.076000000000022
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        1081160,
+        1081160,
+        1081160,
+        1081160,
+        1081160
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "html",
+      "depth": 48,
+      "samplesMs": [
+        4.1388546,
+        4.1550014,
+        4.5960868,
+        3.9199311666666667,
+        3.9831228333333333
+      ],
+      "samplesCpuMs": [
+        4.129199999999997,
+        4.144599999999992,
+        4.587400000000002,
+        3.917999999999997,
+        3.984333333333334
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        6,
+        6
+      ],
+      "samplesPeakManagedBytes": [
+        863872,
+        863872,
+        863872,
+        863872,
+        863872
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "html",
+      "depth": 96,
+      "samplesMs": [
+        15.4408485,
+        16.10789,
+        16.3151385,
+        16.3741555,
+        16.459818
+      ],
+      "samplesCpuMs": [
+        15.445499999999981,
+        16.101499999999987,
+        16.309500000000014,
+        16.375999999999976,
+        16.41749999999996
+      ],
+      "batchIterations": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "samplesPeakManagedBytes": [
+        1729024,
+        1729024,
+        1729024,
+        1729024,
+        1729024
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "current",
+      "round": 1,
+      "family": "list",
+      "phase": "html",
+      "depth": 192,
+      "samplesMs": [
+        69.332473,
+        66.700676,
+        70.637399,
+        68.329797,
+        65.552205
+      ],
+      "samplesCpuMs": [
+        69.30099999999993,
+        66.67599999999993,
+        70.57700000000023,
+        68.27200000000016,
+        65.548
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        3516864,
+        3567744,
+        3516864,
+        3567744,
+        3516864
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "depth": 48,
+      "phase": "parse",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.035247169014084506,
+        0.035169518453427064,
+        0.035555962699822384,
+        0.035079019264448334,
+        0.035095194736842104
+      ],
+      "batchIterations": [
+        568,
+        569,
+        563,
+        571,
+        570
+      ],
+      "samplesAllocatedBytes": [
+        161185,
+        161185,
+        161185,
+        161185,
+        161185
+      ],
+      "samplesAllocationCalls": [
+        558,
+        558,
+        558,
+        558,
+        558
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "depth": 48,
+      "phase": "render",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.016841049663299662,
+        0.01689725168918919,
+        0.016842761784511787,
+        0.01705472549019608,
+        0.01736661892361111
+      ],
+      "batchIterations": [
+        1188,
+        1184,
+        1188,
+        1173,
+        1152
+      ],
+      "samplesAllocatedBytes": [
+        543368,
+        543368,
+        543368,
+        543368,
+        543368
+      ],
+      "samplesAllocationCalls": [
+        400,
+        400,
+        400,
+        400,
+        400
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "depth": 48,
+      "phase": "html",
+      "inputBytes": 100,
+      "htmlBytes": 5722,
+      "samplesMs": [
+        0.04851164648910412,
+        0.04936313300492611,
+        0.04841680434782609,
+        0.05070472405063291,
+        0.04413540528634361
+      ],
+      "batchIterations": [
+        413,
+        406,
+        414,
+        395,
+        454
+      ],
+      "samplesAllocatedBytes": [
+        690570,
+        690570,
+        690570,
+        690570,
+        690570
+      ],
+      "samplesAllocationCalls": [
+        902,
+        902,
+        902,
+        902,
+        902
+      ],
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "htmlSha256": "06a4b598b4fbf84adbb975c709328bf7a0383cfb553fd463dbcbb10401bc7d37"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "depth": 96,
+      "phase": "parse",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.07970024701195219,
+        0.08058730522088353,
+        0.078059140077821,
+        0.07856744705882353,
+        0.0806483629032258
+      ],
+      "batchIterations": [
+        251,
+        249,
+        257,
+        255,
+        248
+      ],
+      "samplesAllocatedBytes": [
+        328401,
+        328401,
+        328401,
+        328401,
+        328401
+      ],
+      "samplesAllocationCalls": [
+        1087,
+        1087,
+        1087,
+        1087,
+        1087
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "depth": 96,
+      "phase": "render",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.06402658146964857,
+        0.06352143174603174,
+        0.06496399350649351,
+        0.06631209602649006,
+        0.06456507096774193
+      ],
+      "batchIterations": [
+        313,
+        315,
+        308,
+        302,
+        310
+      ],
+      "samplesAllocatedBytes": [
+        3898752,
+        3898752,
+        3898752,
+        3898752,
+        3898752
+      ],
+      "samplesAllocationCalls": [
+        869,
+        869,
+        869,
+        869,
+        869
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "depth": 96,
+      "phase": "html",
+      "inputBytes": 196,
+      "htmlBytes": 20650,
+      "samplesMs": [
+        0.15685061718749999,
+        0.1426740780141844,
+        0.14471742446043165,
+        0.1431432142857143,
+        0.15207342424242426
+      ],
+      "batchIterations": [
+        128,
+        141,
+        139,
+        140,
+        132
+      ],
+      "samplesAllocatedBytes": [
+        4200018,
+        4200018,
+        4200018,
+        4200018,
+        4200018
+      ],
+      "samplesAllocationCalls": [
+        1852,
+        1852,
+        1852,
+        1852,
+        1852
+      ],
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "htmlSha256": "cdf7a1735afee4d4f3cf6b9c48cb2392ef5061d53b9637289e26bdfedde99a7a"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "depth": 192,
+      "phase": "parse",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        0.1815453063063063,
+        0.18679122222222222,
+        0.17944775,
+        0.1858910740740741,
+        0.18195844144144144
+      ],
+      "batchIterations": [
+        111,
+        108,
+        112,
+        108,
+        111
+      ],
+      "samplesAllocatedBytes": [
+        690481,
+        690481,
+        690481,
+        690481,
+        690481
+      ],
+      "samplesAllocationCalls": [
+        2144,
+        2144,
+        2144,
+        2144,
+        2144
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "depth": 192,
+      "phase": "render",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        0.3689147818181818,
+        0.36445414545454546,
+        0.3749225740740741,
+        0.37837707547169813,
+        0.37601427777777774
+      ],
+      "batchIterations": [
+        55,
+        55,
+        54,
+        53,
+        54
+      ],
+      "samplesAllocatedBytes": [
+        29665904,
+        29665904,
+        29665904,
+        29665904,
+        29665904
+      ],
+      "samplesAllocationCalls": [
+        1899,
+        1899,
+        1899,
+        1899,
+        1899
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "depth": 192,
+      "phase": "html",
+      "inputBytes": 388,
+      "htmlBytes": 78154,
+      "samplesMs": [
+        0.7568187407407407,
+        0.7540193703703703,
+        0.7707221153846154,
+        0.7923119615384616,
+        0.7637437407407407
+      ],
+      "batchIterations": [
+        27,
+        27,
+        26,
+        26,
+        27
+      ],
+      "samplesAllocatedBytes": [
+        30302946,
+        30302946,
+        30302946,
+        30302946,
+        30302946
+      ],
+      "samplesAllocationCalls": [
+        3843,
+        3843,
+        3843,
+        3843,
+        3843
+      ],
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "htmlSha256": "634e3c67a32344395ba0137aa4c908d746eaba5e98b10000d054a2b04123440b"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "depth": 48,
+      "phase": "parse",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.30811373846153844,
+        0.3085481076923077,
+        0.30868898461538463,
+        0.31265328124999997,
+        0.31039452307692306
+      ],
+      "batchIterations": [
+        65,
+        65,
+        65,
+        64,
+        65
+      ],
+      "samplesAllocatedBytes": [
+        300357,
+        300357,
+        300357,
+        300357,
+        300357
+      ],
+      "samplesAllocationCalls": [
+        882,
+        882,
+        882,
+        882,
+        882
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "depth": 48,
+      "phase": "render",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.015984596645367413,
+        0.01605971187800963,
+        0.016022839071257004,
+        0.0160117992,
+        0.016352181372549016
+      ],
+      "batchIterations": [
+        1252,
+        1246,
+        1249,
+        1250,
+        1224
+      ],
+      "samplesAllocatedBytes": [
+        61903,
+        61903,
+        61903,
+        61903,
+        61903
+      ],
+      "samplesAllocationCalls": [
+        119,
+        119,
+        119,
+        119,
+        119
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "depth": 48,
+      "phase": "html",
+      "inputBytes": 100,
+      "htmlBytes": 19107,
+      "samplesMs": [
+        0.314111203125,
+        0.3115926615384615,
+        0.3229433064516129,
+        0.3205296507936508,
+        0.32222955555555555
+      ],
+      "batchIterations": [
+        64,
+        65,
+        62,
+        63,
+        63
+      ],
+      "samplesAllocatedBytes": [
+        339061,
+        339061,
+        339061,
+        339061,
+        339061
+      ],
+      "samplesAllocationCalls": [
+        897,
+        897,
+        897,
+        897,
+        897
+      ],
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "htmlSha256": "12e6ffc645d1fecce2e3538ac3838ad65d0d64687c123d1fc4200895c9eefae1"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "depth": 96,
+      "phase": "parse",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        1.1052953157894736,
+        1.1091225789473682,
+        1.094286,
+        1.0976913684210525,
+        1.0830646842105263
+      ],
+      "batchIterations": [
+        19,
+        19,
+        19,
+        19,
+        19
+      ],
+      "samplesAllocatedBytes": [
+        661013,
+        661013,
+        661013,
+        661013,
+        661013
+      ],
+      "samplesAllocationCalls": [
+        1829,
+        1829,
+        1829,
+        1829,
+        1829
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "depth": 96,
+      "phase": "render",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        0.04736202127659575,
+        0.047342125295508276,
+        0.04751669596199525,
+        0.046904435597189695,
+        0.046806598130841114
+      ],
+      "batchIterations": [
+        423,
+        423,
+        421,
+        427,
+        428
+      ],
+      "samplesAllocatedBytes": [
+        196543,
+        196543,
+        196543,
+        196543,
+        196543
+      ],
+      "samplesAllocationCalls": [
+        216,
+        216,
+        216,
+        216,
+        216
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "depth": 96,
+      "phase": "html",
+      "inputBytes": 196,
+      "htmlBytes": 75075,
+      "samplesMs": [
+        1.1803915882352942,
+        1.1478853888888887,
+        1.1576054999999998,
+        1.178973,
+        1.1758267777777778
+      ],
+      "batchIterations": [
+        17,
+        18,
+        18,
+        17,
+        18
+      ],
+      "samplesAllocatedBytes": [
+        811989,
+        811989,
+        811989,
+        811989,
+        811989
+      ],
+      "samplesAllocationCalls": [
+        1845,
+        1845,
+        1845,
+        1845,
+        1845
+      ],
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "htmlSha256": "d6a94a489e34d5e38a795ce68c77cd7e9bc007ba22fd4b37a8acef90582572b8"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "depth": 192,
+      "phase": "parse",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        4.4820052,
+        5.06935675,
+        5.39959875,
+        7.220067333333333,
+        5.980464
+      ],
+      "batchIterations": [
+        5,
+        4,
+        4,
+        3,
+        4
+      ],
+      "samplesAllocatedBytes": [
+        1559989,
+        1559989,
+        1559989,
+        1559989,
+        1559989
+      ],
+      "samplesAllocationCalls": [
+        3816,
+        3816,
+        3816,
+        3816,
+        3816
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "depth": 192,
+      "phase": "render",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        0.1582435748031496,
+        0.16834094957983195,
+        0.160875424,
+        0.16531865289256198,
+        0.1795255625
+      ],
+      "batchIterations": [
+        127,
+        119,
+        125,
+        121,
+        112
+      ],
+      "samplesAllocatedBytes": [
+        687007,
+        687007,
+        687007,
+        687007,
+        687007
+      ],
+      "samplesAllocationCalls": [
+        409,
+        409,
+        409,
+        409,
+        409
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "rs",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "depth": 192,
+      "phase": "html",
+      "inputBytes": 388,
+      "htmlBytes": 297603,
+      "samplesMs": [
+        4.682594,
+        4.6647862,
+        4.6798288,
+        4.6419468,
+        4.96924
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "samplesAllocatedBytes": [
+        2156693,
+        2156693,
+        2156693,
+        2156693,
+        2156693
+      ],
+      "samplesAllocationCalls": [
+        3833,
+        3833,
+        3833,
+        3833,
+        3833
+      ],
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "htmlSha256": "2fdf2b55ba4b3a3a38efc39fe7ebb2e73ba1308ecc536b002944c85842c76053"
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 48,
+      "samplesMs": [
+        0.6683201000000001,
+        0.6666703333333334,
+        0.6511226129032258,
+        0.6489623548387097,
+        0.64004853125
+      ],
+      "samplesCpuMs": [
+        0.6682666666666667,
+        0.6667999999999997,
+        0.6512580645161279,
+        0.6483870967741943,
+        0.6355312499999997
+      ],
+      "batchIterations": [
+        30,
+        30,
+        31,
+        31,
+        32
+      ],
+      "samplesPeakManagedBytes": [
+        406512,
+        406512,
+        406512,
+        406512,
+        406512
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 96,
+      "samplesMs": [
+        1.6817444166666666,
+        1.6973231666666668,
+        1.6899853076923077,
+        1.5787564615384615,
+        1.6210991538461539
+      ],
+      "samplesCpuMs": [
+        1.682250000000001,
+        1.6963333333333328,
+        1.6903846153846085,
+        1.5786153846153883,
+        1.6214615384615434
+      ],
+      "batchIterations": [
+        12,
+        12,
+        13,
+        13,
+        13
+      ],
+      "samplesPeakManagedBytes": [
+        813904,
+        813904,
+        813904,
+        813904,
+        813904
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "parse",
+      "depth": 192,
+      "samplesMs": [
+        4.7109955999999995,
+        4.8583894,
+        4.9526944,
+        4.7558488,
+        4.6163218
+      ],
+      "samplesCpuMs": [
+        4.697199999999998,
+        4.8557999999999995,
+        4.951599999999985,
+        4.7488000000000055,
+        4.6156000000000175
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "samplesPeakManagedBytes": [
+        1643952,
+        1643952,
+        1643952,
+        1643952,
+        1643952
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "render",
+      "depth": 48,
+      "samplesMs": [
+        0.19242492307692308,
+        0.19168657142857143,
+        0.19280410576923077,
+        0.19176758095238094,
+        0.19080985714285714
+      ],
+      "samplesCpuMs": [
+        0.19252884615384638,
+        0.19172380952380927,
+        0.19283653846153853,
+        0.19180000000000008,
+        0.19083809523809533
+      ],
+      "batchIterations": [
+        104,
+        105,
+        104,
+        105,
+        105
+      ],
+      "samplesPeakManagedBytes": [
+        34584,
+        34584,
+        34584,
+        34584,
+        34584
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "render",
+      "depth": 96,
+      "samplesMs": [
+        0.6565984516129033,
+        0.6583896129032257,
+        0.6608574838709677,
+        0.6561527419354838,
+        0.6616070000000001
+      ],
+      "samplesCpuMs": [
+        0.6565806451612917,
+        0.6584838709677423,
+        0.6610322580645149,
+        0.6562258064516117,
+        0.6617096774193559
+      ],
+      "batchIterations": [
+        31,
+        31,
+        31,
+        31,
+        31
+      ],
+      "samplesPeakManagedBytes": [
+        91592,
+        91592,
+        91592,
+        91592,
+        91592
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "render",
+      "depth": 192,
+      "samplesMs": [
+        4.7000346,
+        4.8161312,
+        4.608978,
+        4.5723142,
+        4.5601894000000005
+      ],
+      "samplesCpuMs": [
+        4.701800000000003,
+        4.8173999999999975,
+        4.610000000000014,
+        4.573000000000002,
+        4.558999999999992
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "samplesPeakManagedBytes": [
+        320968,
+        320968,
+        320968,
+        320968,
+        320968
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "html",
+      "depth": 48,
+      "samplesMs": [
+        0.9481126363636364,
+        0.991253238095238,
+        0.968320619047619,
+        0.9285313636363636,
+        0.8766084782608696
+      ],
+      "samplesCpuMs": [
+        0.948590909090909,
+        0.9904761904761911,
+        0.9665714285714286,
+        0.9284090909090914,
+        0.8758695652173906
+      ],
+      "batchIterations": [
+        22,
+        21,
+        21,
+        22,
+        23
+      ],
+      "samplesPeakManagedBytes": [
+        406512,
+        406512,
+        406512,
+        406512,
+        406512
+      ],
+      "htmlBytes": 5723,
+      "htmlSha256": "afc141c70693ee8c16edf884137b204c29732aa46d9009e2f9afb7d96a34dc02",
+      "inputSha256": "4b82e6cf28881cdbbb8b45286606619b30baf41122d9daa00072c7fe87a41fe2",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "html",
+      "depth": 96,
+      "samplesMs": [
+        2.5393495,
+        2.5953495,
+        2.555456375,
+        2.473164,
+        2.51942175
+      ],
+      "samplesCpuMs": [
+        2.5318749999999994,
+        2.5896250000000123,
+        2.5500000000000114,
+        2.4668888888888887,
+        2.5130000000000052
+      ],
+      "batchIterations": [
+        8,
+        8,
+        8,
+        9,
+        8
+      ],
+      "samplesPeakManagedBytes": [
+        813904,
+        813904,
+        813904,
+        813904,
+        813904
+      ],
+      "htmlBytes": 20651,
+      "htmlSha256": "d98bcba83164bab2e99177b4a346ecc7da73de9da4ab5033c3fc4d8117f042a1",
+      "inputSha256": "813ca022d6b9f3fe05f08863b0b13f92e45030234175e4ea30fbef4f8c09e8f4",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "quote",
+      "phase": "html",
+      "depth": 192,
+      "samplesMs": [
+        10.2088405,
+        10.1581245,
+        10.594192,
+        10.268188,
+        10.331674
+      ],
+      "samplesCpuMs": [
+        10.173000000000002,
+        10.122000000000014,
+        10.524000000000001,
+        10.230500000000006,
+        10.295500000000004
+      ],
+      "batchIterations": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "samplesPeakManagedBytes": [
+        1643952,
+        1643952,
+        1643952,
+        1643952,
+        1643952
+      ],
+      "htmlBytes": 78155,
+      "htmlSha256": "ff14ce13a285fcac667bb21a0503842475bcb5db7e65b8c7f6ca4c8b11ef35c1",
+      "inputSha256": "546ddff402fe3151dc9c4a0a9059219bcbf4a4426c63d9ab136a05072365c95a",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "parse",
+      "depth": 48,
+      "samplesMs": [
+        3.4289326666666664,
+        3.541897,
+        3.737966,
+        3.5023553333333335,
+        3.280159857142857
+      ],
+      "samplesCpuMs": [
+        3.417999999999997,
+        3.529499999999994,
+        3.726166666666662,
+        3.4939999999999998,
+        3.273142857142862
+      ],
+      "batchIterations": [
+        6,
+        6,
+        6,
+        6,
+        7
+      ],
+      "samplesPeakManagedBytes": [
+        641680,
+        641680,
+        641680,
+        641680,
+        641680
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "parse",
+      "depth": 96,
+      "samplesMs": [
+        12.475268,
+        11.104936,
+        12.1944245,
+        12.5173775,
+        11.950381
+      ],
+      "samplesCpuMs": [
+        12.441500000000019,
+        11.079499999999996,
+        12.172500000000014,
+        12.490499999999997,
+        11.928999999999974
+      ],
+      "batchIterations": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "samplesPeakManagedBytes": [
+        1551472,
+        1551472,
+        1551472,
+        1551472,
+        1551472
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "parse",
+      "depth": 192,
+      "samplesMs": [
+        39.694904,
+        41.90505,
+        40.448285,
+        40.127586,
+        40.533045
+      ],
+      "samplesCpuMs": [
+        39.702999999999975,
+        41.90899999999988,
+        40.243999999999915,
+        40.04100000000017,
+        40.44900000000007
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        3401552,
+        3401552,
+        3401552,
+        3401552,
+        3401552
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "render",
+      "depth": 48,
+      "samplesMs": [
+        0.9540610952380952,
+        0.7295388571428572,
+        0.7449552962962963,
+        0.7402119642857142,
+        0.6920806896551724
+      ],
+      "samplesCpuMs": [
+        0.9545714285714282,
+        0.7297499999999998,
+        0.7451481481481492,
+        0.7403571428571415,
+        0.6915862068965531
+      ],
+      "batchIterations": [
+        21,
+        28,
+        27,
+        28,
+        29
+      ],
+      "samplesPeakManagedBytes": [
+        266376,
+        266376,
+        266376,
+        266376,
+        266376
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "render",
+      "depth": 96,
+      "samplesMs": [
+        4.5858814,
+        4.282654,
+        4.486981800000001,
+        4.3056214,
+        4.0612856
+      ],
+      "samplesCpuMs": [
+        4.582400000000007,
+        4.283399999999983,
+        4.473399999999993,
+        4.304599999999982,
+        4.061600000000022
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "samplesPeakManagedBytes": [
+        533464,
+        533464,
+        533464,
+        533464,
+        533464
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "render",
+      "depth": 192,
+      "samplesMs": [
+        29.713665,
+        30.69066,
+        28.890473,
+        27.752833,
+        28.145058
+      ],
+      "samplesCpuMs": [
+        29.701999999999998,
+        30.667999999999893,
+        28.87200000000007,
+        27.756999999999834,
+        28.14799999999991
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        1081160,
+        1081160,
+        1081160,
+        1081160,
+        1081160
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "html",
+      "depth": 48,
+      "samplesMs": [
+        4.4098812,
+        4.0860384000000005,
+        4.0372958,
+        3.854238,
+        3.8335255
+      ],
+      "samplesCpuMs": [
+        4.406799999999999,
+        4.081200000000001,
+        4.032600000000002,
+        3.8498333333333314,
+        3.8343333333333383
+      ],
+      "batchIterations": [
+        5,
+        5,
+        5,
+        6,
+        6
+      ],
+      "samplesPeakManagedBytes": [
+        641680,
+        641680,
+        641680,
+        641680,
+        641680
+      ],
+      "htmlBytes": 19108,
+      "htmlSha256": "902f929fadbb37e32bd4acd4d68b58e27119f78ab6db3d44da5c38ad3c9e7a22",
+      "inputSha256": "6fb0f72eb0445fe11edcfdb65708d5bd30969d5f316cf3d8a76b94c2f4788f0d",
+      "inputBytes": 100
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "html",
+      "depth": 96,
+      "samplesMs": [
+        17.260555,
+        17.1168525,
+        17.1506065,
+        16.1864215,
+        16.564674
+      ],
+      "samplesCpuMs": [
+        17.242999999999995,
+        17.033500000000004,
+        17.125500000000045,
+        16.162999999999954,
+        16.560500000000047
+      ],
+      "batchIterations": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "samplesPeakManagedBytes": [
+        1551472,
+        1551472,
+        1551472,
+        1551472,
+        1551472
+      ],
+      "htmlBytes": 75076,
+      "htmlSha256": "07492d9f3cb6d062504061a78202a9c99393581ac56db3bbe628762f24f55bb0",
+      "inputSha256": "576a14805b6f2c97cc184d9e1487491dac76d161e240407b711a96ea8954892d",
+      "inputBytes": 196
+    },
+    {
+      "reader": "php",
+      "variant": "baseline",
+      "round": 1,
+      "family": "list",
+      "phase": "html",
+      "depth": 192,
+      "samplesMs": [
+        69.023984,
+        67.597926,
+        65.819691,
+        70.614524,
+        71.420653
+      ],
+      "samplesCpuMs": [
+        68.94200000000001,
+        67.54999999999995,
+        65.78800000000001,
+        70.56700000000001,
+        71.42399999999998
+      ],
+      "batchIterations": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "samplesPeakManagedBytes": [
+        3401552,
+        3401552,
+        3401552,
+        3401552,
+        3401552
+      ],
+      "htmlBytes": 297604,
+      "htmlSha256": "7acb243436e324e0864718bd8e00b770677763b4913db281e6d91cf9f7e1cf9b",
+      "inputSha256": "7b2e83ce7399600d77f919e5c0084373d85d3f238d111427fc0bc314f1c86b5e",
+      "inputBytes": 388
+    }
+  ]
+}

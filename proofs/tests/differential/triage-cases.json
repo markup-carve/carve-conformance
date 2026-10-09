@@ -1,0 +1,72 @@
+[
+  {
+    "id": "escaped-reference-close",
+    "source": "[x][a\\]b]",
+    "family": "escaped-reference-close",
+    "jsCurrent": "<p><a>x</a></p>\n",
+    "ocaml": "<p><a>x</a>b]</p>\n"
+  },
+  {
+    "id": "escaped-reference-minimal",
+    "source": "[x][\\]]",
+    "family": "escaped-reference-close",
+    "jsCurrent": "<p><a>x</a></p>\n",
+    "ocaml": "<p><a>x</a>]</p>\n"
+  },
+  {
+    "id": "unescaped-reference-control",
+    "source": "[x][a]b]",
+    "family": null,
+    "jsCurrent": "<p><a>x</a>b]</p>\n",
+    "ocaml": "<p><a>x</a>b]</p>\n"
+  },
+  {
+    "id": "even-backslash-control",
+    "source": "[x][a\\\\]b]",
+    "family": null,
+    "jsCurrent": "<p><a>x</a>b]</p>\n",
+    "ocaml": "<p><a>x</a>b]</p>\n"
+  },
+  {
+    "id": "unresolved-image",
+    "source": "![x][r]",
+    "family": "unresolved-image-alt",
+    "jsCurrent": "<p><img></p>\n",
+    "ocaml": "<p><img alt=\"x\"></p>\n"
+  },
+  {
+    "id": "resolved-image-control",
+    "source": "![x][r]\n\n[r]: /u\n",
+    "family": null,
+    "jsCurrent": "<p><img alt=\"x\" src=\"/u\"></p>\n",
+    "ocaml": "<p><img alt=\"x\" src=\"/u\"></p>\n"
+  },
+  {
+    "id": "quote-recovery",
+    "source": "> {\n> a",
+    "family": "block-attribute-recovery",
+    "jsCurrent": "<blockquote>\n<p>{\n&gt; a</p>\n</blockquote>\n",
+    "ocaml": "<blockquote>\n<p>{\na</p>\n</blockquote>\n"
+  },
+  {
+    "id": "quote-balanced-control",
+    "source": "> {#x}\n> y",
+    "family": null,
+    "jsCurrent": "<blockquote>\n<p id=\"x\">y</p>\n</blockquote>\n",
+    "ocaml": "<blockquote>\n<p id=\"x\">y</p>\n</blockquote>\n"
+  },
+  {
+    "id": "smart-heading",
+    "source": "# \"",
+    "family": "smart-punctuation-id",
+    "jsCurrent": "<section id=\"&quot;\">\n<h1>“</h1>\n</section>\n",
+    "ocaml": "<section id=\"“\">\n<h1>“</h1>\n</section>\n"
+  },
+  {
+    "id": "escaped-heading-control",
+    "source": "# \\\"",
+    "family": null,
+    "jsCurrent": "<section id=\"&quot;\">\n<h1>\"</h1>\n</section>\n",
+    "ocaml": "<section id=\"&quot;\">\n<h1>\"</h1>\n</section>\n"
+  }
+]

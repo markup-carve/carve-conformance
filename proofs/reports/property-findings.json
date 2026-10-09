@@ -1,0 +1,290 @@
+{
+  "wrapping/code@11/js": {
+    "outcome": "different",
+    "leftHash": "0d355e90f163c9f510afd668cec54d909c07e0445f032f5f6cb374d87b2bd1c0",
+    "rightHash": "fc9f25952c1ba3ffbde79f56990207253956a41d714e11cb29979f7761143701",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/code@11/spec": {
+    "outcome": "different",
+    "leftHash": "86fb695859aea6e69e7922c0551ae87107088ae804f256e07d69915f31d8f8ae",
+    "rightHash": "255d9392150d6f6366b35a5e09f2885b35935bb5c7bc3374527e626086bf5b9d",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/heading@5/js": {
+    "outcome": "different",
+    "leftHash": "f1f535aa417981dc4e1a0e26b56a60a13c294d6dfd54a30dcfaa9f1062d9d15c",
+    "rightHash": "62362e2e956fb93731d722a79bb2f654ce3770b8d2697587814409700d3d3115",
+    "classification": "exception",
+    "reason": "A visible heading or quote opener at line start interrupts an existing paragraph.",
+    "rule": "resources/spec/14-semantics-blocks.ebnf"
+  },
+  "wrapping/heading@5/spec": {
+    "outcome": "different",
+    "leftHash": "d9b86ca42cc4fb731d31ba81beef530e533bf553733e7a023ce99d03cb91f095",
+    "rightHash": "34fcc37636072878e2c4675da8d856bcecde71de25dd4e7cc7fb6eaee40a11a1",
+    "classification": "exception",
+    "reason": "A visible heading or quote opener at line start interrupts an existing paragraph.",
+    "rule": "resources/spec/14-semantics-blocks.ebnf"
+  },
+  "wrapping/quote@5/js": {
+    "outcome": "different",
+    "leftHash": "6e8a2196c14122573e784e3d28b0f6f1bf8fd13643f45596eb47ee708b5f6623",
+    "rightHash": "3f191f9986aec02334c5a74b0574b941ddc85ea6fe9ee1fe7eb853567fe0ee5d",
+    "classification": "exception",
+    "reason": "A visible heading or quote opener at line start interrupts an existing paragraph.",
+    "rule": "resources/spec/14-semantics-blocks.ebnf"
+  },
+  "wrapping/quote@5/spec": {
+    "outcome": "different",
+    "leftHash": "7d6a6ecdc45f011cf73ea34ae690dd5846ca89d745bc1b9e21ac5f37c66ae2cd",
+    "rightHash": "7fba5c0da0fe7ce400e39166895436d425de44694480b2d7a284529931f6546c",
+    "classification": "exception",
+    "reason": "A visible heading or quote opener at line start interrupts an existing paragraph.",
+    "rule": "resources/spec/14-semantics-blocks.ebnf"
+  },
+  "wrapping/comment@5/js": {
+    "outcome": "different",
+    "leftHash": "fdfd03df25a1ceb1c758d7c5dd9ed78ffc7e96f1cc03262e93d1d93c224c221b",
+    "rightHash": "0b3def66b6ac375eb8edb824accfeb4d5f81f61b04f08ce0cdd350b11020e7af",
+    "classification": "exception",
+    "reason": "Comments end at a physical newline; moving the break can change their AST placement or expose formerly hidden text.",
+    "rule": "resources/spec/16-semantics-comments-security.ebnf"
+  },
+  "wrapping/comment@5/spec": {
+    "outcome": "different",
+    "leftHash": "a3e7033505356e5109ed0909175e540074a3adb49e2f57bb723f3eabc74477d9",
+    "rightHash": "2b5f293244b300fc726f4fd7e2be6ff873d442cb93064d0d32f3bdf706de5d26",
+    "classification": "exception",
+    "reason": "Comments end at a physical newline; moving the break can change their AST placement or expose formerly hidden text.",
+    "rule": "resources/spec/16-semantics-comments-security.ebnf"
+  },
+  "wrapping/comment@8/js": {
+    "outcome": "different",
+    "leftHash": "fdfd03df25a1ceb1c758d7c5dd9ed78ffc7e96f1cc03262e93d1d93c224c221b",
+    "rightHash": "3afcd0b1e91a514b62bb9e783765471da899abf8f72ed035fcc8d5b59cc5177c",
+    "classification": "exception",
+    "reason": "Comments end at a physical newline; moving the break can change their AST placement or expose formerly hidden text.",
+    "rule": "resources/spec/16-semantics-comments-security.ebnf"
+  },
+  "wrapping/comment@8/spec": {
+    "outcome": "different",
+    "leftHash": "a3e7033505356e5109ed0909175e540074a3adb49e2f57bb723f3eabc74477d9",
+    "rightHash": "9a4f02edda4d6c87947b7b84f5e1817ecb2955f33f734e5f0277feee8bf318cd",
+    "classification": "exception",
+    "reason": "Comments end at a physical newline; moving the break can change their AST placement or expose formerly hidden text.",
+    "rule": "resources/spec/16-semantics-comments-security.ebnf"
+  },
+  "wrapping/comment@15/js": {
+    "outcome": "different",
+    "leftHash": "fdfd03df25a1ceb1c758d7c5dd9ed78ffc7e96f1cc03262e93d1d93c224c221b",
+    "rightHash": "7eeb7c0f1608942c7e803401f7018d7356a21919cbf01afff8d13484d994ed02",
+    "classification": "exception",
+    "reason": "Comments end at a physical newline; moving the break can change their AST placement or expose formerly hidden text.",
+    "rule": "resources/spec/16-semantics-comments-security.ebnf"
+  },
+  "wrapping/comment@15/spec": {
+    "outcome": "different",
+    "leftHash": "a3e7033505356e5109ed0909175e540074a3adb49e2f57bb723f3eabc74477d9",
+    "rightHash": "f6eb8b69357accb86f37ebecfd030f1af5c8526114360e5d9c7210f313fb5333",
+    "classification": "exception",
+    "reason": "Comments end at a physical newline; moving the break can change their AST placement or expose formerly hidden text.",
+    "rule": "resources/spec/16-semantics-comments-security.ebnf"
+  },
+  "wrapping/comment@21/js": {
+    "outcome": "different",
+    "leftHash": "fdfd03df25a1ceb1c758d7c5dd9ed78ffc7e96f1cc03262e93d1d93c224c221b",
+    "rightHash": "615a4d68b936e87f977a6cdc752bd1906638780f3f314011de802ed20e778ab1",
+    "classification": "exception",
+    "reason": "Comments end at a physical newline; moving the break can change their AST placement or expose formerly hidden text.",
+    "rule": "resources/spec/16-semantics-comments-security.ebnf"
+  },
+  "wrapping/comment@21/spec": {
+    "outcome": "different",
+    "leftHash": "a3e7033505356e5109ed0909175e540074a3adb49e2f57bb723f3eabc74477d9",
+    "rightHash": "2353e1640582fba23f3b1a785e5b55701bfaa0f42f70ca1ea0b499fe6f7ce684",
+    "classification": "exception",
+    "reason": "Comments end at a physical newline; moving the break can change their AST placement or expose formerly hidden text.",
+    "rule": "resources/spec/16-semantics-comments-security.ebnf"
+  },
+  "wrapping/codeFence@9/js": {
+    "outcome": "different",
+    "leftHash": "cc15502b50db787df75215d37c24ea34f6bbadcdbb0cf11fb222adb2492d7c1a",
+    "rightHash": "0dc3a7046141eae1f7901e2a8c958749a8fcc3791d5f1dfd3c0741510f0295c6",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/codeFence@9/spec": {
+    "outcome": "different",
+    "leftHash": "4d1b831b000a3f7866052906275aa230f22b0caadddfdb563d3813b7bc1f1cb5",
+    "rightHash": "d13f42e2e96700c74942ecc5a1a0f0dfd058aaee96c7a92fa39f5061dfc817e9",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/codeFence@14/js": {
+    "outcome": "different",
+    "leftHash": "cc15502b50db787df75215d37c24ea34f6bbadcdbb0cf11fb222adb2492d7c1a",
+    "rightHash": "26e0a3c42fb907f75a74c1241a375da53fed939dc93f499d1f054785ae9d351e",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/codeFence@14/spec": {
+    "outcome": "different",
+    "leftHash": "4d1b831b000a3f7866052906275aa230f22b0caadddfdb563d3813b7bc1f1cb5",
+    "rightHash": "5650bc61330735cf8a17446933dc2bf526afa8f1f131871b0ead09cb12801f7f",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/codeFence@20/js": {
+    "outcome": "different",
+    "leftHash": "cc15502b50db787df75215d37c24ea34f6bbadcdbb0cf11fb222adb2492d7c1a",
+    "rightHash": "18c3ce904d713bf1ad9f47aa5405e85da49386532bd795a66aa779dbd7ed40de",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/codeFence@20/spec": {
+    "outcome": "different",
+    "leftHash": "4d1b831b000a3f7866052906275aa230f22b0caadddfdb563d3813b7bc1f1cb5",
+    "rightHash": "d316f8bdcfadf9277daa4b9ee75997ca0ab9f4a9178be4d97752c8c5d3caf373",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/rawFence@14/js": {
+    "outcome": "different",
+    "leftHash": "0b73e1a5c84b004e5d46c0691d6a2558303fd26237503e42e6d301e5b836fbf0",
+    "rightHash": "838159bbbb2bd4733dac5bebaea8f91f5a2b83ea22e6cb41c746753bf9eafd56",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/rawFence@14/spec": {
+    "outcome": "different",
+    "leftHash": "509cce973b1fc1dce0f97455c55f06e9b6e5fe255e2f6b0ebb77341b0cf7d24e",
+    "rightHash": "29f393106aa18f197c09ed1ec88a1ae460adaffda4ddfbb547f49d03c05b3aad",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/rawFence@18/js": {
+    "outcome": "different",
+    "leftHash": "0b73e1a5c84b004e5d46c0691d6a2558303fd26237503e42e6d301e5b836fbf0",
+    "rightHash": "9f82e9be26c4cee93fe7557eef924896b1474806625a406440930112cf81aecb",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/rawFence@18/spec": {
+    "outcome": "different",
+    "leftHash": "509cce973b1fc1dce0f97455c55f06e9b6e5fe255e2f6b0ebb77341b0cf7d24e",
+    "rightHash": "6095c9d0389743d60c3c38498a55999fd60307d678b298ead1164959368f2a12",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/rawFence@24/js": {
+    "outcome": "different",
+    "leftHash": "0b73e1a5c84b004e5d46c0691d6a2558303fd26237503e42e6d301e5b836fbf0",
+    "rightHash": "395d4f083f8fb96ae0e6b8ebd7a9e548efa1642da1a1977a9af508b95516e025",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/rawFence@24/spec": {
+    "outcome": "different",
+    "leftHash": "509cce973b1fc1dce0f97455c55f06e9b6e5fe255e2f6b0ebb77341b0cf7d24e",
+    "rightHash": "19faa4d813ba392660f00fc976a89809d42a600751fcdbec43498f78d10235ee",
+    "classification": "exception",
+    "reason": "Wrapping changes preserved code-span content, including unclosed spans; byte-preserving code is outside safe prose wrapping.",
+    "rule": "resources/spec/06-inline-links-images.ebnf"
+  },
+  "wrapping/footnoteDefinition@5/js": {
+    "outcome": "different",
+    "leftHash": "52c573976591c29de6ccf5bc3431ba60a520ea808c7200a3a8246088058d623c",
+    "rightHash": "0bf92c268e902cef505169ecabd0c79c9f298ebf5ed1674b07b9d88ba61927b2",
+    "classification": "exception",
+    "reason": "A footnote definition at line start interrupts the paragraph and registers a definition.",
+    "rule": "resources/spec/14-semantics-blocks.ebnf"
+  },
+  "wrapping/footnoteDefinition@5/spec": {
+    "outcome": "different",
+    "leftHash": "549a522e03d57aa44fa2e6f33387611b10e67f5e792f8c24af6e0d3b9a8f6261",
+    "rightHash": "2b5f293244b300fc726f4fd7e2be6ff873d442cb93064d0d32f3bdf706de5d26",
+    "classification": "exception",
+    "reason": "A footnote definition at line start interrupts the paragraph and registers a definition.",
+    "rule": "resources/spec/14-semantics-blocks.ebnf"
+  },
+  "stability/code/caption/js": {
+    "outcome": "different",
+    "leftHash": "9f2c6c4172f174d4eac7a020ea2f414dbab1e425086524bfe779dc82e47de3ab",
+    "rightHash": "8fbea844c6c6b3b841b4178f2d233e3d3f54956e27ef571aee974063dd0f8065",
+    "classification": "exception",
+    "reason": "A caption after one blank still attaches to the preceding captionable block.",
+    "rule": "resources/spec/13-semantics-foundations.ebnf"
+  },
+  "stability/code/caption/spec": {
+    "outcome": "different",
+    "leftHash": "1b39e88edf5d72fcc353e487ee0fe8377f63c9c0f4c726047bb4236d84c7f652",
+    "rightHash": "4b0e68436bf9454ae1c364777ca9fcf3b86e1b1f82146d0d8246e42fdea7abab",
+    "classification": "exception",
+    "reason": "A caption after one blank still attaches to the preceding captionable block.",
+    "rule": "resources/spec/13-semantics-foundations.ebnf"
+  },
+  "stability/quote/caption/js": {
+    "outcome": "different",
+    "leftHash": "0a1ebd7f67b5858878a70e5245ee473cdc59fa28aa55c8e65f584263e30a4f1a",
+    "rightHash": "ddd1a61d0ca4f75802d96cc85f3f4d8e17e16768cbfa86f9bb2ee2798bd3d74e",
+    "classification": "exception",
+    "reason": "A caption after one blank still attaches to the preceding captionable block.",
+    "rule": "resources/spec/13-semantics-foundations.ebnf"
+  },
+  "stability/quote/caption/spec": {
+    "outcome": "different",
+    "leftHash": "19d92b791545fc4aba5ea57bc2df8fd80a28b2def4510175222d15cb8ee78a95",
+    "rightHash": "72c058ddd5a95e561dd4e7eb0077a9364cbbbcda0aa18577fd4ab565cd963c28",
+    "classification": "exception",
+    "reason": "A caption after one blank still attaches to the preceding captionable block.",
+    "rule": "resources/spec/13-semantics-foundations.ebnf"
+  },
+  "stability/list/list/js": {
+    "outcome": "different",
+    "leftHash": "764f62e0eea86cd96935882071689fd8c142b18f6cb1bfcfb4344f0aa375ab7e",
+    "rightHash": "b25dab7eefb29cf0b76598f457ef2a190520f1eb2ae37150d9bad429645940be",
+    "classification": "exception",
+    "reason": "A blank does not finalize a list: a later sibling extends it and changes tightness.",
+    "rule": "resources/spec/15-semantics-resolution-rendering.ebnf"
+  },
+  "stability/list/list/spec": {
+    "outcome": "different",
+    "leftHash": "27ff77fe7592e3440aeb07da672f9ef81132846116e8ae339f9b4d6c323b90d1",
+    "rightHash": "44f044d8bd2d6a83fb9abcddb7986f7ebf3b5ecc2aa47343af3cd547b7f4c185",
+    "classification": "exception",
+    "reason": "A blank does not finalize a list: a later sibling extends it and changes tightness.",
+    "rule": "resources/spec/15-semantics-resolution-rendering.ebnf"
+  },
+  "stability/table/caption/js": {
+    "outcome": "different",
+    "leftHash": "45b0ddf2926a829d2a79f357b36bb472142395f5c745eb48942dd7dfabe66d20",
+    "rightHash": "89a432c808e7e10f81ef65713ade913056c07b0eb02aaa3d36b2aa43b392d3c9",
+    "classification": "exception",
+    "reason": "A caption after one blank still attaches to the preceding captionable block.",
+    "rule": "resources/spec/13-semantics-foundations.ebnf"
+  },
+  "stability/table/caption/spec": {
+    "outcome": "different",
+    "leftHash": "77a5756e5ae0be7aa61da6d3c8b8de31b000ac4424d3a593f6ef0701bf64e5aa",
+    "rightHash": "ffe95d18cd3622779a549a9ef01f93af6c68d98b355fbef1711920a7560e372b",
+    "classification": "exception",
+    "reason": "A caption after one blank still attaches to the preceding captionable block.",
+    "rule": "resources/spec/13-semantics-foundations.ebnf"
+  }
+}

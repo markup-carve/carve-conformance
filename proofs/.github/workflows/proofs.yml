@@ -1,0 +1,235 @@
+name: Proofs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      benchmark:
+        description: Run timing benchmarks and upload raw measurements
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: proofs-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# Jobs carry an explicit timeout-minutes: without one GitHub applies a
+# 360-minute default, long enough for a stalled job to go unnoticed.
+
+jobs:
+  layout:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: '4.14.2'
+      - name: Identify opam version
+        id: opam
+        run: echo "version=$(opam --version)" >> "$GITHUB_OUTPUT"
+      - name: Restore proof toolchain
+        id: proof-toolchain
+        uses: actions/cache/restore@v4
+        with:
+          path: _opam
+          # The workflow hash covers the runner image and pinned toolchain versions.
+          key: proof-toolchain-v1-${{ runner.os }}-${{ runner.arch }}-opam-${{ steps.opam.outputs.version }}-${{ hashFiles('.github/workflows/proofs.yml') }}
+      - name: Install proof compiler and standard library
+        run: opam install --yes rocq-core.9.2.0 rocq-stdlib.9.1.0 dune.3.23.1
+      - name: Save proof toolchain
+        if: steps.proof-toolchain.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: _opam
+          key: ${{ steps.proof-toolchain.outputs.cache-primary-key }}
+      - name: Use HTTPS for Git dependencies
+        run: |
+          git config --global --add url."https://github.com/".insteadOf ssh://git@github.com/
+          git config --global --add url."https://github.com/".insteadOf git@github.com:
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - name: Check deterministic scaling work
+        run: |
+          npm run check:scaling-guards
+          npm run check:budgets
+      - name: Record property observations
+        run: npm run check:properties -- --check-artifact reports/property-results.json --output reports/property-ci.json
+      - name: Check three-reader comparison
+        run: npm run check:comparison -- --check reports/comparison-results.json --output reports/comparison-ci.json
+      - name: Check scoped contracts and container positions
+        run: |
+          npm run check:contracts -- --check reports/comparison-contracts.json
+          npm run check:containers -- --check reports/container-regressions.json
+      - name: Check pinned djot.v package
+        run: |
+          npm run build:djot-v
+          npm run check:djot-v -- --check reports/djot-v-results.json
+          npm run check:djot-extensions -- --check reports/djot-extension-results.json
+          npm run proof:djot-extensions -- --check reports/djot-extension-proofs.json
+          npm run build:djot-differential
+          npm run check:djot-differential -- --check reports/djot-differential.json --diagnostic-output reports/djot-differential-ci.json
+          npm run triage:djot-differences -- --check reports/djot-difference-triage.json
+          npm run proof:djot-differential -- --check reports/djot-differential-proofs.json
+          npm run report:djot-differential
+          git diff --exit-code -- reports/djot-differential.md
+          npm run report:djot-v
+          git diff --exit-code -- reports/djot-v.md
+      - name: Check comparison and profiling reports
+        run: |
+          npm run report:comparison
+          npm run report:profiling
+          npm run report:budgets
+          git diff --exit-code -- reports/comparison.md reports/nesting-profile.md reports/regression-budgets.md reports/regression-budgets.csv
+      - name: Check committed report
+        run: |
+          npm run report:properties
+          git diff --exit-code -- reports/properties.md
+      - name: Check model proofs and recorded evidence
+        run: opam exec -- npm run proof:layout
+      - name: Check candidate-stack selection and extracted helper
+        run: opam exec -- npm run proof:stack
+      - name: Measure parser scaling
+        if: github.event_name == 'workflow_dispatch' && inputs.benchmark
+        run: npm run bench:scaling -- reports/scaling-ci.json
+      - name: Upload measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: property-observations
+          path: |
+            reports/property-ci.json
+            reports/comparison-ci.json
+            reports/djot-differential-ci.json
+      - name: Upload benchmark measurements
+        if: always() && github.event_name == 'workflow_dispatch' && inputs.benchmark
+        uses: actions/upload-artifact@v4
+        with:
+          name: scaling-measurements
+          path: reports/scaling-ci.json
+          if-no-files-found: error
+
+  ownership:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install PHP
+        run: sudo apt-get update && sudo apt-get install -y php-cli php-mbstring
+      - name: Use HTTPS for Git dependencies
+        run: |
+          git config --global --add url."https://github.com/".insteadOf ssh://git@github.com/
+          git config --global --add url."https://github.com/".insteadOf git@github.com:
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run build:ownership
+      - name: Check current ownership and versioned contracts
+        run: |
+          npm run build:ownership:current
+          npm run check:ownership:current
+          npm run check:ownership:contracts
+          npm run report:ownership:current
+      - run: npm run check:ownership -- --check reports/ownership-results.json
+      - run: npm run reduce:ownership -- --check reports/ownership-reductions.json
+      - run: node --test tests/ownership.test.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ownership-build
+          path: |
+            .cache/ownership/build.json
+            .cache/ownership-current/build.json
+          include-hidden-files: true
+
+  runtime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      CARGO_TARGET_DIR: .cache/runtime/target
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install PHP
+        run: sudo apt-get update && sudo apt-get install -y php-cli php-mbstring
+      - uses: actions/cache@v4
+        with:
+          path: .cache/runtime/target
+          key: runtime-rust-${{ runner.os }}-${{ hashFiles('scripts/runtime/rust/Cargo.lock', 'scripts/runtime/rust/Cargo.toml', 'scripts/ownership/pins.json') }}
+      - run: npm run build:runtime
+      - run: node --test tests/runtime-scaling.test.mjs
+      - name: Measure Rust and PHP scaling
+        if: github.event_name == 'workflow_dispatch' && inputs.benchmark
+        run: npm run bench:runtime -- reports/runtime-ci.json
+      - uses: actions/upload-artifact@v4
+        if: always() && github.event_name == 'workflow_dispatch' && inputs.benchmark
+        with:
+          name: runtime-measurements
+          path: reports/runtime-ci.json*
+          if-no-files-found: error
+
+  site:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Use HTTPS for Git dependencies
+        run: |
+          git config --global --add url."https://github.com/".insteadOf ssh://git@github.com/
+          git config --global --add url."https://github.com/".insteadOf git@github.com:
+      - run: npm ci --no-audit --no-fund
+      - run: pip install -r site/requirements.txt
+      - run: npm run build:site
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:site
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: site-test-results
+          path: test-results/
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: [layout, ownership, runtime, site]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy evidence site
+        id: deployment
+        uses: actions/deploy-pages@v4

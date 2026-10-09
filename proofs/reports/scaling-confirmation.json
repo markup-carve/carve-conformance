@@ -1,0 +1,1432 @@
+{
+  "metadata": {
+    "generatedAt": "2026-09-28T10:58:36.109Z",
+    "node": "v24.19.0",
+    "platform": "linux",
+    "release": "7.0.0-31-generic",
+    "arch": "x64",
+    "cpu": "AMD Ryzen 9 PRO 7940HS w/ Radeon 780M Graphics",
+    "logicalCpus": 16,
+    "loadAverage": [
+      13.77,
+      22.19,
+      25.22
+    ],
+    "specCommit": "d20ebd942f91470485332cec925fa0717f20a58a",
+    "specDirty": false,
+    "engine": "github:markup-carve/carve-js#c5df77f658c80a3a80a4d31ec1855d854e5da648",
+    "installedEngine": "git+ssh://git@github.com/markup-carve/carve-js.git#c5df77f658c80a3a80a4d31ec1855d854e5da648",
+    "runnerSha256": "fc5e1ef419cbcbb5da9c3868f1d2055ca7fac6153790530c0d008424e31aa0ba",
+    "method": "Serial worker processes; source generation and startup excluded. Two warmups, five batches, 1–32 parses per batch; GC before each batch. 60s deadline per reader/mode/family, including startup. RSS is cumulative process peak. Counters instrument selected JS/spec layout work only; their fields are not directly comparable."
+  },
+  "groups": [
+    {
+      "reader": "js",
+      "mode": "parse",
+      "family": "nested-quotes",
+      "rows": [
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 8,
+          "bytes": 20,
+          "samplesMs": [
+            0.15719269230769092,
+            0.10891246153846186,
+            0.09665761538461591,
+            0.10421507692307859,
+            0.13365561538461618
+          ],
+          "medianMs": 0.10891246153846186,
+          "minMs": 0.09665761538461591,
+          "maxMs": 0.15719269230769092,
+          "iterations": 13,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 20,
+            "total": 20
+          },
+          "peakRssKiB": 179952
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 16,
+          "bytes": 36,
+          "samplesMs": [
+            0.3520771562500009,
+            0.2026543437499999,
+            0.16711962499999977,
+            0.1522434999999991,
+            0.22233331250000177
+          ],
+          "medianMs": 0.2026543437499999,
+          "minMs": 0.1522434999999991,
+          "maxMs": 0.3520771562500009,
+          "iterations": 32,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 36,
+            "total": 36
+          },
+          "peakRssKiB": 179952,
+          "byteRatio": 1.8,
+          "timeRatio": 1.8607085074322152,
+          "exponent": 1.0564331759244496
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 32,
+          "bytes": 68,
+          "samplesMs": [
+            0.5561107647058835,
+            0.4287357058823518,
+            0.28165900000000393,
+            0.32565382352941147,
+            0.2888244117647018
+          ],
+          "medianMs": 0.32565382352941147,
+          "minMs": 0.28165900000000393,
+          "maxMs": 0.5561107647058835,
+          "iterations": 17,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 68,
+            "total": 68
+          },
+          "peakRssKiB": 179952,
+          "byteRatio": 1.8888888888888888,
+          "timeRatio": 1.606942232292574,
+          "exponent": 0.7458199946029145
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 64,
+          "bytes": 132,
+          "samplesMs": [
+            1.0611319090909008,
+            0.6862328181818239,
+            0.8182283636363598,
+            0.8385396363636346,
+            0.7525871818181816
+          ],
+          "medianMs": 0.8182283636363598,
+          "minMs": 0.6862328181818239,
+          "maxMs": 1.0611319090909008,
+          "iterations": 11,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 132,
+            "total": 132
+          },
+          "peakRssKiB": 179952,
+          "byteRatio": 1.9411764705882353,
+          "timeRatio": 2.512571032541435,
+          "exponent": 1.3889862454114985
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 128,
+          "bytes": 260,
+          "samplesMs": [
+            2.926571799999988,
+            2.460988599999996,
+            2.1445332000000006,
+            2.418800400000009,
+            2.7057941999999913
+          ],
+          "medianMs": 2.460988599999996,
+          "minMs": 2.1445332000000006,
+          "maxMs": 2.926571799999988,
+          "iterations": 5,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 260,
+            "total": 260
+          },
+          "peakRssKiB": 179996,
+          "byteRatio": 1.9696969696969697,
+          "timeRatio": 3.0077038506253957,
+          "exponent": 1.6244430001865728
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 192,
+          "bytes": 388,
+          "samplesMs": [
+            4.927783500000032,
+            4.896689000000038,
+            6.242648499999973,
+            6.886502499999949,
+            5.7555225000000405
+          ],
+          "medianMs": 5.7555225000000405,
+          "minMs": 4.896689000000038,
+          "maxMs": 6.886502499999949,
+          "iterations": 2,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 388,
+            "total": 388
+          },
+          "peakRssKiB": 182940,
+          "byteRatio": 1.4923076923076923,
+          "timeRatio": 2.3387034381224074,
+          "exponent": 2.1222742277477247
+        }
+      ],
+      "skippedSizes": [],
+      "exitCode": 0,
+      "signal": null,
+      "workerError": null,
+      "fittedExponent": 1.3117967826933878,
+      "completed": true,
+      "stderr": ""
+    },
+    {
+      "reader": "js",
+      "mode": "parse",
+      "family": "nested-lists",
+      "rows": [
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 8,
+          "bytes": 20,
+          "samplesMs": [
+            0.3055839999999972,
+            0.16926407692307505,
+            0.1836344615384615,
+            0.16736200000000367,
+            0.21187515384615643
+          ],
+          "medianMs": 0.1836344615384615,
+          "minMs": 0.16736200000000367,
+          "maxMs": 0.3055839999999972,
+          "iterations": 13,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 20,
+            "total": 20
+          },
+          "peakRssKiB": 180512
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 16,
+          "bytes": 36,
+          "samplesMs": [
+            0.33720171875000027,
+            0.177111406249999,
+            0.2625494687500005,
+            0.3793267812500005,
+            0.3846963437499973
+          ],
+          "medianMs": 0.33720171875000027,
+          "minMs": 0.177111406249999,
+          "maxMs": 0.3846963437499973,
+          "iterations": 32,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 36,
+            "total": 36
+          },
+          "peakRssKiB": 182276,
+          "byteRatio": 1.8,
+          "timeRatio": 1.8362660032598224,
+          "exponent": 1.0339366303162385
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 32,
+          "bytes": 68,
+          "samplesMs": [
+            0.9646512666666694,
+            0.831916933333332,
+            0.8381828666666706,
+            0.9598248000000013,
+            0.8056810666666631
+          ],
+          "medianMs": 0.8381828666666706,
+          "minMs": 0.8056810666666631,
+          "maxMs": 0.9646512666666694,
+          "iterations": 15,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 68,
+            "total": 68
+          },
+          "peakRssKiB": 182276,
+          "byteRatio": 1.8888888888888888,
+          "timeRatio": 2.4857016440301583,
+          "exponent": 1.4317154941482306
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 64,
+          "bytes": 132,
+          "samplesMs": [
+            1.4088617777777774,
+            1.3543214444444454,
+            1.1624399999999975,
+            1.1916065555555457,
+            1.2305361111111022
+          ],
+          "medianMs": 1.2305361111111022,
+          "minMs": 1.1624399999999975,
+          "maxMs": 1.4088617777777774,
+          "iterations": 9,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 132,
+            "total": 132
+          },
+          "peakRssKiB": 182500,
+          "byteRatio": 1.9411764705882353,
+          "timeRatio": 1.4680998145485393,
+          "exponent": 0.5788817561861047
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 128,
+          "bytes": 260,
+          "samplesMs": [
+            3.8291372500000023,
+            2.849687749999987,
+            3.1073900000000094,
+            3.1181907499999966,
+            3.1726142500000094
+          ],
+          "medianMs": 3.1181907499999966,
+          "minMs": 2.849687749999987,
+          "maxMs": 3.8291372500000023,
+          "iterations": 4,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 260,
+            "total": 260
+          },
+          "peakRssKiB": 182500,
+          "byteRatio": 1.9696969696969697,
+          "timeRatio": 2.5340099504958475,
+          "exponent": 1.3716342252518534
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 192,
+          "bytes": 388,
+          "samplesMs": [
+            7.535902000000021,
+            6.959816499999988,
+            5.546505000000025,
+            5.946525000000008,
+            8.617929000000004
+          ],
+          "medianMs": 6.959816499999988,
+          "minMs": 5.546505000000025,
+          "maxMs": 8.617929000000004,
+          "iterations": 2,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 388,
+            "total": 388
+          },
+          "peakRssKiB": 182908,
+          "byteRatio": 1.4923076923076923,
+          "timeRatio": 2.2320047290243537,
+          "exponent": 2.00562731107701
+        }
+      ],
+      "skippedSizes": [],
+      "exitCode": 0,
+      "signal": null,
+      "workerError": null,
+      "fittedExponent": 1.1707670924979543,
+      "completed": true,
+      "stderr": ""
+    },
+    {
+      "reader": "js",
+      "mode": "html",
+      "family": "nested-quotes",
+      "rows": [
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 8,
+          "bytes": 20,
+          "samplesMs": [
+            0.35562599999999683,
+            0.23065142857142615,
+            0.22610985714286308,
+            0.2888477142857125,
+            0.5915947142857151
+          ],
+          "medianMs": 0.2888477142857125,
+          "minMs": 0.22610985714286308,
+          "maxMs": 0.5915947142857151,
+          "iterations": 7,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 20,
+            "total": 20
+          },
+          "peakRssKiB": 180084
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 16,
+          "bytes": 36,
+          "samplesMs": [
+            0.23528615384615337,
+            0.19690973076923404,
+            0.32553042307691926,
+            0.25766023076923045,
+            0.28675823076923296
+          ],
+          "medianMs": 0.25766023076923045,
+          "minMs": 0.19690973076923404,
+          "maxMs": 0.32553042307691926,
+          "iterations": 26,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 36,
+            "total": 36
+          },
+          "peakRssKiB": 180116,
+          "byteRatio": 1.8,
+          "timeRatio": 0.8920279373039003,
+          "exponent": -0.19438655870865792
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 32,
+          "bytes": 68,
+          "samplesMs": [
+            0.513737461538461,
+            0.3843884615384573,
+            0.6764105384615348,
+            0.5367751538461527,
+            0.3926503076923102
+          ],
+          "medianMs": 0.513737461538461,
+          "minMs": 0.3843884615384573,
+          "maxMs": 0.6764105384615348,
+          "iterations": 13,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 68,
+            "total": 68
+          },
+          "peakRssKiB": 180372,
+          "byteRatio": 1.8888888888888888,
+          "timeRatio": 1.993856250166066,
+          "exponent": 1.0850357960083699
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 64,
+          "bytes": 132,
+          "samplesMs": [
+            1.1271059230769231,
+            0.9249661538461501,
+            1.0315426923076967,
+            0.9180769230769277,
+            1.0855669230769274
+          ],
+          "medianMs": 1.0315426923076967,
+          "minMs": 0.9180769230769277,
+          "maxMs": 1.1271059230769231,
+          "iterations": 13,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 132,
+            "total": 132
+          },
+          "peakRssKiB": 180372,
+          "byteRatio": 1.9411764705882353,
+          "timeRatio": 2.0079179922339967,
+          "exponent": 1.0509640249786696
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 128,
+          "bytes": 260,
+          "samplesMs": [
+            3.0867432499999836,
+            3.322899750000005,
+            3.3378832500000044,
+            4.100495749999993,
+            3.2180177500000013
+          ],
+          "medianMs": 3.322899750000005,
+          "minMs": 3.0867432499999836,
+          "maxMs": 4.100495749999993,
+          "iterations": 4,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 260,
+            "total": 260
+          },
+          "peakRssKiB": 180372,
+          "byteRatio": 1.9696969696969697,
+          "timeRatio": 3.2212915420555603,
+          "exponent": 1.7256489088088898
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 192,
+          "bytes": 388,
+          "samplesMs": [
+            7.87813749999998,
+            6.225169499999993,
+            5.957716500000004,
+            6.05475100000001,
+            7.92490650000002
+          ],
+          "medianMs": 6.225169499999993,
+          "minMs": 5.957716500000004,
+          "maxMs": 7.92490650000002,
+          "iterations": 2,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 388,
+            "total": 388
+          },
+          "peakRssKiB": 182548,
+          "byteRatio": 1.4923076923076923,
+          "timeRatio": 1.8734147787636337,
+          "exponent": 1.5681380767679718
+        }
+      ],
+      "skippedSizes": [],
+      "exitCode": 0,
+      "signal": null,
+      "workerError": null,
+      "fittedExponent": 1.1035108153180586,
+      "completed": true,
+      "stderr": ""
+    },
+    {
+      "reader": "js",
+      "mode": "html",
+      "family": "nested-lists",
+      "rows": [
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 8,
+          "bytes": 20,
+          "samplesMs": [
+            0.7065349999999929,
+            0.5433263333333306,
+            0.567355333333334,
+            0.4984676666666701,
+            0.5289388333333326
+          ],
+          "medianMs": 0.5433263333333306,
+          "minMs": 0.4984676666666701,
+          "maxMs": 0.7065349999999929,
+          "iterations": 6,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 20,
+            "total": 20
+          },
+          "peakRssKiB": 180320
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 16,
+          "bytes": 36,
+          "samplesMs": [
+            0.4418525000000021,
+            0.2915557142857129,
+            0.7528344642857162,
+            0.3761286428571436,
+            0.4736554642857129
+          ],
+          "medianMs": 0.4418525000000021,
+          "minMs": 0.2915557142857129,
+          "maxMs": 0.7528344642857162,
+          "iterations": 28,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 36,
+            "total": 36
+          },
+          "peakRssKiB": 185136,
+          "byteRatio": 1.8,
+          "timeRatio": 0.8132359373955205,
+          "exponent": -0.35171605274813467
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 32,
+          "bytes": 68,
+          "samplesMs": [
+            0.7982446428571441,
+            0.7814285000000041,
+            0.7892827142857105,
+            0.9129406428571413,
+            0.945312214285715
+          ],
+          "medianMs": 0.7982446428571441,
+          "minMs": 0.7814285000000041,
+          "maxMs": 0.945312214285715,
+          "iterations": 14,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 68,
+            "total": 68
+          },
+          "peakRssKiB": 185136,
+          "byteRatio": 1.8888888888888888,
+          "timeRatio": 1.8065862315074384,
+          "exponent": 0.9299519668197003
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 64,
+          "bytes": 132,
+          "samplesMs": [
+            1.716511199999991,
+            2.4636838000000125,
+            2.1814933999999995,
+            2.9643957999999886,
+            2.0386438
+          ],
+          "medianMs": 2.1814933999999995,
+          "minMs": 1.716511199999991,
+          "maxMs": 2.9643957999999886,
+          "iterations": 5,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 132,
+            "total": 132
+          },
+          "peakRssKiB": 185136,
+          "byteRatio": 1.9411764705882353,
+          "timeRatio": 2.7328631886483015,
+          "exponent": 1.515692162340671
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 128,
+          "bytes": 260,
+          "samplesMs": [
+            4.780421666666636,
+            4.4404286666667,
+            7.764194000000013,
+            6.250319666666655,
+            5.672641333333293
+          ],
+          "medianMs": 5.672641333333293,
+          "minMs": 4.4404286666667,
+          "maxMs": 7.764194000000013,
+          "iterations": 3,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 260,
+            "total": 260
+          },
+          "peakRssKiB": 185136,
+          "byteRatio": 1.9696969696969697,
+          "timeRatio": 2.600347694534989,
+          "exponent": 1.4097562633470244
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 192,
+          "bytes": 388,
+          "samplesMs": [
+            12.093892000000096,
+            8.495065499999896,
+            9.735443499999974,
+            12.681434500000023,
+            12.422541999999908
+          ],
+          "medianMs": 12.093892000000096,
+          "minMs": 8.495065499999896,
+          "maxMs": 12.681434500000023,
+          "iterations": 2,
+          "counters": {
+            "gate": 0,
+            "strip": 0,
+            "seam": 388,
+            "total": 388
+          },
+          "peakRssKiB": 188584,
+          "byteRatio": 1.4923076923076923,
+          "timeRatio": 2.131968388153605,
+          "exponent": 1.891083796926415
+        }
+      ],
+      "skippedSizes": [],
+      "exitCode": 0,
+      "signal": null,
+      "workerError": null,
+      "fittedExponent": 1.1240748940084175,
+      "completed": true,
+      "stderr": ""
+    },
+    {
+      "reader": "spec",
+      "mode": "parse",
+      "family": "nested-quotes",
+      "rows": [
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 8,
+          "bytes": 20,
+          "samplesMs": [
+            0.04761442857142738,
+            0.042960964285713645,
+            0.048798107142857816,
+            0.06138742857142786,
+            0.05404057142857255
+          ],
+          "medianMs": 0.048798107142857816,
+          "minMs": 0.042960964285713645,
+          "maxMs": 0.06138742857142786,
+          "iterations": 28,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 10,
+            "quoteStrips": 8,
+            "lineVisits": 9
+          },
+          "peakRssKiB": 179628
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 16,
+          "bytes": 36,
+          "samplesMs": [
+            0.10949721875000051,
+            0.08591959374999902,
+            0.06787809375000009,
+            0.0795703437499995,
+            0.10328009375000136
+          ],
+          "medianMs": 0.08591959374999902,
+          "minMs": 0.06787809375000009,
+          "maxMs": 0.10949721875000051,
+          "iterations": 32,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 18,
+            "quoteStrips": 16,
+            "lineVisits": 17
+          },
+          "peakRssKiB": 180524,
+          "byteRatio": 1.8,
+          "timeRatio": 1.760715707649623,
+          "exponent": 0.9624586814288655
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 32,
+          "bytes": 68,
+          "samplesMs": [
+            0.17561074999999704,
+            0.18897740625000026,
+            0.18051131250000196,
+            0.1582818437500002,
+            0.15417625000000257
+          ],
+          "medianMs": 0.17561074999999704,
+          "minMs": 0.15417625000000257,
+          "maxMs": 0.18897740625000026,
+          "iterations": 32,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 34,
+            "quoteStrips": 32,
+            "lineVisits": 33
+          },
+          "peakRssKiB": 181548,
+          "byteRatio": 1.8888888888888888,
+          "timeRatio": 2.0438964191447777,
+          "exponent": 1.1240104116602385
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 64,
+          "bytes": 132,
+          "samplesMs": [
+            0.5296575294117661,
+            0.6091946470588241,
+            0.4973419999999966,
+            0.5860282352941193,
+            0.5354149411764745
+          ],
+          "medianMs": 0.5354149411764745,
+          "minMs": 0.4973419999999966,
+          "maxMs": 0.6091946470588241,
+          "iterations": 17,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 66,
+            "quoteStrips": 64,
+            "lineVisits": 65
+          },
+          "peakRssKiB": 183724,
+          "byteRatio": 1.9411764705882353,
+          "timeRatio": 3.0488733814785456,
+          "exponent": 1.6806601203478717
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 128,
+          "bytes": 260,
+          "samplesMs": [
+            3.578350499999999,
+            3.082437749999997,
+            3.1760255000000086,
+            2.841236749999979,
+            2.575428499999987
+          ],
+          "medianMs": 3.082437749999997,
+          "minMs": 2.575428499999987,
+          "maxMs": 3.578350499999999,
+          "iterations": 4,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 130,
+            "quoteStrips": 128,
+            "lineVisits": 129
+          },
+          "peakRssKiB": 184492,
+          "byteRatio": 1.9696969696969697,
+          "timeRatio": 5.757100732428039,
+          "exponent": 2.5822192066772924
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 192,
+          "bytes": 388,
+          "samplesMs": [
+            7.048029499999984,
+            6.932058999999981,
+            7.05930550000005,
+            7.439794000000006,
+            6.8998679999999695
+          ],
+          "medianMs": 7.048029499999984,
+          "minMs": 6.8998679999999695,
+          "maxMs": 7.439794000000006,
+          "iterations": 2,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 194,
+            "quoteStrips": 192,
+            "lineVisits": 193
+          },
+          "peakRssKiB": 184492,
+          "byteRatio": 1.4923076923076923,
+          "timeRatio": 2.2865115443126114,
+          "exponent": 2.0658964113833975
+        }
+      ],
+      "skippedSizes": [],
+      "exitCode": 0,
+      "signal": null,
+      "workerError": null,
+      "fittedExponent": 1.70945666476681,
+      "completed": true,
+      "stderr": ""
+    },
+    {
+      "reader": "spec",
+      "mode": "parse",
+      "family": "nested-lists",
+      "rows": [
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 8,
+          "bytes": 20,
+          "samplesMs": [
+            0.10474668750000049,
+            0.08857025000000007,
+            0.06327843749999928,
+            0.07597762500000016,
+            0.08209106250000175
+          ],
+          "medianMs": 0.08209106250000175,
+          "minMs": 0.06327843749999928,
+          "maxMs": 0.10474668750000049,
+          "iterations": 16,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 18,
+            "quoteStrips": 0,
+            "lineVisits": 9
+          },
+          "peakRssKiB": 180648
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 16,
+          "bytes": 36,
+          "samplesMs": [
+            0.14660403124999988,
+            0.10342978125000002,
+            0.14971493750000064,
+            0.07833612499999987,
+            0.09591859374999956
+          ],
+          "medianMs": 0.10342978125000002,
+          "minMs": 0.07833612499999987,
+          "maxMs": 0.14971493750000064,
+          "iterations": 32,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 34,
+            "quoteStrips": 0,
+            "lineVisits": 17
+          },
+          "peakRssKiB": 180904,
+          "byteRatio": 1.8,
+          "timeRatio": 1.2599396097473803,
+          "exponent": 0.3931082565156931
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 32,
+          "bytes": 68,
+          "samplesMs": [
+            0.22799687499999877,
+            0.35123243749999844,
+            0.38921274999999866,
+            0.2554468750000005,
+            0.2470205624999977
+          ],
+          "medianMs": 0.2554468750000005,
+          "minMs": 0.22799687499999877,
+          "maxMs": 0.38921274999999866,
+          "iterations": 32,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 66,
+            "quoteStrips": 0,
+            "lineVisits": 33
+          },
+          "peakRssKiB": 181672,
+          "byteRatio": 1.8888888888888888,
+          "timeRatio": 2.4697613386860033,
+          "exponent": 1.4215998289098302
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 64,
+          "bytes": 132,
+          "samplesMs": [
+            0.8537774285714315,
+            1.0422808571428601,
+            0.9304660714285709,
+            0.8289452142857142,
+            1.284370357142856
+          ],
+          "medianMs": 0.9304660714285709,
+          "minMs": 0.8289452142857142,
+          "maxMs": 1.284370357142856,
+          "iterations": 14,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 130,
+            "quoteStrips": 0,
+            "lineVisits": 65
+          },
+          "peakRssKiB": 181672,
+          "byteRatio": 1.9411764705882353,
+          "timeRatio": 3.6425032462368896,
+          "exponent": 1.9488653999504142
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 128,
+          "bytes": 260,
+          "samplesMs": [
+            3.956046000000015,
+            3.9156117500000107,
+            4.288818499999991,
+            3.9713199999999915,
+            5.246629750000011
+          ],
+          "medianMs": 3.9713199999999915,
+          "minMs": 3.9156117500000107,
+          "maxMs": 5.246629750000011,
+          "iterations": 4,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 258,
+            "quoteStrips": 0,
+            "lineVisits": 129
+          },
+          "peakRssKiB": 181928,
+          "byteRatio": 1.9696969696969697,
+          "timeRatio": 4.268097593180062,
+          "exponent": 2.140745889557199
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 192,
+          "bytes": 388,
+          "samplesMs": [
+            9.828275000000076,
+            10.007204999999999,
+            12.121755000000007,
+            10.57377299999996,
+            12.327967000000058
+          ],
+          "medianMs": 10.57377299999996,
+          "minMs": 9.828275000000076,
+          "maxMs": 12.327967000000058,
+          "iterations": 1,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 386,
+            "quoteStrips": 0,
+            "lineVisits": 193
+          },
+          "peakRssKiB": 195368,
+          "byteRatio": 1.4923076923076923,
+          "timeRatio": 2.6625336160269084,
+          "exponent": 2.4462157390063153
+        }
+      ],
+      "skippedSizes": [],
+      "exitCode": 0,
+      "signal": null,
+      "workerError": null,
+      "fittedExponent": 1.6999988988950487,
+      "completed": true,
+      "stderr": ""
+    },
+    {
+      "reader": "spec",
+      "mode": "html",
+      "family": "nested-quotes",
+      "rows": [
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 8,
+          "bytes": 20,
+          "samplesMs": [
+            0.6006964444444457,
+            0.8538243333333324,
+            0.8355161111111076,
+            1.1275646666666654,
+            1.0279120000000022
+          ],
+          "medianMs": 0.8538243333333324,
+          "minMs": 0.6006964444444457,
+          "maxMs": 1.1275646666666654,
+          "iterations": 9,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 10,
+            "quoteStrips": 8,
+            "lineVisits": 9
+          },
+          "peakRssKiB": 179484
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 16,
+          "bytes": 36,
+          "samplesMs": [
+            1.0158682999999997,
+            0.7340105000000108,
+            0.7443731000000071,
+            0.7119455000000017,
+            0.7274198999999953
+          ],
+          "medianMs": 0.7340105000000108,
+          "minMs": 0.7119455000000017,
+          "maxMs": 1.0158682999999997,
+          "iterations": 10,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 18,
+            "quoteStrips": 16,
+            "lineVisits": 17
+          },
+          "peakRssKiB": 179484,
+          "byteRatio": 1.8,
+          "timeRatio": 0.8596739063812247,
+          "exponent": -0.2572398274680804
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 32,
+          "bytes": 68,
+          "samplesMs": [
+            1.1149728124999996,
+            0.936907374999997,
+            0.8446639375000018,
+            0.5519806249999988,
+            0.706461187500004
+          ],
+          "medianMs": 0.8446639375000018,
+          "minMs": 0.5519806249999988,
+          "maxMs": 1.1149728124999996,
+          "iterations": 16,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 34,
+            "quoteStrips": 32,
+            "lineVisits": 33
+          },
+          "peakRssKiB": 180364,
+          "byteRatio": 1.8888888888888888,
+          "timeRatio": 1.1507518455117323,
+          "exponent": 0.220782999336585
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 64,
+          "bytes": 132,
+          "samplesMs": [
+            1.3592264999999912,
+            1.4500330000000048,
+            1.696961250000001,
+            1.8478881249999972,
+            1.2837504999999965
+          ],
+          "medianMs": 1.4500330000000048,
+          "minMs": 1.2837504999999965,
+          "maxMs": 1.8478881249999972,
+          "iterations": 8,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 66,
+            "quoteStrips": 64,
+            "lineVisits": 65
+          },
+          "peakRssKiB": 181004,
+          "byteRatio": 1.9411764705882353,
+          "timeRatio": 1.7166981276503257,
+          "exponent": 0.8147255598520413
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 128,
+          "bytes": 260,
+          "samplesMs": [
+            3.9736580000000004,
+            3.707735666666698,
+            4.238184000000008,
+            4.33789033333331,
+            4.584652666666632
+          ],
+          "medianMs": 4.238184000000008,
+          "minMs": 3.707735666666698,
+          "maxMs": 4.584652666666632,
+          "iterations": 3,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 130,
+            "quoteStrips": 128,
+            "lineVisits": 129
+          },
+          "peakRssKiB": 181004,
+          "byteRatio": 1.9696969696969697,
+          "timeRatio": 2.9228189979124575,
+          "exponent": 1.5822107484244177
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 192,
+          "bytes": 388,
+          "samplesMs": [
+            8.628889499999957,
+            9.719162499999982,
+            9.103662500000041,
+            9.101418000000024,
+            10.478576500000031
+          ],
+          "medianMs": 9.103662500000041,
+          "minMs": 8.628889499999957,
+          "maxMs": 10.478576500000031,
+          "iterations": 2,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 194,
+            "quoteStrips": 192,
+            "lineVisits": 193
+          },
+          "peakRssKiB": 181132,
+          "byteRatio": 1.4923076923076923,
+          "timeRatio": 2.1480102090895588,
+          "exponent": 1.9098092694266193
+        }
+      ],
+      "skippedSizes": [],
+      "exitCode": 0,
+      "signal": null,
+      "workerError": null,
+      "fittedExponent": 0.8136859009040682,
+      "completed": true,
+      "stderr": ""
+    },
+    {
+      "reader": "spec",
+      "mode": "html",
+      "family": "nested-lists",
+      "rows": [
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 8,
+          "bytes": 20,
+          "samplesMs": [
+            0.7667666666666643,
+            0.8814734444444462,
+            0.8746538888888848,
+            1.0351267777777795,
+            0.9317614444444442
+          ],
+          "medianMs": 0.8814734444444462,
+          "minMs": 0.7667666666666643,
+          "maxMs": 1.0351267777777795,
+          "iterations": 9,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 18,
+            "quoteStrips": 0,
+            "lineVisits": 9
+          },
+          "peakRssKiB": 180360
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 16,
+          "bytes": 36,
+          "samplesMs": [
+            0.9371308461538425,
+            0.7544696923076974,
+            0.9084632307692311,
+            0.8233329230769186,
+            0.5787726153846157
+          ],
+          "medianMs": 0.8233329230769186,
+          "minMs": 0.5787726153846157,
+          "maxMs": 0.9371308461538425,
+          "iterations": 13,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 34,
+            "quoteStrips": 0,
+            "lineVisits": 17
+          },
+          "peakRssKiB": 180360,
+          "byteRatio": 1.8,
+          "timeRatio": 0.9340416642906685,
+          "exponent": -0.11608673243944918
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 32,
+          "bytes": 68,
+          "samplesMs": [
+            0.8495034615384611,
+            0.9812524615384658,
+            0.8548390000000049,
+            0.9819868461538502,
+            1.0719933846153866
+          ],
+          "medianMs": 0.9812524615384658,
+          "minMs": 0.8495034615384611,
+          "maxMs": 1.0719933846153866,
+          "iterations": 13,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 66,
+            "quoteStrips": 0,
+            "lineVisits": 33
+          },
+          "peakRssKiB": 181300,
+          "byteRatio": 1.8888888888888888,
+          "timeRatio": 1.1918052030172415,
+          "exponent": 0.2758997394026483
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 64,
+          "bytes": 132,
+          "samplesMs": [
+            2.113697000000002,
+            2.239537714285721,
+            2.710262571428562,
+            1.8899257142857095,
+            2.074758571428577
+          ],
+          "medianMs": 2.113697000000002,
+          "minMs": 1.8899257142857095,
+          "maxMs": 2.710262571428562,
+          "iterations": 7,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 130,
+            "quoteStrips": 0,
+            "lineVisits": 65
+          },
+          "peakRssKiB": 181300,
+          "byteRatio": 1.9411764705882353,
+          "timeRatio": 2.154080710978317,
+          "exponent": 1.1568984444128505
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 128,
+          "bytes": 260,
+          "samplesMs": [
+            7.656245666666678,
+            6.993231666666664,
+            5.591997666666695,
+            4.888289666666651,
+            6.527472666666692
+          ],
+          "medianMs": 6.527472666666692,
+          "minMs": 4.888289666666651,
+          "maxMs": 7.656245666666678,
+          "iterations": 3,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 258,
+            "quoteStrips": 0,
+            "lineVisits": 129
+          },
+          "peakRssKiB": 183140,
+          "byteRatio": 1.9696969696969697,
+          "timeRatio": 3.0881780438098203,
+          "exponent": 1.6633943650379266
+        },
+        {
+          "event": "result",
+          "status": "ok",
+          "size": 192,
+          "bytes": 388,
+          "samplesMs": [
+            23.011487999999986,
+            16.29450799999995,
+            12.73526199999992,
+            17.866996999999856,
+            12.876829999999927
+          ],
+          "medianMs": 16.29450799999995,
+          "minMs": 12.73526199999992,
+          "maxMs": 23.011487999999986,
+          "iterations": 1,
+          "counters": {
+            "scan": 0,
+            "pad": 0,
+            "views": 386,
+            "quoteStrips": 0,
+            "lineVisits": 193
+          },
+          "peakRssKiB": 197348,
+          "byteRatio": 1.4923076923076923,
+          "timeRatio": 2.4962966269027485,
+          "exponent": 2.2851713867616024
+        }
+      ],
+      "skippedSizes": [],
+      "exitCode": 0,
+      "signal": null,
+      "workerError": null,
+      "fittedExponent": 0.996111996666087,
+      "completed": true,
+      "stderr": ""
+    }
+  ]
+}

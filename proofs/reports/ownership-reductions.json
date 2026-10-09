@@ -1,0 +1,22 @@
+{
+  "pins": {
+    "spec": {
+      "repository": "https://github.com/markup-carve/carve.git",
+      "commit": "9db91206d1a4a8a8cf795c48210bca49d66f14d6"
+    },
+    "js": {
+      "repository": "https://github.com/markup-carve/carve-js.git",
+      "commit": "6d02fa7062dd03024e7c092016459602e9a7aeec"
+    },
+    "php": {
+      "repository": "https://github.com/markup-carve/carve-php.git",
+      "commit": "7033d04b1d942263508eadf9b699a77ee656bfda"
+    },
+    "rs": {
+      "repository": "https://github.com/markup-carve/carve-rs.git",
+      "commit": "9f3f334c7d5c91c57e4e6269b32599af1062fdde"
+    }
+  },
+  "method": "fixed-point single-character deletion preserving the nonempty word skeleton, layout and exact reader partition; errors abort",
+  "rows": []
+}

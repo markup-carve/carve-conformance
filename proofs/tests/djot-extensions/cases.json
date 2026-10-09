@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "projection": "Block structure only: paragraph and code leaves; recursive list/quote children; ordered list start. Inline text, code bytes, attributes, locations, list tightness, bullet marker characters and ordered delimiter/numbering styles are excluded.",
+  "configurations": {
+    "djot": "djot_bconfig with djot_table",
+    "list-interruption": "with_marker_interrupts prose_safe_markers djot_bconfig with djot_table; all other fields unchanged"
+  },
+  "cases": [
+    {
+      "id": "wrap-hyphen",
+      "change": "Replace the space after alpha with a newline.",
+      "before": "alpha - beta\n",
+      "after": "alpha\n- beta\n",
+      "expected": {
+        "djot": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph"
+          ]
+        },
+        "list-interruption": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph",
+            {
+              "bullet_list": [
+                [
+                  "paragraph"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "wrap-plus",
+      "change": "Replace the space after alpha with a newline.",
+      "before": "alpha + beta\n",
+      "after": "alpha\n+ beta\n",
+      "expected": {
+        "djot": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph"
+          ]
+        },
+        "list-interruption": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph",
+            {
+              "bullet_list": [
+                [
+                  "paragraph"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "wrap-asterisk",
+      "change": "Replace the space after alpha with a newline.",
+      "before": "alpha * beta\n",
+      "after": "alpha\n* beta\n",
+      "expected": {
+        "djot": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph"
+          ]
+        },
+        "list-interruption": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph",
+            {
+              "bullet_list": [
+                [
+                  "paragraph"
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "wrap-one",
+      "change": "Replace the space after alpha with a newline.",
+      "before": "alpha 1. beta\n",
+      "after": "alpha\n1. beta\n",
+      "expected": {
+        "djot": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph"
+          ]
+        },
+        "list-interruption": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph",
+            {
+              "ordered_list": [
+                [
+                  "paragraph"
+                ]
+              ],
+              "start": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "wrap-year",
+      "change": "Replace the space after alpha with a newline.",
+      "before": "alpha 1865. beta\n",
+      "after": "alpha\n1865. beta\n",
+      "expected": {
+        "djot": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph"
+          ]
+        },
+        "list-interruption": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph"
+          ]
+        }
+      }
+    },
+    {
+      "id": "wrap-plain",
+      "change": "Replace the space after alpha with a newline.",
+      "before": "alpha ordinary beta\n",
+      "after": "alpha\nordinary beta\n",
+      "expected": {
+        "djot": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph"
+          ]
+        },
+        "list-interruption": {
+          "before": [
+            "paragraph"
+          ],
+          "after": [
+            "paragraph"
+          ]
+        }
+      }
+    },
+    {
+      "id": "fenced-code-control",
+      "change": "Wrap code content; compare block structure only.",
+      "before": "```\nalpha - beta\n```\n",
+      "after": "```\nalpha\n- beta\n```\n",
+      "expected": {
+        "djot": {
+          "before": [
+            "code_block"
+          ],
+          "after": [
+            "code_block"
+          ]
+        },
+        "list-interruption": {
+          "before": [
+            "code_block"
+          ],
+          "after": [
+            "code_block"
+          ]
+        }
+      }
+    },
+    {
+      "id": "sublist-without-blank",
+      "change": "Remove the blank line before an indented sublist.",
+      "before": "- outer\n\n  - inner\n",
+      "after": "- outer\n  - inner\n",
+      "expected": {
+        "djot": {
+          "before": [
+            {
+              "bullet_list": [
+                [
+                  "paragraph",
+                  {
+                    "bullet_list": [
+                      [
+                        "paragraph"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          "after": [
+            {
+              "bullet_list": [
+                [
+                  "paragraph"
+                ]
+              ]
+            }
+          ]
+        },
+        "list-interruption": {
+          "before": [
+            {
+              "bullet_list": [
+                [
+                  "paragraph",
+                  {
+                    "bullet_list": [
+                      [
+                        "paragraph"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          "after": [
+            {
+              "bullet_list": [
+                [
+                  "paragraph",
+                  {
+                    "bullet_list": [
+                      [
+                        "paragraph"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

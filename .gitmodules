@@ -1,0 +1,3 @@
+[submodule "proofs/spec"]
+	path = proofs/spec
+	url = https://github.com/markup-carve/carve.git

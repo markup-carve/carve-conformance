@@ -1,0 +1,443 @@
+[
+  {
+    "family": "tab-marker",
+    "id": "231-a-tab-after-a-heading-quote-or-caption-marker-leaves-the-line-as-prose-2",
+    "source": "![Moon](m.jpg)\n^\tFigure 1\n",
+    "expectedHtml": "<p><img src=\"m.jpg\" alt=\"Moon\">\n^\tFigure 1</p>\n",
+    "specFixture": "231-a-tab-after-a-heading-quote-or-caption-marker-leaves-the-line-as-prose-2.crv"
+  },
+  {
+    "family": "tab-marker",
+    "id": "231-a-tab-after-a-heading-quote-or-caption-marker-leaves-the-line-as-prose",
+    "source": "#\tHeading\n\n>\tquoted\n",
+    "expectedHtml": "<p>#\tHeading</p>\n<p>&gt;\tquoted</p>\n",
+    "specFixture": "231-a-tab-after-a-heading-quote-or-caption-marker-leaves-the-line-as-prose.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-10",
+    "source": "> intro\n>\n%% c\n  more\n",
+    "expectedHtml": "<blockquote><p>intro</p></blockquote>\n<p>more</p>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-10.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-11",
+    "source": "> intro\n>\n+\n  more\n",
+    "expectedHtml": "<blockquote><p>intro</p></blockquote>\n<p>more</p>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-11.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-12",
+    "source": "> intro\n>\n+\nmore\n",
+    "expectedHtml": "<blockquote>\n  <p>intro</p>\n  <p>more</p>\n</blockquote>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-12.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-13",
+    "source": "- intro\n+\n  more\n",
+    "expectedHtml": "<ul>\n  <li>intro\nmore</li>\n</ul>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-13.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-14",
+    "source": "- x\n  > q\n +\n",
+    "expectedHtml": "<ul>\n  <li>x\n    <blockquote><p>q\n+</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-14.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-15",
+    "source": "- x\n  > q\n ZZZ\n",
+    "expectedHtml": "<ul>\n  <li>x\n    <blockquote><p>q\nZZZ</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-15.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-16",
+    "source": "- x\n  > q\n  +\n",
+    "expectedHtml": "<ul>\n  <li>x\n    <blockquote><p>q</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-16.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-17",
+    "source": "- x\n  > q\n+\n",
+    "expectedHtml": "<ul>\n  <li>x\n    <blockquote><p>q</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-17.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-18",
+    "source": "- x\n  > q\n   +\n",
+    "expectedHtml": "<ul>\n  <li>x\n    <blockquote><p>q\n+</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-18.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-19",
+    "source": "> q\n +\n- m\n",
+    "expectedHtml": "<blockquote><p>q\n+\n- m</p></blockquote>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-19.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-2",
+    "source": "[^a]: intro\n+\n more\n\nsee[^a]\n",
+    "expectedHtml": "<p>more</p>\n<p>see<a id=\"fnref1\" href=\"#fn1\" role=\"doc-noteref\"><sup>1</sup></a></p>\n<section role=\"doc-endnotes\" aria-label=\"Footnotes\">\n  <hr>\n  <ol>\n    <li id=\"fn1\">\n      <p>intro<a href=\"#fnref1\" role=\"doc-backlink\" aria-label=\"Back to reference\">↩</a></p>\n    </li>\n  </ol>\n</section>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-2.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-3",
+    "source": "[^a]: intro\n%% c\n  more\n\nsee[^a]\n",
+    "expectedHtml": "<p>more</p>\n<p>see<a id=\"fnref1\" href=\"#fn1\" role=\"doc-noteref\"><sup>1</sup></a></p>\n<section role=\"doc-endnotes\" aria-label=\"Footnotes\">\n  <hr>\n  <ol>\n    <li id=\"fn1\">\n      <p>intro<a href=\"#fnref1\" role=\"doc-backlink\" aria-label=\"Back to reference\">↩</a></p>\n    </li>\n  </ol>\n</section>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-3.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-4",
+    "source": "[^a]: intro\n+\n  more\n\nsee[^a]\n",
+    "expectedHtml": "<p>more</p>\n<p>see<a id=\"fnref1\" href=\"#fn1\" role=\"doc-noteref\"><sup>1</sup></a></p>\n<section role=\"doc-endnotes\" aria-label=\"Footnotes\">\n  <hr>\n  <ol>\n    <li id=\"fn1\">\n      <p>intro<a href=\"#fnref1\" role=\"doc-backlink\" aria-label=\"Back to reference\">↩</a></p>\n    </li>\n  </ol>\n</section>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-4.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-5",
+    "source": "[^a]: intro\n+\nmore\n\nsee[^a]\n",
+    "expectedHtml": "<p>see<a id=\"fnref1\" href=\"#fn1\" role=\"doc-noteref\"><sup>1</sup></a></p>\n<section role=\"doc-endnotes\" aria-label=\"Footnotes\">\n  <hr>\n  <ol>\n    <li id=\"fn1\">\n      <p>intro</p>\n      <p>more<a href=\"#fnref1\" role=\"doc-backlink\" aria-label=\"Back to reference\">↩</a></p>\n    </li>\n  </ol>\n</section>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-5.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-6",
+    "source": ":: term\n:  intro\n%% c\n  more\n",
+    "expectedHtml": "<dl>\n  <dt>term</dt>\n  <dd>intro</dd>\n</dl>\n<p>more</p>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-6.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-7",
+    "source": ":: term\n:  intro\n+\n  more\n",
+    "expectedHtml": "<dl>\n  <dt>term</dt>\n  <dd>intro</dd>\n</dl>\n<p>more</p>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-7.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-8",
+    "source": ":: term\n:  intro\n+\nmore\n",
+    "expectedHtml": "<dl>\n  <dt>term</dt>\n  <dd>\n    <p>intro</p>\n    <p>more</p>\n  </dd>\n</dl>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-8.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container-9",
+    "source": "> intro\n>\n\n  more\n",
+    "expectedHtml": "<blockquote><p>intro</p></blockquote>\n<p>more</p>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container-9.crv"
+  },
+  {
+    "family": "continuation",
+    "id": "435-the-continuation-marker-s-column-gate-reaches-every-container",
+    "source": "[^a]: intro\n%% c\n more\n\nsee[^a]\n",
+    "expectedHtml": "<p>more</p>\n<p>see<a id=\"fnref1\" href=\"#fn1\" role=\"doc-noteref\"><sup>1</sup></a></p>\n<section role=\"doc-endnotes\" aria-label=\"Footnotes\">\n  <hr>\n  <ol>\n    <li id=\"fn1\">\n      <p>intro<a href=\"#fnref1\" role=\"doc-backlink\" aria-label=\"Back to reference\">↩</a></p>\n    </li>\n  </ol>\n</section>\n",
+    "specFixture": "435-the-continuation-marker-s-column-gate-reaches-every-container.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-10",
+    "source": "- > ~~~\n  > x\n    > y\n  > ~~~\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    &gt; y\n    <blockquote>\n      <pre><code></code></pre>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-10.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-11",
+    "source": "- > ~~~\n  > x\n\n  > y\n  > ~~~\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    <blockquote><p>y\n~~~</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-11.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-12",
+    "source": "- > ~~~\n  > x\n\n    > y\n  > ~~~\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    <blockquote><p>y\n~~~</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-12.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-13",
+    "source": "- > ~~~\n  > x\n  > ~~~\n  > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n      <p>y</p>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-13.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-14",
+    "source": "- > ~~~\n  > x\n  > ~~~\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    &gt; y\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-14.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-15",
+    "source": "- > ~~~\n  > x\n  > ~~~\n\n  > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    <blockquote><p>y</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-15.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-16",
+    "source": "- > ~~~\n  > x\n  > ~~~\n\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    <blockquote><p>y</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-16.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-17",
+    "source": "- > ```=html\n  > x\n  > y\n  > ```\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      x\ny\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-17.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-18",
+    "source": "- > ```=html\n  > x\n    > y\n  > ```\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      x\n    </blockquote>\n    &gt; y\n    <blockquote>\n      <pre><code></code></pre>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-18.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-19",
+    "source": "- > ```=html\n  > x\n\n  > y\n  > ```\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      x\n    </blockquote>\n    <blockquote><p>y\n<code></code></p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-19.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-2",
+    "source": "- > ```\n  > x\n    > y\n  > ```\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    &gt; y\n    <blockquote>\n      <pre><code></code></pre>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-2.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-20",
+    "source": "- > ```=html\n  > x\n\n    > y\n  > ```\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      x\n    </blockquote>\n    <blockquote><p>y\n<code></code></p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-20.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-21",
+    "source": "- > ```=html\n  > x\n  > ```\n  > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      x\n      <p>y</p>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-21.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-22",
+    "source": "- > ```=html\n  > x\n  > ```\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      x\n    </blockquote>\n    &gt; y\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-22.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-23",
+    "source": "- > ```=html\n  > x\n  > ```\n\n  > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      x\n    </blockquote>\n    <blockquote><p>y</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-23.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-24",
+    "source": "- > ```=html\n  > x\n  > ```\n\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      x\n    </blockquote>\n    <blockquote><p>y</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-24.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-25",
+    "source": "- > # H\n  > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <h1 id=\"H\">H</h1>\n      <p>y</p>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-25.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-26",
+    "source": "- > # H\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <h1 id=\"H\">H</h1>\n      <p>y</p>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-26.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-27",
+    "source": "- > | a |\n  > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <table>\n        <tbody>\n          <tr><td>a</td></tr>\n        </tbody>\n      </table>\n      <p>y</p>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-27.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-28",
+    "source": "- > | a |\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <table>\n        <tbody>\n          <tr><td>a</td></tr>\n        </tbody>\n      </table>\n      <p>y</p>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-28.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-29",
+    "source": "- > p\n  > ```\n  > x\n  > ```\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <p>p</p>\n      <pre><code>x\n</code></pre>\n      <p>y</p>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-29.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-3",
+    "source": "- > ```\n  > x\n\n  > y\n  > ```\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    <blockquote><p>y\n<code></code></p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-3.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-30",
+    "source": "- > p\n  >\n  > ```\n  > x\n  > ```\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <p>p</p>\n      <pre><code>x\n</code></pre>\n      <p>y</p>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-30.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-31",
+    "source": "- > > ```\n  > > x\n  > > ```\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <blockquote>\n        <pre><code>x\n</code></pre>\n      </blockquote>\n    </blockquote>\n    &gt; y\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-31.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-32",
+    "source": "- > > ```\n  > > x\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <blockquote>\n        <pre><code>x\n</code></pre>\n      </blockquote>\n    </blockquote>\n    &gt; y\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-32.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-33",
+    "source": "- > ***\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <hr>\n      <p>y</p>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-33.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-34",
+    "source": "- > %%%\n  > x\n    > y\n  > %%%\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-34.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-35",
+    "source": "- > ```\n  > x\n  > ```\n  > ~~~\n  > z\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n      <pre><code>z\n</code></pre>\n    </blockquote>\n    &gt; y\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-35.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-36",
+    "source": "- > ```\n  > x\n  > ```\n  > ~~~\n  > z\n  > ~~~\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n      <pre><code>z\n</code></pre>\n      <p>y</p>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-36.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-4",
+    "source": "- > ```\n  > x\n\n    > y\n  > ```\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    <blockquote><p>y\n<code></code></p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-4.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-5",
+    "source": "- > ```\n  > x\n  > ```\n  > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n      <p>y</p>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-5.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-6",
+    "source": "- > ```\n  > x\n  > ```\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    &gt; y\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-6.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-7",
+    "source": "- > ```\n  > x\n  > ```\n\n  > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    <blockquote><p>y</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-7.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-8",
+    "source": "- > ```\n  > x\n  > ```\n\n    > y\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\n</code></pre>\n    </blockquote>\n    <blockquote><p>y</p></blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-8.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-9",
+    "source": "- > ~~~\n  > x\n  > y\n  > ~~~\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\ny\n</code></pre>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal-9.crv"
+  },
+  {
+    "family": "opaque-quote",
+    "id": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal",
+    "source": "- > ```\n  > x\n  > y\n  > ```\n",
+    "expectedHtml": "<ul>\n  <li>\n    <blockquote>\n      <pre><code>x\ny\n</code></pre>\n    </blockquote>\n  </li>\n</ul>\n",
+    "specFixture": "535-a-marker-line-opaque-quote-keeps-overindented-markers-literal.crv"
+  },
+  {
+    "family": "opaque-span",
+    "id": "69-opaque-spans-inside-a-container-2",
+    "source": "::: note\n~~~\n:::\n~~~\nbody\n:::\nafter\n",
+    "expectedHtml": "<aside class=\"admonition note\" aria-label=\"Note\">\n  <pre><code>:::\n</code></pre>\n  <p>body</p>\n</aside>\n<p>after</p>\n",
+    "specFixture": "69-opaque-spans-inside-a-container-2.crv"
+  },
+  {
+    "family": "opaque-span",
+    "id": "69-opaque-spans-inside-a-container-3",
+    "source": "::: note\n```text\n::: tip\n```\nbody\n:::\nafter\n",
+    "expectedHtml": "<aside class=\"admonition note\" aria-label=\"Note\">\n  <pre><code class=\"language-text\">::: tip\n</code></pre>\n  <p>body</p>\n</aside>\n<p>after</p>\n",
+    "specFixture": "69-opaque-spans-inside-a-container-3.crv"
+  },
+  {
+    "family": "opaque-span",
+    "id": "69-opaque-spans-inside-a-container-4",
+    "source": "::: note\n%%%\n:::\n%%%\nbody\n:::\nafter\n",
+    "expectedHtml": "<aside class=\"admonition note\" aria-label=\"Note\">\n  <p>body</p>\n</aside>\n<p>after</p>\n",
+    "specFixture": "69-opaque-spans-inside-a-container-4.crv"
+  },
+  {
+    "family": "opaque-span",
+    "id": "69-opaque-spans-inside-a-container-5",
+    "source": "::: note\n```\nx\n:::\nafter\n",
+    "expectedHtml": "<aside class=\"admonition note\" aria-label=\"Note\">\n  <pre><code>x\n</code></pre>\n</aside>\n<p>after</p>\n",
+    "specFixture": "69-opaque-spans-inside-a-container-5.crv"
+  },
+  {
+    "family": "opaque-span",
+    "id": "69-opaque-spans-inside-a-container-6",
+    "source": "> ```\n",
+    "expectedHtml": "<blockquote>\n  <pre><code></code></pre>\n</blockquote>\n",
+    "specFixture": "69-opaque-spans-inside-a-container-6.crv"
+  },
+  {
+    "family": "opaque-span",
+    "id": "69-opaque-spans-inside-a-container",
+    "source": "::: note\n```\n:::\n```\nbody\n:::\nafter\n",
+    "expectedHtml": "<aside class=\"admonition note\" aria-label=\"Note\">\n  <pre><code>:::\n</code></pre>\n  <p>body</p>\n</aside>\n<p>after</p>\n",
+    "specFixture": "69-opaque-spans-inside-a-container.crv"
+  }
+]

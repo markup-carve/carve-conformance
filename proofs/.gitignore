@@ -1,0 +1,16 @@
+node_modules/
+_opam/
+*.vo
+*.vos
+*.vok
+*.glob
+.*.aux
+reports/*.partial
+
+.cache/
+
+reports/*-ci.json
+_site/
+test-results/
+playwright-report/
+.venv/

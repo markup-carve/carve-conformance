@@ -1,0 +1,261 @@
+{
+  "pin": {
+    "repository": "https://github.com/hon-gyu/djot.v.git",
+    "commit": "f38c92d585b914d673e35d0fca23cf5cad0a6b56"
+  },
+  "ocaml": "4.14.2",
+  "suiteSha256": "82bf83198d9a61941d3351c17c0968f5b5c9e83bda45dc05690dae90e3042597",
+  "projection": "Block structure only: paragraph and code leaves; recursive list/quote children; ordered list start. Inline text, code bytes, attributes, locations, list tightness, bullet marker characters and ordered delimiter/numbering styles are excluded.",
+  "rows": [
+    {
+      "id": "wrap-hyphen",
+      "config": "djot",
+      "changed": false,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph"
+      ]
+    },
+    {
+      "id": "wrap-hyphen",
+      "config": "list-interruption",
+      "changed": true,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph",
+        {
+          "bullet_list": [
+            [
+              "paragraph"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-plus",
+      "config": "djot",
+      "changed": false,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph"
+      ]
+    },
+    {
+      "id": "wrap-plus",
+      "config": "list-interruption",
+      "changed": true,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph",
+        {
+          "bullet_list": [
+            [
+              "paragraph"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-asterisk",
+      "config": "djot",
+      "changed": false,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph"
+      ]
+    },
+    {
+      "id": "wrap-asterisk",
+      "config": "list-interruption",
+      "changed": true,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph",
+        {
+          "bullet_list": [
+            [
+              "paragraph"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-one",
+      "config": "djot",
+      "changed": false,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph"
+      ]
+    },
+    {
+      "id": "wrap-one",
+      "config": "list-interruption",
+      "changed": true,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph",
+        {
+          "ordered_list": [
+            [
+              "paragraph"
+            ]
+          ],
+          "start": 1
+        }
+      ]
+    },
+    {
+      "id": "wrap-year",
+      "config": "djot",
+      "changed": false,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph"
+      ]
+    },
+    {
+      "id": "wrap-year",
+      "config": "list-interruption",
+      "changed": false,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph"
+      ]
+    },
+    {
+      "id": "wrap-plain",
+      "config": "djot",
+      "changed": false,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph"
+      ]
+    },
+    {
+      "id": "wrap-plain",
+      "config": "list-interruption",
+      "changed": false,
+      "before": [
+        "paragraph"
+      ],
+      "after": [
+        "paragraph"
+      ]
+    },
+    {
+      "id": "fenced-code-control",
+      "config": "djot",
+      "changed": false,
+      "before": [
+        "code_block"
+      ],
+      "after": [
+        "code_block"
+      ]
+    },
+    {
+      "id": "fenced-code-control",
+      "config": "list-interruption",
+      "changed": false,
+      "before": [
+        "code_block"
+      ],
+      "after": [
+        "code_block"
+      ]
+    },
+    {
+      "id": "sublist-without-blank",
+      "config": "djot",
+      "changed": true,
+      "before": [
+        {
+          "bullet_list": [
+            [
+              "paragraph",
+              {
+                "bullet_list": [
+                  [
+                    "paragraph"
+                  ]
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "after": [
+        {
+          "bullet_list": [
+            [
+              "paragraph"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sublist-without-blank",
+      "config": "list-interruption",
+      "changed": false,
+      "before": [
+        {
+          "bullet_list": [
+            [
+              "paragraph",
+              {
+                "bullet_list": [
+                  [
+                    "paragraph"
+                  ]
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "after": [
+        {
+          "bullet_list": [
+            [
+              "paragraph",
+              {
+                "bullet_list": [
+                  [
+                    "paragraph"
+                  ]
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

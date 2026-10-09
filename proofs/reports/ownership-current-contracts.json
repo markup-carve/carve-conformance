@@ -1,0 +1,5321 @@
+{
+  "pins": {
+    "spec": {
+      "repository": "https://github.com/markup-carve/carve.git",
+      "commit": "1acc54cfb26811868490dd8add4c7f75128a1507"
+    },
+    "js": {
+      "repository": "https://github.com/markup-carve/carve-js.git",
+      "commit": "c77d85ead683bffc534d50ab18c1df95f1821c8b"
+    },
+    "php": {
+      "repository": "https://github.com/markup-carve/carve-php.git",
+      "commit": "4c1cf690ea57e6ce035dfbecce932d42684c1018"
+    },
+    "rs": {
+      "repository": "https://github.com/markup-carve/carve-rs.git",
+      "commit": "1aa51a380af1c5407fba49a476497ac4795adaeb"
+    }
+  },
+  "version": "0.1",
+  "projectionVersion": 1,
+  "suiteSha256": "1f3cf52da791875241a172c86712dc435129227e0f7a1be6916984fc205d65fd",
+  "rows": [
+    {
+      "id": "wrap-prose",
+      "contract": "eligible-wrap",
+      "before": "alpha beta gamma\n",
+      "after": "alpha\nbeta gamma\n",
+      "expected": "equal",
+      "reader": "spec",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-unicode",
+      "contract": "eligible-wrap",
+      "before": "alpha café 日本語\n",
+      "after": "alpha café\n日本語\n",
+      "expected": "equal",
+      "reader": "spec",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-emphasis",
+      "contract": "eligible-wrap",
+      "before": "alpha /italic words/ omega\n",
+      "after": "alpha /italic\nwords/ omega\n",
+      "expected": "equal",
+      "reader": "spec",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-link-label",
+      "contract": "eligible-wrap",
+      "before": "alpha [label words](/target) omega\n",
+      "after": "alpha [label\nwords](/target) omega\n",
+      "expected": "equal",
+      "reader": "spec",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-list-marker",
+      "contract": "eligible-wrap",
+      "before": "alpha - item words\n",
+      "after": "alpha\n- item words\n",
+      "expected": "equal",
+      "reader": "spec",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-heading",
+      "contract": "wrap-exclusion",
+      "before": "alpha # heading\n",
+      "after": "alpha\n# heading\n",
+      "expected": "different",
+      "reader": "spec",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha # heading"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "heading"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "heading"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha # heading"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "heading"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "heading"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-quote",
+      "contract": "wrap-exclusion",
+      "before": "alpha > quoted\n",
+      "after": "alpha\n> quoted\n",
+      "expected": "different",
+      "reader": "spec",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha > quoted"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "quoted"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha > quoted"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "quoted"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-code-bytes",
+      "contract": "wrap-exclusion",
+      "before": "alpha `code words`\n",
+      "after": "alpha `code\nwords`\n",
+      "expected": "different",
+      "reader": "spec",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code words"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code\nwords"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code words"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code\nwords"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-comment",
+      "contract": "wrap-exclusion",
+      "before": "alpha %% hidden words\n",
+      "after": "alpha %% hidden\nwords\n",
+      "expected": "different",
+      "reader": "spec",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha words"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha words"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-after-heading",
+      "expectedTail": "<ul><li>later</li></ul>",
+      "contract": "closed-prefix",
+      "before": "- alpha\n\n# Boundary\n\n",
+      "after": "- alpha\n\n# Boundary\n\n- later\n",
+      "expected": "equal",
+      "projection": "prefix",
+      "reader": "spec",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            },
+            {
+              "tag": "ul",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "li",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-after-code-boundary",
+      "expectedTail": "<blockquote><p>later</p></blockquote>",
+      "contract": "closed-prefix",
+      "before": "```\npayload\n```\n\n# Boundary\n\n",
+      "after": "```\npayload\n```\n\n# Boundary\n\n> later\n",
+      "expected": "equal",
+      "projection": "prefix",
+      "reader": "spec",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            },
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-list-item",
+      "contract": "append-exclusion",
+      "before": "- alpha\n\n",
+      "after": "- alpha\n\n- later\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "spec",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attach-code-caption",
+      "contract": "append-exclusion",
+      "before": "```\npayload\n```\n\n",
+      "after": "```\npayload\n```\n\n^ caption\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "spec",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "pre",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "code",
+                  "attrs": {},
+                  "children": [
+                    "payload\n"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "pre",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "code",
+                  "attrs": {},
+                  "children": [
+                    "payload\n"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attach-quote-caption",
+      "contract": "append-exclusion",
+      "before": "> alpha\n\n",
+      "after": "> alpha\n\n^ caption\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "spec",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replace-link-definition",
+      "contract": "reference-render-shape",
+      "before": "[label][ref]\n\n[ref]: /one\n",
+      "after": "[label][ref]\n\n[ref]: /two\n",
+      "expected": "equal",
+      "projection": "reference",
+      "reader": "spec",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {},
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {},
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/two"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replace-image-definition",
+      "contract": "reference-render-shape",
+      "before": "![label][ref]\n\n[ref]: /one\n",
+      "after": "![label][ref]\n\n[ref]: /two\n",
+      "expected": "equal",
+      "projection": "reference",
+      "reader": "spec",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label"
+          },
+          "children": []
+        }
+      ],
+      "right": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label"
+          },
+          "children": []
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label",
+            "src": "/one"
+          },
+          "children": []
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label",
+            "src": "/two"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "unrelated-definition",
+      "contract": "reference-render-shape",
+      "before": "[label][ref]\n\n[ref]: /one\n",
+      "after": "[label][ref]\n\n[ref]: /one\n[other]: /two\n",
+      "expected": "equal",
+      "reader": "spec",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-prose",
+      "contract": "eligible-wrap",
+      "before": "alpha beta gamma\n",
+      "after": "alpha\nbeta gamma\n",
+      "expected": "equal",
+      "reader": "js",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-unicode",
+      "contract": "eligible-wrap",
+      "before": "alpha café 日本語\n",
+      "after": "alpha café\n日本語\n",
+      "expected": "equal",
+      "reader": "js",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-emphasis",
+      "contract": "eligible-wrap",
+      "before": "alpha /italic words/ omega\n",
+      "after": "alpha /italic\nwords/ omega\n",
+      "expected": "equal",
+      "reader": "js",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-link-label",
+      "contract": "eligible-wrap",
+      "before": "alpha [label words](/target) omega\n",
+      "after": "alpha [label\nwords](/target) omega\n",
+      "expected": "equal",
+      "reader": "js",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-list-marker",
+      "contract": "eligible-wrap",
+      "before": "alpha - item words\n",
+      "after": "alpha\n- item words\n",
+      "expected": "equal",
+      "reader": "js",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-heading",
+      "contract": "wrap-exclusion",
+      "before": "alpha # heading\n",
+      "after": "alpha\n# heading\n",
+      "expected": "different",
+      "reader": "js",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha # heading"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "heading"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "heading"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha # heading"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "heading"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "heading"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-quote",
+      "contract": "wrap-exclusion",
+      "before": "alpha > quoted\n",
+      "after": "alpha\n> quoted\n",
+      "expected": "different",
+      "reader": "js",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha > quoted"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "quoted"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha > quoted"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "quoted"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-code-bytes",
+      "contract": "wrap-exclusion",
+      "before": "alpha `code words`\n",
+      "after": "alpha `code\nwords`\n",
+      "expected": "different",
+      "reader": "js",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code words"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code\nwords"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code words"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code\nwords"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-comment",
+      "contract": "wrap-exclusion",
+      "before": "alpha %% hidden words\n",
+      "after": "alpha %% hidden\nwords\n",
+      "expected": "different",
+      "reader": "js",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha words"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha words"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-after-heading",
+      "expectedTail": "<ul><li>later</li></ul>",
+      "contract": "closed-prefix",
+      "before": "- alpha\n\n# Boundary\n\n",
+      "after": "- alpha\n\n# Boundary\n\n- later\n",
+      "expected": "equal",
+      "projection": "prefix",
+      "reader": "js",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            },
+            {
+              "tag": "ul",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "li",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-after-code-boundary",
+      "expectedTail": "<blockquote><p>later</p></blockquote>",
+      "contract": "closed-prefix",
+      "before": "```\npayload\n```\n\n# Boundary\n\n",
+      "after": "```\npayload\n```\n\n# Boundary\n\n> later\n",
+      "expected": "equal",
+      "projection": "prefix",
+      "reader": "js",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            },
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-list-item",
+      "contract": "append-exclusion",
+      "before": "- alpha\n\n",
+      "after": "- alpha\n\n- later\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "js",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attach-code-caption",
+      "contract": "append-exclusion",
+      "before": "```\npayload\n```\n\n",
+      "after": "```\npayload\n```\n\n^ caption\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "js",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "pre",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "code",
+                  "attrs": {},
+                  "children": [
+                    "payload\n"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "pre",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "code",
+                  "attrs": {},
+                  "children": [
+                    "payload\n"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attach-quote-caption",
+      "contract": "append-exclusion",
+      "before": "> alpha\n\n",
+      "after": "> alpha\n\n^ caption\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "js",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replace-link-definition",
+      "contract": "reference-render-shape",
+      "before": "[label][ref]\n\n[ref]: /one\n",
+      "after": "[label][ref]\n\n[ref]: /two\n",
+      "expected": "equal",
+      "projection": "reference",
+      "reader": "js",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {},
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {},
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/two"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replace-image-definition",
+      "contract": "reference-render-shape",
+      "before": "![label][ref]\n\n[ref]: /one\n",
+      "after": "![label][ref]\n\n[ref]: /two\n",
+      "expected": "equal",
+      "projection": "reference",
+      "reader": "js",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label"
+          },
+          "children": []
+        }
+      ],
+      "right": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label"
+          },
+          "children": []
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label",
+            "src": "/one"
+          },
+          "children": []
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label",
+            "src": "/two"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "unrelated-definition",
+      "contract": "reference-render-shape",
+      "before": "[label][ref]\n\n[ref]: /one\n",
+      "after": "[label][ref]\n\n[ref]: /one\n[other]: /two\n",
+      "expected": "equal",
+      "reader": "js",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-prose",
+      "contract": "eligible-wrap",
+      "before": "alpha beta gamma\n",
+      "after": "alpha\nbeta gamma\n",
+      "expected": "equal",
+      "reader": "php",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-unicode",
+      "contract": "eligible-wrap",
+      "before": "alpha café 日本語\n",
+      "after": "alpha café\n日本語\n",
+      "expected": "equal",
+      "reader": "php",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-emphasis",
+      "contract": "eligible-wrap",
+      "before": "alpha /italic words/ omega\n",
+      "after": "alpha /italic\nwords/ omega\n",
+      "expected": "equal",
+      "reader": "php",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-link-label",
+      "contract": "eligible-wrap",
+      "before": "alpha [label words](/target) omega\n",
+      "after": "alpha [label\nwords](/target) omega\n",
+      "expected": "equal",
+      "reader": "php",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-list-marker",
+      "contract": "eligible-wrap",
+      "before": "alpha - item words\n",
+      "after": "alpha\n- item words\n",
+      "expected": "equal",
+      "reader": "php",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-heading",
+      "contract": "wrap-exclusion",
+      "before": "alpha # heading\n",
+      "after": "alpha\n# heading\n",
+      "expected": "different",
+      "reader": "php",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha # heading"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "heading"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "heading"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha # heading"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "heading"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "heading"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-quote",
+      "contract": "wrap-exclusion",
+      "before": "alpha > quoted\n",
+      "after": "alpha\n> quoted\n",
+      "expected": "different",
+      "reader": "php",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha > quoted"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "quoted"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha > quoted"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "quoted"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-code-bytes",
+      "contract": "wrap-exclusion",
+      "before": "alpha `code words`\n",
+      "after": "alpha `code\nwords`\n",
+      "expected": "different",
+      "reader": "php",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code words"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code\nwords"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code words"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code\nwords"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-comment",
+      "contract": "wrap-exclusion",
+      "before": "alpha %% hidden words\n",
+      "after": "alpha %% hidden\nwords\n",
+      "expected": "different",
+      "reader": "php",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha words"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha words"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-after-heading",
+      "expectedTail": "<ul><li>later</li></ul>",
+      "contract": "closed-prefix",
+      "before": "- alpha\n\n# Boundary\n\n",
+      "after": "- alpha\n\n# Boundary\n\n- later\n",
+      "expected": "equal",
+      "projection": "prefix",
+      "reader": "php",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            },
+            {
+              "tag": "ul",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "li",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-after-code-boundary",
+      "expectedTail": "<blockquote><p>later</p></blockquote>",
+      "contract": "closed-prefix",
+      "before": "```\npayload\n```\n\n# Boundary\n\n",
+      "after": "```\npayload\n```\n\n# Boundary\n\n> later\n",
+      "expected": "equal",
+      "projection": "prefix",
+      "reader": "php",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            },
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-list-item",
+      "contract": "append-exclusion",
+      "before": "- alpha\n\n",
+      "after": "- alpha\n\n- later\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "php",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attach-code-caption",
+      "contract": "append-exclusion",
+      "before": "```\npayload\n```\n\n",
+      "after": "```\npayload\n```\n\n^ caption\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "php",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "pre",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "code",
+                  "attrs": {},
+                  "children": [
+                    "payload\n"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "pre",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "code",
+                  "attrs": {},
+                  "children": [
+                    "payload\n"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attach-quote-caption",
+      "contract": "append-exclusion",
+      "before": "> alpha\n\n",
+      "after": "> alpha\n\n^ caption\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "php",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replace-link-definition",
+      "contract": "reference-render-shape",
+      "before": "[label][ref]\n\n[ref]: /one\n",
+      "after": "[label][ref]\n\n[ref]: /two\n",
+      "expected": "equal",
+      "projection": "reference",
+      "reader": "php",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {},
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {},
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/two"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replace-image-definition",
+      "contract": "reference-render-shape",
+      "before": "![label][ref]\n\n[ref]: /one\n",
+      "after": "![label][ref]\n\n[ref]: /two\n",
+      "expected": "equal",
+      "projection": "reference",
+      "reader": "php",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label"
+          },
+          "children": []
+        }
+      ],
+      "right": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label"
+          },
+          "children": []
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label",
+            "src": "/one"
+          },
+          "children": []
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label",
+            "src": "/two"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "unrelated-definition",
+      "contract": "reference-render-shape",
+      "before": "[label][ref]\n\n[ref]: /one\n",
+      "after": "[label][ref]\n\n[ref]: /one\n[other]: /two\n",
+      "expected": "equal",
+      "reader": "php",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-prose",
+      "contract": "eligible-wrap",
+      "before": "alpha beta gamma\n",
+      "after": "alpha\nbeta gamma\n",
+      "expected": "equal",
+      "reader": "rs",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha beta gamma"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-unicode",
+      "contract": "eligible-wrap",
+      "before": "alpha café 日本語\n",
+      "after": "alpha café\n日本語\n",
+      "expected": "equal",
+      "reader": "rs",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha café 日本語"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-emphasis",
+      "contract": "eligible-wrap",
+      "before": "alpha /italic words/ omega\n",
+      "after": "alpha /italic\nwords/ omega\n",
+      "expected": "equal",
+      "reader": "rs",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "em",
+              "attrs": {},
+              "children": [
+                "italic words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-link-label",
+      "contract": "eligible-wrap",
+      "before": "alpha [label words](/target) omega\n",
+      "after": "alpha [label\nwords](/target) omega\n",
+      "expected": "equal",
+      "reader": "rs",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/target"
+              },
+              "children": [
+                "label words"
+              ]
+            },
+            " omega"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-list-marker",
+      "contract": "eligible-wrap",
+      "before": "alpha - item words\n",
+      "after": "alpha\n- item words\n",
+      "expected": "equal",
+      "reader": "rs",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha - item words"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-heading",
+      "contract": "wrap-exclusion",
+      "before": "alpha # heading\n",
+      "after": "alpha\n# heading\n",
+      "expected": "different",
+      "reader": "rs",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha # heading"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "heading"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "heading"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha # heading"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "heading"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "heading"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-quote",
+      "contract": "wrap-exclusion",
+      "before": "alpha > quoted\n",
+      "after": "alpha\n> quoted\n",
+      "expected": "different",
+      "reader": "rs",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha > quoted"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "quoted"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha > quoted"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        },
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "quoted"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-code-bytes",
+      "contract": "wrap-exclusion",
+      "before": "alpha `code words`\n",
+      "after": "alpha `code\nwords`\n",
+      "expected": "different",
+      "reader": "rs",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code words"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code\nwords"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code words"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha ",
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "code\nwords"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrap-comment",
+      "contract": "wrap-exclusion",
+      "before": "alpha %% hidden words\n",
+      "after": "alpha %% hidden\nwords\n",
+      "expected": "different",
+      "reader": "rs",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha words"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha"
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            "alpha words"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-after-heading",
+      "expectedTail": "<ul><li>later</li></ul>",
+      "contract": "closed-prefix",
+      "before": "- alpha\n\n# Boundary\n\n",
+      "after": "- alpha\n\n# Boundary\n\n- later\n",
+      "expected": "equal",
+      "projection": "prefix",
+      "reader": "rs",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            },
+            {
+              "tag": "ul",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "li",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-after-code-boundary",
+      "expectedTail": "<blockquote><p>later</p></blockquote>",
+      "contract": "closed-prefix",
+      "before": "```\npayload\n```\n\n# Boundary\n\n",
+      "after": "```\npayload\n```\n\n# Boundary\n\n> later\n",
+      "expected": "equal",
+      "projection": "prefix",
+      "reader": "rs",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "h1",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            "Boundary"
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "attrs": {
+            "id": "Boundary"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "attrs": {},
+              "children": [
+                "Boundary"
+              ]
+            },
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "append-list-item",
+      "contract": "append-exclusion",
+      "before": "- alpha\n\n",
+      "after": "- alpha\n\n- later\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "rs",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "ul",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "li",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "later"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attach-code-caption",
+      "contract": "append-exclusion",
+      "before": "```\npayload\n```\n\n",
+      "after": "```\npayload\n```\n\n^ caption\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "rs",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "pre",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "code",
+                  "attrs": {},
+                  "children": [
+                    "payload\n"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "pre",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "code",
+              "attrs": {},
+              "children": [
+                "payload\n"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "pre",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "code",
+                  "attrs": {},
+                  "children": [
+                    "payload\n"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "attach-quote-caption",
+      "contract": "append-exclusion",
+      "before": "> alpha\n\n",
+      "after": "> alpha\n\n^ caption\n",
+      "expected": "different",
+      "projection": "prefix",
+      "reader": "rs",
+      "outcome": "different",
+      "left": [
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "blockquote",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "p",
+              "attrs": {},
+              "children": [
+                "alpha"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "figure",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "blockquote",
+              "attrs": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "attrs": {},
+                  "children": [
+                    "alpha"
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "figcaption",
+              "attrs": {},
+              "children": [
+                "caption"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replace-link-definition",
+      "contract": "reference-render-shape",
+      "before": "[label][ref]\n\n[ref]: /one\n",
+      "after": "[label][ref]\n\n[ref]: /two\n",
+      "expected": "equal",
+      "projection": "reference",
+      "reader": "rs",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {},
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {},
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/two"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "replace-image-definition",
+      "contract": "reference-render-shape",
+      "before": "![label][ref]\n\n[ref]: /one\n",
+      "after": "![label][ref]\n\n[ref]: /two\n",
+      "expected": "equal",
+      "projection": "reference",
+      "reader": "rs",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label"
+          },
+          "children": []
+        }
+      ],
+      "right": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label"
+          },
+          "children": []
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label",
+            "src": "/one"
+          },
+          "children": []
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "img",
+          "attrs": {
+            "alt": "label",
+            "src": "/two"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "unrelated-definition",
+      "contract": "reference-render-shape",
+      "before": "[label][ref]\n\n[ref]: /one\n",
+      "after": "[label][ref]\n\n[ref]: /one\n[other]: /two\n",
+      "expected": "equal",
+      "reader": "rs",
+      "outcome": "equal",
+      "left": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "right": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawLeft": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ],
+      "rawRight": [
+        {
+          "tag": "p",
+          "attrs": {},
+          "children": [
+            {
+              "tag": "a",
+              "attrs": {
+                "href": "/one"
+              },
+              "children": [
+                "label"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

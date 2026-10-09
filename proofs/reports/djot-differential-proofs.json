@@ -1,0 +1,10 @@
+{
+  "pin": {
+    "repository": "https://github.com/hon-gyu/djot.v.git",
+    "commit": "f38c92d585b914d673e35d0fca23cf5cad0a6b56"
+  },
+  "sourceSha256": "99b23cf391494368d29d8ce95c5b4e35334b12dddec63dbdd21b2a37ff41e133",
+  "rocq": "The Rocq Prover, version 9.2\ncompiled with OCaml 4.14.2",
+  "closedUnderGlobalContext": 4,
+  "transcript": "Closed under the global context\nClosed under the global context\nClosed under the global context\nClosed under the global context"
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "footnote-lazy",
+    "source": "[^n]: a\nb\n\n[^n]\n",
+    "expectedAgreement": true,
+    "classification": "fixed-in-djot-v"
+  },
+  {
+    "id": "footnote-indented-control",
+    "source": "[^n]: a\n b\n\n[^n]\n",
+    "expectedAgreement": true,
+    "classification": "control"
+  },
+  {
+    "id": "footnote-blank-control",
+    "source": "[^n]: a\n\nb\n\n[^n]\n",
+    "expectedAgreement": true,
+    "classification": "control"
+  },
+  {
+    "id": "footnote-unreferenced",
+    "source": "[^n]: a\nb\n",
+    "expectedAgreement": true,
+    "classification": "fixed-in-djot-v"
+  },
+  {
+    "id": "image-unresolved",
+    "source": "![x][r]\n",
+    "expectedAgreement": false,
+    "classification": "djot-js-renderer-candidate"
+  },
+  {
+    "id": "image-resolved-control",
+    "source": "![x][r]\n\n[r]: /target\n",
+    "expectedAgreement": true,
+    "classification": "control"
+  },
+  {
+    "id": "image-collapsed",
+    "source": "![x][]\n",
+    "expectedAgreement": false,
+    "classification": "djot-js-renderer-candidate"
+  },
+  {
+    "id": "known-container-recovery",
+    "source": "> {#same\n> alpha\n",
+    "expectedAgreement": false,
+    "classification": "documented-difference"
+  },
+  {
+    "id": "known-escaped-reference",
+    "source": "[x][a\\]b]\n",
+    "expectedAgreement": false,
+    "classification": "documented-difference"
+  },
+  {
+    "id": "known-smart-heading",
+    "source": "# \"x\n",
+    "expectedAgreement": false,
+    "classification": "documented-intentional-difference"
+  },
+  {
+    "id": "fixed-footnote-ids",
+    "source": "x[^n]\n\nx[^n]\n\n[^n]: note\n",
+    "expectedAgreement": true,
+    "classification": "already-fixed-in-current-djot-js"
+  },
+  {
+    "id": "unicode-control",
+    "source": "# Café α\n\n[été](café)\n",
+    "expectedAgreement": true,
+    "classification": "control"
+  }
+]

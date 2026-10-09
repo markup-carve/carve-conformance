@@ -1,0 +1,82 @@
+{
+  "toolchain": {
+    "rocq": "The Rocq Prover, version 9.2\ncompiled with OCaml 4.14.2",
+    "ocaml": "4.14.2"
+  },
+  "theoremCount": 15,
+  "theorems": [
+    "singleton_claim_names_frame",
+    "selected_candidate_is_open",
+    "stack_selection_is_live",
+    "first_accepted_candidate_wins",
+    "closed_candidate_is_skipped",
+    "candidate_selection_append",
+    "selection_visits_bounded",
+    "explicit_prefix_wins",
+    "live_stack_claim_wins",
+    "rejected_stack_claim_uses_scan",
+    "failed_scan_visits_every_candidate",
+    "successful_scan_has_first_witness",
+    "live_candidate_witness",
+    "prefix_selection_is_live",
+    "global_selection_is_live"
+  ],
+  "closedUnderGlobalContext": 15,
+  "examples": 13,
+  "extractedOutput": "ancestor:0 visits:2; claim:0; sibling:none",
+  "sourceHashes": {
+    "proofs/layout/Ownership.v": "c9e2183f9b999daec7fda33fb77e161fbac13ea0252da8d3202b8a2fe012cd50",
+    "proofs/layout/StackSelection.v": "56e3e0ca9ea2245b31723684e3213774d6ac57a2b5ce52dae9fc12dae99600bf",
+    "scripts/stack-proof-check.mjs": "1156aa466126f1fbe21c6ef2a5e0eafd949d7231956cbaa794cadc6b7df25e54",
+    "scripts/proof-validation.mjs": "859076f06d1d789d303ff12a2e4616560d56fa53dcd7134075274b21bca2858d"
+  },
+  "transcript": "The Rocq Prover, version 9.2\ncompiled with OCaml 4.14.2\n\n4.14.2\n\nFile \"./Ownership.v\", line 1, characters 5-8:\nWarning: \"From Coq\" has been replaced by \"From Stdlib\".\n[deprecated-from-Coq,deprecated-since-9.0,deprecated,default]\n\n\nCARVE_ASSUMPTIONS:singleton_claim_names_frame\nClosed under the global context\nCARVE_ASSUMPTIONS:selected_candidate_is_open\nClosed under the global context\nCARVE_ASSUMPTIONS:stack_selection_is_live\nClosed under the global context\nCARVE_ASSUMPTIONS:first_accepted_candidate_wins\nClosed under the global context\nCARVE_ASSUMPTIONS:closed_candidate_is_skipped\nClosed under the global context\nCARVE_ASSUMPTIONS:candidate_selection_append\nClosed under the global context\nCARVE_ASSUMPTIONS:selection_visits_bounded\nClosed under the global context\nCARVE_ASSUMPTIONS:explicit_prefix_wins\nClosed under the global context\nCARVE_ASSUMPTIONS:live_stack_claim_wins\nClosed under the global context\nCARVE_ASSUMPTIONS:rejected_stack_claim_uses_scan\nClosed under the global context\nCARVE_ASSUMPTIONS:failed_scan_visits_every_candidate\nClosed under the global context\nCARVE_ASSUMPTIONS:successful_scan_has_first_witness\nClosed under the global context\nCARVE_ASSUMPTIONS:live_candidate_witness\nClosed under the global context\nCARVE_ASSUMPTIONS:prefix_selection_is_live\nClosed under the global context\nCARVE_ASSUMPTIONS:global_selection_is_live\nClosed under the global context\nFile \"./StackExamples.v\", line 130, characters 0-63:\nWarning: Setting extraction output directory by default to\n\"<temporary-directory>\". Use \"Set Extraction Output Directory\" or\ncommand line option \"-output-directory\" to set a different directory for\nextracted files to appear in.\n[extraction-default-directory,extraction,default]\n\n\nancestor:0 visits:2; claim:0; sibling:none\n",
+  "commands": [
+    [
+      "rocq",
+      "--version"
+    ],
+    [
+      "ocamlopt",
+      "-version"
+    ],
+    [
+      "rocq",
+      "compile",
+      "-q",
+      "-Q",
+      ".",
+      "",
+      "Ownership.v"
+    ],
+    [
+      "rocq",
+      "compile",
+      "-q",
+      "-Q",
+      ".",
+      "",
+      "StackSelection.v"
+    ],
+    [
+      "rocq",
+      "compile",
+      "-q",
+      "-Q",
+      ".",
+      "",
+      "StackExamples.v"
+    ],
+    [
+      "ocamlopt",
+      "stack_model.mli",
+      "stack_model.ml",
+      "driver.ml",
+      "-o",
+      "stack-driver"
+    ],
+    [
+      "./stack-driver"
+    ]
+  ]
+}

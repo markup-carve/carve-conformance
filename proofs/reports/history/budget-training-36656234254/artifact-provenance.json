@@ -1,0 +1,10 @@
+{
+  "runId": "36656234254",
+  "runUrl": "https://github.com/markup-carve/carve-proofs/actions/runs/36656234254",
+  "artifactId": 11072158730,
+  "name": "cross-reader-evidence",
+  "digest": "sha256:d138994f2e764a8ed3db6d61ac66686c4de552226452b05304dfde0690268682",
+  "apiUrl": "https://api.github.com/repos/markup-carve/carve-proofs/actions/artifacts/11072158730",
+  "recordedAt": "2026-09-30",
+  "scope": "GitHub-reported artifact archive digest, separate from local extracted-file hashes."
+}

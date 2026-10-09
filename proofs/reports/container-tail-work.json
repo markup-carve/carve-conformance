@@ -1,0 +1,1055 @@
+{
+  "metadata": {
+    "baseline": {
+      "source": "github:markup-carve/carve-js#8fe00fd672e1d9af43fe1f92ca1cc64387412990",
+      "version": "0.1.8",
+      "resolved": "git+ssh://git@github.com/markup-carve/carve-js.git#8fe00fd672e1d9af43fe1f92ca1cc64387412990",
+      "integrity": "sha512-hdguh1FNMdMV1+AZkEfeFmIqLFIjedaTTTOIWtssbki690MiUf+Eluh8HduKh4PiJgP9S8KuYX6TwPde15854g=="
+    },
+    "candidate": {
+      "source": "github:markup-carve/carve-js#5001ebb049eda7b68e1905aa96ccf47aa92b1109",
+      "version": "0.1.8",
+      "resolved": "git+ssh://git@github.com/markup-carve/carve-js.git#5001ebb049eda7b68e1905aa96ccf47aa92b1109",
+      "integrity": "sha512-g2IpjPgMprSCGfCkbRha42bYKhbCWcfWd1GIkohprIbsjkuiNkNvJvMDFzW+kgrdq05Igr2nRuaeCodswD5Ziw=="
+    },
+    "method": "Deterministic counters in separate parses. UTF-16 input, successful match and suffix argument lengths; global forward progress. These are not engine steps or wall times. Complete ASTs and source positions are checked.",
+    "copyMethod": "Candidate layoutWork.seam, enabled around a separate parse: source normalization and attributed-tail reconstruction. Selected UTF-16 copy lengths, not total allocation. Long-payload ASTs are checked against the baseline.",
+    "suiteSha256": "28afd0300001a4c6742e1f89b35feb08519c09827b0b295d1615d2129a3b43a2"
+  },
+  "groups": [
+    {
+      "reader": "baseline",
+      "family": "quotes",
+      "size": 32,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 743,
+      "inputChars": 26311,
+      "matchedChars": 355,
+      "globalAdvance": 135,
+      "terminatorInput": 67,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "quotes",
+      "size": 32,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 775,
+      "inputChars": 27463,
+      "matchedChars": 355,
+      "globalAdvance": 135,
+      "terminatorInput": 67,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "quotes",
+      "size": 64,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 1415,
+      "inputChars": 97479,
+      "matchedChars": 707,
+      "globalAdvance": 263,
+      "terminatorInput": 131,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "quotes",
+      "size": 64,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 1479,
+      "inputChars": 101831,
+      "matchedChars": 707,
+      "globalAdvance": 263,
+      "terminatorInput": 131,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "quotes",
+      "size": 128,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 2759,
+      "inputChars": 374983,
+      "matchedChars": 1411,
+      "globalAdvance": 519,
+      "terminatorInput": 259,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "quotes",
+      "size": 128,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 2887,
+      "inputChars": 391879,
+      "matchedChars": 1411,
+      "globalAdvance": 519,
+      "terminatorInput": 259,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "bullets",
+      "size": 32,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n",
+      "calls": 1934,
+      "inputChars": 67231,
+      "matchedChars": 637,
+      "globalAdvance": 71,
+      "terminatorInput": 67,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "bullets",
+      "size": 32,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n",
+      "calls": 1966,
+      "inputChars": 68383,
+      "matchedChars": 637,
+      "globalAdvance": 71,
+      "terminatorInput": 67,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "bullets",
+      "size": 64,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n",
+      "calls": 3790,
+      "inputChars": 253023,
+      "matchedChars": 1277,
+      "globalAdvance": 135,
+      "terminatorInput": 131,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "bullets",
+      "size": 64,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n",
+      "calls": 3854,
+      "inputChars": 257375,
+      "matchedChars": 1277,
+      "globalAdvance": 135,
+      "terminatorInput": 131,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "bullets",
+      "size": 128,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n",
+      "calls": 7502,
+      "inputChars": 980959,
+      "matchedChars": 2557,
+      "globalAdvance": 263,
+      "terminatorInput": 259,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "bullets",
+      "size": 128,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n",
+      "calls": 7630,
+      "inputChars": 997855,
+      "matchedChars": 2557,
+      "globalAdvance": 263,
+      "terminatorInput": 259,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "ordered",
+      "size": 32,
+      "source": "1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. end\n",
+      "calls": 1998,
+      "inputChars": 98015,
+      "matchedChars": 12171,
+      "globalAdvance": 103,
+      "terminatorInput": 99,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "ordered",
+      "size": 32,
+      "source": "1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. end\n",
+      "calls": 2030,
+      "inputChars": 99695,
+      "matchedChars": 1275,
+      "globalAdvance": 103,
+      "terminatorInput": 99,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "ordered",
+      "size": 64,
+      "source": "1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. end\n",
+      "calls": 3918,
+      "inputChars": 373983,
+      "matchedChars": 45851,
+      "globalAdvance": 199,
+      "terminatorInput": 195,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "ordered",
+      "size": 64,
+      "source": "1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. end\n",
+      "calls": 3982,
+      "inputChars": 380415,
+      "matchedChars": 2555,
+      "globalAdvance": 199,
+      "terminatorInput": 195,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "ordered",
+      "size": 128,
+      "source": "1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. end\n",
+      "calls": 7758,
+      "inputChars": 1460447,
+      "matchedChars": 177723,
+      "globalAdvance": 391,
+      "terminatorInput": 387,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "ordered",
+      "size": 128,
+      "source": "1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. 1. end\n",
+      "calls": 7886,
+      "inputChars": 1485599,
+      "matchedChars": 5115,
+      "globalAdvance": 391,
+      "terminatorInput": 387,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "tasks",
+      "size": 32,
+      "source": "- [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] end\n",
+      "calls": 1620,
+      "inputChars": 159967,
+      "matchedChars": 13701,
+      "globalAdvance": 199,
+      "terminatorInput": 195,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "tasks",
+      "size": 32,
+      "source": "- [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] end\n",
+      "calls": 1652,
+      "inputChars": 163231,
+      "matchedChars": 1602,
+      "globalAdvance": 199,
+      "terminatorInput": 195,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "tasks",
+      "size": 64,
+      "source": "- [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] end\n",
+      "calls": 3156,
+      "inputChars": 614623,
+      "matchedChars": 51973,
+      "globalAdvance": 391,
+      "terminatorInput": 387,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "tasks",
+      "size": 64,
+      "source": "- [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] end\n",
+      "calls": 3220,
+      "inputChars": 627295,
+      "matchedChars": 3202,
+      "globalAdvance": 391,
+      "terminatorInput": 387,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "tasks",
+      "size": 128,
+      "source": "- [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] end\n",
+      "calls": 6228,
+      "inputChars": 2408671,
+      "matchedChars": 202245,
+      "globalAdvance": 775,
+      "terminatorInput": 771,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "tasks",
+      "size": 128,
+      "source": "- [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] - [ ] end\n",
+      "calls": 6356,
+      "inputChars": 2458591,
+      "matchedChars": 6402,
+      "globalAdvance": 775,
+      "terminatorInput": 771,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "attributes",
+      "size": 32,
+      "source": "-{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} end\n",
+      "calls": 3361,
+      "inputChars": 207118,
+      "matchedChars": 18033,
+      "globalAdvance": 1787,
+      "terminatorInput": 195,
+      "suffixes": {
+        "calls": 32,
+        "suffixChars": 3072,
+        "successes": 32
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "attributes",
+      "size": 32,
+      "source": "-{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} end\n",
+      "calls": 3551,
+      "inputChars": 195528,
+      "matchedChars": 3051,
+      "globalAdvance": 1787,
+      "terminatorInput": 195,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "attributes",
+      "size": 64,
+      "source": "-{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} end\n",
+      "calls": 6657,
+      "inputChars": 801102,
+      "matchedChars": 66801,
+      "globalAdvance": 3579,
+      "terminatorInput": 387,
+      "suffixes": {
+        "calls": 64,
+        "suffixChars": 12288,
+        "successes": 64
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "attributes",
+      "size": 64,
+      "source": "-{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} end\n",
+      "calls": 7039,
+      "inputChars": 753352,
+      "matchedChars": 6123,
+      "globalAdvance": 3579,
+      "terminatorInput": 387,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "attributes",
+      "size": 128,
+      "source": "-{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} end\n",
+      "calls": 13249,
+      "inputChars": 3150286,
+      "matchedChars": 256497,
+      "globalAdvance": 7163,
+      "terminatorInput": 771,
+      "suffixes": {
+        "calls": 128,
+        "suffixChars": 49152,
+        "successes": 128
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "attributes",
+      "size": 128,
+      "source": "-{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} -{.x} end\n",
+      "calls": 14015,
+      "inputChars": 2956488,
+      "matchedChars": 12267,
+      "globalAdvance": 7163,
+      "terminatorInput": 771,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "lazy-quotes",
+      "size": 32,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\nlazy\n",
+      "calls": 2157,
+      "inputChars": 40754,
+      "matchedChars": 1504,
+      "globalAdvance": 145,
+      "terminatorInput": 264,
+      "suffixes": {
+        "calls": 32,
+        "suffixChars": 128,
+        "successes": 32
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "lazy-quotes",
+      "size": 32,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\nlazy\n",
+      "calls": 2158,
+      "inputChars": 40822,
+      "matchedChars": 419,
+      "globalAdvance": 145,
+      "terminatorInput": 264,
+      "suffixes": {
+        "calls": 32,
+        "suffixChars": 128,
+        "successes": 32
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "lazy-quotes",
+      "size": 64,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\nlazy\n",
+      "calls": 4141,
+      "inputChars": 144434,
+      "matchedChars": 5056,
+      "globalAdvance": 273,
+      "terminatorInput": 520,
+      "suffixes": {
+        "calls": 64,
+        "suffixChars": 256,
+        "successes": 64
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "lazy-quotes",
+      "size": 64,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\nlazy\n",
+      "calls": 4142,
+      "inputChars": 144566,
+      "matchedChars": 835,
+      "globalAdvance": 273,
+      "terminatorInput": 520,
+      "suffixes": {
+        "calls": 64,
+        "suffixChars": 256,
+        "successes": 64
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "lazy-quotes",
+      "size": 128,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\nlazy\n",
+      "calls": 8109,
+      "inputChars": 542258,
+      "matchedChars": 18304,
+      "globalAdvance": 529,
+      "terminatorInput": 1032,
+      "suffixes": {
+        "calls": 128,
+        "suffixChars": 512,
+        "successes": 128
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "lazy-quotes",
+      "size": 128,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\nlazy\n",
+      "calls": 8110,
+      "inputChars": 542518,
+      "matchedChars": 1667,
+      "globalAdvance": 529,
+      "terminatorInput": 1032,
+      "suffixes": {
+        "calls": 128,
+        "suffixChars": 512,
+        "successes": 128
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "multiline-quotes",
+      "size": 32,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > a\n> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 1037,
+      "inputChars": 34850,
+      "matchedChars": 772,
+      "globalAdvance": 267,
+      "terminatorInput": 132,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "multiline-quotes",
+      "size": 32,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > a\n> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 1101,
+      "inputChars": 37090,
+      "matchedChars": 772,
+      "globalAdvance": 267,
+      "terminatorInput": 132,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "multiline-quotes",
+      "size": 64,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > a\n> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 1933,
+      "inputChars": 130914,
+      "matchedChars": 1540,
+      "globalAdvance": 523,
+      "terminatorInput": 260,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "multiline-quotes",
+      "size": 64,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > a\n> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 2061,
+      "inputChars": 139490,
+      "matchedChars": 1540,
+      "globalAdvance": 523,
+      "terminatorInput": 260,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "multiline-quotes",
+      "size": 128,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > a\n> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 3725,
+      "inputChars": 507362,
+      "matchedChars": 3076,
+      "globalAdvance": 1035,
+      "terminatorInput": 516,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "multiline-quotes",
+      "size": 128,
+      "source": "> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > a\n> > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > end\n",
+      "calls": 3981,
+      "inputChars": 540898,
+      "matchedChars": 3076,
+      "globalAdvance": 1035,
+      "terminatorInput": 516,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "blank-lists",
+      "size": 32,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n\n                                                                end\n",
+      "calls": 13057,
+      "inputChars": 309451,
+      "matchedChars": 27167,
+      "globalAdvance": 202,
+      "terminatorInput": 132,
+      "suffixes": {
+        "calls": 64,
+        "suffixChars": 1088,
+        "successes": 64
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "blank-lists",
+      "size": 32,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n\n                                                                end\n",
+      "calls": 7896,
+      "inputChars": 206235,
+      "matchedChars": 1974,
+      "globalAdvance": 202,
+      "terminatorInput": 132,
+      "suffixes": {
+        "calls": 32,
+        "suffixChars": 0,
+        "successes": 32
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "blank-lists",
+      "size": 64,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n\n                                                                                                                                end\n",
+      "calls": 35121,
+      "inputChars": 1436939,
+      "matchedChars": 160879,
+      "globalAdvance": 394,
+      "terminatorInput": 260,
+      "suffixes": {
+        "calls": 128,
+        "suffixChars": 4224,
+        "successes": 128
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "blank-lists",
+      "size": 64,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n\n                                                                                                                                end\n",
+      "calls": 15576,
+      "inputChars": 792283,
+      "matchedChars": 4214,
+      "globalAdvance": 394,
+      "terminatorInput": 260,
+      "suffixes": {
+        "calls": 64,
+        "suffixChars": 0,
+        "successes": 64
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "blank-lists",
+      "size": 128,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n\n                                                                                                                                                                                                                                                                end\n",
+      "calls": 106897,
+      "inputChars": 7210379,
+      "matchedChars": 1013007,
+      "globalAdvance": 778,
+      "terminatorInput": 516,
+      "suffixes": {
+        "calls": 256,
+        "suffixChars": 16640,
+        "successes": 256
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "blank-lists",
+      "size": 128,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n\n                                                                                                                                                                                                                                                                end\n",
+      "calls": 30936,
+      "inputChars": 3101019,
+      "matchedChars": 8694,
+      "globalAdvance": 778,
+      "terminatorInput": 516,
+      "suffixes": {
+        "calls": 128,
+        "suffixChars": 0,
+        "successes": 128
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "comment-lists",
+      "size": 32,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n                                                                %% note\n",
+      "calls": 3927,
+      "inputChars": 124576,
+      "matchedChars": 5950,
+      "globalAdvance": 239,
+      "terminatorInput": 138,
+      "suffixes": {
+        "calls": 32,
+        "suffixChars": 1216,
+        "successes": 32
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "comment-lists",
+      "size": 32,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n                                                                %% note\n",
+      "calls": 3928,
+      "inputChars": 121607,
+      "matchedChars": 2046,
+      "globalAdvance": 239,
+      "terminatorInput": 138,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "comment-lists",
+      "size": 64,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n                                                                                                                                %% note\n",
+      "calls": 7703,
+      "inputChars": 452384,
+      "matchedChars": 20318,
+      "globalAdvance": 463,
+      "terminatorInput": 266,
+      "suffixes": {
+        "calls": 64,
+        "suffixChars": 4480,
+        "successes": 64
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "comment-lists",
+      "size": 64,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n                                                                                                                                %% note\n",
+      "calls": 7704,
+      "inputChars": 440295,
+      "matchedChars": 4318,
+      "globalAdvance": 463,
+      "terminatorInput": 266,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "comment-lists",
+      "size": 128,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n                                                                                                                                                                                                                                                                %% note\n",
+      "calls": 15255,
+      "inputChars": 1716256,
+      "matchedChars": 73630,
+      "globalAdvance": 911,
+      "terminatorInput": 522,
+      "suffixes": {
+        "calls": 128,
+        "suffixChars": 17152,
+        "successes": 128
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "comment-lists",
+      "size": 128,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - end\n                                                                                                                                                                                                                                                                %% note\n",
+      "calls": 15256,
+      "inputChars": 1667495,
+      "matchedChars": 8862,
+      "globalAdvance": 911,
+      "terminatorInput": 522,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "indented-lists",
+      "size": 32,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n                                                                end\n",
+      "calls": 4213,
+      "inputChars": 124152,
+      "matchedChars": 2714,
+      "globalAdvance": 171,
+      "terminatorInput": 132,
+      "suffixes": {
+        "calls": 32,
+        "suffixChars": 1088,
+        "successes": 32
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "indented-lists",
+      "size": 32,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n                                                                end\n",
+      "calls": 4214,
+      "inputChars": 123227,
+      "matchedChars": 1786,
+      "globalAdvance": 171,
+      "terminatorInput": 132,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "indented-lists",
+      "size": 64,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n                                                                                                                                end\n",
+      "calls": 8277,
+      "inputChars": 470520,
+      "matchedChars": 7738,
+      "globalAdvance": 331,
+      "terminatorInput": 260,
+      "suffixes": {
+        "calls": 64,
+        "suffixChars": 4224,
+        "successes": 64
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "indented-lists",
+      "size": 64,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n                                                                                                                                end\n",
+      "calls": 8278,
+      "inputChars": 466619,
+      "matchedChars": 3834,
+      "globalAdvance": 331,
+      "terminatorInput": 260,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    },
+    {
+      "reader": "baseline",
+      "family": "indented-lists",
+      "size": 128,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n                                                                                                                                                                                                                                                                end\n",
+      "calls": 16405,
+      "inputChars": 1826808,
+      "matchedChars": 23930,
+      "globalAdvance": 651,
+      "terminatorInput": 516,
+      "suffixes": {
+        "calls": 128,
+        "suffixChars": 16640,
+        "successes": 128
+      }
+    },
+    {
+      "reader": "candidate",
+      "family": "indented-lists",
+      "size": 128,
+      "source": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - a\n                                                                                                                                                                                                                                                                end\n",
+      "calls": 16406,
+      "inputChars": 1810811,
+      "matchedChars": 7930,
+      "globalAdvance": 651,
+      "terminatorInput": 516,
+      "suffixes": {
+        "calls": 0,
+        "suffixChars": 0,
+        "successes": 0
+      }
+    }
+  ],
+  "copies": [
+    {
+      "family": "long-attributes-bullet",
+      "marker": "-{.x} ",
+      "size": 32,
+      "payloadLength": 100000,
+      "sourceLength": 100193,
+      "seam": 100193
+    },
+    {
+      "family": "long-attributes-bullet",
+      "marker": "-{.x} ",
+      "size": 64,
+      "payloadLength": 100000,
+      "sourceLength": 100385,
+      "seam": 100385
+    },
+    {
+      "family": "long-attributes-bullet",
+      "marker": "-{.x} ",
+      "size": 128,
+      "payloadLength": 100000,
+      "sourceLength": 100769,
+      "seam": 100769
+    },
+    {
+      "family": "long-attributes-ordered",
+      "marker": "1.{.x} ",
+      "size": 32,
+      "payloadLength": 100000,
+      "sourceLength": 100225,
+      "seam": 100225
+    },
+    {
+      "family": "long-attributes-ordered",
+      "marker": "1.{.x} ",
+      "size": 64,
+      "payloadLength": 100000,
+      "sourceLength": 100449,
+      "seam": 100449
+    },
+    {
+      "family": "long-attributes-ordered",
+      "marker": "1.{.x} ",
+      "size": 128,
+      "payloadLength": 100000,
+      "sourceLength": 100897,
+      "seam": 100897
+    },
+    {
+      "family": "long-attributes-task",
+      "marker": "-{.x} [ ] ",
+      "size": 32,
+      "payloadLength": 100000,
+      "sourceLength": 100321,
+      "seam": 100321
+    },
+    {
+      "family": "long-attributes-task",
+      "marker": "-{.x} [ ] ",
+      "size": 64,
+      "payloadLength": 100000,
+      "sourceLength": 100641,
+      "seam": 100641
+    },
+    {
+      "family": "long-attributes-task",
+      "marker": "-{.x} [ ] ",
+      "size": 128,
+      "payloadLength": 100000,
+      "sourceLength": 101281,
+      "seam": 101281
+    }
+  ]
+}
