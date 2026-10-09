@@ -36,8 +36,10 @@ npm run preview       # serves _site/ on http://127.0.0.1:4173
 
 ## Workflows
 
-- `proofs.yml` and `compat.yml` check their lane on pull requests that touch it.
-- `site.yml` runs both lanes on every push to `main` and once a day, assembles
+- `site.yml` is the only workflow a pull request starts. It runs `proofs.yml`
+  or `compat.yml` when that lane changed, and both lanes plus the assembled
+  site when the root site changed.
+- On every push to `main` and once a day, `site.yml` runs both lanes, assembles
   the site and deploys it to GitHub Pages. A failed proof check blocks the
   deploy. A failed compatibility comparison does not, because the published
   report is where that failure is read.

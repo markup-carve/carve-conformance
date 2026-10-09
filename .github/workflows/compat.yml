@@ -1,7 +1,6 @@
 name: Compatibility
+# Pull requests reach this lane through site.yml, which runs it only when it changed.
 on:
-  pull_request:
-    paths: ['compat/**', '.nvmrc', '.github/workflows/compat.yml']
   workflow_call:
     outputs:
       site_ready:
@@ -36,7 +35,14 @@ jobs:
         run: |
           git config --global --add url."https://github.com/".insteadOf ssh://git@github.com/
           git config --global --add url."https://github.com/".insteadOf git@github.com:
-      - run: npm ci
+      - name: Restore node modules
+        id: node-modules
+        uses: actions/cache@v4
+        with:
+          path: compat/node_modules
+          key: compat-node-modules-v1-${{ runner.os }}-${{ hashFiles('.nvmrc', 'compat/package-lock.json') }}
+      - if: steps.node-modules.outputs.cache-hit != 'true'
+        run: npm ci
       - name: Unit and JavaScript compatibility tests
         run: npm test
       - name: Provision native readers
@@ -49,6 +55,22 @@ jobs:
             "-DCARVE_MD4C_VERSION=\"$(dpkg-query -W -f='${Version}' libmd4c0)\"" \
             scripts/compat/md4c-driver.c -lmd4c -lmd4c-html \
             -o .cache/compat/md4c-driver
+      - name: Identify Rust toolchain
+        id: toolchain
+        run: echo "rust=$(rustc --version | cut -d' ' -f2)" >> "$GITHUB_OUTPUT"
+      # A pin bump restores the previous build: the provisioner moves the checkouts
+      # and cargo rebuilds only what changed.
+      - name: Restore pinned engines
+        uses: actions/cache@v4
+        with:
+          path: |
+            compat/.cache/engines
+            compat/.cache/cargo-target
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: compat-engines-v1-${{ runner.os }}-rust-${{ steps.toolchain.outputs.rust }}-${{ hashFiles('compat/resources/engines.json', 'compat/scripts/provision-engines.mjs') }}
+          restore-keys: compat-engines-v1-${{ runner.os }}-rust-${{ steps.toolchain.outputs.rust }}-
       - name: Provision pinned Carve engines and Pandoc
         run: npm run compat:provision
       - name: Measure nine targets across three Carve engines
@@ -68,8 +90,13 @@ jobs:
         id: site
         run: |
           npm run site:build
-      - name: Install browser
-        run: npx playwright install --with-deps chromium
+      - name: Restore Playwright browser
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('compat/package-lock.json') }}
+      # No --with-deps: the runner image already carries Chrome's system libraries, and apt cost 20s to 3 minutes.
+      - run: npx playwright install chromium
       - name: Browser checks
         run: npm run test:site
       - name: Save full evidence
