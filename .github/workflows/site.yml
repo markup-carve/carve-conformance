@@ -1,0 +1,70 @@
+name: Website
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    paths: ['site/**', 'scripts/**', 'tests/**', 'package.json', 'package-lock.json', 'playwright.config.mjs', '.github/workflows/site.yml']
+  schedule:
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: website-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  proofs:
+    uses: ./.github/workflows/proofs.yml
+  compat:
+    uses: ./.github/workflows/compat.yml
+  assemble:
+    # Proofs gate the deploy. A failed compatibility comparison still publishes,
+    # because the report is how that failure is read.
+    needs: [proofs, compat]
+    if: always() && needs.proofs.result == 'success' && needs.compat.outputs.site_ready == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+      - uses: actions/download-artifact@v4
+        with:
+          name: proofs-site
+          path: proofs/_site
+      - uses: actions/download-artifact@v4
+        with:
+          name: compat-site
+          path: compat/dist
+      - run: node scripts/build-site.mjs
+      - run: npm ci --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:site
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: site-test-results
+          path: test-results/
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+  deploy:
+    needs: assemble
+    if: always() && needs.assemble.result == 'success' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4

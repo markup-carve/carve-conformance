@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Do Carve's readers agree? Checked models of the spec, four readers compared case by case, and nine foreign formats mapped through three engines.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'">
+<meta name="theme-color" content="#1d2233">
+<title>Carve conformance</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="shared/bar.css">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="cc-bar" role="navigation" aria-label="Carve conformance"><a class="cc-home" href="./" aria-current="page">carve <span>conformance</span></a><a href="proofs/">Proofs</a><a href="compat/">Compatibility</a><a class="cc-repo" href="https://github.com/markup-carve/carve-conformance">GitHub</a></div>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <h1 id="hero-title">Do Carve's readers agree?</h1>
+      <p class="lead">With the spec, with each other, and with the formats around them. Each claim below is a case someone can open, run again, and trace to the commit it was measured at.</p>
+    </div>
+
+    <figure class="specimen" aria-labelledby="specimen-title">
+      <figcaption class="specimen-head">
+        <h2 id="specimen-title" class="specimen-title">One ownership case</h2>
+        <p class="specimen-id"><code id="case-id">Loading…</code></p>
+      </figcaption>
+      <div class="specimen-body">
+        <div class="pane pane-source">
+          <p class="pane-label">Carve source</p>
+          <pre class="ruler" aria-hidden="true">0    5    10   15</pre>
+          <pre id="case-source" class="source" tabindex="0" aria-label="Carve source of this case"></pre>
+        </div>
+        <div class="pane pane-output">
+          <p class="pane-label">What the readers produced</p>
+          <pre id="case-html" class="html" tabindex="0" aria-label="Rendered HTML"></pre>
+          <ul id="readers" class="readers" aria-label="Readers"></ul>
+        </div>
+      </div>
+      <div class="specimen-foot">
+        <p id="case-note" class="case-note" aria-live="polite"></p>
+        <div class="stepper">
+          <button id="prev" type="button" aria-label="Previous case">Previous</button>
+          <span id="case-count" class="case-count"></span>
+          <button id="next" type="button" aria-label="Next case">Next</button>
+        </div>
+      </div>
+    </figure>
+  </section>
+
+  <section class="lanes" aria-label="The two lanes">
+    <article class="lane lane-proofs">
+      <h2><a href="proofs/">Proofs</a></h2>
+      <p class="question">Does the spec hold together, and do the readers follow it?</p>
+      <dl class="figures">
+        <div><dt>Checked theorems</dt><dd id="f-theorems">–</dd></div>
+        <div><dt>Ownership cases</dt><dd id="f-cases">–</dd></div>
+        <div><dt>Reader disagreements</dt><dd id="f-disagree">–</dd></div>
+      </dl>
+      <p id="proofs-prose" class="prose"></p>
+      <a class="go" href="proofs/">Open the proofs</a>
+    </article>
+
+    <article class="lane lane-compat">
+      <h2><a href="compat/">Compatibility</a></h2>
+      <p class="question">What survives when a document crosses into another format and back?</p>
+      <dl class="figures">
+        <div><dt>Foreign formats</dt><dd id="f-targets">–</dd></div>
+        <div><dt>Comparisons</dt><dd id="f-compared">–</dd></div>
+        <div><dt>Failed</dt><dd id="f-failed">–</dd></div>
+      </dl>
+      <ul id="targets" class="targets" aria-label="Formats measured"></ul>
+      <p id="compat-prose" class="prose"></p>
+      <a class="go" href="compat/">Open the compatibility report</a>
+    </article>
+  </section>
+
+  <section class="pins" aria-labelledby="pins-title">
+    <div class="pins-copy">
+      <h2 id="pins-title">Measured at these commits</h2>
+      <p>Results only hold for the commits that produced them. Where the two lanes measured different commits of the same reader, the row is marked.</p>
+      <p id="pin-drift" class="drift" hidden></p>
+    </div>
+    <div class="table-wrap" tabindex="0" aria-label="Reader pins per lane">
+      <table>
+        <thead><tr><th scope="col">Reader</th><th scope="col">Proofs</th><th scope="col">Compatibility</th></tr></thead>
+        <tbody id="pin-rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="limits" aria-labelledby="limits-title">
+    <h2 id="limits-title">What this does not show</h2>
+    <ul>
+      <li><strong>The models are partial.</strong> A theorem follows from its definitions. No proof yet connects the full parsers in JavaScript, PHP or Rust to the model.</li>
+      <li><strong>Fixtures are finite.</strong> Agreement on these cases is evidence, not a guarantee for every input.</li>
+      <li><strong>Adapters cover subsets.</strong> A foreign format passing here means the measured fixtures map cleanly, not that any document in that format fits Carve.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>Built from <a id="rev" href="https://github.com/markup-carve/carve-conformance">committed evidence</a>. Download <a href="data/summary.json" download>the summary</a>.</p>
+  <nav aria-label="Related sites"><a href="https://markup-carve.github.io/carve/">Carve docs</a><a href="https://markup-carve.github.io/carve-bench/">Benchmarks</a><a href="https://markup-carve.github.io/pandoc-format-fidelity/">Pandoc format fidelity</a></nav>
+</footer>
+<noscript><p class="noscript">The figures on this page load with JavaScript. Without it, open <a href="proofs/">Proofs</a>, <a href="compat/">Compatibility</a> or <a href="data/summary.json">the JSON summary</a>.</p></noscript>
+</body>
+</html>

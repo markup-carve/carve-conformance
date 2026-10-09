@@ -1,16 +1,21 @@
-name: Compatibility and website
+name: Compatibility
 on:
   pull_request:
-  push:
-    branches: [main]
-  schedule:
-    - cron: '30 4 * * *'
+    paths: ['compat/**', '.nvmrc', '.github/workflows/compat.yml']
+  workflow_call:
+    outputs:
+      site_ready:
+        description: The compatibility site was built and uploaded as the compat-site artifact
+        value: ${{ jobs.measure.outputs.site_ready }}
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: compatibility-${{ github.ref }}
+  group: compatibility-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+defaults:
+  run:
+    working-directory: compat
 jobs:
   measure:
     runs-on: ubuntu-24.04
@@ -21,8 +26,9 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version-file: .nvmrc
           cache: npm
+          cache-dependency-path: compat/package-lock.json
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
@@ -72,35 +78,19 @@ jobs:
         with:
           name: compatibility-evidence
           path: |
-            reports/latest.json
-            reports/commonmark.json
-            reports/djot.json
-            test-results/
+            compat/reports/latest.json
+            compat/reports/commonmark.json
+            compat/reports/djot.json
+            compat/test-results/
           if-no-files-found: warn
-      - name: Package website
-        uses: actions/upload-pages-artifact@v4
+      - name: Save website
+        uses: actions/upload-artifact@v4
         with:
-          path: dist
+          name: compat-site
+          path: compat/dist
       - name: Mark packaged website ready
         id: ready
         run: echo 'ready=true' >> "$GITHUB_OUTPUT"
       - name: Fail the check when a comparison fails
         if: steps.comparison.outcome == 'failure'
         run: exit 1
-  deploy:
-    concurrency:
-      group: pages
-      cancel-in-progress: false
-    needs: measure
-    if: always() && needs.measure.outputs.site_ready == 'true' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    runs-on: ubuntu-24.04
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Publish measured report
-        id: deployment
-        uses: actions/deploy-pages@v4

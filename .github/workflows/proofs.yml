@@ -1,10 +1,10 @@
 name: Proofs
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
+    paths: ['proofs/**', '.gitmodules', '.nvmrc', '.github/workflows/proofs.yml']
+  workflow_call:
   workflow_dispatch:
     inputs:
       benchmark:
@@ -16,8 +16,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: proofs-${{ github.ref }}
+  group: proofs-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+defaults:
+  run:
+    working-directory: proofs
 
 # Jobs carry an explicit timeout-minutes: without one GitHub applies a
 # 360-minute default, long enough for a stalled job to go unnoticed.
@@ -34,6 +38,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+          cache-dependency-path: proofs/package-lock.json
       - uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: '4.14.2'
@@ -48,6 +53,7 @@ jobs:
           # The workflow hash covers the runner image and pinned toolchain versions.
           key: proof-toolchain-v1-${{ runner.os }}-${{ runner.arch }}-opam-${{ steps.opam.outputs.version }}-${{ hashFiles('.github/workflows/proofs.yml') }}
       - name: Install proof compiler and standard library
+        working-directory: .
         run: opam install --yes rocq-core.9.2.0 rocq-stdlib.9.1.0 dune.3.23.1
       - name: Save proof toolchain
         if: steps.proof-toolchain.outputs.cache-hit != 'true'
@@ -98,9 +104,11 @@ jobs:
           npm run report:properties
           git diff --exit-code -- reports/properties.md
       - name: Check model proofs and recorded evidence
-        run: opam exec -- npm run proof:layout
+        working-directory: .
+        run: opam exec -- npm --prefix proofs run proof:layout
       - name: Check candidate-stack selection and extracted helper
-        run: opam exec -- npm run proof:stack
+        working-directory: .
+        run: opam exec -- npm --prefix proofs run proof:stack
       - name: Measure parser scaling
         if: github.event_name == 'workflow_dispatch' && inputs.benchmark
         run: npm run bench:scaling -- reports/scaling-ci.json
@@ -110,15 +118,15 @@ jobs:
         with:
           name: property-observations
           path: |
-            reports/property-ci.json
-            reports/comparison-ci.json
-            reports/djot-differential-ci.json
+            proofs/reports/property-ci.json
+            proofs/reports/comparison-ci.json
+            proofs/reports/djot-differential-ci.json
       - name: Upload benchmark measurements
         if: always() && github.event_name == 'workflow_dispatch' && inputs.benchmark
         uses: actions/upload-artifact@v4
         with:
           name: scaling-measurements
-          path: reports/scaling-ci.json
+          path: proofs/reports/scaling-ci.json
           if-no-files-found: error
 
   ownership:
@@ -130,6 +138,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+          cache-dependency-path: proofs/package-lock.json
       - uses: dtolnay/rust-toolchain@stable
       - name: Install PHP
         run: sudo apt-get update && sudo apt-get install -y php-cli php-mbstring
@@ -153,8 +162,8 @@ jobs:
         with:
           name: ownership-build
           path: |
-            .cache/ownership/build.json
-            .cache/ownership-current/build.json
+            proofs/.cache/ownership/build.json
+            proofs/.cache/ownership-current/build.json
           include-hidden-files: true
 
   runtime:
@@ -172,8 +181,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y php-cli php-mbstring
       - uses: actions/cache@v4
         with:
-          path: .cache/runtime/target
-          key: runtime-rust-${{ runner.os }}-${{ hashFiles('scripts/runtime/rust/Cargo.lock', 'scripts/runtime/rust/Cargo.toml', 'scripts/ownership/pins.json') }}
+          path: proofs/.cache/runtime/target
+          key: runtime-rust-${{ runner.os }}-${{ hashFiles('proofs/scripts/runtime/rust/Cargo.lock', 'proofs/scripts/runtime/rust/Cargo.toml', 'proofs/scripts/ownership/pins.json') }}
       - run: npm run build:runtime
       - run: node --test tests/runtime-scaling.test.mjs
       - name: Measure Rust and PHP scaling
@@ -183,7 +192,7 @@ jobs:
         if: always() && github.event_name == 'workflow_dispatch' && inputs.benchmark
         with:
           name: runtime-measurements
-          path: reports/runtime-ci.json*
+          path: proofs/reports/runtime-ci.json*
           if-no-files-found: error
 
   site:
@@ -197,6 +206,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+          cache-dependency-path: proofs/package-lock.json
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
@@ -205,31 +215,18 @@ jobs:
           git config --global --add url."https://github.com/".insteadOf ssh://git@github.com/
           git config --global --add url."https://github.com/".insteadOf git@github.com:
       - run: npm ci --no-audit --no-fund
-      - run: pip install -r site/requirements.txt
+      - run: pip install -r proofs/site/requirements.txt
+        working-directory: .
       - run: npm run build:site
       - run: npx playwright install --with-deps chromium
       - run: npm run test:site
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: site-test-results
-          path: test-results/
-      - uses: actions/upload-pages-artifact@v4
+          name: proofs-site-test-results
+          path: proofs/test-results/
+      - uses: actions/upload-artifact@v4
         with:
-          path: _site
-
-  deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: [layout, ownership, runtime, site]
-    runs-on: ubuntu-24.04
-    timeout-minutes: 20
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy evidence site
-        id: deployment
-        uses: actions/deploy-pages@v4
+          name: proofs-site
+          path: proofs/_site
+          include-hidden-files: true

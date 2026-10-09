@@ -5,32 +5,35 @@ on:
     branches: ['evidence/**']
     paths:
       - '.github/workflows/cross-reader-evidence.yml'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'scripts/comparison/adapters.mjs'
-      - 'scripts/properties/scaling-cases.mjs'
-      - 'scripts/properties/benchmark-results.mjs'
-      - 'scripts/evidence-environment.mjs'
-      - 'scripts/spec-pins.mjs'
-      - 'scripts/comparison/bench.mjs'
-      - 'scripts/comparison/worker.mjs'
-      - 'scripts/comparison/environment.mjs'
-      - 'scripts/comparison/controls.mjs'
-      - 'scripts/comparison/scaling-cases.mjs'
-      - 'scripts/comparison/measurement-host.mjs'
-      - 'scripts/comparison/settle-host.mjs'
-      - 'scripts/profiling/current-costs.mjs'
-      - 'scripts/profiling/cost-worker.mjs'
-      - 'scripts/profiling/run.mjs'
-      - 'scripts/profiling/worker.mjs'
-      - 'scripts/profiling/instrument.mjs'
-      - 'scripts/profiling/summary.mjs'
+      - 'proofs/package.json'
+      - 'proofs/package-lock.json'
+      - 'proofs/scripts/comparison/adapters.mjs'
+      - 'proofs/scripts/properties/scaling-cases.mjs'
+      - 'proofs/scripts/properties/benchmark-results.mjs'
+      - 'proofs/scripts/evidence-environment.mjs'
+      - 'proofs/scripts/spec-pins.mjs'
+      - 'proofs/scripts/comparison/bench.mjs'
+      - 'proofs/scripts/comparison/worker.mjs'
+      - 'proofs/scripts/comparison/environment.mjs'
+      - 'proofs/scripts/comparison/controls.mjs'
+      - 'proofs/scripts/comparison/scaling-cases.mjs'
+      - 'proofs/scripts/comparison/measurement-host.mjs'
+      - 'proofs/scripts/comparison/settle-host.mjs'
+      - 'proofs/scripts/profiling/current-costs.mjs'
+      - 'proofs/scripts/profiling/cost-worker.mjs'
+      - 'proofs/scripts/profiling/run.mjs'
+      - 'proofs/scripts/profiling/worker.mjs'
+      - 'proofs/scripts/profiling/instrument.mjs'
+      - 'proofs/scripts/profiling/summary.mjs'
 
 permissions:
   contents: read
 concurrency:
   group: cross-reader-evidence-${{ github.ref }}
   cancel-in-progress: false
+defaults:
+  run:
+    working-directory: proofs
 jobs:
   measure:
     runs-on: ubuntu-24.04
@@ -45,6 +48,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+          cache-dependency-path: proofs/package-lock.json
       - name: Use HTTPS for Git dependencies
         run: |
           git config --global --add url."https://github.com/".insteadOf ssh://git@github.com/
@@ -70,13 +74,13 @@ jobs:
         with:
           name: cross-reader-evidence
           path: |
-            reports/comparison-timings.json
-            reports/comparison-timings.json.partial
-            reports/comparison.md
-            reports/current-costs.json
-            reports/current-costs.json.partial
-            reports/current-costs.md
-            reports/nesting-profile.json
-            reports/nesting-profile.json.partial
-            reports/nesting-profile.md
+            proofs/reports/comparison-timings.json
+            proofs/reports/comparison-timings.json.partial
+            proofs/reports/comparison.md
+            proofs/reports/current-costs.json
+            proofs/reports/current-costs.json.partial
+            proofs/reports/current-costs.md
+            proofs/reports/nesting-profile.json
+            proofs/reports/nesting-profile.json.partial
+            proofs/reports/nesting-profile.md
           if-no-files-found: error

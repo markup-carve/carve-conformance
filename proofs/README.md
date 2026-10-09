@@ -24,7 +24,7 @@ and classifications remain caller inputs; this does not verify a source parser.
 
 ## Visual evidence
 
-Explore the [**evidence site**](https://markup-carve.github.io/carve-proofs/) for reader comparisons, exportable scaling charts, proof coverage and changes between recorded runs. See the [site build instructions](site/README.md) to reproduce it locally.
+Explore the [**evidence site**](https://markup-carve.github.io/carve-conformance/proofs/) for reader comparisons, exportable scaling charts, proof coverage and changes between recorded runs. See the [site build instructions](site/README.md) to reproduce it locally.
 
 ## Development snapshot
 
@@ -67,8 +67,8 @@ measurements under Scaling & allocation.
 Use Node 24 or newer, Git, Rocq core 9.2.0 and standard library 9.1.0.
 
 ```sh
-git clone --recurse-submodules https://github.com/markup-carve/carve-proofs.git
-cd carve-proofs
+git clone --recurse-submodules https://github.com/markup-carve/carve-conformance.git
+cd carve-conformance/proofs
 GIT_CONFIG_COUNT=2 \
   GIT_CONFIG_KEY_0=url.https://github.com/.insteadOf \
   GIT_CONFIG_VALUE_0=ssh://git@github.com/ \

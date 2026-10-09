@@ -1,6 +1,6 @@
 # Evidence site
 
-The [public report](https://markup-carve.github.io/carve-proofs/) presents committed observations as an ownership explorer, language comparison, chart collection, proof map and change history.
+The [public report](https://markup-carve.github.io/carve-conformance/proofs/) presents committed observations as an ownership explorer, language comparison, chart collection, proof map and change history.
 
 Build and preview with Node 24 and Python 3:
 

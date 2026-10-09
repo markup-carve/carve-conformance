@@ -1,0 +1,20 @@
+{
+  "name": "@markup-carve/carve-conformance",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Checked models, reader agreement and cross-format compatibility for the Carve markup language",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build:site": "npm --prefix proofs run build:site && npm --prefix compat run site:build && node scripts/build-site.mjs",
+    "assemble:site": "node scripts/build-site.mjs",
+    "test:site": "playwright test",
+    "preview": "python3 -m http.server 4173 --bind 127.0.0.1 --directory _site"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}
