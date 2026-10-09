@@ -79,6 +79,32 @@
     </article>
   </section>
 
+  <section class="versus" aria-labelledby="versus-title">
+    <div class="versus-copy">
+      <h2 id="versus-title">Carve next to Markdown and Djot</h2>
+      <p>Two measured questions. Does a small edit stay small, compared with Djot and CommonMark on the same edits? And how much of a CommonMark or Djot document keeps its structure when imported into Carve?</p>
+      <p>Each row is a fixed set of cases, not a ranking of the languages. Speed is measured separately in <a href="https://markup-carve.github.io/carve-bench/">carve-bench</a>.</p>
+    </div>
+    <div class="versus-tables">
+      <h3 id="edits-title" class="table-title">Edits that leave the rest of the document unchanged</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="edits-title">
+        <table aria-labelledby="edits-title">
+          <thead><tr><th scope="col">Edit</th><th scope="col">Carve</th><th scope="col">Djot</th><th scope="col">CommonMark</th></tr></thead>
+          <tbody id="edit-rows"></tbody>
+        </table>
+      </div>
+      <p class="table-link"><a href="proofs/#overview">What changes in each case</a></p>
+      <h3 id="imports-title" class="table-title">Imported examples that keep their structure</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="imports-title">
+        <table aria-labelledby="imports-title">
+          <thead><tr><th scope="col">Source</th><th scope="col">Kept</th><th scope="col">Differs by design</th><th scope="col">Differs</th><th scope="col">Out of scope</th></tr></thead>
+          <tbody id="import-rows"></tbody>
+        </table>
+      </div>
+      <p class="table-link"><a href="compat/#commonmark">Every imported example</a></p>
+    </div>
+  </section>
+
   <section class="pins" aria-labelledby="pins-title">
     <div class="pins-copy">
       <h2 id="pins-title">Measured at these commits</h2>

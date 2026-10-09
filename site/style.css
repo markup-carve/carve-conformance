@@ -98,6 +98,20 @@ h1{font-size:clamp(2.8rem,6.4vw,5.6rem);font-stretch:80%;font-weight:700;line-he
 .targets li{font-size:.84rem;padding:3px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
 .go{font-weight:600;font-size:1rem}
 
+/* Versus */
+.versus{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;padding:56px 0;border-top:1px solid var(--line)}
+.versus h2{font-size:1.6rem;font-stretch:85%;font-weight:700;margin:0 0 12px;line-height:1.15}
+.versus-copy p{color:var(--muted);margin:0 0 12px;max-width:30em}
+.versus-tables{min-width:0}
+.versus .table-title{font-size:1rem;font-weight:600;margin:0 0 8px}
+.versus td{font-variant-numeric:tabular-nums}
+.versus td{white-space:nowrap}
+.versus th .detail{display:block;font-weight:400;font-size:.84rem;color:var(--muted)}
+.versus tr.reference th,.versus tr.reference td{color:var(--muted)}
+.versus th[scope="row"]{white-space:normal;min-width:14em}
+.table-link{margin:8px 0 28px;font-size:.92rem}
+.table-link:last-child{margin-bottom:0}
+
 /* Pins */
 .pins{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;padding:56px 0;border-top:1px solid var(--line)}
 .pins h2,.limits h2{font-size:1.6rem;font-stretch:85%;font-weight:700;margin:0 0 12px;line-height:1.15}
@@ -127,10 +141,11 @@ footer nav{display:flex;gap:8px 20px;flex-wrap:wrap}
 
 @media (max-width:1000px){
   .hero{grid-template-columns:1fr;gap:36px;padding:48px 0 44px}
-  .lanes,.pins{grid-template-columns:1fr}
+  .lanes,.pins,.versus{grid-template-columns:1fr}
   .lane,.lane + .lane{padding:36px 0}
   .lane + .lane{border-left:0;border-top:1px solid var(--line)}
-  .pins{gap:20px}
+  .pins,.versus{gap:20px}
+  .versus th[scope="row"]{min-width:9em}
   .limits ul{grid-template-columns:1fr;gap:18px}
 }
 @media (max-width:620px){

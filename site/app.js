@@ -99,6 +99,17 @@ function renderPins(pins) {
   }
 }
 
+function renderVersus(versus) {
+  const readers = ['carve', 'djot', 'commonmark']
+  $('edit-rows').replaceChildren(...versus.edits.map(r => el('tr', {},
+    el('th', { scope: 'row', textContent: r.edit }),
+    ...readers.map(k => el('td', { textContent: `${r.counts[k].unchanged} / ${r.counts[k].total}` })))))
+  const cell = v => el('td', { textContent: v === null ? '–' : fmt(v) })
+  $('import-rows').replaceChildren(...versus.imports.map(r => el('tr', { className: r.reference ? 'reference' : '' },
+    el('th', { scope: 'row' }, r.label, el('span', { className: 'detail', textContent: r.detail })),
+    cell(r.kept), cell(r.declared), cell(r.differs), cell(r.outOfScope))))
+}
+
 async function main() {
   const data = await (await fetch('data/summary.json')).json()
   const { proofs, compat } = data
@@ -121,6 +132,7 @@ async function main() {
   if (cm) prose.push(` Of the ${fmt(compat.commonmark.examples)} CommonMark spec examples, ${fmt(cm.match)} import to matching structure and ${cm.declared} differ by declaration.`)
   $('compat-prose').append(...prose)
 
+  renderVersus(data.versus)
   renderPins(data.pins)
   const rev = $('rev')
   rev.href = `https://github.com/markup-carve/carve-conformance/commit/${data.revision}`

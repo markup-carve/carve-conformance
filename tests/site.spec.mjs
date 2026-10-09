@@ -48,3 +48,12 @@ test('landing page does not scroll sideways', async ({ page }) => {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
   expect(overflow).toBeLessThanOrEqual(0)
 })
+
+test('comparison section shows edit and import results', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.locator('#edit-rows tr')).toHaveCount(4)
+  await expect(page.locator('#edit-rows tr').first().locator('td')).toHaveCount(3)
+  await expect(page.locator('#edit-rows td').first()).toHaveText(/^\d+ \/ \d+$/)
+  await expect(page.locator('#import-rows tr')).not.toHaveCount(0)
+  await expect(page.locator('#import-rows th').first()).toContainText('into Carve')
+})
