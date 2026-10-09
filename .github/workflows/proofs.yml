@@ -1,9 +1,7 @@
 name: Proofs
 
+# Pull requests reach this lane through site.yml, which runs it only when it changed.
 on:
-  pull_request:
-    branches: [main]
-    paths: ['proofs/**', '.gitmodules', '.nvmrc', '.github/workflows/proofs.yml']
   workflow_call:
   workflow_dispatch:
     inputs:
@@ -217,6 +215,14 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: pip install -r proofs/site/requirements.txt
         working-directory: .
+      # charts.py redraws only charts whose data record changed. The drawing code and
+      # matplotlib pin go in the prefix: they change a chart without changing its record.
+      - name: Restore rendered charts
+        uses: actions/cache@v4
+        with:
+          path: proofs/_site/charts
+          key: proofs-charts-v1-${{ hashFiles('proofs/scripts/site/charts.py', 'proofs/site/requirements.txt') }}-${{ hashFiles('proofs/reports/**') }}
+          restore-keys: proofs-charts-v1-${{ hashFiles('proofs/scripts/site/charts.py', 'proofs/site/requirements.txt') }}-
       - run: npm run build:site
       - run: npx playwright install --with-deps chromium
       - run: npm run test:site

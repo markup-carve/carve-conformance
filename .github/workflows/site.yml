@@ -4,7 +4,6 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-    paths: ['site/**', 'scripts/**', 'tests/**', 'package.json', 'package-lock.json', 'playwright.config.mjs', '.github/workflows/site.yml']
   schedule:
     - cron: '30 4 * * *'
   workflow_dispatch:
@@ -12,17 +11,51 @@ permissions:
   contents: read
 concurrency:
   group: website-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
+  # The single pull request entry point: each lane runs once, and only when it changed.
+  # A site change needs both lane sites to assemble, so it runs both lanes.
+  changes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      proofs: ${{ steps.lanes.outputs.proofs }}
+      compat: ${{ steps.lanes.outputs.compat }}
+      site: ${{ steps.lanes.outputs.site }}
+    steps:
+      - uses: actions/checkout@v6
+        if: github.event_name == 'pull_request'
+        with:
+          fetch-depth: 2
+      - id: lanes
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != pull_request ]; then
+            printf 'proofs=true\ncompat=true\nsite=true\n' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          files=$(git diff --name-only HEAD^1 HEAD)
+          printf '%s\n' "$files"
+          has() { grep -qE "$1" <<< "$files" && echo true || echo false; }
+          all=$(has '^(\.nvmrc|\.gitmodules)$')
+          site=$(has '^(site/|scripts/|tests/|package(-lock)?\.json$|playwright\.config\.mjs$|\.github/workflows/site\.yml$)')
+          [ "$all" = true ] && site=true
+          proofs=$(has '^(proofs/|\.github/workflows/proofs\.yml$)')
+          compat=$(has '^(compat/|\.github/workflows/compat\.yml$)')
+          [ "$site" = true ] && proofs=true && compat=true
+          printf 'proofs=%s\ncompat=%s\nsite=%s\n' "$proofs" "$compat" "$site" | tee -a "$GITHUB_OUTPUT"
   proofs:
+    needs: changes
+    if: needs.changes.outputs.proofs == 'true'
     uses: ./.github/workflows/proofs.yml
   compat:
+    needs: changes
+    if: needs.changes.outputs.compat == 'true'
     uses: ./.github/workflows/compat.yml
   assemble:
     # Proofs gate the deploy. A failed compatibility comparison still publishes,
     # because the report is how that failure is read.
-    needs: [proofs, compat]
-    if: always() && needs.proofs.result == 'success' && needs.compat.outputs.site_ready == 'true'
+    needs: [changes, proofs, compat]
+    if: always() && needs.changes.outputs.site == 'true' && needs.proofs.result == 'success' && needs.compat.outputs.site_ready == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
