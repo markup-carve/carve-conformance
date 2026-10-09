@@ -33,7 +33,7 @@ jobs:
             printf 'proofs=true\ncompat=true\nsite=true\n' >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          files=$(git diff --name-only HEAD^1 HEAD)
+          files=$(git diff --name-only --no-renames HEAD^1 HEAD)
           printf '%s\n' "$files"
           has() { grep -qE "$1" <<< "$files" && echo true || echo false; }
           all=$(has '^(\.nvmrc|\.gitmodules)$')
