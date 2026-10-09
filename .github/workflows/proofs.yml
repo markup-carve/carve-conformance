@@ -28,6 +28,11 @@ jobs:
   layout:
     runs-on: ubuntu-24.04
     timeout-minutes: 25
+    env:
+      OCAML_COMPILER: '4.14.2'
+      ROCQ_CORE: '9.2.0'
+      ROCQ_STDLIB: '9.1.0'
+      DUNE: '3.23.1'
     steps:
       - uses: actions/checkout@v6
         with:
@@ -39,7 +44,7 @@ jobs:
           cache-dependency-path: proofs/package-lock.json
       - uses: ocaml/setup-ocaml@v3
         with:
-          ocaml-compiler: '4.14.2'
+          ocaml-compiler: ${{ env.OCAML_COMPILER }}
       - name: Identify opam version
         id: opam
         run: echo "version=$(opam --version)" >> "$GITHUB_OUTPUT"
@@ -48,11 +53,11 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: _opam
-          # The workflow hash covers the runner image and pinned toolchain versions.
-          key: proof-toolchain-v1-${{ runner.os }}-${{ runner.arch }}-opam-${{ steps.opam.outputs.version }}-${{ hashFiles('.github/workflows/proofs.yml') }}
+          # Keyed on the pins alone: hashing the whole workflow made every unrelated edit rebuild Rocq.
+          key: proof-toolchain-v2-ubuntu-24.04-${{ runner.arch }}-ocaml-${{ env.OCAML_COMPILER }}-opam-${{ steps.opam.outputs.version }}-rocq-${{ env.ROCQ_CORE }}-stdlib-${{ env.ROCQ_STDLIB }}-dune-${{ env.DUNE }}
       - name: Install proof compiler and standard library
         working-directory: .
-        run: opam install --yes rocq-core.9.2.0 rocq-stdlib.9.1.0 dune.3.23.1
+        run: opam install --yes "rocq-core.$ROCQ_CORE" "rocq-stdlib.$ROCQ_STDLIB" "dune.$DUNE"
       - name: Save proof toolchain
         if: steps.proof-toolchain.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
