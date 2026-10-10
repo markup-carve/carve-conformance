@@ -3,16 +3,20 @@
  "engines": {
   "js": {
    "repo": "markup-carve/carve-js",
-   "commit": "caea5d57fc365e373f89f422c8ef6822e6f7193c"
+   "commit": "caea5d57fc365e373f89f422c8ef6822e6f7193c",
+   "specPin": "5d9795d23dadb6d77da37db640f8e032d0fc0823"
   },
   "php": {
    "repo": "markup-carve/carve-php",
-   "commit": "019cf1c98862285472afaefa9bf09c3c82a9bde9"
+   "commit": "019cf1c98862285472afaefa9bf09c3c82a9bde9",
+   "specPin": "5d9795d23dadb6d77da37db640f8e032d0fc0823"
   },
   "rust": {
    "repo": "markup-carve/carve-rs",
-   "commit": "5cd6bf82b2f17e9831e40c6f148dbb3bfeb7248f"
-  }
+   "commit": "5cd6bf82b2f17e9831e40c6f148dbb3bfeb7248f",
+   "specPin": "b738ffe75366d4c4b6acff83dabd90e2d1e932ab"
+  },
+  "specPinNote": "the engines carry different spec pins, and this harness does not read them: it measures the Djot importer against the djot.js suite and the generated sets in cases/, so a pin bump alone does not move these counts. A mismatched pin DOES move scripts/import-comparison.mjs in markup-carve/carve."
  },
  "referenceRenderer": {
   "package": "@markup-carve/carve",
@@ -74,5 +78,19 @@
    "note": "carve-js and carve-php escape the at sign, carve-rs does not; expected/gen3.json pins the js/php form"
   }
  },
- "threeWayIdenticalRows": 2195
+ "threeWayIdenticalRows": 2195,
+ "instrument": {
+  "runner": "compat/tests/djot-score/run-engine.mjs",
+  "counts": "compat/tests/djot-score/measure.mjs, matches against cases/<set>.json expectedHtml through the reference renderer",
+  "snapshot": "compat/tests/djot-score/check-expected.mjs, byte comparison against expected/<set>.json",
+  "cases": [
+   "cases/djot-suite.json",
+   "cases/gen.json",
+   "cases/gen2.json",
+   "cases/gen3.json",
+   "cases/gen4.json",
+   "cases/gen5.json"
+  ],
+  "notTheSameAs": "markup-carve/carve scripts/import-comparison.mjs, which reads that repo's own 1,585-document corpus and reports identical / spelling / meaning rather than a match count. Numbers from the two instruments are not comparable."
+ }
 }
