@@ -8,7 +8,7 @@ const report = { ...measured, selected: ['mdast'], notMeasured: ['hast', 'common
 const commonmark = {
   schemaVersion:1, kind:'commonmark-spec', spec:{version:'0.31.2',examples:652}, selectedEngines:['javascript','php'], engines:{javascript:{name:'Carve JavaScript'},php:{name:'Carve PHP'}},
   reportDisagreements:[{example:485,section:'Links',classes:{javascript:'clean',php:'names-loss'},codes:{javascript:[],php:['link-loss']}}],
-  totals:{javascript:{honesty:{reported:0,unassessed:0,'silent-loss':1,'false-loss':0,ok:0},match:0,mismatch:1,declared:0,notComparable:0,failed:1,mismatchByReport:{'names-loss':0,'unverified-only':0,clean:1}},php:{honesty:{reported:1,unassessed:0,'silent-loss':0,'false-loss':0,ok:0},match:0,mismatch:1,declared:0,notComparable:0,failed:0,mismatchByReport:{'names-loss':1,'unverified-only':0,clean:0}}},
+  totals:{javascript:{honesty:{reported:0,unassessed:0,'silent-loss':1,'unverified-loss':0,ok:0},match:0,mismatch:1,declared:0,notComparable:0,failed:1,mismatchByReport:{'names-loss':0,'unverified-only':0,clean:1}},php:{honesty:{reported:1,unassessed:0,'silent-loss':0,'unverified-loss':0,ok:0},match:0,mismatch:1,declared:0,notComparable:0,failed:0,mismatchByReport:{'names-loss':1,'unverified-only':0,clean:0}}},
   baselines:{'pandoc-djot':{converter:{name:'pandoc',version:'3.11',command:'-f commonmark -t djot --wrap=preserve'},renderer:{name:'@djot/djot',version:'0.3.2'},totals:{match:1,mismatch:1,notComparable:0,failed:0},rows:[{example:485,section:'Links',status:'match',output:'[foo]()',html:'<p><a href="">foo</a></p>'},{example:486,section:'Links',status:'mismatch',output:'baseline-only evidence',html:'<p>baseline-only evidence</p>'}]}},
   sections:[{section:'Links',examples:2,results:{javascript:{match:0,mismatch:1,declared:0,notComparable:0,failed:1},php:{match:0,mismatch:1,declared:0,notComparable:0,failed:0}},baselines:{'pandoc-djot':{match:1,mismatch:1,notComparable:0,failed:0}}}],
   rows:[
@@ -33,7 +33,7 @@ test('CommonMark measurement shows totals, section counts, failures and engine f
   await expect(page.locator('#commonmark-engine-filter option')).toHaveCount(3)
   await expect(page.locator('#commonmark-examples')).not.toContainText('baseline-only evidence')
   await expect(page.locator('#commonmark-totals thead')).toContainText('Clean report = silent')
-  for (const outcome of ['reported','unassessed','silent-loss','false-loss','ok']) await expect(page.locator('#commonmark-totals thead')).toContainText(outcome)
+  for (const outcome of ['reported','unassessed','silent-loss','unverified-loss','ok']) await expect(page.locator('#commonmark-totals thead')).toContainText(outcome)
   await expect(page.locator('#commonmark-totals tbody tr').first().locator('td').nth(10)).toHaveText('1')
   await expect(page.locator('#commonmark-disagreements a')).toHaveAttribute('href', 'https://spec.commonmark.org/0.31.2/#example-485')
   await expect(page.locator('#commonmark-disagreements')).toContainText('Links')
@@ -352,4 +352,20 @@ test('missing Djot evidence is marked as not measured', async ({page}) => {
   await page.goto('/#djot')
   await expect(page.locator('#djot-note')).toHaveText('Not measured in this report.')
   await expect(page.locator('#djot-results')).toBeHidden()
+})
+
+
+for (const value of ['unverified-loss', 'false-loss']) test(`matching HTML loss filter ${value} survives reload`, async ({ page }) => {
+  const changed = structuredClone(commonmark)
+  const row = changed.rows[0]
+  Object.assign(row, { status:'match', honesty:'unverified-loss', reportClass:'names-loss', diagnostics:[{code:'raw-preserved', fidelity:'degraded'}] })
+  await page.route('**/commonmark-summary.json', route => route.fulfill({json:changed}))
+  await page.goto(`/?suite=commonmark&assessment=${value}#commonmark`)
+  const assessment = page.getByLabel('Diagnostic assessment (CommonMark)', {exact:true})
+  await expect(assessment).toHaveValue('unverified-loss')
+  await expect(page.locator('#commonmark-examples>li')).toHaveCount(1)
+  await expect(page.locator('#commonmark-examples>li').first()).toContainText('Diagnostic assessment: unverified-loss')
+  await page.reload()
+  await expect(assessment).toHaveValue('unverified-loss')
+  await expect(page.locator('#commonmark-examples>li')).toHaveCount(1)
 })

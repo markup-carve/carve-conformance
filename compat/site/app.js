@@ -130,7 +130,7 @@ function fillHtmlSuite(data, {id,kind,label,sourceKey,sourceLabel,sectionLabel})
   const setLink = (link, row) => { const url = exampleLink(row); if (typeof url === 'string' && URL.canParse(url) && new URL(url).protocol === 'https:') link.href = url }
   if (data.schemaVersion !== 1 || data.kind !== kind || !Array.isArray(data.rows) || !Array.isArray(data.sections) || !Array.isArray(data.selectedEngines)) throw new Error(`Unsupported ${label} report`)
   const engines = data.selectedEngines, name = engine => data.engines[engine]?.name ?? engine
-  const outcomes = ['reported','unassessed','silent-loss','false-loss','ok']
+  const outcomes = ['reported','unassessed','silent-loss','unverified-loss','ok']
   const baselines = Object.entries(data.baselines ?? {}), baselineName = 'pandoc to Djot (baseline)'
   suiteTable(`#${id}-totals`, `Totals by ${sourceLabel} importer`, ['Engine','Match','Mismatch','Declared','Not comparable','Failed','Names the loss','Only fidelity-unverified','Clean report = silent',...outcomes], engines.map(engine => {
     const t = data.totals[engine]
@@ -181,18 +181,18 @@ function fillHtmlSuite(data, {id,kind,label,sourceKey,sourceLabel,sectionLabel})
   const provenance = node('details'); provenance.append(node('summary','Import measurement pins, date and rendering scope'), node('pre',JSON.stringify({generatedAt:data.generatedAt,suiteRevision:data.suiteRevision,engines:data.engines,referenceRenderer:data.renderer,nativeRendering:data.nativeRendering ?? 'Not measured in this archived report'},null,2))); controls.before(provenance)
   const query = new URL(location.href).searchParams
   if(query.get('suite') === id) {
-    restoreSelect(filter, query.get('importFilter') ?? (query.has('example') ? '' : query.get('importEngine'))); restoreSelect(status, query.get('outcome')); restoreSelect(assessment, query.get('assessment')); restoreSelect(section, query.get('section')); search.value = query.get('importQ') ?? ''
+    restoreSelect(filter, query.get('importFilter') ?? (query.has('example') ? '' : query.get('importEngine'))); restoreSelect(status, query.get('outcome')); restoreSelect(assessment, query.get('assessment') === 'false-loss' ? 'unverified-loss' : query.get('assessment')); restoreSelect(section, query.get('section')); search.value = query.get('importQ') ?? ''
   }
   let limit = 30, selectionVersion = 0
   const issueQueue = node('details'); issueQueue.append(node('summary','Findings grouped by section and diagnostic assessment'))
   const queue = node('ul')
   const groups = new Map()
-  for(const row of data.rows.filter(r => r.status === 'mismatch' || r.status === 'failed' || r.honesty === 'false-loss')) {
+  for(const row of data.rows.filter(r => r.status === 'mismatch' || r.status === 'failed' || r.honesty === 'unverified-loss')) {
     const key = `${row.section} / ${row.honesty ?? row.status}`; if(!groups.has(key)) groups.set(key,[]); groups.get(key).push(row)
   }
   for(const [key,rows] of groups) {
     const item = node('li'), button = node('button',`${key}: ${new Set(rows.map(r=>r.example)).size} examples`); button.type = 'button'
-    button.addEventListener('click',()=>{ filter.value=''; search.value=''; section.value=rows[0].section; assessment.value=rows[0].honesty ?? ''; status.value=rows[0].honesty==='false-loss'?'':rows[0].status; limit=30; updateSelection(); renderExamples(); select('examples').scrollIntoView() }); item.append(button); queue.append(item)
+    button.addEventListener('click',()=>{ filter.value=''; search.value=''; section.value=rows[0].section; assessment.value=rows[0].honesty ?? ''; status.value=rows[0].honesty==='unverified-loss'?'':rows[0].status; limit=30; updateSelection(); renderExamples(); select('examples').scrollIntoView() }); item.append(button); queue.append(item)
   }
   issueQueue.append(queue); controls.before(issueQueue)
   const renderExamples = () => {
