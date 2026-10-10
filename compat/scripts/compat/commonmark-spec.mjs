@@ -91,7 +91,16 @@ export function dropMathRole(tree) {
   return { ...out, attrs }
 }
 
-const normalizations = Object.freeze({ 'unwrap-lone-image-paragraph':unwrapLoneImageParagraph, 'drop-math-role':dropMathRole })
+export function percentEncodeDestinationWhitespace(tree) {
+  if (Array.isArray(tree)) return tree.map(percentEncodeDestinationWhitespace)
+  if (!tree || typeof tree !== 'object') return tree
+  const out = Object.fromEntries(Object.entries(tree).map(([key,value]) => [key,percentEncodeDestinationWhitespace(value)]))
+  const key = out.type === 'link' ? 'href' : out.type === 'image' ? 'src' : null
+  if (key && typeof out[key] === 'string') out[key] = out[key].replace(/\s/gu, encodeURIComponent)
+  return out
+}
+
+const normalizations = Object.freeze({ 'unwrap-lone-image-paragraph':unwrapLoneImageParagraph, 'drop-math-role':dropMathRole, 'percent-encode-destination-whitespace':percentEncodeDestinationWhitespace })
 
 export function validateDeclarations(source = readFileSync(declaredPath), examples = validateSpec()) {
   const file = JSON.parse(source.toString())
