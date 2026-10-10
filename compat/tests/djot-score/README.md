@@ -34,8 +34,17 @@ a renderer other than the installed one.
 
 2,197 rows in all. Regenerate `djot-suite` with `build-djot-suite.mjs`, which takes the
 set from `validateDjotTests()`: the six cases that carry per-case options expect an AST
-dump rather than HTML, so they cannot be scored here and the filter drops them. An earlier
-count of 2,474 came from two copies of this set, one of them unfiltered at 277 rows.
+dump rather than HTML, so they cannot be scored here and the filter drops them.
+
+An earlier count of 2,474 was 268 + 560 + 310 + 392 + 667 + 277 over the scratch copy's
+file list. It counted the djot.js suite twice, as a filtered 268-row file and an unfiltered
+277-row one, and reached `gen` and `gen2` through a union file as well.
+
+**A number from here is only a number with its instrument.** Say which script and which
+case files produced it. `markup-carve/carve` carries `scripts/import-comparison.mjs`, which
+measures a different population, 1,585 documents, and reports identical, spelling and
+meaning counts rather than matches. Neither instrument is wrong and the two are not
+comparable, which is exactly how a figure quoted without its instrument goes unchallenged.
 
 ## Running it
 
@@ -60,7 +69,7 @@ of the 2,197 rows. An expectation only one engine satisfies is therefore wrong b
 construction, which is the cheapest check available here. The two rows that do differ are
 listed under `engineDivergences` with the issue that will settle them.
 
-**Numbers live in `baselines.json`, not in a brief.** Every score in this area travelled by
+**Numbers live in `baselines.json`, with their instrument, not in a brief.** Every score in this area travelled by
 prose until 2026-10-10, and the expectations lived in a scratch directory where a second
 vintage could not be ruled out. Lanes read different numbers for the same set and each was
 internally consistent against its own copy. Re-record the
