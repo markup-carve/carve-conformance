@@ -1,7 +1,9 @@
-export function finding(row) {
+export function finding(row, {allowUnknown = false} = {}) {
   if (row.groups.length === 1) return null
+  const unclassified = () => { if (allowUnknown) return `unclassified/${row.family}`; throw new Error(`Unclassified disagreement: ${row.family}/${row.id}`) }
   const p = row.parameters
   if (row.family === 'fences') return 'footnote-fence-base'
+  if (!p) return unclassified()
   if (p.boundary === 'content-comment' && p.indent === 4) return p.host === 'list-list' ? 'nested-content-comment-opener' : 'opener-after-content-comment'
   if (p.boundary === 'low-comment' && p.indent === 1 && p.follower === 'sibling') return 'marker-below-content'
   if (p.host === 'list-quote' && p.boundary === 'ordinary') return 'quote-lazy-interruption'
@@ -11,7 +13,7 @@ export function finding(row) {
   if (p.host === 'list-list' && p.boundary === 'content-comment' && p.follower === 'sibling') return 'nested-comment-marker'
   if (p.host === 'list-list' && p.boundary === 'content-comment') return 'nested-comment-retention'
   if (p.host === 'list-list' && p.boundary === 'comment-blank') return 'nested-comment-blank'
-  throw new Error(`Unclassified disagreement: ${row.family}/${row.id}`)
+  return unclassified()
 }
 
 // Resolved cases stay in the matrix; only disagreements need reduction.

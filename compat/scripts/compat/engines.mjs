@@ -58,3 +58,18 @@ export function cachedEngine(engine, ast, source) {
   if (!resultCache.has(key)) resultCache.set(key,runEngine(engine,ast,source))
   return structuredClone(resultCache.get(key))
 }
+
+export function renderSourceBatch(engine, sources, {ast = false} = {}) {
+  const metadata = engineMetadata(engine)
+  if (engine === 'php') {
+    const args = [fileURLToPath(new URL('./php-render-driver.php', import.meta.url)), ...(ast ? ['--ast'] : [])];
+    try { return JSON.parse(native(process.env.CARVE_PHP ?? 'php', args, JSON.stringify(sources))) }
+    catch { return sources.map(source => { try { return JSON.parse(native(process.env.CARVE_PHP ?? 'php', args, JSON.stringify([source])))[0] } catch(error) { return {error:error.message} } }) }
+  }
+  return sources.map(source => {
+    try {
+      if (engine === 'javascript') { const doc = parse(source); return {html:renderHtml(resolve(doc)), ...(ast ? {ast:toAstJson(doc)} : {})} }
+      return {html:native(metadata.binary,['--html'],source), ...(ast ? {ast:JSON.parse(native(metadata.binary,['--json'],source))} : {})}
+    } catch(error) { return {error:error.message} }
+  })
+}

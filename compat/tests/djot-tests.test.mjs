@@ -105,6 +105,11 @@ test('JavaScript Djot lane measures every HTML example and accounts for every ou
   assert.ok(!Object.hasOwn(report,'baselines'))
   assert.deepEqual(report.notMeasuredEngines,['php','rust'])
   validateHtmlSuite(report,{label:'Djot',examples,differences:loadDjotDeclarations(examples).differences,sourceKey:'source'})
+  assert.equal(report.nativeRendering.totals.javascript.referenceDisagreements,0)
+  assert.equal(report.rows.every(row => row.nativeComparison.referenceAgreement),true)
+  const altered = structuredClone(report)
+  altered.nativeRendering.totals.javascript.match++
+  assert.throws(() => validateHtmlSuite(altered,{label:'Djot',examples,differences:loadDjotDeclarations(examples).differences,sourceKey:'source'}), /Inconsistent native rendering totals/)
   const emphasis = report.rows.find(r => r.example === 'emphasis.test:1')
   assert.equal(emphasis.source, '*foo bar*\n')
   assert.equal(emphasis.status, 'match')

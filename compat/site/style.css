@@ -7,3 +7,7 @@
 footer .related{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;gap:6px 16px;padding:0;border:0;overflow:visible;white-space:normal;}
 
 .html-suite caption{text-align:left;padding:12px 15px;font-weight:650;color:var(--ink)}.html-suite .silent-losses{font-weight:650;color:var(--red)}.html-suite .suite-examples{list-style:none;padding:0;display:grid;gap:12px}.html-suite .suite-examples>li{min-width:0;background:#fff;border:1px solid var(--line);border-radius:8px}.html-suite .suite-examples>li>details{padding:8px 15px 15px}.html-suite .suite-examples p,.html-suite .suite-results>p{font-size:.82rem}.html-suite .suite-examples .detail-panes{margin-top:12px}
+
+.evidence-actions{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
+#source-results select{max-width:100%}#source-results pre{white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:640px){header nav{flex-wrap:wrap}header nav a{white-space:nowrap}}

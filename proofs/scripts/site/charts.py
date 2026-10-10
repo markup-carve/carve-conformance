@@ -202,7 +202,8 @@ for family in sorted({g['family'] for g in costs['groups']}):
             export('current-costs', family, phase, metric, unit, series, costs['metadata'], costs['metadata']['method'] + ' Error bars show sample minimum and maximum, not confidence intervals. Fresh-worker rounds remain separate; pooled medians would hide variation. These timings do not establish a performance ordering. Heap sampling measures allocation churn, not retained memory. Carve positions:false drops fields after parsing; it does not bypass position construction.')
 live = {chart['id'] for chart in charts}
 for path in OUT.iterdir():
-    if path.name != 'index.json' and path.stem not in live:
+    if path.name not in ['index.json', 'catalog.json'] and path.stem not in live:
         path.unlink()
 (OUT / 'index.json').write_text(json.dumps(charts))
+(OUT / 'catalog.json').write_text(json.dumps([{key: chart[key] for key in ['id', 'dataset', 'family', 'phase', 'metric', 'unit', 'xUnit']} for chart in charts]))
 print(f'Exported {len(charts)} charts as SVG, PNG, CSV and JSON')

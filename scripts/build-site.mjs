@@ -36,11 +36,11 @@ for (const lane of lanes) {
 }
 
 const evidence = json('proofs/_site/data/evidence.json')
-const ownership = evidence.reports['ownership-results']
+const ownership = evidence.reports['ownership-current-results']
 const report = json('compat/dist/report.json')
 const commonmark = existsSync(path('compat/dist/commonmark.json')) ? json('compat/dist/commonmark.json') : null
 const djot = existsSync(path('compat/dist/djot.json')) ? json('compat/dist/djot.json') : null
-const theoremCount = file => (readFileSync(path(`proofs/proofs/layout/${file}`), 'utf8').match(/^(?:Theorem|Lemma)\s/gm) ?? []).length
+const theoremCount = model => [...evidence.theorems, ...evidence.stackTheorems].filter(t => t.model === model).length
 
 // Contrast pairs for the landing page: one column of indentation moves a line
 // to a different owner. Each note is checked against the spec output, so a
@@ -61,37 +61,34 @@ const specimens = curated.map(([id, expect, note]) => {
   return { id, note, source: r.source, html: r.outputs.spec.trim(), readers: r.groups.find(g => g.includes('spec')) }
 })
 
-const suiteTotals = suite => suite && Object.fromEntries(Object.entries(suite.totals).map(([engine, t]) => [engine, { match: t.match, mismatch: t.mismatch, declared: t.declared, failed: t.failed, silentLoss: t.honesty?.['silent-loss'] ?? null }]))
-const short = sha => sha?.slice(0, 7) ?? null
+const suiteTotals = suite => suite && Object.fromEntries(Object.entries(suite.totals).map(([engine, t]) => [engine, { match: t.match, mismatch: t.mismatch, declared: t.declared, notComparable:t.notComparable, failed: t.failed, unassessed:t.honesty?.unassessed ?? null, falseLoss:t.honesty?.['false-loss'] ?? null, silentLoss: t.honesty?.['silent-loss'] ?? null }]))
 
-// Importing CommonMark and Djot into Carve. Every engine must report the same
-// totals, since the landing page shows one row per source format.
-const importRow = (label, detail, suite) => {
-  const totals = Object.values(suite.totals)
-  const t = totals[0]
-  for (const other of totals) {
-    for (const key of ['match', 'mismatch', 'declared', 'notComparable', 'failed']) {
-      if (other[key] !== t[key]) throw new Error(`${label}: engines disagree on ${key}; the landing page needs a row per engine`)
-    }
-  }
-  return { label, detail, kept: t.match, declared: t.declared, differs: t.mismatch + t.failed, outOfScope: t.notComparable }
+// Show separate importer rows when their measured totals differ.
+const importRows = (label, detail, suite) => {
+  const values = Object.entries(suite.totals), keys = ['match','mismatch','declared','notComparable','failed'];
+  const shared = values.every(([,t])=>keys.every(key=>t[key] === values[0][1][key]));
+  const selected = shared ? [values[0]] : values;
+  return selected.map(([engine,t])=>({ label:shared ? label : `${label} (${engine})`, detail:shared ? `${detail}, measured engines: ${values.map(([id])=>id).join(', ')}` : detail, kept:t.match,declared:t.declared,differs:t.mismatch+t.failed,outOfScope:t.notComparable }));
 }
 const imports = []
 if (commonmark) {
-  imports.push(importRow('CommonMark into Carve', `${commonmark.spec.examples} spec examples`, commonmark))
+  imports.push(...importRows('CommonMark into Carve', `${commonmark.spec.examples} spec examples`, commonmark))
   const pandoc = commonmark.baselines?.['pandoc-djot']?.totals
   if (pandoc) imports.push({ label: 'Pandoc: CommonMark into Djot', detail: `${commonmark.spec.examples} spec examples, for reference`, reference: true, kept: pandoc.match, declared: null, differs: pandoc.mismatch + pandoc.failed, outOfScope: pandoc.notComparable })
 }
-if (djot) imports.push(importRow('Djot into Carve', `${djot.suite.examples} djot.js test examples`, djot))
+if (djot) imports.push(...importRows('Djot into Carve', `${djot.suite.examples} djot.js test examples`, djot))
 
 const summary = {
+  builtAt: new Date().toISOString(),
   revision: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: path(''), encoding: 'utf8' }).trim(),
   proofs: {
     ownershipCases: ownership.rows.length,
     disagreements: ownership.rows.filter(r => r.groups.length > 1).length,
-    disagreementsBefore: evidence.history.before,
+    disagreementsAfter: evidence.history.after, disagreementsBefore: evidence.history.before,
     theorems: { ownership: theoremCount('Ownership.v'), stack: theoremCount('StackSelection.v') },
     traces: evidence.layoutExamples.trace,
+    contracts: evidence.reports['ownership-current-contracts'].rows.length,
+    historicalCases:evidence.history.total,
   },
   compat: {
     generatedAt: report.generatedAt,
@@ -106,10 +103,10 @@ const summary = {
   },
   versus: { edits: evidence.comparisonSummary, imports },
   pins: [
-    { reader: 'Spec', proofs: short(ownership.pins.spec?.commit), compat: null },
-    { reader: 'JavaScript', proofs: short(ownership.pins.js?.commit), compat: short(report.engines.javascript?.revision) },
-    { reader: 'PHP', proofs: short(ownership.pins.php?.commit), compat: short(report.engines.php?.revision) },
-    { reader: 'Rust', proofs: short(ownership.pins.rs?.commit), compat: short(report.engines.rust?.revision) },
+    { reader: 'Spec', proofs: ownership.pins.spec?.commit, compat: null },
+    { reader: 'JavaScript', proofs: ownership.pins.js?.commit, compat: report.engines.javascript?.revision },
+    { reader: 'PHP', proofs: ownership.pins.php?.commit, compat: report.engines.php?.revision },
+    { reader: 'Rust', proofs: ownership.pins.rs?.commit, compat: report.engines.rust?.revision },
   ],
   specimens,
 }

@@ -84,9 +84,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-      # No --with-deps: the runner image already carries Chrome's system libraries, and apt cost 20s to 3 minutes.
-      - run: npx playwright install chromium
+          key: playwright-all-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      # Firefox and WebKit require additional system libraries.
+      - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run test:site
       - uses: actions/upload-artifact@v4
         if: failure()

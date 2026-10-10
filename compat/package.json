@@ -16,7 +16,8 @@
     "site:build": "node scripts/build-site.mjs",
     "site:preview": "python3 -m http.server 4173 --directory dist",
     "test:site": "playwright test",
-    "compat:provision": "node scripts/provision-engines.mjs && node scripts/provision-pandoc.mjs"
+    "compat:provision": "node scripts/provision-engines.mjs && node scripts/provision-pandoc.mjs",
+    "compat:source-agreement": "node scripts/source-agreement.mjs"
   },
   "devDependencies": {
     "@asciidoctor/core": "4.1.0",

@@ -63,6 +63,7 @@ function show(index) {
   const i = ((index % n) + n) % n
   current = specimens[i]
   $('case-id').textContent = current.id
+  $('case-link').href = `proofs/?profile=current&result=all&case=${encodeURIComponent(current.id)}#ownership`
   $('case-count').textContent = `${i + 1} / ${n}`
   $('case-note').textContent = ''
   renderSource(current.source)
@@ -79,7 +80,7 @@ function figure(id, value) {
 
 function renderPins(pins) {
   const commit = (sha, repo) => sha
-    ? el('a', { href: `https://github.com/markup-carve/${repo}/commit/${sha}` }, el('code', { textContent: sha }))
+    ? el('a', { href: `https://github.com/markup-carve/${repo}/commit/${sha}` }, el('code', { textContent: sha.slice(0, 7), title:sha }))
     : el('span', { className: 'none', textContent: 'not measured' })
   const repos = { Spec: 'carve', JavaScript: 'carve-js', PHP: 'carve-php', Rust: 'carve-rs' }
   let drift = 0
@@ -95,7 +96,7 @@ function renderPins(pins) {
     $('pin-drift').hidden = false
     const shared = pins.filter(p => p.proofs && p.compat).length
     const which = drift === shared ? `All ${count(shared)} readers` : `${fmt(drift)} of ${fmt(shared)} readers`
-    $('pin-drift').textContent = `${which} measured by both lanes are pinned at different commits in each. Moving both lanes to one pin per reader is the next step.`
+    $('pin-drift').textContent = `${which} measured by both lanes are pinned at different commits in each. These are separate measurement profiles; compare results only within their recorded scope.`
   }
 }
 
@@ -111,23 +112,27 @@ function renderVersus(versus) {
 }
 
 async function main() {
-  const data = await (await fetch('data/summary.json')).json()
+  const response = await fetch('data/summary.json', {cache:'no-store'}); if(!response.ok) throw new Error(`HTTP ${response.status}`)
+  const data = await response.json()
   const { proofs, compat } = data
 
   figure('f-theorems', proofs.theorems.ownership + proofs.theorems.stack)
   figure('f-cases', proofs.ownershipCases)
   figure('f-disagree', proofs.disagreements)
   $('proofs-prose').append(
-    `${proofs.theorems.ownership} theorems describe how indentation decides which container owns a line, and ${proofs.theorems.stack} more cover choosing among candidate frames. Across ${fmt(proofs.ownershipCases)} generated cases the spec and the JavaScript, PHP and Rust readers `,
+    `${proofs.theorems.ownership} theorems describe how indentation decides which container owns a line, and ${proofs.theorems.stack} more cover choosing among candidate frames. Across ${fmt(proofs.ownershipCases)} current ownership cases the spec and the JavaScript, PHP and Rust readers `,
     el('strong', { textContent: proofs.disagreements === 0 ? 'produce identical HTML' : `disagree on ${proofs.disagreements}` }),
-    `, down from ${proofs.disagreementsBefore} disagreements before the ownership fixes.`)
+    `. The historical ${proofs.historicalCases}-case suite went from ${proofs.disagreementsBefore} disagreements to ${proofs.disagreementsAfter}. Another ${proofs.contracts} observations check versioned edit contracts.`)
 
   figure('f-targets', compat.targets.length)
   figure('f-compared', compat.passed + compat.failed)
   figure('f-failed', compat.failed)
+  const imported = Object.entries({CommonMark:compat.commonmark,Djot:compat.djot}).filter(([,suite])=>suite)
+  $('import-status').textContent = imported.map(([name,suite])=>`${name}: ${Object.entries(suite.totals).map(([engine,t])=>`${engine}: ${t.mismatch} import mismatches, ${t.unassessed ?? 'unrecorded'} losses needing assessment`).join('; ')} (JavaScript reference rendering).`).join(' ')
+  $('import-status').append(' ',el('a',{href:'compat/#commonmark',textContent:'Inspect all import outcomes'}))
   const names = { mdast: 'mdast', hast: 'hast', commonmark: 'commonmark.js', cmark: 'cmark', djot: 'djot.js', docutils: 'Docutils', asciidoctor: 'Asciidoctor', md4c: 'MD4C', pandoc: 'Pandoc' }
   $('targets').replaceChildren(...compat.targets.map(t => el('li', { textContent: names[t] ?? t })))
-  const prose = [`Each format is mapped through all ${count(compat.engines.length)} Carve engines: ${fmt(compat.supported)} supported comparisons and ${fmt(compat.loss)} where a loss must be reported with the right diagnostic.`]
+  const prose = [`Each parser target is mapped through all ${count(compat.engines.length)} Carve engines: ${fmt(compat.supported)} supported comparisons and ${fmt(compat.loss)} where a loss must be reported with the right diagnostic.`]
   const cm = compat.commonmark?.totals?.javascript
   if (cm) prose.push(` Of the ${fmt(compat.commonmark.examples)} CommonMark spec examples, ${fmt(cm.match)} import to matching structure and ${cm.declared} differ by declaration.`)
   $('compat-prose').append(...prose)
@@ -139,7 +144,7 @@ async function main() {
   rev.textContent = `committed evidence at ${data.revision.slice(0, 7)}`
 
   specimens = data.specimens
-  if (specimens.length) show(0)
+  if (specimens.length) show(0); else { $('prev').disabled=true; $('next').disabled=true; }
   $('prev').addEventListener('click', () => show(show.index - 1))
   $('next').addEventListener('click', () => show(show.index + 1))
 }
