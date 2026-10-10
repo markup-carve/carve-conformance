@@ -19,6 +19,13 @@ export function honesty(structureKept, cls) {
   return { 'names-loss': 'reported', 'unverified-only': 'unassessed', clean: 'silent-loss' }[cls]
 }
 
+export const htmlHonestyOutcomes = ['reported', 'unassessed', 'silent-loss', 'unverified-loss', 'ok']
+
+export function htmlHonesty(htmlKept, cls) {
+  if (htmlKept && cls === 'names-loss') return 'unverified-loss'
+  return honesty(htmlKept, cls)
+}
+
 export function validateAssessment(data = JSON.parse(readFileSync(assessmentPath))) {
   assert.ok(data && typeof data === 'object' && !Array.isArray(data), 'Invalid importer assessment config')
   assert.equal(data.schemaVersion, 1, 'Invalid importer assessment schemaVersion')

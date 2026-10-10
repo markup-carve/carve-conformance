@@ -27,12 +27,12 @@ test('current four-reader contracts and recorded-run comparisons are accessible'
   await expect(page.getByLabel('Earlier behavior run')).toHaveValue('pre-prefix-refresh')
   await expect(page.locator('.result-count').last()).toContainText('observations')
 })
-test('matching imports with false loss diagnostics can be inspected and reloaded',async({page})=>{
-  const row=cm.rows.find(r=>r.honesty==='false-loss');test.skip(!row,'No false-loss observations in this measurement')
-  await page.goto(`/compat/?suite=commonmark&example=${encodeURIComponent(row.example)}&importEngine=${row.engine}&assessment=false-loss#commonmark`)
+test('matching imports with losses outside the HTML comparison can be inspected and reloaded',async({page})=>{
+  const row=cm.rows.find(r=>r.honesty==='unverified-loss');test.skip(!row,'No named losses with matching HTML in this measurement')
+  await page.goto(`/compat/?suite=commonmark&example=${encodeURIComponent(row.example)}&importEngine=${row.engine}&assessment=unverified-loss#commonmark`)
   const example=page.locator('#commonmark-examples>li').first()
   await expect(example.locator('summary').first()).toContainText(`Example ${row.example}`)
-  await expect(example).toContainText('Diagnostic assessment: false-loss')
+  await expect(example).toContainText('Diagnostic assessment: unverified-loss')
   await expect(example).toContainText(row.diagnostics[0].code)
   await page.reload();await expect(page.locator('#commonmark-examples>li').first()).toContainText(row.diagnostics[0].code)
   await expect(page.locator('#commonmark-native-totals')).toBeVisible()

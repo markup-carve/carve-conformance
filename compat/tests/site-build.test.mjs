@@ -32,7 +32,7 @@ test('the site includes an optional CommonMark report and rejects stale or incon
     writeFileSync(join(dir,'reports/latest.json'), JSON.stringify(report))
     const spec = JSON.parse(readFileSync('tests/commonmark-spec/spec.json'))
     const counts = {match:652,mismatch:0,declared:0,notComparable:0,failed:0}
-    const commonmark = { schemaVersion:1, kind:'commonmark-spec', spec:{sha256:hash('tests/commonmark-spec/spec.json'),examples:652}, engineConfigSha256:hash('resources/engines.json'), selectedEngines:['javascript'], engines:{javascript:{name:'Carve JavaScript'}}, reportDisagreements:[], totals:{javascript:{...counts,honesty:{reported:0,unassessed:0,'silent-loss':0,'false-loss':0,ok:652},mismatchByReport:{'names-loss':0,'unverified-only':0,clean:0}}}, rows:spec.map(e => ({engine:'javascript',example:e.example,section:e.section,status:'match',markdown:e.markdown,expectedHtml:e.html,carve:'',carveHtml:'',diagnostics:[],reportClass:'clean',honesty:'ok'})), sections:[...new Set(spec.map(e => e.section))].map(section => {const examples = spec.filter(e => e.section === section).length;return {section,examples,results:{javascript:{...counts,match:examples}}}}) }
+    const commonmark = { schemaVersion:1, kind:'commonmark-spec', spec:{sha256:hash('tests/commonmark-spec/spec.json'),examples:652}, engineConfigSha256:hash('resources/engines.json'), selectedEngines:['javascript'], engines:{javascript:{name:'Carve JavaScript'}}, reportDisagreements:[], totals:{javascript:{...counts,honesty:{reported:0,unassessed:0,'silent-loss':0,'unverified-loss':0,ok:652},mismatchByReport:{'names-loss':0,'unverified-only':0,clean:0}}}, rows:spec.map(e => ({engine:'javascript',example:e.example,section:e.section,status:'match',markdown:e.markdown,expectedHtml:e.html,carve:'',carveHtml:'',diagnostics:[],reportClass:'clean',honesty:'ok'})), sections:[...new Set(spec.map(e => e.section))].map(section => {const examples = spec.filter(e => e.section === section).length;return {section,examples,results:{javascript:{...counts,match:examples}}}}) }
     commonmark.declaredSha256 = hash('tests/commonmark-spec/declared.json')
     commonmark.declarations = JSON.parse(readFileSync('tests/commonmark-spec/declared.json')).differences.map(d => ({...d,declared:{javascript:0},stale:{javascript:[...d.examples]},insufficient:{javascript:[]}}))
     const custom = join(dir,'optional.json'), output = join(dir,'dist/commonmark.json')
@@ -55,8 +55,8 @@ test('the site includes an optional CommonMark report and rejects stale or incon
       {...commonmark,rows:[{...commonmark.rows[0],expectedHtml:'wrong expectation'},...commonmark.rows.slice(1)]},
       {...commonmark,engines:{}}, {...commonmark,sections:[]},
       {...commonmark,reportDisagreements:{}},
-      {...commonmark,totals:{javascript:{...commonmark.totals.javascript,honesty:{reported:0,unassessed:0,'silent-loss':0,'false-loss':0,ok:651}}}},
-      {...commonmark,rows:[{...commonmark.rows[0],honesty:'false-loss'},...commonmark.rows.slice(1)]},
+      {...commonmark,totals:{javascript:{...commonmark.totals.javascript,honesty:{reported:0,unassessed:0,'silent-loss':0,'unverified-loss':0,ok:651}}}},
+      {...commonmark,rows:[{...commonmark.rows[0],honesty:'unverified-loss'},...commonmark.rows.slice(1)]},
     ]) {
       writeFileSync(custom, JSON.stringify(broken))
       assert.equal(build('--commonmark=optional.json').status, 1)
@@ -156,7 +156,7 @@ test('the site validates optional Djot evidence and removes absent report artifa
       r => {r.engineConfigSha256='stale'}, r => {r.declaredSha256='stale'},
       r => {r.rows.pop()}, r => {r.rows[1]=r.rows[0]}, r => {r.rows[0].example='bad.test:1'},
       r => {r.rows[0].source='changed'}, r => {r.rows[0].expectedHtml='changed'},
-      r => {r.rows[0].link='https://example.com'}, r => {r.rows[0].honesty='false-loss'},
+      r => {r.rows[0].link='https://example.com'}, r => {r.rows[0].honesty='unverified-loss'},
       r => {r.rows[0].reportClass='clean'}, r => {r.rows[0].status='other'},
       r => {r.totals.javascript.match++}, r => {r.totals.javascript.mismatchByReport.clean++},
       r => {r.totals.javascript.honesty.ok++}, r => {r.sections[0].results.javascript.match++},

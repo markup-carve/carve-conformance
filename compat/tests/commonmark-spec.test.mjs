@@ -92,7 +92,7 @@ test('reports count declared rows as kept structure and identify stale and insuf
     assert.deepEqual(report.declarations[0].insufficient, {javascript:[34]})
     const declared = report.rows.find(r => r.example === 520)
     assert.equal(declared.status, 'declared')
-    assert.ok(['ok','false-loss'].includes(declared.honesty))
+    assert.ok(['ok','unverified-loss'].includes(declared.honesty))
     assert.equal(report.rows.find(r => r.example === 572).status, 'mismatch')
     assert.equal(report.rows.find(r => r.example === 34).status, 'mismatch')
     assert.deepEqual(report.rows.find(r => r.example === 34).declaration, {id:d.id,insufficient:true})

@@ -61,7 +61,7 @@ const specimens = curated.map(([id, expect, note]) => {
   return { id, note, source: r.source, html: r.outputs.spec.trim(), readers: r.groups.find(g => g.includes('spec')) }
 })
 
-const suiteTotals = suite => suite && Object.fromEntries(Object.entries(suite.totals).map(([engine, t]) => [engine, { match: t.match, mismatch: t.mismatch, declared: t.declared, notComparable:t.notComparable, failed: t.failed, unassessed:t.honesty?.unassessed ?? null, falseLoss:t.honesty?.['false-loss'] ?? null, silentLoss: t.honesty?.['silent-loss'] ?? null }]))
+const suiteTotals = suite => suite && Object.fromEntries(Object.entries(suite.totals).map(([engine, t]) => [engine, { match: t.match, mismatch: t.mismatch, declared: t.declared, notComparable:t.notComparable, failed: t.failed, unassessed:t.honesty?.unassessed ?? null, unverifiedLoss:t.honesty?.['unverified-loss'] ?? null, silentLoss: t.honesty?.['silent-loss'] ?? null }]))
 
 // Show separate importer rows when their measured totals differ.
 const importRows = (label, detail, suite) => {

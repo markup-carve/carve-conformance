@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { parse, resolve, renderHtml } from '@markup-carve/carve'
 import { engineNames, engineMetadata, renderSourceBatch } from './engines.mjs'
-import { reportClass, honesty, honestyOutcomes, runImportBatch } from './importer-report.mjs'
+import { reportClass, htmlHonesty, htmlHonestyOutcomes, runImportBatch } from './importer-report.mjs'
 
 const counts = () => ({ match:0, mismatch:0, notComparable:0, failed:0 })
 const engineCounts = () => ({ ...counts(), declared:0 })
@@ -34,7 +34,7 @@ export function runHtmlSuite(selectedEngines, { examples, format, sourceKey, dif
   const metadata = Object.fromEntries(selectedEngines.map(engine => [engine,engineMetadata(engine)]))
   const engines = Object.fromEntries(Object.entries(metadata).map(([engine,{root,binary,...meta}]) => [engine,meta]))
   const reference = engineMetadata('javascript'), pkg = JSON.parse(readFileSync(new URL('../../node_modules/@markup-carve/carve/package.json', import.meta.url)))
-  const totals = Object.fromEntries(selectedEngines.map(engine => [engine,{ ...engineCounts(), honesty:Object.fromEntries(honestyOutcomes.map(outcome => [outcome,0])), mismatchByReport:{ 'names-loss':0, 'unverified-only':0, clean:0 } }]))
+  const totals = Object.fromEntries(selectedEngines.map(engine => [engine,{ ...engineCounts(), honesty:Object.fromEntries(htmlHonestyOutcomes.map(outcome => [outcome,0])), mismatchByReport:{ 'names-loss':0, 'unverified-only':0, clean:0 } }]))
   const sections = [...new Set(examples.map(e => e.section))].map(section => ({ section, examples:examples.filter(e => e.section === section).length, results:Object.fromEntries(selectedEngines.map(engine => [engine,engineCounts()])), ...(baselines ? {baselines:Object.fromEntries(Object.keys(baselines).map(baseline => [baseline,counts()]))} : {}) }))
   for (const [baseline,result] of Object.entries(baselines ?? {})) for (const row of result.rows) sections.find(s => s.section === row.section).baselines[baseline][countKey(row.status)]++
   const rows = [], nativeTotals = {}
@@ -64,7 +64,7 @@ export function runHtmlSuite(selectedEngines, { examples, format, sourceKey, dif
       }
       nativeTotals[engine][countKey(row.nativeComparison.status)]++
       if(row.nativeComparison.referenceAgreement === false) nativeTotals[engine].referenceDisagreements++
-      row.honesty = ['match','mismatch','declared'].includes(row.status) ? honesty(row.status !== 'mismatch', row.reportClass) : null
+      row.honesty = ['match','mismatch','declared'].includes(row.status) ? htmlHonesty(row.status !== 'mismatch', row.reportClass) : null
       if (row.honesty !== null) totals[engine].honesty[row.honesty]++
       rows.push(row)
       totals[engine][countKey(row.status)]++

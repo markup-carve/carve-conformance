@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { honesty, honestyOutcomes, reportClass } from './importer-report.mjs'
+import { htmlHonesty, htmlHonestyOutcomes, reportClass } from './importer-report.mjs'
 import { engineNames } from './engines.mjs'
 import { reportDisagreements, declarationSummaries } from './html-suite.mjs'
 
@@ -58,7 +58,7 @@ export function validateHtmlSuite(measurement, {label,examples,differences,sourc
     assert.ok(Array.isArray(row.diagnostics) && row.diagnostics.every(d => typeof d?.code === 'string'), `Invalid ${label} diagnostics`)
     assert.equal(row.reportClass, reportClass(row.diagnostics), 'Report class differs from diagnostics')
     assert.ok(['names-loss','unverified-only','clean'].includes(row.reportClass), `Invalid ${label} report class`)
-    assert.equal(row.honesty, ['match','mismatch','declared'].includes(row.status) ? honesty(row.status !== 'mismatch', row.reportClass) : null, `Invalid ${label} honesty outcome`)
+    assert.equal(row.honesty, ['match','mismatch','declared'].includes(row.status) ? htmlHonesty(row.status !== 'mismatch', row.reportClass) : null, `Invalid ${label} honesty outcome`)
     const id = declaredExamples.get(row.example)
     if (row.status === 'declared' || (row.status === 'mismatch' && id)) {
       assert.ok(id, `Undeclared ${label} example`)
@@ -75,7 +75,7 @@ export function validateHtmlSuite(measurement, {label,examples,differences,sourc
     for (const [status,key] of engineStatuses) assert.equal(totals[key], rows.filter(r => r.status === status).length, `${label} ${engine}: inconsistent ${key} count`)
     assert.ok(rows.filter(r => r.status === 'mismatch').every(r => ['names-loss','unverified-only','clean'].includes(r.reportClass)), `Invalid ${label} mismatch report class`)
     for (const cls of ['names-loss','unverified-only','clean']) assert.equal(totals.mismatchByReport?.[cls], rows.filter(r => r.status === 'mismatch' && r.reportClass === cls).length, `${label} ${engine}: inconsistent ${cls} count`)
-    for (const outcome of honestyOutcomes) assert.equal(totals.honesty?.[outcome], rows.filter(r => r.honesty === outcome).length, `${label} ${engine}: inconsistent ${outcome} honesty count`)
+    for (const outcome of htmlHonestyOutcomes) assert.equal(totals.honesty?.[outcome], rows.filter(r => r.honesty === outcome).length, `${label} ${engine}: inconsistent ${outcome} honesty count`)
     assert.equal(Object.values(totals.honesty).reduce((sum,n) => sum+n, 0), totals.match + totals.mismatch + totals.declared, `${label} ${engine}: inconsistent honesty total`)
   }
   assert.deepEqual(measurement.reportDisagreements, reportDisagreements(examples, measurement.rows), 'Inconsistent report disagreements')

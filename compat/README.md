@@ -114,15 +114,20 @@ Results are `match`, `mismatch`, `declared`, `not-comparable` when the HTML mapp
 represent the expected structure, or `failed` when importing fails. Importer
 reports have three classes: `names-loss` names a degraded or dropped feature;
 `unverified-only` has `fidelity-unverified` without a named loss; `clean` has
-neither. Comparable rows also use the five honesty outcomes described above;
+neither. Comparable HTML rows use `reported`, `unassessed`, `silent-loss`,
+`unverified-loss`, and `ok`. HTML equality cannot disprove a loss of source whitespace or structured nodes.
+The authored adapter fixtures retain their existing gated honesty checks;
 `not-comparable` and `failed` rows have no honesty outcome. Totals count each
 outcome, and `reportDisagreements` lists examples with different report classes
 across the selected engines.
 
-This lane measures all outcomes without gating on honesty. A `false-loss` can
-be a real loss that the whitespace-collapsing comparator cannot see. Example 40
-drops a leading tab that HTML rendering collapses anyway. JavaScript names
-`structure-unspellable`; PHP and Rust report only `fidelity-unverified`.
+This lane measures all outcomes without gating on honesty. `unverified-loss`
+means the HTML matches, or differs only by a declared rendering difference,
+and the importer names a loss outside the comparison's
+verified scope. It does not confirm or reject that diagnostic. Example 40 drops
+a leading tab that this comparator ignores. An opaque HTML fallback can also
+keep the rendered output while losing structured nodes. See the
+[import evidence audit](IMPORT-EVIDENCE.md) for the measured cases.
 
 ```sh
 CARVE_PANDOC=.cache/pandoc/bin/pandoc npm run compat:commonmark -- --report=reports/commonmark.json
