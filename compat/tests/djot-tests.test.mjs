@@ -4,7 +4,7 @@ import { readFileSync, mkdtempSync, cpSync, writeFileSync, rmSync } from 'node:f
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { parseTests, validateDjotTests, djotTestsPath, loadDjotDeclarations, runDjotTests, testfiles } from '../scripts/compat/djot-tests.mjs'
-import { compareHtml, applyDeclaration, dropMathRole } from '../scripts/compat/commonmark-spec.mjs'
+import { compareHtml, applyDeclaration, dropMathRole, percentEncodeDestinationWhitespace } from '../scripts/compat/commonmark-spec.mjs'
 import { validateHtmlSuite } from '../scripts/compat/validate-html-suite.mjs'
 
 const counts = {
@@ -98,10 +98,10 @@ test('JavaScript Djot lane measures every HTML example and accounts for every ou
   assert.deepEqual(report.suite.excluded,{options:6,filters:0})
   assert.equal(report.rows.length,268)
   assert.deepEqual(report.rows.map(r => r.example),examples.map(e => e.example))
-  assert.deepEqual(report.declarations.map(d => d.id),['math-role','lone-image-block'])
+  assert.deepEqual(report.declarations.map(d => d.id),['math-role','lone-image-block','destination-whitespace'])
   assert.match(report.declaredSha256,/^[a-f0-9]{64}$/)
   for (const d of report.declarations) { assert.deepEqual(d.stale.javascript,[]); assert.deepEqual(d.insufficient.javascript,[]) }
-  assert.equal(report.totals.javascript.declared,11)
+  assert.equal(report.totals.javascript.declared,13)
   assert.ok(!Object.hasOwn(report,'baselines'))
   assert.deepEqual(report.notMeasuredEngines,['php','rust'])
   validateHtmlSuite(report,{label:'Djot',examples,differences:loadDjotDeclarations(examples).differences,sourceKey:'source'})
@@ -134,4 +134,14 @@ test('the math-role declaration drops only role=math on math spans, on both side
   assert.equal(applyDeclaration(compareHtml('<p><span class="note">x</span></p>','<p><span class="note" role="math">x</span></p>',{expectedGenerated:true}),difference).status,'mismatch')
   assert.equal(applyDeclaration(compareHtml(expected,'<p><span class="math inline" role="math">\\(y\\)</span></p>',{expectedGenerated:true}),difference).status,'mismatch')
   assert.deepEqual(dropMathRole({type:'span',attrs:{classes:['math','inline'],keyValues:{role:'math',k:'v'}}}),{type:'span',attrs:{classes:['math','inline'],keyValues:{k:'v'}}})
+})
+
+test('the destination-whitespace declaration encodes whitespace only in link and image destinations, on both sides', () => {
+  const difference = { id:'destination-whitespace', normalization:'percent-encode-destination-whitespace' }
+  const generated = { expectedGenerated:true }
+  assert.equal(applyDeclaration(compareHtml('<p><a href="a b">t</a></p>','<p><a href="a%20b">t</a></p>',generated),difference).status,'declared')
+  assert.equal(applyDeclaration(compareHtml('<p><img src="a b" alt="x"></p>','<p><img src="a%20b" alt="x"></p>',generated),difference).status,'declared')
+  assert.equal(applyDeclaration(compareHtml('<p><a href="a b">t</a></p>','<p><a href="a%20c">t</a></p>',generated),difference).status,'mismatch')
+  assert.equal(applyDeclaration(compareHtml('<p><a href="u">a b</a></p>','<p><a href="u">a%20b</a></p>',generated),difference).status,'mismatch')
+  assert.deepEqual(percentEncodeDestinationWhitespace({type:'link',href:'a b\tc',children:[{type:'text',value:'a b'}]}),{type:'link',href:'a%20b%09c',children:[{type:'text',value:'a b'}]})
 })

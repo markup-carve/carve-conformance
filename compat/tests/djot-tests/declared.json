@@ -13,7 +13,14 @@
       "normalization": "unwrap-lone-image-paragraph",
       "reason": "Carve renders a paragraph whose only content is one image as a bare <img>, without <p>.",
       "reference": "https://github.com/markup-carve/carve/blob/9f7c3f7a44952d2bb3d9ac461ed9c04b7caaf563/docs/comparison.md#L60",
-      "examples": ["links_and_images.test:9", "links_and_images.test:157", "links_and_images.test:171"]
+      "examples": ["links_and_images.test:9", "links_and_images.test:157", "links_and_images.test:171", "links_and_images.test:230"]
+    },
+    {
+      "id": "destination-whitespace",
+      "normalization": "percent-encode-destination-whitespace",
+      "reason": "A Carve destination cannot hold whitespace, so the importer writes it percent-encoded; djot.js keeps the space in the href.",
+      "reference": "https://github.com/markup-carve/carve/blob/d0ca0503764dd50adefeaa9b5dfc20de4b2a308f/resources/spec/06-inline-links-images.ebnf#L197-L199",
+      "examples": ["links_and_images.test:187"]
     }
   ]
 }
