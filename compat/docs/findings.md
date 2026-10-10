@@ -122,9 +122,8 @@ NUL as its three-byte replacement character. PHP counted the original input.
 
 [JavaScript PR #2671](https://github.com/markup-carve/carve-js/pull/2671) and
 [Rust PR #2432](https://github.com/markup-carve/carve-rs/pull/2432) capture the
-original UTF-8 input length before normalization. The provisional compatibility
-pins include those PR commits; replace them with commits reachable from each
-engine's main branch after both fixes merge. The generated suite now covers 109 inputs, adding BOM, NUL,
+original UTF-8 input length before normalization. Compatibility pins include
+the merged fixes. The generated suite now covers 109 inputs, adding BOM, NUL,
 lone carriage returns and combined normalization. All three readers agree on
 semantic ASTs and report the original byte length for these inputs. Rendering
 and source-position checks remain separate observations.
@@ -141,7 +140,8 @@ refresh brings that fix into the report. No new PHP parser change is needed.
 Proof-profile pins remain unchanged. These results concern the compatibility
 readers and their finite fixture sets.
 
-The refreshed readers emit `data-delim=")"` on ordered lists. HTML comparisons
+The refreshed readers emit `data-delim=")"` on ordered lists. Foreign-format HTML comparisons
 omit this marker only on generated Carve ordered lists with that value;
-list starts, other values and other attributes still participate. This removes
+authored markers, list starts, other values and other attributes still participate.
+Native reader agreement retains the marker. This removes
 three comparison-only mismatches in CommonMark examples 296, 297 and 302.

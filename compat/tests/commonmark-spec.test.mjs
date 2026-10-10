@@ -129,6 +129,10 @@ test('migration diagnostics distinguish named losses, unverified reports and cle
 test('generated ordered-list delimiter markers preserve the CommonMark comparison', () => {
   const expected = '<ol start="10"><li>foo</li></ol>'
   assert.equal(compareHtml(expected, '<ol start="10" data-delim=")"><li>foo</li></ol>').status, 'match')
+  const marked = '<ol start="10" data-delim=")"><li>foo</li></ol>'
+  assert.equal(compareHtml(marked, expected, {expectedGenerated:true}).status, 'mismatch')
+  assert.equal(compareHtml(marked, marked, {expectedGenerated:true}).status, 'match')
+  assert.deepEqual(compareHtml('', marked, {preserveCarveMarkers:true}).actual.children[0].attrs.keyValues, {'data-delim':')'})
   for (const actual of [
     '<ol start="10" data-delim="."><li>foo</li></ol>',
     '<ol start="10" data-other=")"><li>foo</li></ol>',

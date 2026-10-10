@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { spawnSync } from 'node:child_process'
 import { parse as parseDjot, renderHTML } from '@djot/djot'
-import { context, semantics, parseHtml, fromHast, coalesce } from './trees.mjs'
+import { context, semantics, parseHtml, fromHast, coalesce, authoredAttributes } from './trees.mjs'
 import { engineNames } from './engines.mjs'
 import { runHtmlSuite } from './html-suite.mjs'
 export { reportClass } from './importer-report.mjs'
@@ -122,10 +122,10 @@ export function applyDeclaration(comparison, difference) {
   return { ...comparison, status:matches ? 'declared' : 'mismatch', declaration:matches ? { id:difference.id } : { id:difference.id, insufficient:true } }
 }
 
-export function compareHtml(expectedHtml, carveHtml, { expectedGenerated = false } = {}) {
+export function compareHtml(expectedHtml, carveHtml, { expectedGenerated = false, preserveCarveMarkers = false } = {}) {
   const expectedContext = context('commonmark-spec')
   const expected = renderedWhitespace(semantics(fromHast(parseHtml(layout(expectedHtml)), expectedContext, expectedGenerated ? { generated:true, renderer:'djot', keepDivs:true } : {})))
-  const actual = renderedWhitespace(semantics(fromHast(parseHtml(layout(carveHtml)), context('carve'), { generated:true, renderer:'carve', ...(expectedGenerated ? { keepDivs:true } : {}) })))
+  const actual = renderedWhitespace(semantics(fromHast(parseHtml(layout(carveHtml)), context('carve'), { generated:true, renderer:'carve', normalizeListDelimiter:!preserveCarveMarkers, authoredKeyValues:authoredAttributes(expected).authoredKeyValues, ...(expectedGenerated ? { keepDivs:true } : {}) })))
   return { status:expectedContext.diagnostics.some(loss) ? 'not-comparable' : isDeepStrictEqual(expected, actual) ? 'match' : 'mismatch', expected, actual }
 }
 
@@ -136,6 +136,6 @@ export function runCommonmarkSpec(selectedEngines = engineNames, { baselines:sel
   assert.equal(new Set(selectedBaselines).size, selectedBaselines.length, 'Duplicate selected baseline')
   for (const baseline of selectedBaselines) assert.equal(baseline, 'pandoc-djot', `Unknown baseline: ${baseline}`)
   const baselines = Object.fromEntries(selectedBaselines.map(baseline => [baseline,runPandocDjotBaseline(examples)]))
-  const measured = runHtmlSuite(selectedEngines, { examples, format:'markdown', sourceKey:'markdown', differences, baselines, compare:comparison => applyDeclaration(compareHtml(comparison.expectedHtml, comparison.carveHtml), comparison.difference) })
+  const measured = runHtmlSuite(selectedEngines, { examples, format:'markdown', sourceKey:'markdown', differences, baselines, compare:comparison => applyDeclaration(compareHtml(comparison.expectedHtml, comparison.carveHtml, {preserveCarveMarkers:comparison.preserveCarveMarkers}), comparison.difference) })
   return { schemaVersion:1, kind:'commonmark-spec', spec:{ version:'0.31.2', source:'https://spec.commonmark.org/0.31.2/spec.json', sha256:specSha256, examples:examples.length }, ...measured, startedAt:startedAt.toISOString(), generatedAt:new Date().toISOString(), durationMs:Math.round(performance.now() - started), declaredSha256:hash(declaredSource) }
 }

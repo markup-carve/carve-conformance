@@ -5,7 +5,7 @@
   },
   "rust": {
     "repository": "https://github.com/markup-carve/carve-rs.git",
-    "revision": "dd7933387ad06756a508e48e8a8205478b18b9c7"
+    "revision": "c084dcbdb239bfce5cdfd3795f79011153c3c56c"
   },
   "pandoc": {
     "version": "3.11",

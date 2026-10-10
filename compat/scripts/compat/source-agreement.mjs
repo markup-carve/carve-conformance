@@ -71,7 +71,7 @@ export function runSourceAgreement(selectedEngines=engineNames) {
     for(const engine of selectedEngines.slice(1)) {
       const actual=results[engine]
       if(reference.error || actual.error) continue
-      differences[engine]={semantic:structuralDiff(semanticAst(reference.ast),semanticAst(actual.ast)),positioned:structuralDiff(reference.ast,actual.ast),html:isDeepStrictEqual(compareHtml('',reference.html).actual,compareHtml('',actual.html).actual)?'match':'mismatch'}
+      differences[engine]={semantic:structuralDiff(semanticAst(reference.ast),semanticAst(actual.ast)),positioned:structuralDiff(reference.ast,actual.ast),html:isDeepStrictEqual(compareHtml('',reference.html,{preserveCarveMarkers:true}).actual,compareHtml('',actual.html,{preserveCarveMarkers:true}).actual)?'match':'mismatch'}
     }
     return {...input,results,differences,semanticAgreement:selectedEngines.every(engine=>results[engine].ast && isDeepStrictEqual(semanticAst(reference.ast),semanticAst(results[engine].ast)))}
   })
@@ -107,7 +107,7 @@ export function validateSourceAgreement(report, adapterReport) {
       assert.deepEqual(row.differences[engine], JSON.parse(JSON.stringify({
         semantic: structuralDiff(semanticAst(reference.ast), semanticAst(result.ast)),
         positioned: structuralDiff(reference.ast, result.ast),
-        html: isDeepStrictEqual(compareHtml('', reference.html).actual, compareHtml('', result.html).actual) ? 'match' : 'mismatch'
+        html: isDeepStrictEqual(compareHtml('', reference.html,{preserveCarveMarkers:true}).actual, compareHtml('', result.html,{preserveCarveMarkers:true}).actual) ? 'match' : 'mismatch'
       })), 'Incorrect generated source differences')
     }
     assert.equal(row.semanticAgreement, report.selectedEngines.every(engine => row.results[engine].ast && isDeepStrictEqual(semanticAst(reference.ast), semanticAst(row.results[engine].ast))), 'Incorrect semantic agreement')

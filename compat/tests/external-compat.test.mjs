@@ -283,7 +283,7 @@ test('rich interchange checks reject changed authored fields and missing source 
 
 test('generated Carve list delimiter normalization retains authored and foreign attributes', () => {
   const html = parseHtml('<ol data-delim=")"><li>x</li></ol>')
-  const options = {generated:true, renderer:'carve'}
+  const options = {generated:true, renderer:'carve', normalizeListDelimiter:true}
   const ctx = context('carve')
   const generated = fromHast(html, ctx, options)
   assert.equal(generated.children[0].attrs, undefined)

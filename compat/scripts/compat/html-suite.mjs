@@ -60,7 +60,7 @@ export function runHtmlSuite(selectedEngines, { examples, format, sourceKey, dif
       } else {
         row.nativeHtml = native[i].html
         const comparison = compare({expectedHtml:e.html,carveHtml:row.nativeHtml,difference:byExample.get(e.example)})
-        row.nativeComparison = {status:comparison.status,expected:comparison.expected,actual:comparison.actual,referenceAgreement:row.comparison ? isDeepStrictEqual(row.comparison.actual,comparison.actual) : null}
+        row.nativeComparison = {status:comparison.status,expected:comparison.expected,actual:comparison.actual,referenceAgreement:row.comparison ? isDeepStrictEqual(compare({expectedHtml:'',carveHtml:row.carveHtml,preserveCarveMarkers:true}).actual,compare({expectedHtml:'',carveHtml:row.nativeHtml,preserveCarveMarkers:true}).actual) : null}
       }
       nativeTotals[engine][countKey(row.nativeComparison.status)]++
       if(row.nativeComparison.referenceAgreement === false) nativeTotals[engine].referenceDisagreements++
