@@ -45,3 +45,16 @@ found that it fixes all 28 Rust-only mismatches without introducing a mismatch
 among the previously matching cases. After applying the existing rendering
 declarations, Rust has the same sixteen mismatches as JavaScript and PHP.
 The refreshed conformance engine pins include that merged fix.
+
+## Remaining importer cases
+
+Review probes also found older cases outside the seven CommonMark examples:
+
+- JavaScript and PHP leave the nested empty image literal in `[a ![b]() c]()`,
+  while Rust retains its alt text.
+- Unsupported fence languages on `> - ` or `- > ` container lines still need
+  consistent handling in JavaScript and PHP. Top-level fences and the container
+  forms covered by the new regressions report their omitted language.
+
+These cases need separate output and diagnostic fixes; the refreshed suite
+counts above do not measure them.

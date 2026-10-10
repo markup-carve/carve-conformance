@@ -364,6 +364,7 @@ for (const value of ['unverified-loss', 'false-loss']) test(`matching HTML loss 
   const assessment = page.getByLabel('Diagnostic assessment (CommonMark)', {exact:true})
   await expect(assessment).toHaveValue('unverified-loss')
   await expect(page.locator('#commonmark-examples>li')).toHaveCount(1)
+  await page.locator('#commonmark-examples>li').first().locator('summary').first().click()
   await expect(page.locator('#commonmark-examples>li').first()).toContainText('Diagnostic assessment: unverified-loss')
   await page.reload()
   await expect(assessment).toHaveValue('unverified-loss')
