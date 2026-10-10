@@ -48,8 +48,7 @@ The refreshed conformance engine pins include that merged fix.
 
 [Conformance PR #6](https://github.com/markup-carve/carve-conformance/pull/6)
 subsequently declared two of those differences. With the current pins,
-JavaScript and Rust have fourteen mismatches. PHP has fifteen because its
-caption case below also mismatches.
+all three engines have fourteen mismatches after the PHP caption fix below.
 
 ## Remaining importer cases
 
@@ -64,12 +63,21 @@ Review probes also found older cases outside the seven CommonMark examples:
 These cases need separate output and diagnostic fixes and fall outside
 these suite counts.
 
-## PHP caption regression in the refreshed pins
+## PHP caption and empty-footnote fixes
 
-Refreshing PHP from `8bddf96a` to `66b1dfe7` also includes a Djot caption regression
+Refreshing PHP from `8bddf96a` to `66b1dfe7` included a Djot caption regression
 introduced by [PHP PR #3030](https://github.com/markup-carve/carve-php/pull/3030).
-In `tables.test:35`, the converter escapes the caption marker and imports its
-text as a paragraph instead of attaching it to the table. This adds one
-unassessed mismatch: PHP moves from fourteen to fifteen, while JavaScript and
-Rust remain at fourteen. The boundary-loss changes in PHP PR #3041 do not
-cause this regression; the preceding Djot converter produces the same output.
+In `tables.test:35`, the converter escaped the caption marker and imported its
+text as a paragraph instead of attaching it to the table. PHP had fifteen
+mismatches while JavaScript and Rust had fourteen.
+
+[PHP PR #3055](https://github.com/markup-carve/carve-php/pull/3055) preserves table
+caption markers, including captions in quotes and lists. It also protects
+synthetic empty-footnote markers from the percent-run escaping added in
+[PHP PR #3054](https://github.com/markup-carve/carve-php/pull/3054). Without that
+protection, `footnotes.test:1`, `:33`, and `:51` expose those markers as text.
+
+The refreshed pin includes both fixes. All three engines now have 240 matches,
+fourteen mismatches, thirteen declared differences, one non-comparable case,
+and no failures across the 268 Djot examples. Thirteen mismatches name a loss;
+the remaining smart-quote mismatch is unassessed.
