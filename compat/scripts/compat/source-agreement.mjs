@@ -25,6 +25,12 @@ export function generatedSources() {
     add('unicode-inline',depth,`${payload} /${payload}/ [${payload}](/target)\n`)
     add('empty-slots',depth,`${'- '.repeat(depth)}${payload}\n\n${'  '.repeat(depth)}%% hidden\n`)
   }
+  for (const [name, eol, source] of [
+    ['bom', 'lf', '\ufeffa\n'],
+    ['nul', 'lf', 'a\0b\n'],
+    ['lone-cr', 'cr', 'a\rb\r'],
+    ['combined', 'crlf', '\ufeff🙂\0\r\n'],
+  ]) rows.push({id:`normalization/${name}`,family:'input-normalization',depth:0,eol,source})
   return rows
 }
 export function semanticAst(value) {

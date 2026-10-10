@@ -4,10 +4,12 @@ import {generatedSources,semanticAst,positionSummary,runSourceAgreement,validate
 import {structuralDiff} from '../../site/shared/evidence-tools.js'
 
 test('generated sources cover deep containers and each line ending reproducibly',()=>{
-  const rows=generatedSources();assert.deepEqual(rows,generatedSources());assert.equal(new Set(rows.map(r=>r.id)).size,105)
+  const rows=generatedSources();assert.deepEqual(rows,generatedSources());assert.equal(new Set(rows.map(r=>r.id)).size,109)
   assert.equal(Math.max(...rows.map(r=>r.depth)),16)
   for(const row of rows){if(row.eol==='crlf'){assert.ok(row.source.includes('\r\n'));assert.doesNotMatch(row.source,/(?<!\r)\n/)}if(row.eol==='eof')assert.ok(!row.source.endsWith('\n'))}
   assert.ok(rows.some(r=>r.source.includes('%%%')&&r.source.includes('+ tail')))
+  assert.deepEqual(rows.filter(r=>r.family==='input-normalization').map(r=>r.id),['normalization/bom','normalization/nul','normalization/lone-cr','normalization/combined'])
+  assert.ok(rows.some(r=>r.source.startsWith('\ufeff')&&r.source.includes('\0')&&r.source.includes('\r\n')))
 })
 test('semantic comparison removes coordinates while retaining invisible AST fields',()=>{
   assert.deepEqual(semanticAst({type:'text',value:'a',pos:{startOffset:0}}),{type:'text',value:'a'})

@@ -281,6 +281,19 @@ test('rich interchange checks reject changed authored fields and missing source 
   await assert.rejects(checkCase('hast', { ...fixture, sourceChanges: [] }), /declared source conversion changes/)
 })
 
+test('generated Carve list delimiter normalization retains authored and foreign attributes', () => {
+  const html = parseHtml('<ol data-delim=")"><li>x</li></ol>')
+  const options = {generated:true, renderer:'carve'}
+  const ctx = context('carve')
+  const generated = fromHast(html, ctx, options)
+  assert.equal(generated.children[0].attrs, undefined)
+  assert.ok(ctx.diagnostics.some(d => d.code === 'generated-html-attribute' && d.path.endsWith('/dataDelim')))
+  for (const keep of [
+    {}, {generated:true}, {generated:true, renderer:'djot'},
+    {...options, authoredKeyValues:new Set(['data-delim=)'])},
+  ]) assert.equal(fromHast(html, undefined, keep).children[0].attrs.keyValues['data-delim'], ')')
+})
+
 test('generated row-header scope normalization keeps authored scope assertions', () => {
   const html = parseHtml('<table><tbody><tr><th scope="row">x</th><td>y</td></tr></tbody></table>')
   const generated = fromHast(html, undefined, { generated: true })
