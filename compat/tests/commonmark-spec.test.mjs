@@ -132,6 +132,8 @@ test('generated ordered-list delimiter markers preserve the CommonMark compariso
   const marked = '<ol start="10" data-delim=")"><li>foo</li></ol>'
   assert.equal(compareHtml(marked, expected, {expectedGenerated:true}).status, 'mismatch')
   assert.equal(compareHtml(marked, marked, {expectedGenerated:true}).status, 'match')
+  assert.equal(compareHtml(marked + expected, marked + marked, {expectedGenerated:true}).status, 'match')
+  assert.equal(compareHtml(marked + expected, expected + marked, {expectedGenerated:true}).status, 'mismatch')
   assert.deepEqual(compareHtml('', marked, {preserveCarveMarkers:true}).actual.children[0].attrs.keyValues, {'data-delim':')'})
   for (const actual of [
     '<ol start="10" data-delim="."><li>foo</li></ol>',

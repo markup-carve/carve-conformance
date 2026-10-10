@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { spawnSync } from 'node:child_process'
 import { parse as parseDjot, renderHTML } from '@djot/djot'
-import { context, semantics, parseHtml, fromHast, coalesce, authoredAttributes } from './trees.mjs'
+import { context, semantics, parseHtml, fromHast, coalesce } from './trees.mjs'
 import { engineNames } from './engines.mjs'
 import { runHtmlSuite } from './html-suite.mjs'
 export { reportClass } from './importer-report.mjs'
@@ -122,10 +122,24 @@ export function applyDeclaration(comparison, difference) {
   return { ...comparison, status:matches ? 'declared' : 'mismatch', declaration:matches ? { id:difference.id } : { id:difference.id, insufficient:true } }
 }
 
+function normalizeListMarkers(expected, actual) {
+  if (Array.isArray(actual)) return actual.map((value, i) => normalizeListMarkers(expected?.[i], value))
+  if (!actual || typeof actual !== 'object') return actual
+  const out = Object.fromEntries(Object.entries(actual).map(([key, value]) => [key, normalizeListMarkers(expected?.[key], value)]))
+  if (out.type === 'list' && out.ordered && expected?.type === 'list' && expected.ordered &&
+      out.attrs?.keyValues?.['data-delim'] === ')' && expected.attrs?.keyValues?.['data-delim'] === undefined) {
+    delete out.attrs.keyValues['data-delim']
+    if (!Object.keys(out.attrs.keyValues).length) delete out.attrs.keyValues
+    if (!Object.keys(out.attrs).length) delete out.attrs
+  }
+  return out
+}
+
 export function compareHtml(expectedHtml, carveHtml, { expectedGenerated = false, preserveCarveMarkers = false } = {}) {
   const expectedContext = context('commonmark-spec')
   const expected = renderedWhitespace(semantics(fromHast(parseHtml(layout(expectedHtml)), expectedContext, expectedGenerated ? { generated:true, renderer:'djot', keepDivs:true } : {})))
-  const actual = renderedWhitespace(semantics(fromHast(parseHtml(layout(carveHtml)), context('carve'), { generated:true, renderer:'carve', normalizeListDelimiter:!preserveCarveMarkers, authoredKeyValues:authoredAttributes(expected).authoredKeyValues, ...(expectedGenerated ? { keepDivs:true } : {}) })))
+  const rendered = renderedWhitespace(semantics(fromHast(parseHtml(layout(carveHtml)), context('carve'), { generated:true, renderer:'carve', ...(expectedGenerated ? { keepDivs:true } : {}) })))
+  const actual = preserveCarveMarkers ? rendered : normalizeListMarkers(expected, rendered)
   return { status:expectedContext.diagnostics.some(loss) ? 'not-comparable' : isDeepStrictEqual(expected, actual) ? 'match' : 'mismatch', expected, actual }
 }
 
