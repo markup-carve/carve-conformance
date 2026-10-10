@@ -13,8 +13,8 @@ schema already represented them. This was an engine bug.
 [Issue #2831](https://github.com/markup-carve/carve-php/issues/2831) tracked the
 reproduction. [PR #2833](https://github.com/markup-carve/carve-php/pull/2833)
 fixed IDs supplied without an attribute-order entry and preserved classes when
-that optional order was incomplete. The compat PHP pin now includes the merged
-fix at `e15b786c668b5e97207b7d45a5356c9743308ee9`. The five comparisons pass.
+that optional order was incomplete. The compat PHP pin includes the merged
+fix `e15b786c668b5e97207b7d45a5356c9743308ee9`. The five comparisons pass.
 Generated heading IDs retain their existing export behavior.
 
 ## Representation versus coverage
@@ -112,3 +112,36 @@ share the JavaScript adapters; they are not separate foreign-language importers.
 Asciidoctor's DocBook and HTML paths have separate mappers but share one parser.
 Generated IDs, renderer navigation and computed note numbers receive visible
 normalization diagnostics. Authored attributes remain part of the comparison.
+
+## Input byte lengths and CommonMark example 96
+
+The earlier generated-source report recorded 35 Rust byte-length differences
+on CRLF input. Rust counted normalized bytes. Additional cases showed that
+both Rust and JavaScript dropped a leading BOM from the count and counted a
+NUL as its three-byte replacement character. PHP counted the original input.
+
+[JavaScript PR #2671](https://github.com/markup-carve/carve-js/pull/2671) and
+[Rust PR #2432](https://github.com/markup-carve/carve-rs/pull/2432) capture the
+original UTF-8 input length before normalization. Compatibility pins include
+the merged fixes. The generated suite now covers 109 inputs, adding BOM, NUL,
+lone carriage returns and combined normalization. All three readers agree on
+semantic ASTs and report the original byte length for these inputs. Rendering
+and source-position checks remain separate observations.
+
+CommonMark example 96 is `---`, `Foo`, `---`, `Bar`, `---`, `Baz` on successive
+lines. With the old pins, JavaScript reference rendering treated the imported
+opening as frontmatter, losing the rule and first heading. PHP native rendering
+differed from that reference. Current JavaScript, PHP and Rust importers retain the rule
+and both headings. Each imported result renders correctly through all three
+readers. This was already addressed by
+[spec issue #2799](https://github.com/markup-carve/carve/issues/2799); the pin
+refresh brings that fix into the report. No new PHP parser change is needed.
+
+Proof-profile pins remain unchanged. These results concern the compatibility
+readers and their finite fixture sets.
+
+The refreshed readers emit `data-delim=")"` on ordered lists. Foreign-format HTML comparisons
+omit this marker only on generated Carve ordered lists with that value;
+authored markers, list starts, other values and other attributes still participate.
+Native reader agreement retains the marker. This removes
+three comparison-only mismatches in CommonMark examples 296, 297 and 302.

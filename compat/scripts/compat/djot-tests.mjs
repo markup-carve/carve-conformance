@@ -80,6 +80,6 @@ export function loadDjotDeclarations(examples, directory = djotTestsPath) {
 export function runDjotTests(selectedEngines = engineNames) {
   const startedAt = new Date(), started = performance.now()
   const {examples,excluded} = validateDjotTests(), {differences,declaredSha256} = loadDjotDeclarations(examples)
-  const measured = runHtmlSuite(selectedEngines, { examples, format:'djot', sourceKey:'source', differences, compare:({expectedHtml,carveHtml,difference}) => applyDeclaration(compareHtml(expectedHtml,carveHtml,{expectedGenerated:true}),difference) })
+  const measured = runHtmlSuite(selectedEngines, { examples, format:'djot', sourceKey:'source', differences, compare:({expectedHtml,carveHtml,difference,preserveCarveMarkers}) => applyDeclaration(compareHtml(expectedHtml,carveHtml,{expectedGenerated:true,preserveCarveMarkers}),difference) })
   return { schemaVersion:1, kind:'djot-tests', suite:{name:'djot.js',commit:djotCommit,sha256:djotSha256,examples:examples.length,excluded}, ...measured, startedAt:startedAt.toISOString(), generatedAt:new Date().toISOString(), durationMs:Math.round(performance.now() - started), declaredSha256 }
 }

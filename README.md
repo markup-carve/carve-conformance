@@ -73,8 +73,8 @@ mismatches are separate results; expected-loss assertions can pass.
 Reference import totals use the JavaScript renderer. Native totals parse and
 render each importer's output through its own engine. Foreign AST adapters
 remain shared JavaScript infrastructure. The generated source suite compares
-identical Carve inputs across engines, including Unicode, CRLF, tabs, comments,
-empty slots and nesting to depth 16. It records semantic AST differences,
+109 identical Carve inputs across engines, including Unicode, CRLF, tabs, comments,
+empty slots, BOM, NUL, lone carriage returns and nesting to depth 16. It records semantic AST differences,
 position availability and source byte lengths. These are finite observations
 without a normative oracle. Semantic or byte-length differences remain visible;
 execution failures, invalid schemas and invalid position bounds fail the command.

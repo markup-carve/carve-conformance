@@ -126,9 +126,26 @@ test('migration diagnostics distinguish named losses, unverified reports and cle
   for (const fidelity of ['degraded','dropped']) assert.equal(reportClass([{code:'fidelity-unverified',fidelity:'degraded'},{code:'unsupported-node',fidelity}]), 'names-loss')
 })
 
+test('generated ordered-list delimiter markers preserve the CommonMark comparison', () => {
+  const expected = '<ol start="10"><li>foo</li></ol>'
+  assert.equal(compareHtml(expected, '<ol start="10" data-delim=")"><li>foo</li></ol>').status, 'match')
+  const marked = '<ol start="10" data-delim=")"><li>foo</li></ol>'
+  assert.equal(compareHtml(marked, expected, {expectedGenerated:true}).status, 'mismatch')
+  assert.equal(compareHtml(marked, marked, {expectedGenerated:true}).status, 'match')
+  assert.equal(compareHtml(marked + expected, marked + marked, {expectedGenerated:true}).status, 'match')
+  assert.equal(compareHtml(marked + expected, expected + marked, {expectedGenerated:true}).status, 'mismatch')
+  assert.deepEqual(compareHtml('', marked, {preserveCarveMarkers:true}).actual.children[0].attrs.keyValues, {'data-delim':')'})
+  for (const actual of [
+    '<ol start="10" data-delim="."><li>foo</li></ol>',
+    '<ol start="10" data-other=")"><li>foo</li></ol>',
+    '<ul data-delim=")"><li>foo</li></ul>',
+    '<ol start="11" data-delim=")"><li>foo</li></ol>',
+  ]) assert.equal(compareHtml(expected, actual).status, 'mismatch')
+})
+
 test('JavaScript measures all CommonMark examples and accounts for every result', () => {
   const report = runCommonmarkSpec(['javascript']), totals = report.totals.javascript
-  assert.deepEqual([totals.match,totals.mismatch,totals.declared,totals.notComparable,totals.failed], [566,25,18,43,0])
+  assert.deepEqual([totals.match,totals.mismatch,totals.declared,totals.notComparable,totals.failed], [567,24,18,43,0])
   assert.equal(report.declaredSha256, createHash('sha256').update(readFileSync('tests/commonmark-spec/declared.json')).digest('hex'))
   assert.deepEqual(report.declarations[0].declared, {javascript:18})
   assert.deepEqual(report.declarations[0].stale, {javascript:[]})

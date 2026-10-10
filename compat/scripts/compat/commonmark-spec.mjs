@@ -122,10 +122,24 @@ export function applyDeclaration(comparison, difference) {
   return { ...comparison, status:matches ? 'declared' : 'mismatch', declaration:matches ? { id:difference.id } : { id:difference.id, insufficient:true } }
 }
 
-export function compareHtml(expectedHtml, carveHtml, { expectedGenerated = false } = {}) {
+function normalizeListMarkers(expected, actual) {
+  if (Array.isArray(actual)) return actual.map((value, i) => normalizeListMarkers(expected?.[i], value))
+  if (!actual || typeof actual !== 'object') return actual
+  const out = Object.fromEntries(Object.entries(actual).map(([key, value]) => [key, normalizeListMarkers(expected?.[key], value)]))
+  if (out.type === 'list' && out.ordered && expected?.type === 'list' && expected.ordered &&
+      out.attrs?.keyValues?.['data-delim'] === ')' && expected.attrs?.keyValues?.['data-delim'] === undefined) {
+    delete out.attrs.keyValues['data-delim']
+    if (!Object.keys(out.attrs.keyValues).length) delete out.attrs.keyValues
+    if (!Object.keys(out.attrs).length) delete out.attrs
+  }
+  return out
+}
+
+export function compareHtml(expectedHtml, carveHtml, { expectedGenerated = false, preserveCarveMarkers = false } = {}) {
   const expectedContext = context('commonmark-spec')
   const expected = renderedWhitespace(semantics(fromHast(parseHtml(layout(expectedHtml)), expectedContext, expectedGenerated ? { generated:true, renderer:'djot', keepDivs:true } : {})))
-  const actual = renderedWhitespace(semantics(fromHast(parseHtml(layout(carveHtml)), context('carve'), { generated:true, renderer:'carve', ...(expectedGenerated ? { keepDivs:true } : {}) })))
+  const rendered = renderedWhitespace(semantics(fromHast(parseHtml(layout(carveHtml)), context('carve'), { generated:true, renderer:'carve', ...(expectedGenerated ? { keepDivs:true } : {}) })))
+  const actual = preserveCarveMarkers ? rendered : normalizeListMarkers(expected, rendered)
   return { status:expectedContext.diagnostics.some(loss) ? 'not-comparable' : isDeepStrictEqual(expected, actual) ? 'match' : 'mismatch', expected, actual }
 }
 
@@ -136,6 +150,6 @@ export function runCommonmarkSpec(selectedEngines = engineNames, { baselines:sel
   assert.equal(new Set(selectedBaselines).size, selectedBaselines.length, 'Duplicate selected baseline')
   for (const baseline of selectedBaselines) assert.equal(baseline, 'pandoc-djot', `Unknown baseline: ${baseline}`)
   const baselines = Object.fromEntries(selectedBaselines.map(baseline => [baseline,runPandocDjotBaseline(examples)]))
-  const measured = runHtmlSuite(selectedEngines, { examples, format:'markdown', sourceKey:'markdown', differences, baselines, compare:comparison => applyDeclaration(compareHtml(comparison.expectedHtml, comparison.carveHtml), comparison.difference) })
+  const measured = runHtmlSuite(selectedEngines, { examples, format:'markdown', sourceKey:'markdown', differences, baselines, compare:comparison => applyDeclaration(compareHtml(comparison.expectedHtml, comparison.carveHtml, {preserveCarveMarkers:comparison.preserveCarveMarkers}), comparison.difference) })
   return { schemaVersion:1, kind:'commonmark-spec', spec:{ version:'0.31.2', source:'https://spec.commonmark.org/0.31.2/spec.json', sha256:specSha256, examples:examples.length }, ...measured, startedAt:startedAt.toISOString(), generatedAt:new Date().toISOString(), durationMs:Math.round(performance.now() - started), declaredSha256:hash(declaredSource) }
 }

@@ -85,7 +85,7 @@ function checkImporter(engine, tool, fixture, rendered, authored, progress, asse
     let comparisonError
     try {
       const importedContext = context('carve-importer')
-      const importedHtml = fromHast(parseHtml(renderHtml(resolve(parse(result.value)))), importedContext, { generated: true, ...authored })
+      const importedHtml = fromHast(parseHtml(renderHtml(resolve(parse(result.value)))), importedContext, { generated: true, renderer:'carve', normalizeListDelimiter:true, ...authored })
       assert.deepEqual(semantics(importedHtml), semantics(rendered), `${tool}/${fixture.id}: built-in importer rendering`)
       assert.deepEqual(importedContext.diagnostics.filter(d => ['degraded', 'dropped'].includes(d.fidelity)), [], `${tool}/${fixture.id}: importer HTML comparison lost structure`)
     } catch (error) { comparisonError = error }
@@ -124,7 +124,7 @@ export async function checkCase(tool, fixture, { assessment = validateAssessment
   progress.diagnostics = [...result.diagnostics, ...(result.independentDiagnostics??[]), ...renderedContext.diagnostics]
   const carveHtml = renderHtml(resolve(fromAstJson(result.ast)))
   const carveContext = context('carve')
-  const carveRendered = fromHast(parseHtml(carveHtml), carveContext, { generated: true, ...authored })
+  const carveRendered = fromHast(parseHtml(carveHtml), carveContext, { generated: true, renderer:'carve', normalizeListDelimiter:true, ...authored })
   assert.deepEqual(htmlSemantics(rendered,tool,renderedContext), htmlSemantics(carveRendered,tool,carveContext), `${tool}/${fixture.id}: independent HTML structure`)
   assert.deepEqual(renderedContext.diagnostics.filter(d => ['degraded', 'dropped'].includes(d.fidelity)), [], `${tool}/${fixture.id}: HTML comparison lost structure`)
   assert.deepEqual(carveContext.diagnostics.filter(d => ['degraded', 'dropped'].includes(d.fidelity)), [], `${tool}/${fixture.id}: Carve HTML comparison lost structure`)
@@ -230,7 +230,7 @@ export async function checkInterchangeCase(tool, fixture) {
     progress.checks.push('source-conversion-changes')
     const authored=authoredAttributes(result.ast), foreignCtx=context(tool), carveCtx=context('carve')
     const foreignHtml=fromHast(parseHtml(result.html),foreignCtx,{generated:tool!=='hast',renderer:tool,...authored})
-    const carveHtml=fromHast(parseHtml(renderHtml(resolve(fromAstJson(result.ast)))),carveCtx,{generated:true,...authored})
+    const carveHtml=fromHast(parseHtml(renderHtml(resolve(fromAstJson(result.ast)))),carveCtx,{generated:true,renderer:'carve',normalizeListDelimiter:true,...authored})
     const actualHtmlView=htmlSemantics(foreignHtml,tool,foreignCtx), expectedHtmlView=htmlSemantics(carveHtml,tool,carveCtx)
     progress.diagnostics.push(...foreignCtx.diagnostics,...carveCtx.diagnostics)
     assert.deepEqual(actualHtmlView,expectedHtmlView,`${tool}/${fixture.id}: independent HTML structure`)

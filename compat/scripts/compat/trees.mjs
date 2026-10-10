@@ -91,6 +91,7 @@ export function fromHast(root, ctx = context('hast'), options = {}) {
   const readAttrs=(props,tag,path,generatedLang)=>{
     const attrs = {}
     for (const [key, value] of Object.entries(props)) {
+      if(options.generated && options.renderer==='carve' && options.normalizeListDelimiter && tag==='ol' && key==='dataDelim' && value===')' && !options.authoredKeyValues?.has('data-delim=)')){ctx.note(`${path}/properties/dataDelim`,'generated-html-attribute','normalized','Omitted the generated ordered-list delimiter marker.');continue}
       if(options.generated && tag==='th' && key==='scope' && ['col','row'].includes(value) && !options.authoredKeyValues?.has(`scope=${value}`)){ctx.note(`${path}/properties/scope`,'generated-html-attribute','normalized','Omitted generated header scope.');continue}
       if(options.generated && options.renderer==='pandoc' && key.startsWith('data') && key.length>4){const original=key[4].toLowerCase()+key.slice(5);if(options.authoredKeyValues?.has(`${original}=${value}`)){attrs.keyValues??={};attrs.keyValues[original]=String(value);ctx.note(`${path}/properties/${key}`,'generated-html-attribute','normalized','Restored an authored attribute renamed by Pandoc HTML output.');continue}}
       if (options.renderer === 'pandoc' && tag === 'ol' && key === 'type' && String(value) === '1') { ctx.note(`${path}/properties/type`, 'generated-html-attribute', 'normalized', 'Omitted the Pandoc decimal-list type attribute.'); continue }
