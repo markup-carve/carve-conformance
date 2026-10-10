@@ -46,6 +46,11 @@ among the previously matching cases. After applying the existing rendering
 declarations, Rust has the same sixteen mismatches as JavaScript and PHP.
 The refreshed conformance engine pins include that merged fix.
 
+[Conformance PR #6](https://github.com/markup-carve/carve-conformance/pull/6)
+subsequently declared two of those differences. With the current pins,
+JavaScript and Rust have fourteen mismatches. PHP has fifteen because its
+caption case below also mismatches.
+
 ## Remaining importer cases
 
 Review probes also found older cases outside the seven CommonMark examples:
@@ -56,5 +61,15 @@ Review probes also found older cases outside the seven CommonMark examples:
   consistent handling in JavaScript and PHP. Top-level fences and the container
   forms covered by the new regressions report their omitted language.
 
-These cases need separate output and diagnostic fixes; the refreshed suite
-counts above do not measure them.
+These cases need separate output and diagnostic fixes and fall outside
+these suite counts.
+
+## PHP caption regression in the refreshed pins
+
+Refreshing PHP from `8bddf96a` to `66b1dfe7` also includes a Djot caption regression
+introduced by [PHP PR #3030](https://github.com/markup-carve/carve-php/pull/3030).
+In `tables.test:35`, the converter escapes the caption marker and imports its
+text as a paragraph instead of attaching it to the table. This adds one
+unassessed mismatch: PHP moves from fourteen to fifteen, while JavaScript and
+Rust remain at fourteen. The boundary-loss changes in PHP PR #3041 do not
+cause this regression; the preceding Djot converter produces the same output.
