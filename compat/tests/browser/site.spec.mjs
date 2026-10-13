@@ -370,3 +370,39 @@ for (const value of ['unverified-loss', 'false-loss']) test(`matching HTML loss 
   await expect(assessment).toHaveValue('unverified-loss')
   await expect(page.locator('#commonmark-examples>li')).toHaveCount(1)
 })
+
+const roundtrip = {
+  schemaVersion:1, kind:'roundtrip', generatedAt:'2026-01-01T00:00:00Z', versions:{carve:'0.1.11', pandoc:'pandoc 3.11'},
+  chains:[{id:'carve-html-carriers',language:'carve',viaHtml:true,label:'Carve -> HTML with roundtrip carriers -> Carve'},{id:'remark-md',language:'markdown',viaHtml:false,label:'remark -> remark (no HTML)'}],
+  summary:{'carve-html-carriers':{meaning:{measured:1,kept:1,errors:0},spelling:{bullet:{measured:2,kept:2,spellings:{'-':true,'*':true}}}},'remark-md':{meaning:{measured:1,kept:1,errors:0},spelling:{bullet:{measured:2,kept:1,spellings:{'-':true,'+':false}},'heading-style':{measured:1,kept:0,spellings:{setext:false}}}}},
+  rows:[
+    {layer:'meaning',chain:'carve-html-carriers',id:'external/x',kept:true,evidenceUrl:'evidence/roundtrip/0.json'},
+    {layer:'spelling',chain:'remark-md',id:'heading-style/setext',distinction:'heading-style',spelling:'setext',kept:false,before:['setext'],after:['atx'],evidenceUrl:'evidence/roundtrip/1.json'},
+  ],
+}
+test('roundtrip measurement keeps meaning and spelling apart and opens each case', async ({page}) => {
+  await page.route('**/roundtrip-summary.json',route=>route.fulfill({json:roundtrip}))
+  await page.route('**/evidence/roundtrip/1.json',route=>route.fulfill({json:{...roundtrip.rows[1],source:'<b>Title</b>\n=====\n',returned:'# <b>Title</b>\n'}}))
+  await page.goto('/#roundtrip')
+  const table = page.locator('#roundtrip-table')
+  await expect(table.locator('thead tr').first()).toContainText('Carve')
+  await expect(table.locator('thead tr').first()).toContainText('Markdown')
+  await expect(table.locator('thead tr').last()).toContainText('no HTML')
+  await expect(table.locator('tbody tr').first()).toContainText('meaning')
+  const heading = table.locator('tbody tr', {hasText:'heading-style'})
+  await expect(heading.locator('td').first()).toHaveText('n/a')
+  await expect(heading.locator('button')).toHaveText('0/1')
+  await expect(page.locator('#roundtrip-versions')).toContainText('· pandoc 3.11')
+  await heading.locator('button').click()
+  await expect(page.locator('#roundtrip-detail-title')).toHaveText('remark -> remark (no HTML): heading-style')
+  await expect(page.locator('#roundtrip-cases')).toContainText('before setext · after atx')
+  await page.locator('#roundtrip-cases button').click()
+  await expect(page.locator('#roundtrip-cases pre').first()).toHaveText('<b>Title</b>\n=====\n')
+  await expect(page.locator('#roundtrip-cases b', {hasText:'Title'})).toHaveCount(0)
+})
+test('missing roundtrip evidence is marked as not measured', async ({page}) => {
+  await page.route('**/roundtrip-summary.json',route=>route.fulfill({status:404,body:'Not found'}))
+  await page.goto('/#roundtrip')
+  await expect(page.locator('#roundtrip-note')).toHaveText('Not measured in this report.')
+  await expect(page.locator('#roundtrip-results')).toBeHidden()
+})
