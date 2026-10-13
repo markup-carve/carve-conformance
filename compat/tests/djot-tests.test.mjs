@@ -101,7 +101,7 @@ test('JavaScript Djot lane measures every HTML example and accounts for every ou
   assert.deepEqual(report.declarations.map(d => d.id),['math-role','lone-image-block','destination-whitespace'])
   assert.match(report.declaredSha256,/^[a-f0-9]{64}$/)
   for (const d of report.declarations) { assert.deepEqual(d.stale.javascript,[]); assert.deepEqual(d.insufficient.javascript,[]) }
-  assert.equal(report.totals.javascript.declared,13)
+  assert.equal(report.totals.javascript.declared,9)
   assert.ok(!Object.hasOwn(report,'baselines'))
   assert.deepEqual(report.notMeasuredEngines,['php','rust'])
   validateHtmlSuite(report,{label:'Djot',examples,differences:loadDjotDeclarations(examples).differences,sourceKey:'source'})
@@ -116,6 +116,22 @@ test('JavaScript Djot lane measures every HTML example and accounts for every ou
   assert.match(emphasis.carveHtml, /<strong>foo bar<\/strong>/)
   assert.equal(Object.values(report.totals.javascript.honesty).reduce((sum,n)=>sum+n,0),report.totals.javascript.match + report.totals.javascript.mismatch + report.totals.javascript.declared)
   for (const selection of [[],['javascript','javascript'],['unknown']]) assert.throws(() => runDjotTests(selection))
+})
+
+test('an engine-scoped declaration applies only to the engines it names', () => {
+  const {examples} = validateDjotTests(), {differences} = loadDjotDeclarations(examples)
+  const lone = differences.find(d => d.id === 'lone-image-block')
+  assert.deepEqual(lone.engines, ['php','rust'])
+  const report = runDjotTests(['javascript'])
+  assert.ok(report.rows.filter(r => lone.examples.includes(r.example)).every(r => r.status === 'match' && !r.declaration))
+  assert.deepEqual(report.declarations.find(d => d.id === 'lone-image-block').declared, {javascript:0})
+  const dir = mkdtempSync(join(tmpdir(),'djot-declared-'))
+  try {
+    for (const engines of [[], ['php','php'], ['unknown'], 'php']) {
+      writeFileSync(join(dir,'declared.json'), JSON.stringify({schemaVersion:1,differences:[{...lone,engines}]}))
+      assert.throws(() => loadDjotDeclarations(examples,dir), /Declaration engines/)
+    }
+  } finally { rmSync(dir,{recursive:true,force:true}) }
 })
 
 test('the Djot comparison keeps authored divs', () => {

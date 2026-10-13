@@ -1,13 +1,13 @@
 import assert from 'node:assert/strict'
 import { htmlHonesty, htmlHonestyOutcomes, reportClass } from './importer-report.mjs'
 import { engineNames } from './engines.mjs'
-import { reportDisagreements, declarationSummaries } from './html-suite.mjs'
+import { reportDisagreements, declarationSummaries, declarationFor } from './html-suite.mjs'
 
 export function validateHtmlSuite(measurement, {label,examples,differences,sourceKey}) {
   const byExample = new Map(examples.map(e => [e.example,e]))
   assert.ok(Array.isArray(measurement.selectedEngines), 'Missing selected engines')
   assert.ok(measurement.selectedEngines.every(engine => engineNames.includes(engine)), 'Unknown suite engine')
-  const declaredExamples = new Map(differences.flatMap(d => d.examples.map(example => [example,d.id])))
+  const declaredExamples = new Map(differences.flatMap(d => d.examples.map(example => [example,d])))
   assert.ok(Array.isArray(measurement.rows) && Array.isArray(measurement.selectedEngines) && measurement.selectedEngines.length > 0)
   assert.equal(new Set(measurement.selectedEngines).size, measurement.selectedEngines.length)
   assert.ok(measurement.rows.every(r => measurement.selectedEngines.includes(r.engine) && ['match','mismatch','declared','not-comparable','failed'].includes(r.status)), `Invalid ${label} result row`)
@@ -59,7 +59,7 @@ export function validateHtmlSuite(measurement, {label,examples,differences,sourc
     assert.equal(row.reportClass, reportClass(row.diagnostics), 'Report class differs from diagnostics')
     assert.ok(['names-loss','unverified-only','clean'].includes(row.reportClass), `Invalid ${label} report class`)
     assert.equal(row.honesty, ['match','mismatch','declared'].includes(row.status) ? htmlHonesty(row.status !== 'mismatch', row.reportClass) : null, `Invalid ${label} honesty outcome`)
-    const id = declaredExamples.get(row.example)
+    const id = declarationFor(declaredExamples.get(row.example), row.engine)?.id
     if (row.status === 'declared' || (row.status === 'mismatch' && id)) {
       assert.ok(id, `Undeclared ${label} example`)
       assert.deepEqual(row.declaration, row.status === 'declared' ? {id} : {id,insufficient:true}, `Invalid ${label} declaration annotation`)

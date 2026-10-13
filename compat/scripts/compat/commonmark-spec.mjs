@@ -116,6 +116,7 @@ export function validateDeclarations(source = readFileSync(declaredPath), exampl
     assert.ok(typeof d.reason === 'string' && d.reason.trim(), 'Declaration reason must be non-empty')
     assert.ok(typeof d.reference === 'string' && URL.canParse(d.reference) && new URL(d.reference).protocol === 'https:', 'Declaration reference must be an https URL')
     assert.ok(Array.isArray(d.examples) && d.examples.length > 0, 'Declaration examples must be a non-empty array')
+    if (Object.hasOwn(d, 'engines')) assert.ok(Array.isArray(d.engines) && d.engines.length > 0 && new Set(d.engines).size === d.engines.length && d.engines.every(engine => engineNames.includes(engine)), 'Declaration engines must be a non-empty list of known engines')
     for (const example of d.examples) {
       assert.ok(known.has(example), 'Invalid declaration example')
       assert.ok(!assigned.has(example), 'Duplicate declaration example'); assigned.add(example)
