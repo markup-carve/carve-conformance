@@ -23,7 +23,7 @@ export function semantics(value) {
   if (value.type === 'text' || value.type === 'escaped_text') return text(value.value.replace(/\n/g, ' '))
   const out = {}
   for (const [key, field] of Object.entries(value)) {
-    if (['pos', 'srcByteLength', 'bulletChar', 'delim', 'order'].includes(key)) continue
+    if (['pos', 'srcByteLength', 'bulletChar', 'delim', 'order', 'separatorWidths'].includes(key)) continue
     if (key === 'start' && field === 1) continue
     out[key] = semantics(field)
   }
@@ -92,6 +92,7 @@ export function fromHast(root, ctx = context('hast'), options = {}) {
     const attrs = {}
     for (const [key, value] of Object.entries(props)) {
       if(options.generated && options.renderer==='carve' && options.normalizeListDelimiter && tag==='ol' && key==='dataDelim' && value===')' && !options.authoredKeyValues?.has('data-delim=)')){ctx.note(`${path}/properties/dataDelim`,'generated-html-attribute','normalized','Omitted the generated ordered-list delimiter marker.');continue}
+      if(options.generated && options.renderer==='carve' && tag==='li' && key==='dataTaskState' && !options.authoredKeyValues?.has(`data-task-state=${value}`)){ctx.note(`${path}/properties/dataTaskState`,'generated-html-attribute','normalized','Omitted the task-state styling hook every Carve render writes.');continue}
       if(options.generated && tag==='th' && key==='scope' && ['col','row'].includes(value) && !options.authoredKeyValues?.has(`scope=${value}`)){ctx.note(`${path}/properties/scope`,'generated-html-attribute','normalized','Omitted generated header scope.');continue}
       if(options.generated && options.renderer==='pandoc' && key.startsWith('data') && key.length>4){const original=key[4].toLowerCase()+key.slice(5);if(options.authoredKeyValues?.has(`${original}=${value}`)){attrs.keyValues??={};attrs.keyValues[original]=String(value);ctx.note(`${path}/properties/${key}`,'generated-html-attribute','normalized','Restored an authored attribute renamed by Pandoc HTML output.');continue}}
       if (options.renderer === 'pandoc' && tag === 'ol' && key === 'type' && String(value) === '1') { ctx.note(`${path}/properties/type`, 'generated-html-attribute', 'normalized', 'Omitted the Pandoc decimal-list type attribute.'); continue }
