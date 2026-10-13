@@ -1,5 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { existsSync } from 'node:fs'
 import { chains, inventory, meaning, meaningInputs, runRoundtrip, spellingTable, validateVariantCases, variantCases } from '../scripts/compat/roundtrip.mjs'
 
 const spellings = (language, source, distinction) => inventory(language, source).filter(entry => entry.distinction === distinction).map(entry => entry.spelling)
@@ -47,4 +48,17 @@ test('the roundtrip export keeps every distinction PART 10 §13 carries over HTM
 test('chain identifiers are unique and every chain names its language', () => {
   assert.equal(new Set(chains.map(chain => chain.id)).size, chains.length)
   for (const chain of chains) assert.ok(['carve', 'markdown', 'djot'].includes(chain.language), chain.id)
+})
+
+test('each engine runs the same five Carve chains, and a native engine keeps meaning over its own HTML', async t => {
+  const modes = ['html', 'html-carriers', 'markdown', 'markdown-carriers', 'fmt']
+  for (const engine of ['php', 'rust']) assert.deepEqual(chains.filter(chain => chain.engine === engine).map(chain => chain.id), modes.map(mode => `${engine}-${mode}`))
+  assert.deepEqual(chains.filter(chain => chain.engine === 'javascript').map(chain => chain.id), modes.map(mode => `carve-${mode}`))
+  for (const engine of ['php', 'rust']) {
+    if (!existsSync(engine === 'php' ? '.cache/engines/php' : '.cache/engines/rust/bin/carve')) { t.diagnostic(`${engine} engine absent`); continue }
+    const report = await runRoundtrip([`${engine}-html-carriers`])
+    assert.equal(report.rows.filter(row => row.error).length, 0, engine)
+    assert.equal(report.summary[`${engine}-html-carriers`].spelling['thematic-break'].kept, 3, engine)
+    assert.match(report.versions[engine === 'php' ? 'carve-php' : 'carve-rs'], /^[0-9a-f]{8}$/)
+  }
 })

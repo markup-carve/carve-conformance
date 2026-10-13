@@ -16,6 +16,7 @@ language.
 | `carve-html`, `carve-html-carriers` | Carve | yes, plain and with roundtrip carriers |
 | `carve-markdown`, `carve-markdown-carriers` | Carve | no, through Markdown |
 | `carve-fmt` | Carve | no, canonical writer |
+| `php-*`, `rust-*` | Carve | the same five chains through the pinned PHP and Rust engines |
 | `remark-html` | Markdown | yes, remark-rehype then rehype-remark |
 | `remark-md` | Markdown | no |
 | `turndown-html` | Markdown | yes, commonmark.js then turndown with default options |
@@ -24,6 +25,13 @@ language.
 
 The chains without HTML separate what a tool's own writer normalizes from what
 HTML loses.
+
+The `carve-*` chains run carve-js. `php-*` and `rust-*` run the engines pinned
+in `resources/engines.json`: PHP through `scripts/compat/php-roundtrip-driver.php`,
+Rust through its CLI (`--html`, `--markdown`, `--roundtrip`, `--carve` and
+`migrate --from`). Every chain's returned source is measured by the same
+carve-js reader, so the columns differ only in the engine that wrote and read
+it back.
 
 ## Two layers
 
@@ -65,7 +73,7 @@ default. These are small authored samples, not a statistical corpus.
 
 `npm run site:build` picks up `reports/roundtrip.json` when it exists (or
 `--roundtrip=<path>`) and adds a "Source to HTML and back" section: the same
-table, chains grouped by language and marked via HTML or no HTML, with each
+table, chains grouped by language (Carve once per engine) and marked via HTML or no HTML, with each
 cell opening its cases, their input and the returned source. The build
 refuses a report whose cases changed after it was measured or whose summary
 does not match its rows. Without a report the section reads "Not measured in

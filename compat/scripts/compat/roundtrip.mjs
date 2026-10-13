@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { isDeepStrictEqual } from 'node:util'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
@@ -17,6 +18,7 @@ import TurndownService from 'turndown'
 import { carveToCarve, carveToHtml, carveToMarkdown, htmlToCarve, markdownToCarve, parse, toAstJson } from '@markup-carve/carve'
 import { context, fromDjot, fromMdast, semantics } from './trees.mjs'
 import { corpus } from './check.mjs'
+import { engineMetadata } from './engines.mjs'
 
 export const variantCases = JSON.parse(readFileSync(new URL('../../tests/roundtrip/cases.json', import.meta.url), 'utf8'))
 export const languages = ['carve', 'markdown', 'djot']
@@ -25,15 +27,33 @@ const md = unified().use(remarkParse).use(remarkGfm)
 const mdToHtml = unified().use(remarkParse).use(remarkGfm).use(remarkRehype).use(rehypeStringify)
 const htmlToMd = unified().use(rehypeParse, { fragment: true }).use(rehypeRemark).use(remarkGfm).use(remarkStringify)
 const mdToMd = unified().use(remarkParse).use(remarkGfm).use(remarkStringify)
+const phpBatch = mode => sources => JSON.parse(execFileSync(process.env.CARVE_PHP ?? 'php', [fileURLToPath(new URL('./php-roundtrip-driver.php', import.meta.url))], { input: JSON.stringify(sources.map(source => ({ chain: mode, source }))), encoding: 'utf8', timeout: 120000, maxBuffer: 64 * 1024 * 1024 }))
+const rust = (args, input) => execFileSync(engineMetadata('rust').binary, args, { input, encoding: 'utf8', timeout: 15000, maxBuffer: 8 * 1024 * 1024, stdio: ['pipe', 'pipe', 'pipe'] })
+const engineChains = engine => {
+  const name = { php: 'PHP', rust: 'Rust' }[engine], native = engine
+  const run = engine === 'rust'
+    ? { html: s => rust(['migrate', '--from', 'html'], rust(['--html'], s)), 'html-carriers': s => rust(['migrate', '--from', 'html'], rust(['--html', '--roundtrip'], s)), markdown: s => rust(['migrate', '--from', 'markdown'], rust(['--markdown'], s)), 'markdown-carriers': s => rust(['migrate', '--from', 'markdown'], rust(['--markdown', '--roundtrip'], s)), fmt: s => rust(['--carve'], s) }
+    : null
+  const chain = (mode, viaHtml, label) => ({ id: `${engine}-${mode}`, language: 'carve', engine, viaHtml, native, label: `Carve ${name}: ${label}`, ...(run ? { run: run[mode] } : { batch: phpBatch(mode) }) })
+  return [
+    chain('html', true, 'Carve -> HTML -> Carve'),
+    chain('html-carriers', true, 'Carve -> HTML with roundtrip carriers -> Carve'),
+    chain('markdown', false, 'Carve -> Markdown -> Carve'),
+    chain('markdown-carriers', false, 'Carve -> Markdown with roundtrip carriers -> Carve'),
+    chain('fmt', false, 'Carve canonical writer (no HTML)'),
+  ]
+}
 const pandoc = (args, input) => execFileSync(process.env.CARVE_PANDOC ?? 'pandoc', args, { input, encoding: 'utf8', timeout: 15000, maxBuffer: 8 * 1024 * 1024 })
 
 // Each chain takes source in its language and returns source in the same language.
 export const chains = [
-  { id: 'carve-html', language: 'carve', viaHtml: true, label: 'Carve -> HTML -> Carve', run: s => htmlToCarve(carveToHtml(s)).value },
-  { id: 'carve-html-carriers', language: 'carve', viaHtml: true, label: 'Carve -> HTML with roundtrip carriers -> Carve', run: s => htmlToCarve(carveToHtml(s, { roundtrip: true })).value },
-  { id: 'carve-markdown', language: 'carve', viaHtml: false, label: 'Carve -> Markdown -> Carve', run: s => markdownToCarve(carveToMarkdown(s)) },
-  { id: 'carve-markdown-carriers', language: 'carve', viaHtml: false, label: 'Carve -> Markdown with roundtrip carriers -> Carve', run: s => markdownToCarve(carveToMarkdown(s, { roundtrip: true })) },
-  { id: 'carve-fmt', language: 'carve', viaHtml: false, label: 'Carve canonical writer (no HTML)', run: s => carveToCarve(s) },
+  { id: 'carve-html', language: 'carve', engine: 'javascript', viaHtml: true, label: 'Carve -> HTML -> Carve', run: s => htmlToCarve(carveToHtml(s)).value },
+  { id: 'carve-html-carriers', language: 'carve', engine: 'javascript', viaHtml: true, label: 'Carve -> HTML with roundtrip carriers -> Carve', run: s => htmlToCarve(carveToHtml(s, { roundtrip: true })).value },
+  { id: 'carve-markdown', language: 'carve', engine: 'javascript', viaHtml: false, label: 'Carve -> Markdown -> Carve', run: s => markdownToCarve(carveToMarkdown(s)) },
+  { id: 'carve-markdown-carriers', language: 'carve', engine: 'javascript', viaHtml: false, label: 'Carve -> Markdown with roundtrip carriers -> Carve', run: s => markdownToCarve(carveToMarkdown(s, { roundtrip: true })) },
+  { id: 'carve-fmt', language: 'carve', engine: 'javascript', viaHtml: false, label: 'Carve canonical writer (no HTML)', run: s => carveToCarve(s) },
+  ...engineChains('php'),
+  ...engineChains('rust'),
   { id: 'remark-html', language: 'markdown', viaHtml: true, label: 'remark -> rehype -> remark', run: async s => String(await htmlToMd.process(String(await mdToHtml.process(s)))) },
   { id: 'remark-md', language: 'markdown', viaHtml: false, label: 'remark -> remark (no HTML)', run: async s => String(await mdToMd.process(s)) },
   { id: 'turndown-html', language: 'markdown', viaHtml: true, label: 'commonmark.js -> turndown (defaults)', run: s => new TurndownService().turndown(new commonmark.HtmlRenderer().render(new commonmark.Parser().parse(s))) + '\n' },
@@ -141,8 +161,14 @@ export async function runRoundtrip(selected = chains.map(chain => chain.id)) {
   const rows = [], summary = {}
   for (const chain of chains.filter(item => selected.includes(item.id))) {
     const result = summary[chain.id] = { meaning: { measured: 0, kept: 0, errors: 0 }, spelling: {} }
+    let run = chain.run
+    if (chain.batch) {
+      const sources = [...meaningInputs(chain.language).map(input => input.source), ...variantCases.cases.filter(entry => typeof entry[chain.language] === 'string').map(entry => entry[chain.language])]
+      const batch = await attempt(() => chain.batch(sources)), results = new Map(sources.map((source, i) => [source, batch.error ? { error: batch.error } : batch.value[i]]))
+      run = source => { const value = results.get(source); if (value.error) throw new Error(value.error); return value.value }
+    }
     for (const input of meaningInputs(chain.language)) {
-      const back = await attempt(() => chain.run(input.source))
+      const back = await attempt(() => run(input.source))
       const kept = !back.error && (await attempt(() => isDeepStrictEqual(meaning(chain.language, input.source), meaning(chain.language, back.value)))).value === true
       result.meaning.measured++
       if (back.error) result.meaning.errors++
@@ -150,7 +176,7 @@ export async function runRoundtrip(selected = chains.map(chain => chain.id)) {
       rows.push({ layer: 'meaning', chain: chain.id, id: input.id, kept, ...(back.error ? { error: back.error } : { returned: back.value }) })
     }
     for (const item of variantCases.cases.filter(entry => typeof entry[chain.language] === 'string')) {
-      const back = await attempt(() => chain.run(item[chain.language]))
+      const back = await attempt(() => run(item[chain.language]))
       const before = inventory(chain.language, item[chain.language]).filter(entry => entry.distinction === item.distinction).map(entry => entry.spelling)
       const after = back.error ? null : (await attempt(() => inventory(chain.language, back.value).filter(entry => entry.distinction === item.distinction).map(entry => entry.spelling))).value ?? null
       const kept = isDeepStrictEqual(before, after)
@@ -169,6 +195,8 @@ export async function runRoundtrip(selected = chains.map(chain => chain.id)) {
     commonmark: JSON.parse(readFileSync(new URL('../../node_modules/commonmark/package.json', import.meta.url))).version,
     djot: djot.version,
     ...(selected.some(id => chains.find(chain => chain.id === id).native === 'pandoc') ? { pandoc: pandoc(['--version'], '').split('\n')[0] } : {}),
+    ...(selected.some(id => chains.find(chain => chain.id === id).native === 'php') ? { 'carve-php': engineMetadata('php').revision.slice(0, 8) } : {}),
+    ...(selected.some(id => chains.find(chain => chain.id === id).native === 'rust') ? { 'carve-rs': engineMetadata('rust').revision.slice(0, 8) } : {}),
   }
   return {
     schemaVersion: 1,
@@ -177,7 +205,7 @@ export async function runRoundtrip(selected = chains.map(chain => chain.id)) {
     versions,
     casesSha256: createHash('sha256').update(readFileSync(new URL('../../tests/roundtrip/cases.json', import.meta.url))).digest('hex'),
     externalCasesSha256: createHash('sha256').update(readFileSync(new URL('../../tests/external-compat/cases.json', import.meta.url))).digest('hex'),
-    chains: chains.filter(chain => selected.includes(chain.id)).map(({ run, ...chain }) => chain),
+    chains: chains.filter(chain => selected.includes(chain.id)).map(({ run, batch, ...chain }) => chain),
     scope: 'Meaning compares the compat semantic projection of the original and the returned source in the same language. Spelling compares, per authored variant case, the sequence of spellings for that case\'s distinction. A distinction is measured only for languages that can spell it two ways; elsewhere it is not applicable.',
     summary,
     rows,

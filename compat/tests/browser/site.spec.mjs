@@ -406,3 +406,13 @@ test('missing roundtrip evidence is marked as not measured', async ({page}) => {
   await expect(page.locator('#roundtrip-note')).toHaveText('Not measured in this report.')
   await expect(page.locator('#roundtrip-results')).toBeHidden()
 })
+test('roundtrip groups each Carve engine under its own heading', async ({page}) => {
+  const carve = mode => ({language:'carve',viaHtml:mode==='html',label:mode})
+  const chains = [{id:'php-html',engine:'php',...carve('html')},{id:'carve-html',engine:'javascript',...carve('html')},{id:'rust-fmt',engine:'rust',...carve('fmt')},{id:'remark-md',language:'markdown',viaHtml:false,label:'remark'}]
+  const summary = Object.fromEntries(chains.map(c => [c.id,{meaning:{measured:1,kept:1,errors:0},spelling:{}}]))
+  await page.route('**/roundtrip-summary.json',route=>route.fulfill({json:{...roundtrip,chains,summary,rows:chains.map(c => ({layer:'meaning',chain:c.id,id:'external/x',kept:true}))}}))
+  await page.goto('/#roundtrip')
+  const groups = page.locator('#roundtrip-table thead tr').first().locator('th')
+  await expect(groups).toHaveText(['','Carve JavaScript','Carve PHP','Carve Rust','Markdown'])
+  await expect(page.locator('#roundtrip-table thead tr').last().locator('th')).toHaveText([/Layer/,/HTML/,/HTML/,/fmt/,/remark/])
+})

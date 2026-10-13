@@ -327,15 +327,19 @@ async function loadRoundtrip() {
 }
 function fillRoundtrip(data) {
   const languages = {carve:'Carve', markdown:'Markdown', djot:'Djot'}
-  const order = Object.keys(languages), chains = [...data.chains].sort((a, b) => order.indexOf(a.language) - order.indexOf(b.language))
+  const engineNames = {javascript:'JavaScript', php:'PHP', rust:'Rust'}, engineOrder = Object.keys(engineNames)
+  const group = c => c.engine ? `${c.language}:${c.engine}` : c.language, groupName = c => c.engine ? `${languages[c.language]} ${engineNames[c.engine] ?? c.engine}` : languages[c.language]
+  const order = Object.keys(languages), rank = c => order.indexOf(c.language) * 10 + (c.engine ? engineOrder.indexOf(c.engine) : 0)
+  const chains = [...data.chains].sort((a, b) => rank(a) - rank(b))
   const distinctions = [...new Set(data.rows.filter(r => r.layer === 'spelling').map(r => r.distinction))]
   const table = $('#roundtrip-table'), head = node('thead'), groups = node('tr'), labels = node('tr'), body = node('tbody')
   append(table, node('caption', 'Kept over measured, per chain. n/a: the language spells this one way only.'), head, body)
   groups.append(node('th', ''))
-  for (const language of order) { const span = chains.filter(c => c.language === language).length; if (!span) continue; const th = node('th', languages[language]); th.colSpan = span; th.scope = 'colgroup'; groups.append(th) }
+  for (const key of [...new Set(chains.map(group))]) { const members = chains.filter(c => group(c) === key), th = node('th', groupName(members[0])); th.colSpan = members.length; th.scope = 'colgroup'; groups.append(th) }
   labels.append(node('th', 'Layer'))
   const short = {'carve-html':'HTML', 'carve-html-carriers':'HTML + carriers', 'carve-markdown':'Markdown', 'carve-markdown-carriers':'Markdown + carriers', 'carve-fmt':'fmt', 'remark-html':'remark', 'remark-md':'remark', 'turndown-html':'turndown', 'pandoc-gfm-html':'pandoc', 'pandoc-gfm':'pandoc', 'pandoc-djot-html':'pandoc', 'pandoc-djot':'pandoc'}
-  for (const chain of chains) { const th = node('th'); th.scope = 'col'; th.title = chain.label; append(th, node('span', short[chain.id] ?? chain.label), node('small', chain.viaHtml ? 'via HTML' : 'no HTML', chain.viaHtml ? 'via-html' : 'control')); labels.append(th) }
+  const mode = id => id.replace(/^(php|rust)-/, 'carve-')
+  for (const chain of chains) { const th = node('th'); th.scope = 'col'; th.title = chain.label; append(th, node('span', short[chain.id] ?? short[mode(chain.id)] ?? chain.label), node('small', chain.viaHtml ? 'via HTML' : 'no HTML', chain.viaHtml ? 'via-html' : 'control')); labels.append(th) }
   append(head, groups, labels)
   const detail = $('#roundtrip-detail'); let active
   const open = (chain, distinction, button) => {
