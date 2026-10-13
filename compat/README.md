@@ -100,7 +100,9 @@ Documented Carve rendering differences are listed in `tests/commonmark-spec/decl
 Each declaration is rechecked by applying its named normalization to both the expected and the actual
 semantic tree; only a matching comparison receives `declared` status. Reports flag
 stale declarations when the original comparison already matches and insufficient
-declarations when the normalized comparison still mismatches.
+declarations when the normalized comparison still mismatches. A declaration with
+an `engines` list covers only those importers, so one engine can drop a difference
+the others still carry.
 
 The default `pandoc-djot` baseline converts the same examples with pinned Pandoc
 3.11 using `pandoc -f commonmark -t djot --wrap=preserve`, then renders the Djot
@@ -155,8 +157,9 @@ heading IDs, so the lane does not measure them. Divs are kept with their
 attributes on both sides, so a lost or extra fenced div counts as a mismatch.
 [`tests/djot-tests/declared.json`](tests/djot-tests/declared.json) declares three
 documented differences, Carve's `role="math"` on math spans, a lone image
-without `<p>`, and whitespace in a link or image destination written
-percent-encoded, with the same re-check as the CommonMark declarations.
+without `<p>` (PHP and Rust only; the JavaScript importer keeps the paragraph),
+and whitespace in a link or image destination written percent-encoded, with the
+same re-check as the CommonMark declarations.
 
 ```sh
 npm run compat:djot -- --report=reports/djot.json

@@ -144,7 +144,7 @@ function fillHtmlSuite(data, {id,kind,label,sourceKey,sourceLabel,sectionLabel})
   for (const d of data.declarations ?? []) {
     const item = node('li'), link = node('a', 'Reference')
     if (typeof d.reference === 'string' && URL.canParse(d.reference) && new URL(d.reference).protocol === 'https:') link.href = d.reference
-    item.append(node('span', `${d.reason} `), link, node('span', ` · ${engines.map(engine => `${name(engine)}: ${d.declared[engine]} declared examples`).join(' · ')}`))
+    item.append(node('span', `${d.reason} `), link, ...(Array.isArray(d.engines) ? [node('span', ` · Applies to ${d.engines.map(name).join(', ')}`)] : []), node('span', ` · ${engines.map(engine => `${name(engine)}: ${d.declared[engine]} declared examples`).join(' · ')}`))
     for (const kind of ['stale','insufficient']) for (const engine of engines) {
       if (d[kind][engine]?.length) item.append(node('span', ` · ${name(engine)} ${kind}: examples ${d[kind][engine].join(', ')}`))
     }

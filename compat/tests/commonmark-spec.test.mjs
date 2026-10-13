@@ -294,7 +294,7 @@ syncBuiltinESMExports()
   } finally { rmSync(dir, {recursive:true,force:true}) }
 })
 
-test('three-engine reports include the example 40 diagnostic disagreement', t => {
+test('three-engine reports agree on the example 40 names loss', t => {
   if (!existsSync('.cache/engines/php') || !existsSync('.cache/engines/rust/bin/carve')) {
     t.skip('Native engines absent; JavaScript-only report shape checked separately')
     return
@@ -304,11 +304,9 @@ test('three-engine reports include the example 40 diagnostic disagreement', t =>
     assert.equal(Object.values(totals.honesty).reduce((a,b) => a+b, 0), totals.match + totals.mismatch + totals.declared)
     for (const [outcome, count] of Object.entries(totals.honesty)) assert.equal(count, report.rows.filter(r => r.engine === engine && r.honesty === outcome).length)
   }
-  const row = report.reportDisagreements.find(r => r.example === 40)
-  assert.ok(row)
-  assert.equal(row.section, 'Entity and numeric character references')
-  assert.deepEqual(row.classes, { javascript:'names-loss', php:'unverified-only', rust:'unverified-only' })
-  assert.ok(row.codes.javascript.includes('structure-unspellable'))
-  assert.deepEqual(row.codes.php, ['fidelity-unverified'])
-  assert.deepEqual(row.codes.rust, ['fidelity-unverified'])
+  assert.ok(!report.reportDisagreements.some(r => r.example === 40))
+  for (const row of report.rows.filter(r => r.example === 40)) {
+    assert.equal(row.reportClass, 'names-loss', row.engine)
+    assert.ok(row.diagnostics.some(d => d.code === 'structure-unspellable'), row.engine)
+  }
 })

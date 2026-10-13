@@ -11,9 +11,12 @@ const counts = () => ({ match:0, mismatch:0, notComparable:0, failed:0 })
 const engineCounts = () => ({ ...counts(), declared:0 })
 const countKey = status => status === 'not-comparable' ? 'notComparable' : status
 
+// A declaration without engines covers every importer; with engines it covers only those.
+export const declarationFor = (difference, engine) => difference && (!difference.engines || difference.engines.includes(engine)) ? difference : undefined
+
 export function declarationSummaries(differences, rows, selectedEngines) {
   return differences.map(d => {
-    const selected = engine => rows.filter(r => r.engine === engine && d.examples.includes(r.example))
+    const selected = engine => declarationFor(d, engine) ? rows.filter(r => r.engine === engine && d.examples.includes(r.example)) : []
     return { ...d, declared:Object.fromEntries(selectedEngines.map(engine => [engine,selected(engine).filter(r => r.status === 'declared').length])), stale:Object.fromEntries(selectedEngines.map(engine => [engine,selected(engine).filter(r => r.status === 'match').map(r => r.example)])), insufficient:Object.fromEntries(selectedEngines.map(engine => [engine,selected(engine).filter(r => r.declaration?.insufficient).map(r => r.example)])) }
   })
 }
@@ -49,7 +52,7 @@ export function runHtmlSuite(selectedEngines, { examples, format, sourceKey, dif
       else {
         try {
           row.carveHtml = renderHtml(resolve(parse(result.value)))
-          const comparison = compare({expectedHtml:e.html,carveHtml:row.carveHtml,difference:byExample.get(e.example)})
+          const comparison = compare({expectedHtml:e.html,carveHtml:row.carveHtml,difference:declarationFor(byExample.get(e.example),engine)})
           row.status = comparison.status
           row.comparison = {expected:comparison.expected,actual:comparison.actual}
           if (comparison.declaration) row.declaration = comparison.declaration
@@ -59,7 +62,7 @@ export function runHtmlSuite(selectedEngines, { examples, format, sourceKey, dif
         row.nativeComparison = {status:'failed',error:result.error ?? native[i].error}
       } else {
         row.nativeHtml = native[i].html
-        const comparison = compare({expectedHtml:e.html,carveHtml:row.nativeHtml,difference:byExample.get(e.example)})
+        const comparison = compare({expectedHtml:e.html,carveHtml:row.nativeHtml,difference:declarationFor(byExample.get(e.example),engine)})
         row.nativeComparison = {status:comparison.status,expected:comparison.expected,actual:comparison.actual,referenceAgreement:row.comparison ? isDeepStrictEqual(compare({expectedHtml:'',carveHtml:row.carveHtml,preserveCarveMarkers:true}).actual,compare({expectedHtml:'',carveHtml:row.nativeHtml,preserveCarveMarkers:true}).actual) : null}
       }
       nativeTotals[engine][countKey(row.nativeComparison.status)]++
