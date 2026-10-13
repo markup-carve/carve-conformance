@@ -11,3 +11,6 @@ footer .related{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:f
 .evidence-actions{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
 #source-results select{max-width:100%}#source-results pre{white-space:pre-wrap;overflow-wrap:anywhere}
 @media(max-width:640px){header nav{flex-wrap:wrap}header nav a{white-space:nowrap}}
+#roundtrip-table th small{display:block;font-weight:500;font-size:.68rem;color:var(--muted)}#roundtrip-table th small.via-html{color:var(--accent)}#roundtrip-table thead th{vertical-align:bottom;text-align:center}#roundtrip-table tbody th{text-align:left;white-space:nowrap}#roundtrip-table td{text-align:center}#roundtrip-table .na{color:var(--muted);font-size:.72rem}#roundtrip-table caption{text-align:left;padding:12px 15px;color:var(--muted)}#roundtrip-cases{list-style:none;padding:0;display:grid;gap:10px}#roundtrip-cases>li{border:1px solid var(--line);border-radius:7px;padding:10px 14px;min-width:0}#roundtrip-cases pre{white-space:pre-wrap;overflow-wrap:anywhere}
+#roundtrip .table-scroll{max-height:none}#roundtrip-table thead th{font-size:.74rem;line-height:1.3;padding:8px 6px}#roundtrip-table thead tr:first-child th+th{border-left:1px solid var(--line)}
+#roundtrip-table tbody th{position:sticky;left:0;background:#fff;z-index:1}

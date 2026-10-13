@@ -60,3 +60,13 @@ The report is per distinction and per chain, `kept/measured`, with no blended
 percentage. The variant set has one case per spelling, so `1/3` for bullets
 means one of three bullet characters came back as written, usually the
 default. These are small authored samples, not a statistical corpus.
+
+## On the website
+
+`npm run site:build` picks up `reports/roundtrip.json` when it exists (or
+`--roundtrip=<path>`) and adds a "Source to HTML and back" section: the same
+table, chains grouped by language and marked via HTML or no HTML, with each
+cell opening its cases, their input and the returned source. The build
+refuses a report whose cases changed after it was measured or whose summary
+does not match its rows. Without a report the section reads "Not measured in
+this report."

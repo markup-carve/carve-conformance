@@ -176,6 +176,7 @@ export async function runRoundtrip(selected = chains.map(chain => chain.id)) {
     generatedAt: new Date().toISOString(),
     versions,
     casesSha256: createHash('sha256').update(readFileSync(new URL('../../tests/roundtrip/cases.json', import.meta.url))).digest('hex'),
+    externalCasesSha256: createHash('sha256').update(readFileSync(new URL('../../tests/external-compat/cases.json', import.meta.url))).digest('hex'),
     chains: chains.filter(chain => selected.includes(chain.id)).map(({ run, ...chain }) => chain),
     scope: 'Meaning compares the compat semantic projection of the original and the returned source in the same language. Spelling compares, per authored variant case, the sequence of spellings for that case\'s distinction. A distinction is measured only for languages that can spell it two ways; elsewhere it is not applicable.',
     summary,
@@ -195,4 +196,36 @@ export function spellingTable(report) {
     `| meaning | ${ids.map(meaningCell).join(' | ')} |`,
     ...distinctions.map(distinction => `| ${distinction} | ${ids.map(id => cell(id, distinction)).join(' | ')} |`),
   ].join('\n')
+}
+
+// A report the site may publish: current cases, and every summary count backed by its rows.
+export function validateRoundtripReport(report) {
+  assert.equal(report.schemaVersion, 1)
+  assert.equal(report.kind, 'roundtrip')
+  assert.equal(report.casesSha256, createHash('sha256').update(readFileSync(new URL('../../tests/roundtrip/cases.json', import.meta.url))).digest('hex'), 'Roundtrip cases changed after this report was measured')
+  assert.equal(report.externalCasesSha256, createHash('sha256').update(readFileSync(new URL('../../tests/external-compat/cases.json', import.meta.url))).digest('hex'), 'External cases changed after this roundtrip report was measured')
+  assert.ok(report.generatedAt && report.versions && report.chains.length, 'Incomplete roundtrip report')
+  for (const chain of report.chains) {
+    assert.ok(chains.some(known => known.id === chain.id && known.language === chain.language), `Unknown chain ${chain.id}`)
+    const rows = report.rows.filter(row => row.chain === chain.id), summary = report.summary[chain.id]
+    const meaningRows = rows.filter(row => row.layer === 'meaning')
+    assert.deepEqual(meaningRows.map(row => row.id), meaningInputs(chain.language).map(input => input.id), `${chain.id}: meaning inputs differ from the fixtures`)
+    assert.deepEqual(summary.meaning, { measured: meaningRows.length, kept: meaningRows.filter(row => row.kept).length, errors: meaningRows.filter(row => row.error).length }, `${chain.id}: meaning summary`)
+    const spellingRows = rows.filter(row => row.layer === 'spelling')
+    assert.deepEqual(spellingRows.map(row => row.id), variantCases.cases.filter(item => typeof item[chain.language] === 'string').map(item => item.id), `${chain.id}: variant cases differ from the fixtures`)
+    const expected = {}
+    for (const row of spellingRows) {
+      const cell = expected[row.distinction] ??= { measured: 0, kept: 0, spellings: {} }
+      cell.measured++; if (row.kept) cell.kept++; cell.spellings[row.spelling] = row.kept
+    }
+    assert.deepEqual(summary.spelling, expected, `${chain.id}: spelling summary`)
+  }
+  assert.equal(report.rows.length, report.rows.filter(row => report.chains.some(chain => chain.id === row.chain)).length, 'Rows for an unlisted chain')
+  return report
+}
+
+// The source a row measured, so published evidence carries its input.
+export function rowSource(language, row) {
+  if (row.layer === 'spelling') return variantCases.cases.find(item => item.id === row.id)[language]
+  return meaningInputs(language).find(input => input.id === row.id).source
 }

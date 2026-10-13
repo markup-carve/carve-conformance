@@ -5,10 +5,11 @@ import { validateHtmlSuite } from './compat/validate-html-suite.mjs'
 import { validateDjotTests, loadDjotDeclarations, djotCommit, djotSha256 } from './compat/djot-tests.mjs'
 import { validateDeclarations } from './compat/commonmark-spec.mjs'
 import { validateSourceAgreement } from './compat/source-agreement.mjs'
-let reportPath = 'reports/latest.json', commonmarkPath = 'reports/commonmark.json', djotPath = 'reports/djot.json', positional = false
+let reportPath = 'reports/latest.json', commonmarkPath = 'reports/commonmark.json', djotPath = 'reports/djot.json', roundtripPath = 'reports/roundtrip.json', positional = false
 for (const arg of process.argv.slice(2)) {
   if (arg.startsWith('--commonmark=') && arg.slice('--commonmark='.length)) commonmarkPath = arg.slice('--commonmark='.length)
   else if (arg.startsWith('--djot=') && arg.slice('--djot='.length)) djotPath = arg.slice('--djot='.length)
+  else if (arg.startsWith('--roundtrip=') && arg.slice('--roundtrip='.length)) roundtripPath = arg.slice('--roundtrip='.length)
   else if (!arg.startsWith('-') && !positional) { reportPath = arg; positional = true }
   else throw new Error(`Unknown argument: ${arg}`)
 }
@@ -52,6 +53,12 @@ if (existsSync(djotPath)) {
   assert.equal(djot.declaredSha256, declaredSha256, 'Declarations changed after the Djot measurement')
   validateHtmlSuite(djot, {label:'Djot',examples,differences,sourceKey:'source'})
 }
+let roundtrip, rowSource
+if (existsSync(roundtripPath)) {
+  // Loaded only with a report: the module pulls in every converter it measures.
+  const module = await import('./compat/roundtrip.mjs')
+  roundtrip = module.validateRoundtripReport(JSON.parse(readFileSync(roundtripPath))); rowSource = module.rowSource
+}
 const tools = JSON.parse(readFileSync('site/tools.json'))
 assert.ok([...report.selected, ...report.notMeasured].every(t => tools.some(tool => tool.id === t)))
 mkdirSync('dist', { recursive: true })
@@ -68,7 +75,7 @@ const splitRows = (name, data) => {
     const bytes = JSON.stringify(row), digest = createHash('sha256').update(bytes).digest('hex').slice(0,16)
     const evidenceUrl = `evidence/${name}/${index}-${digest}.json`
     writeFileSync(`dist/${evidenceUrl}`, bytes)
-    const { evidence, errorDetails, markdown, source, expectedHtml, carve, carveHtml, comparison, nativeHtml, nativeComparison, results, differences, ...summary } = row
+    const { evidence, errorDetails, markdown, source, expectedHtml, carve, carveHtml, comparison, nativeHtml, nativeComparison, results, differences, returned, ...summary } = row
     return { ...summary, evidenceUrl, ...(nativeComparison ? {nativeStatus:nativeComparison.status,nativeReferenceAgreement:nativeComparison.referenceAgreement} : {}), ...(results ? {results:Object.fromEntries(Object.entries(results).map(([engine,{ast,html,...result}])=>[engine,result]))} : {}), ...(evidence?.scope ? {scope:evidence.scope} : {}) }
   }) }
 }
@@ -79,6 +86,12 @@ for (const [name, data] of [['commonmark', commonmark], ['djot', djot], ['source
   else rmSync(`dist/${name}-summary.json`, {force:true})
 }
 
+if (roundtrip) {
+  const language = Object.fromEntries(roundtrip.chains.map(chain => [chain.id, chain.language]))
+  const { rows, ...rest } = splitRows('roundtrip', {...roundtrip, rows: roundtrip.rows.map(row => ({...row, source: rowSource(language[row.chain], row)}))})
+  writeFileSync('dist/roundtrip-summary.json', JSON.stringify({...rest, rows}))
+  writeFileSync('dist/roundtrip.json', JSON.stringify(roundtrip, null, 2) + '\n')
+} else for (const file of ['roundtrip-summary.json', 'roundtrip.json']) rmSync(`dist/${file}`, {force:true})
 if (commonmark) writeFileSync('dist/commonmark.json', JSON.stringify(commonmark, null, 2) + '\n')
 else rmSync('dist/commonmark.json', { force:true })
 if (djot) writeFileSync('dist/djot.json', JSON.stringify(djot, null, 2) + '\n')
@@ -93,3 +106,4 @@ cpSync('tests/external-compat/losses.json', 'dist/losses.json')
 console.log(`Built site from ${report.rows.length} measured cases (${report.failed} failures).`)
 console.log(commonmark ? `Included CommonMark report from ${commonmarkPath} (${commonmark.rows.length} examples across engines).` : `CommonMark report absent at ${commonmarkPath}; built without it.`)
 console.log(djot ? `Included Djot report from ${djotPath} (${djot.rows.length} examples across engines).` : `Djot report absent at ${djotPath}; built without it.`)
+console.log(roundtrip ? `Included roundtrip report from ${roundtripPath} (${roundtrip.chains.length} chains, ${roundtrip.rows.length} rows).` : `Roundtrip report absent at ${roundtripPath}; built without it.`)

@@ -312,3 +312,68 @@ const sourceObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isI
 sourceObserver.observe($('#source-agreement'))
 addEventListener('hashchange',()=>{if(location.hash === '#source-agreement') void loadSourceAgreement()})
 if(location.hash === '#source-agreement') { sourceObserver.disconnect(); void loadSourceAgreement() }
+
+let roundtripLoaded = false
+async function loadRoundtrip() {
+  if(roundtripLoaded) return; roundtripLoaded = true
+  const note = $('#roundtrip-note')
+  try {
+    const response = await fetch('roundtrip-summary.json', {cache:'no-store'})
+    if (response.status === 404) { note.textContent = 'Not measured in this report.'; return }
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    fillRoundtrip(await response.json())
+    note.hidden = true; $('#roundtrip-results').hidden = false
+  } catch (error) { note.textContent = `Roundtrip report could not be loaded: ${error.message}` }
+}
+function fillRoundtrip(data) {
+  const languages = {carve:'Carve', markdown:'Markdown', djot:'Djot'}
+  const order = Object.keys(languages), chains = [...data.chains].sort((a, b) => order.indexOf(a.language) - order.indexOf(b.language))
+  const distinctions = [...new Set(data.rows.filter(r => r.layer === 'spelling').map(r => r.distinction))]
+  const table = $('#roundtrip-table'), head = node('thead'), groups = node('tr'), labels = node('tr'), body = node('tbody')
+  append(table, node('caption', 'Kept over measured, per chain. n/a: the language spells this one way only.'), head, body)
+  groups.append(node('th', ''))
+  for (const language of order) { const span = chains.filter(c => c.language === language).length; if (!span) continue; const th = node('th', languages[language]); th.colSpan = span; th.scope = 'colgroup'; groups.append(th) }
+  labels.append(node('th', 'Layer'))
+  const short = {'carve-html':'HTML', 'carve-html-carriers':'HTML + carriers', 'carve-markdown':'Markdown', 'carve-markdown-carriers':'Markdown + carriers', 'carve-fmt':'fmt', 'remark-html':'remark', 'remark-md':'remark', 'turndown-html':'turndown', 'pandoc-gfm-html':'pandoc', 'pandoc-gfm':'pandoc', 'pandoc-djot-html':'pandoc', 'pandoc-djot':'pandoc'}
+  for (const chain of chains) { const th = node('th'); th.scope = 'col'; th.title = chain.label; append(th, node('span', short[chain.id] ?? chain.label), node('small', chain.viaHtml ? 'via HTML' : 'no HTML', chain.viaHtml ? 'via-html' : 'control')); labels.append(th) }
+  append(head, groups, labels)
+  const detail = $('#roundtrip-detail'); let active
+  const open = (chain, distinction, button) => {
+    active?.setAttribute('aria-pressed', 'false'); active = button; button.setAttribute('aria-pressed', 'true')
+    const rows = data.rows.filter(r => r.chain === chain.id && (distinction ? r.layer === 'spelling' && r.distinction === distinction : r.layer === 'meaning'))
+    $('#roundtrip-detail-meta').textContent = `${languages[chain.language]} / ${chain.viaHtml ? 'via HTML' : 'no HTML'} / ${distinction ? 'SPELLING' : 'MEANING'}`
+    $('#roundtrip-detail-title').textContent = `${chain.label}: ${distinction ?? 'meaning'}`
+    const list = $('#roundtrip-cases'); list.replaceChildren()
+    for (const row of [...rows].sort((a, b) => a.kept - b.kept)) {
+      const item = node('li'), summary = node('p')
+      append(summary, node('b', row.kept ? 'kept ' : row.error ? 'error ' : 'lost '), node('code', row.id))
+      if (row.layer === 'spelling') summary.append(` · before ${row.before.join(', ')} · after ${row.after ? row.after.join(', ') || 'none' : 'none'}`)
+      if (row.error) summary.append(` · ${row.error}`)
+      const panes = node('div', undefined, 'detail-panes'), load = node('button', 'Show source and result'); load.type = 'button'
+      load.addEventListener('click', async () => {
+        load.disabled = true
+        try { const full = await fetchJson(row.evidenceUrl); panes.replaceChildren(pane('Input source', full.source, true), pane('Returned source', full.returned ?? full.error ?? '', true)) }
+        catch (error) { panes.replaceChildren(node('p', error.message)) }
+      })
+      append(item, summary, load, panes); list.append(item)
+    }
+    detail.hidden = false; detail.scrollIntoView({block:'nearest'})
+  }
+  $('#roundtrip-close').addEventListener('click', () => { detail.hidden = true; active?.setAttribute('aria-pressed', 'false'); active?.focus({preventScroll:true}); active = null })
+  for (const distinction of [null, ...distinctions]) {
+    const tr = node('tr'), th = node('th', distinction ?? 'meaning'); th.scope = 'row'; tr.append(th)
+    for (const chain of chains) {
+      const cell = distinction ? data.summary[chain.id].spelling[distinction] : data.summary[chain.id].meaning, td = node('td')
+      if (!cell) { td.append(node('span', 'n/a', 'na')); tr.append(td); continue }
+      const button = node('button', `${cell.kept}/${cell.measured}`, cell.kept === cell.measured ? '' : cell.kept ? 'interchange' : 'fail'); button.type = 'button'; button.setAttribute('aria-pressed', 'false')
+      button.setAttribute('aria-label', `${chain.label}, ${distinction ?? 'meaning'}: ${cell.kept} of ${cell.measured} kept`)
+      button.addEventListener('click', () => open(chain, distinction, button)); td.append(button); tr.append(td)
+    }
+    body.append(tr)
+  }
+  $('#roundtrip-versions').textContent = `Measured ${new Date(data.generatedAt).toISOString().slice(0, 16).replace('T', ' ')} UTC · ${Object.entries(data.versions).map(([k, v]) => String(v).startsWith(k) ? v : `${k} ${v}`).join(' · ')}`
+}
+const roundtripObserver = new IntersectionObserver(entries => { if (entries.some(e => e.isIntersecting)) { roundtripObserver.disconnect(); void loadRoundtrip() } }, {rootMargin:'300px'})
+roundtripObserver.observe($('#roundtrip'))
+addEventListener('hashchange', () => { if (location.hash === '#roundtrip') void loadRoundtrip() })
+if (location.hash === '#roundtrip') { roundtripObserver.disconnect(); void loadRoundtrip() }

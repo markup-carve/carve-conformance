@@ -173,3 +173,37 @@ test('the site validates optional Djot evidence and removes absent report artifa
     result = build(); assert.equal(result.status,0,result.stderr); assert.equal(existsSync(output),false)
   } finally { rmSync(dir,{recursive:true,force:true}) }
 })
+
+test('the site validates optional roundtrip evidence and publishes each row with its input', async () => {
+  const {runRoundtrip} = await import('../scripts/compat/roundtrip.mjs')
+  const dir = mkdtempSync(join(tmpdir(),'carve-compat-roundtrip-site-'))
+  const hash = path => createHash('sha256').update(readFileSync(path)).digest('hex')
+  try {
+    for (const path of ['site','resources','tests/external-compat']) cpSync(path,join(dir,path),{recursive:true})
+    mkdirSync(join(dir,'reports'))
+    const external = {schemaVersion:1,generatedAt:'2026-01-01T00:00:00Z',engine:{},schema:{sha256:hash('resources/ast-schema.json')},fixtureHashes:Object.fromEntries(['cases.json','losses.json'].map(file=>[file,hash(`tests/external-compat/${file}`)])),selected:[],notMeasured:[],rows:[],passed:0,failed:0}
+    writeFileSync(join(dir,'reports/latest.json'),JSON.stringify(external))
+    const build = (...args) => spawnSync(process.execPath,[fileURLToPath(new URL('../scripts/build-site.mjs',import.meta.url)),...args],{cwd:dir,encoding:'utf8'})
+    const output = join(dir,'dist/roundtrip-summary.json'), custom = join(dir,'optional.json')
+    let result = build(); assert.equal(result.status,0,result.stderr); assert.match(result.stdout,/Roundtrip report absent/); assert.equal(existsSync(output),false)
+    const roundtrip = await runRoundtrip(['carve-html-carriers','remark-md'])
+    writeFileSync(custom,JSON.stringify(roundtrip))
+    result = build('--roundtrip=optional.json'); assert.equal(result.status,0,result.stderr); assert.match(result.stdout,/Included roundtrip/)
+    assert.deepEqual(JSON.parse(readFileSync(join(dir,'dist/roundtrip.json'))),roundtrip)
+    const summary = JSON.parse(readFileSync(output))
+    assert.deepEqual(summary.summary,roundtrip.summary)
+    assert.ok(summary.rows.every(row => !('returned' in row) && row.evidenceUrl))
+    const fence = summary.rows.find(row => row.chain === 'carve-html-carriers' && row.id === 'code-fence/tilde')
+    const evidence = JSON.parse(readFileSync(join(dir,'dist',fence.evidenceUrl)))
+    assert.match(evidence.source,/^~~~/); assert.equal(typeof evidence.returned,'string')
+    for (const mutate of [
+      r => {r.schemaVersion=2}, r => {r.kind='other'}, r => {r.casesSha256='stale'}, r => {r.externalCasesSha256='stale'},
+      r => {r.summary['remark-md'].meaning.kept++}, r => {r.summary['carve-html-carriers'].spelling.bullet.kept--},
+      r => {r.rows.pop()}, r => {r.rows[0].kept=!r.rows[0].kept}, r => {r.chains[0].id='unknown'},
+    ]) {
+      const broken = structuredClone(roundtrip); mutate(broken); writeFileSync(custom,JSON.stringify(broken))
+      assert.equal(build('--roundtrip=optional.json').status,1)
+    }
+    result = build(); assert.equal(result.status,0,result.stderr); assert.equal(existsSync(output),false)
+  } finally { rmSync(dir,{recursive:true,force:true}) }
+})
