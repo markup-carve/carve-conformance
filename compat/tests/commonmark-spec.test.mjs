@@ -145,7 +145,7 @@ test('generated ordered-list delimiter markers preserve the CommonMark compariso
 
 test('JavaScript measures all CommonMark examples and accounts for every result', () => {
   const report = runCommonmarkSpec(['javascript']), totals = report.totals.javascript
-  assert.deepEqual([totals.match,totals.mismatch,totals.declared,totals.notComparable,totals.failed], [567,24,18,43,0])
+  assert.deepEqual([totals.match,totals.mismatch,totals.declared,totals.notComparable,totals.failed], [578,13,18,43,0])
   assert.equal(report.declaredSha256, createHash('sha256').update(readFileSync('tests/commonmark-spec/declared.json')).digest('hex'))
   assert.deepEqual(report.declarations[0].declared, {javascript:18})
   assert.deepEqual(report.declarations[0].stale, {javascript:[]})
