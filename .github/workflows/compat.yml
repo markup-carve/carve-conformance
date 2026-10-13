@@ -90,6 +90,10 @@ jobs:
         id: source_comparison
         continue-on-error: true
         run: npm run compat:source-agreement
+      - name: Measure source roundtrip through HTML (measurement, no gate)
+        env:
+          CARVE_PANDOC: .cache/pandoc/bin/pandoc
+        run: npm run compat:roundtrip -- --report=reports/roundtrip.json
       - name: Build report website
         id: site
         run: |
@@ -113,6 +117,7 @@ jobs:
             compat/reports/source-agreement.json
             compat/reports/commonmark.json
             compat/reports/djot.json
+            compat/reports/roundtrip.json
             compat/test-results/
           if-no-files-found: warn
       - name: Save website

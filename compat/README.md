@@ -6,6 +6,7 @@ pinned revisions for each run.
 
 - [**Website**](https://markup-carve.github.io/carve-conformance/compat/)
 - [Full methodology and adapter boundaries](tests/external-compat/README.md)
+- [Source roundtrip through HTML, Carve against remark, turndown and pandoc](tests/roundtrip/README.md)
 
 The suite lives independently of the Carve specification repository. It measures
 nine external parser targets through pinned JavaScript, PHP and Rust Carve

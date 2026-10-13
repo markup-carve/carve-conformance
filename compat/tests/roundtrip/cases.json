@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "bullet/-",
+      "distinction": "bullet",
+      "spelling": "-",
+      "carve": "- one\n- two\n",
+      "markdown": "- one\n- two\n",
+      "djot": "- one\n- two\n"
+    },
+    {
+      "id": "bullet/*",
+      "distinction": "bullet",
+      "spelling": "*",
+      "carve": "* one\n* two\n",
+      "markdown": "* one\n* two\n",
+      "djot": "* one\n* two\n"
+    },
+    {
+      "id": "bullet/+",
+      "distinction": "bullet",
+      "spelling": "+",
+      "markdown": "+ one\n+ two\n",
+      "djot": "+ one\n+ two\n"
+    },
+    {
+      "id": "ordered-delimiter/.",
+      "distinction": "ordered-delimiter",
+      "spelling": ".",
+      "carve": "1. one\n2. two\n",
+      "markdown": "1. one\n2. two\n",
+      "djot": "1. one\n2. two\n"
+    },
+    {
+      "id": "ordered-delimiter/)",
+      "distinction": "ordered-delimiter",
+      "spelling": ")",
+      "carve": "1) one\n2) two\n",
+      "markdown": "1) one\n2) two\n",
+      "djot": "1) one\n2) two\n"
+    },
+    {
+      "id": "ordered-delimiter/()",
+      "distinction": "ordered-delimiter",
+      "spelling": "()",
+      "djot": "(1) one\n(2) two\n"
+    },
+    {
+      "id": "thematic-break/-",
+      "distinction": "thematic-break",
+      "spelling": "-",
+      "carve": "Before.\n\n---\n\nAfter.\n",
+      "markdown": "Before.\n\n---\n\nAfter.\n",
+      "djot": "Before.\n\n---\n\nAfter.\n"
+    },
+    {
+      "id": "thematic-break/*",
+      "distinction": "thematic-break",
+      "spelling": "*",
+      "carve": "Before.\n\n***\n\nAfter.\n",
+      "markdown": "Before.\n\n***\n\nAfter.\n",
+      "djot": "Before.\n\n***\n\nAfter.\n"
+    },
+    {
+      "id": "thematic-break/_",
+      "distinction": "thematic-break",
+      "spelling": "_",
+      "carve": "Before.\n\n___\n\nAfter.\n",
+      "markdown": "Before.\n\n___\n\nAfter.\n"
+    },
+    {
+      "id": "link-form/inline",
+      "distinction": "link-form",
+      "spelling": "inline",
+      "carve": "See [the docs](https://example.com/docs).\n",
+      "markdown": "See [the docs](https://example.com/docs).\n",
+      "djot": "See [the docs](https://example.com/docs).\n"
+    },
+    {
+      "id": "link-form/full",
+      "distinction": "link-form",
+      "spelling": "full",
+      "carve": "See [the docs][d].\n\n[d]: https://example.com/docs\n",
+      "markdown": "See [the docs][d].\n\n[d]: https://example.com/docs\n",
+      "djot": "See [the docs][d].\n\n[d]: https://example.com/docs\n"
+    },
+    {
+      "id": "link-form/collapsed",
+      "distinction": "link-form",
+      "spelling": "collapsed",
+      "carve": "See [docs][].\n\n[docs]: https://example.com/docs\n",
+      "markdown": "See [docs][].\n\n[docs]: https://example.com/docs\n",
+      "djot": "See [docs][].\n\n[docs]: https://example.com/docs\n"
+    },
+    {
+      "id": "link-form/shortcut",
+      "distinction": "link-form",
+      "spelling": "shortcut",
+      "markdown": "See [docs].\n\n[docs]: https://example.com/docs\n"
+    },
+    {
+      "id": "link-form/autolink",
+      "distinction": "link-form",
+      "spelling": "autolink",
+      "carve": "See <https://example.com/docs>.\n",
+      "markdown": "See <https://example.com/docs>.\n",
+      "djot": "See <https://example.com/docs>.\n"
+    },
+    {
+      "id": "table-widths/3,5",
+      "distinction": "table-widths",
+      "spelling": "3,5",
+      "carve": "| a | b |\n|---|-----|\n| 1 | 2 |\n",
+      "markdown": "| a | b |\n|---|-----|\n| 1 | 2 |\n"
+    },
+    {
+      "id": "table-widths/6,3",
+      "distinction": "table-widths",
+      "spelling": "6,3",
+      "carve": "| a | b |\n|------|---|\n| 1 | 2 |\n",
+      "markdown": "| a | b |\n|------|---|\n| 1 | 2 |\n"
+    },
+    {
+      "id": "code-label/Example",
+      "distinction": "code-label",
+      "spelling": "Example",
+      "carve": "```js [Example]\nlet x = 1\n```\n"
+    },
+    {
+      "id": "code-fence/backtick",
+      "distinction": "code-fence",
+      "spelling": "backtick",
+      "carve": "```js\nlet x = 1\n```\n",
+      "markdown": "```js\nlet x = 1\n```\n",
+      "djot": "```js\nlet x = 1\n```\n"
+    },
+    {
+      "id": "code-fence/tilde",
+      "distinction": "code-fence",
+      "spelling": "tilde",
+      "carve": "~~~js\nlet x = 1\n~~~\n",
+      "markdown": "~~~js\nlet x = 1\n~~~\n",
+      "djot": "~~~js\nlet x = 1\n~~~\n"
+    },
+    {
+      "id": "code-fence/indented",
+      "distinction": "code-fence",
+      "spelling": "indented",
+      "markdown": "Before.\n\n    let x = 1\n"
+    },
+    {
+      "id": "heading-style/atx",
+      "distinction": "heading-style",
+      "spelling": "atx",
+      "markdown": "## Title\n\nText.\n"
+    },
+    {
+      "id": "heading-style/setext",
+      "distinction": "heading-style",
+      "spelling": "setext",
+      "markdown": "Title\n-----\n\nText.\n"
+    },
+    {
+      "id": "emphasis-char/*",
+      "distinction": "emphasis-char",
+      "spelling": "*",
+      "markdown": "An *important* word.\n"
+    },
+    {
+      "id": "strong-char/**",
+      "distinction": "strong-char",
+      "spelling": "**",
+      "markdown": "A **strong** word.\n"
+    },
+    {
+      "id": "emphasis-char/_",
+      "distinction": "emphasis-char",
+      "spelling": "_",
+      "markdown": "An _important_ word.\n"
+    },
+    {
+      "id": "strong-char/__",
+      "distinction": "strong-char",
+      "spelling": "__",
+      "markdown": "A __strong__ word.\n"
+    },
+    {
+      "id": "hard-break/backslash",
+      "distinction": "hard-break",
+      "spelling": "backslash",
+      "markdown": "One\\\nTwo\n"
+    },
+    {
+      "id": "hard-break/spaces",
+      "distinction": "hard-break",
+      "spelling": "spaces",
+      "markdown": "One  \nTwo\n"
+    }
+  ]
+}
