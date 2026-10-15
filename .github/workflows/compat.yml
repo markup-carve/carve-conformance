@@ -45,6 +45,10 @@ jobs:
         run: npm ci
       - name: Unit and JavaScript compatibility tests
         run: npm test
+      - name: Published MCP receipt
+        id: mcp_receipt
+        continue-on-error: true
+        run: npm run compat:published-mcp-receipt
       - name: Provision native readers
         run: |
           sudo apt-get update
@@ -129,5 +133,5 @@ jobs:
         id: ready
         run: echo 'ready=true' >> "$GITHUB_OUTPUT"
       - name: Fail the check when a comparison fails
-        if: steps.comparison.outcome == 'failure' || steps.source_comparison.outcome == 'failure'
+        if: steps.comparison.outcome == 'failure' || steps.source_comparison.outcome == 'failure' || steps.mcp_receipt.outcome == 'failure'
         run: exit 1

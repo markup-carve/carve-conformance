@@ -18,6 +18,7 @@
     "test:site": "playwright test",
     "compat:provision": "node scripts/provision-engines.mjs && node scripts/provision-pandoc.mjs",
     "compat:source-agreement": "node scripts/source-agreement.mjs",
+    "compat:published-mcp-receipt": "node scripts/published-mcp-receipt.mjs",
     "compat:roundtrip": "node scripts/roundtrip.mjs"
   },
   "devDependencies": {
