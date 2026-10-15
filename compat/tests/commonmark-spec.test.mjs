@@ -303,6 +303,9 @@ test('three-engine reports agree on the example 40 names loss', t => {
     return
   }
   const report = runCommonmarkSpec(['javascript','php','rust'])
+  assert.deepEqual(report.declarations[1].declared, {javascript:1,php:1,rust:0})
+  for (const engine of ['javascript','php']) assert.equal(report.rows.find(r => r.engine === engine && r.example === 199).status, 'declared')
+  assert.equal(report.rows.find(r => r.engine === 'rust' && r.example === 199).status, 'match')
   for (const [engine, totals] of Object.entries(report.totals)) {
     assert.equal(Object.values(totals.honesty).reduce((a,b) => a+b, 0), totals.match + totals.mismatch + totals.declared)
     for (const [outcome, count] of Object.entries(totals.honesty)) assert.equal(count, report.rows.filter(r => r.engine === engine && r.honesty === outcome).length)

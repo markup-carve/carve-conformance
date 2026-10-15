@@ -12,7 +12,7 @@
       "id": "bare-empty-reference",
       "normalization": "drop-bare-empty-reference-paragraph",
       "engines": ["javascript", "php"],
-      "reason": "Carve treats a bare reference definition as an empty destination; CommonMark renders it as paragraph text.",
+      "reason": "The JavaScript and PHP Markdown importers consume a bare empty reference definition; CommonMark and the Rust Markdown importer render it as paragraph text.",
       "reference": "https://github.com/markup-carve/carve/issues/2878",
       "examples": [199]
     }
