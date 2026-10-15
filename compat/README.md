@@ -58,7 +58,13 @@ npm ci
 npm test
 mkdir -p reports
 npm run compat:javascript -- --report=reports/javascript.json
+npm run compat:published-mcp-receipt
 ```
+
+The MCP receipt check installs the current npm release in a clean temporary
+directory and checks a captioned table with row and column spans. Set
+`CARVE_MCP_PACKAGE_SPEC` to an absolute package tarball path to test a release candidate.
+The registry check requires a release that includes receipt version 1.
 
 For all nine readers and three engines on Ubuntu, install Rust with Cargo,
 PHP 8.3 or newer, and the native dependencies below:
