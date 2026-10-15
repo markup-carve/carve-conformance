@@ -282,8 +282,16 @@ test('failed AST interchange rows retain their error message', async ({ page }) 
   await expect(page.locator('#detail-summary')).not.toContainText('preserved')
 })
 
-test('native AST evidence shows engine source changes without a lossless round-trip label', async ({ page }) => {
+test('source conversion changes show paths without a lossless round-trip label', async ({ page }) => {
   test.skip(!report.selectedEngines.includes('php'), 'PHP was not measured')
+  const target = measured.rows.find(row => row.engine === 'php' && row.tool === 'hast' && row.case === 'multiple-bodies-caption-widths-and-spans')
+  expect(target).toBeTruthy()
+  const changed = {...measured, rows:measured.rows.map(row => row === target ? {
+    ...row,
+    checks:[...new Set([...row.checks,'source-conversion-changes'])],
+    evidence:{...row.evidence,sourceChanges:[{path:'/children/0/rows/5/cells/0/header',before:false,after:true}]},
+  } : row)}
+  await page.route('**/matrix.json',route => route.fulfill({json:changed}))
   await page.goto('/')
   await page.locator('#engine-filter').selectOption('php')
   await page.locator('button[data-case="multiple-bodies-caption-widths-and-spans"][data-tool="hast"]').click()

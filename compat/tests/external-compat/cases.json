@@ -3326,29 +3326,7 @@
           "before": true,
           "after": false
         }
-      ],
-      "sourceChangesByEngine": {
-        "php": [
-          {
-            "path": "/children/0/attrs",
-            "after": {
-              "keyValues": {
-                "widths": "33.3,66.7",
-                "header-rows": "1",
-                "footer-rows": "1",
-                "body-rows": "1,2",
-                "body-header-rows": "1,1",
-                "body-header-cols": "1,1"
-              }
-            }
-          },
-          {
-            "path": "/children/0/rows/5/cells/0/header",
-            "before": true,
-            "after": false
-          }
-        ]
-      }
+      ]
     },
     {
       "id": "empty-body-before-intermediate-header",

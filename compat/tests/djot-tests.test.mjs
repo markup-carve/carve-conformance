@@ -102,6 +102,7 @@ test('JavaScript Djot lane measures every HTML example and accounts for every ou
   assert.match(report.declaredSha256,/^[a-f0-9]{64}$/)
   for (const d of report.declarations) { assert.deepEqual(d.stale.javascript,[]); assert.deepEqual(d.insufficient.javascript,[]) }
   assert.equal(report.totals.javascript.declared,9)
+  assert.equal(report.rows.find(row => row.example === 'links_and_images.test:62').status, 'match')
   assert.ok(!Object.hasOwn(report,'baselines'))
   assert.deepEqual(report.notMeasuredEngines,['php','rust'])
   validateHtmlSuite(report,{label:'Djot',examples,differences:loadDjotDeclarations(examples).differences,sourceKey:'source'})
