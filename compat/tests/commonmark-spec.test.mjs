@@ -145,14 +145,13 @@ test('generated ordered-list delimiter markers preserve the CommonMark compariso
 
 test('JavaScript measures all CommonMark examples and accounts for every result', () => {
   const report = runCommonmarkSpec(['javascript']), totals = report.totals.javascript
-  assert.deepEqual([totals.match,totals.mismatch,totals.declared,totals.notComparable,totals.failed], [582,8,19,43,0])
+  assert.deepEqual([totals.match,totals.mismatch,totals.declared,totals.notComparable,totals.failed], [583,8,18,43,0])
   assert.equal(report.declaredSha256, createHash('sha256').update(readFileSync('tests/commonmark-spec/declared.json')).digest('hex'))
   assert.deepEqual(report.declarations[0].declared, {javascript:18})
   assert.deepEqual(report.declarations[0].stale, {javascript:[]})
   assert.deepEqual(report.declarations[0].insufficient, {javascript:[]})
-  assert.deepEqual(report.declarations[1].declared, {javascript:1})
-  assert.equal(report.rows.find(row => row.example === 199).status, 'declared')
-  for (const example of [200,485,486,487,567]) assert.equal(report.rows.find(row => row.example === example).status, 'match')
+  assert.equal(report.declarations.length, 1)
+  for (const example of [199,200,485,486,487,567]) assert.equal(report.rows.find(row => row.example === example).status, 'match')
   assert.deepEqual(report.baselines, {})
   assert.ok(report.sections.every(s => Object.keys(s.baselines).length === 0))
   assert.equal(report.rows.length, 652)
@@ -273,7 +272,7 @@ test('CLI baseline defaults require pandoc and --baselines=none needs no binary'
   const disabled = run('--baselines=none')
   assert.equal(disabled.status, 0, disabled.stderr)
   assert.match(disabled.stdout, /javascript: \d+ match/)
-  assert.match(disabled.stdout, /19 declared/)
+  assert.match(disabled.stdout, /18 declared/)
   assert.doesNotMatch(disabled.stdout, /Warning:/)
   assert.doesNotMatch(disabled.stdout, /pandoc-djot/)
   assert.equal(run('--baselines=unknown').status, 1)
@@ -303,11 +302,9 @@ test('three-engine reports agree on the example 40 names loss', t => {
     return
   }
   const report = runCommonmarkSpec(['javascript','php','rust'])
-  assert.deepEqual(report.declarations[1].declared, {javascript:1,php:1,rust:0})
-  assert.deepEqual(report.declarations[1].stale, {javascript:[],php:[],rust:[]})
-  assert.deepEqual(report.declarations[1].insufficient, {javascript:[],php:[],rust:[]})
-  for (const engine of ['javascript','php']) assert.equal(report.rows.find(r => r.engine === engine && r.example === 199).status, 'declared')
-  assert.equal(report.rows.find(r => r.engine === 'rust' && r.example === 199).status, 'match')
+  for (const engine of ['javascript','php','rust']) {
+    for (const example of [199,200,485,486,487,567]) assert.equal(report.rows.find(r => r.engine === engine && r.example === example).status, 'match')
+  }
   for (const [engine, totals] of Object.entries(report.totals)) {
     assert.equal(Object.values(totals.honesty).reduce((a,b) => a+b, 0), totals.match + totals.mismatch + totals.declared)
     for (const [outcome, count] of Object.entries(totals.honesty)) assert.equal(count, report.rows.filter(r => r.engine === engine && r.honesty === outcome).length)

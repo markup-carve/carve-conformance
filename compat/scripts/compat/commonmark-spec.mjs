@@ -100,16 +100,7 @@ export function percentEncodeDestinationWhitespace(tree) {
   return out
 }
 
-export function dropBareEmptyReferenceParagraph(tree) {
-  if (tree?.type !== 'document') return tree
-  return {
-    ...tree,
-    children: tree.children.filter(node => !(node.type === 'paragraph' && node.children?.length === 1 &&
-      node.children[0].type === 'text' && /^\[[^\]]+\]:$/u.test(node.children[0].value))),
-  }
-}
-
-const normalizations = Object.freeze({ 'unwrap-lone-image-paragraph':unwrapLoneImageParagraph, 'drop-math-role':dropMathRole, 'percent-encode-destination-whitespace':percentEncodeDestinationWhitespace, 'drop-bare-empty-reference-paragraph':dropBareEmptyReferenceParagraph })
+const normalizations = Object.freeze({ 'unwrap-lone-image-paragraph':unwrapLoneImageParagraph, 'drop-math-role':dropMathRole, 'percent-encode-destination-whitespace':percentEncodeDestinationWhitespace })
 
 export function validateDeclarations(source = readFileSync(declaredPath), examples = validateSpec()) {
   const file = JSON.parse(source.toString())
