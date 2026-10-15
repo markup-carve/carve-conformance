@@ -145,11 +145,14 @@ test('generated ordered-list delimiter markers preserve the CommonMark compariso
 
 test('JavaScript measures all CommonMark examples and accounts for every result', () => {
   const report = runCommonmarkSpec(['javascript']), totals = report.totals.javascript
-  assert.deepEqual([totals.match,totals.mismatch,totals.declared,totals.notComparable,totals.failed], [578,13,18,43,0])
+  assert.deepEqual([totals.match,totals.mismatch,totals.declared,totals.notComparable,totals.failed], [582,8,19,43,0])
   assert.equal(report.declaredSha256, createHash('sha256').update(readFileSync('tests/commonmark-spec/declared.json')).digest('hex'))
   assert.deepEqual(report.declarations[0].declared, {javascript:18})
   assert.deepEqual(report.declarations[0].stale, {javascript:[]})
   assert.deepEqual(report.declarations[0].insufficient, {javascript:[]})
+  assert.deepEqual(report.declarations[1].declared, {javascript:1})
+  assert.equal(report.rows.find(row => row.example === 199).status, 'declared')
+  for (const example of [200,485,486,487,567]) assert.equal(report.rows.find(row => row.example === example).status, 'match')
   assert.deepEqual(report.baselines, {})
   assert.ok(report.sections.every(s => Object.keys(s.baselines).length === 0))
   assert.equal(report.rows.length, 652)
@@ -270,7 +273,7 @@ test('CLI baseline defaults require pandoc and --baselines=none needs no binary'
   const disabled = run('--baselines=none')
   assert.equal(disabled.status, 0, disabled.stderr)
   assert.match(disabled.stdout, /javascript: \d+ match/)
-  assert.match(disabled.stdout, /18 declared/)
+  assert.match(disabled.stdout, /19 declared/)
   assert.doesNotMatch(disabled.stdout, /Warning:/)
   assert.doesNotMatch(disabled.stdout, /pandoc-djot/)
   assert.equal(run('--baselines=unknown').status, 1)

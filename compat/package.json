@@ -23,7 +23,7 @@
   "devDependencies": {
     "@asciidoctor/core": "4.1.0",
     "@djot/djot": "0.3.2",
-    "@markup-carve/carve": "git+https://github.com/markup-carve/carve-js.git#05faee2c81f2daf514f925c3721b47c293eb93b5",
+    "@markup-carve/carve": "github:markup-carve/carve-js#2b5446923d9a59e89f68a1234a1f874eb51fae39",
     "@playwright/test": "1.63.0",
     "ajv": "8.20.0",
     "commonmark": "0.31.2",
