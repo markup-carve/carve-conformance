@@ -37,7 +37,7 @@ jobs:
           git config --global --add url."https://github.com/".insteadOf git@github.com:
       - name: Restore node modules
         id: node-modules
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: compat/node_modules
           key: compat-node-modules-v1-${{ runner.os }}-${{ hashFiles('.nvmrc', 'compat/package-lock.json') }}
@@ -61,7 +61,7 @@ jobs:
       # A pin bump restores the previous build: the provisioner moves the checkouts
       # and cargo rebuilds only what changed.
       - name: Restore pinned engines
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             compat/.cache/engines
@@ -99,7 +99,7 @@ jobs:
         run: |
           npm run site:build
       - name: Restore Playwright browser
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('compat/package-lock.json') }}
@@ -109,7 +109,7 @@ jobs:
         run: npm run test:site
       - name: Save full evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: compatibility-evidence
           path: |
@@ -121,7 +121,7 @@ jobs:
             compat/test-results/
           if-no-files-found: warn
       - name: Save website
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: compat-site
           path: compat/dist
