@@ -63,37 +63,37 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: proofs-site
           path: proofs/_site
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: compat-site
           path: compat/dist
       - run: node scripts/build-site.mjs
       - name: Restore node modules
         id: node-modules
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: node_modules
           key: site-node-modules-v1-${{ runner.os }}-${{ hashFiles('.nvmrc', 'package-lock.json') }}
       - if: steps.node-modules.outputs.cache-hit != 'true'
         run: npm ci --no-audit --no-fund
       - name: Restore Playwright browser
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: playwright-all-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       # Firefox and WebKit require additional system libraries.
       - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run test:site
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: site-test-results
           path: test-results/
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
   deploy:
@@ -113,4 +113,4 @@ jobs:
     steps:
       - name: Deploy website
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
