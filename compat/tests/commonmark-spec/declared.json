@@ -7,6 +7,13 @@
       "reason": "Carve renders a paragraph whose only content is one image as a bare <img>, without <p>.",
       "reference": "https://github.com/markup-carve/carve/blob/9f7c3f7a44952d2bb3d9ac461ed9c04b7caaf563/docs/comparison.md#L60",
       "examples": [520, 572, 573, 574, 575, 576, 577, 578, 580, 581, 582, 583, 584, 585, 586, 588, 589, 591]
+    },
+    {
+      "id": "destination-as-written",
+      "normalization": "percent-encode-destination",
+      "reason": "The Markdown importer keeps a destination's characters as Carve reads them, so Carve renders href and src as written where the CommonMark reference HTML percent-encodes them. The two spell the same URL.",
+      "reference": "https://github.com/markup-carve/carve-js/pull/3286",
+      "examples": [20, 32, 33, 202, 206, 346, 502, 503, 504, 507, 526, 538, 603]
     }
   ]
 }

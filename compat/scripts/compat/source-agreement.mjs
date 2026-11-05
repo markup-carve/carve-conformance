@@ -36,7 +36,7 @@ export function generatedSources() {
 export function semanticAst(value) {
   if(Array.isArray(value)) return value.map(semanticAst)
   if(!value || typeof value !== 'object') return value
-  return Object.fromEntries(Object.entries(value).filter(([key])=>!['pos','srcByteLength'].includes(key)).map(([key,child])=>[key,semanticAst(child)]))
+  return Object.fromEntries(Object.entries(value).filter(([key])=>!['pos','srcByteLength','astVersion'].includes(key)).map(([key,child])=>[key,semanticAst(child)]))
 }
 export function positionSummary(ast, source) {
   let positioned = 0, nodes = 0

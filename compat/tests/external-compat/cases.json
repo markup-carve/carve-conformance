@@ -558,7 +558,7 @@
         "djot",
         "pandoc"
       ],
-      "carve": "a. one\na. two\n",
+      "carve": "a.  one\na.  two\n",
       "djot": "a. one\na. two\n",
       "pandocMarkdown": "a. one\na. two\n"
     },
@@ -568,7 +568,7 @@
         "djot",
         "pandoc"
       ],
-      "carve": "A. one\nA. two\n",
+      "carve": "A.  one\nA.  two\n",
       "djot": "A. one\nA. two\n",
       "pandocMarkdown": "A.  one\nB.  two\n"
     },
@@ -578,7 +578,7 @@
         "djot",
         "pandoc"
       ],
-      "carve": "i. one\ni. two\n",
+      "carve": "i.  one\ni.  two\n",
       "djot": "i. one\ni. two\n",
       "pandocMarkdown": "i. one\ni. two\n"
     },
@@ -588,7 +588,7 @@
         "djot",
         "pandoc"
       ],
-      "carve": "I. one\nI. two\n",
+      "carve": "I.  one\nI.  two\n",
       "djot": "I. one\nI. two\n",
       "pandocMarkdown": "I.  one\nII.  two\n"
     },
@@ -3290,18 +3290,7 @@
         ],
         "srcByteLength": 0
       },
-      "sourceDiagnostics": [
-        {
-          "code": "field-unspellable",
-          "node": "table_cell",
-          "field": "header"
-        },
-        {
-          "code": "field-unspellable",
-          "node": "table_cell",
-          "field": "header"
-        }
-      ],
+      "sourceDiagnostics": [],
       "sourceChanges": [
         {
           "path": "/children/0/attrs",
@@ -3315,16 +3304,6 @@
               "body-header-cols": "1,1"
             }
           }
-        },
-        {
-          "path": "/children/0/rows/0/cells/1/header",
-          "before": true,
-          "after": false
-        },
-        {
-          "path": "/children/0/rows/5/cells/0/header",
-          "before": true,
-          "after": false
         }
       ]
     },

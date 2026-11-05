@@ -100,7 +100,20 @@ export function percentEncodeDestinationWhitespace(tree) {
   return out
 }
 
-const normalizations = Object.freeze({ 'unwrap-lone-image-paragraph':unwrapLoneImageParagraph, 'drop-math-role':dropMathRole, 'percent-encode-destination-whitespace':percentEncodeDestinationWhitespace })
+// The character set commonmark.js (mdurl) leaves unencoded in a destination; an existing %XX escape is kept.
+const destinationKept = /^(?:%[0-9A-Fa-f]{2}|[A-Za-z0-9;/?:@&=+$,\-_.!~*'()#])$/u
+const encodeDestinationChar = c => { try { return encodeURIComponent(c) } catch { return c } }
+
+export function percentEncodeDestination(tree) {
+  if (Array.isArray(tree)) return tree.map(percentEncodeDestination)
+  if (!tree || typeof tree !== 'object') return tree
+  const out = Object.fromEntries(Object.entries(tree).map(([key,value]) => [key,percentEncodeDestination(value)]))
+  const key = out.type === 'link' ? 'href' : out.type === 'image' ? 'src' : null
+  if (key && typeof out[key] === 'string') out[key] = out[key].replace(/%[0-9A-Fa-f]{2}|[^]/gu, c => destinationKept.test(c) ? c : encodeDestinationChar(c))
+  return out
+}
+
+const normalizations = Object.freeze({ 'unwrap-lone-image-paragraph':unwrapLoneImageParagraph, 'drop-math-role':dropMathRole, 'percent-encode-destination-whitespace':percentEncodeDestinationWhitespace, 'percent-encode-destination':percentEncodeDestination })
 
 export function validateDeclarations(source = readFileSync(declaredPath), examples = validateSpec()) {
   const file = JSON.parse(source.toString())

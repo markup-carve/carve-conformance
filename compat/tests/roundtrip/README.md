@@ -57,7 +57,9 @@ fence label, so neither counts against the other. Carve accepts backtick and
 tilde fences but its tree does not record which one was written, and the
 canonical writer has a single spelling (CARVE-P11-013). Its fence character is
 read from the source slice and measured anyway, so the report shows that
-normalization rather than hiding it.
+normalization rather than hiding it. The thematic-break `-` is the same case
+for the carrier chains: `data-char` is written only for another character, and
+a plain `<hr>` imports as the canonical `***` (PART 11 section 6).
 
 `validateVariantCases()` reads every authored case back through its own
 inventory, so a case cannot claim a spelling its source does not hold.
