@@ -8,6 +8,7 @@ import { parse as parseDjot, renderDjot } from '@djot/djot'
 import { corpus, lossCorpus, checkCase, isTableMetadataSpelling, checkIndependent, checkLossCase, validateCorpus, validateLossCorpus, validateAst, runCompatibility } from '../scripts/compat/check.mjs'
 import { toolNames, nativeTools, readForeign, toMdast, toHast, toDjot } from '../scripts/compat/tools.mjs'
 import { context, semantics, htmlSemantics, fromDjot, fromMd4c, fromHast, parseHtml } from '../scripts/compat/trees.mjs'
+import { engineProjection } from '../scripts/compat/engines.mjs'
 
 import {toPandoc,fromPandoc} from '../scripts/compat/pandoc.mjs'
 
@@ -451,4 +452,15 @@ test('HAST percentages retain exact AST fractions', async () => {
   const html = '<table><colgroup><col style="width: 33.3%"><col style="width: 66.7%"></colgroup><tbody><tr><td>a</td><td>b</td></tr></tbody></table>'
   const result = await readForeign('hast', html)
   assert.deepEqual(result.ast.children[0].columns, [{ width: 0.333 }, { width: 0.667 }])
+})
+
+test('engine projection reads a promoted block-image paragraph as the bare block image it encodes', () => {
+  const image = {type:'image',src:'i.png',alt:'a'}
+  const promoted = {type:'document',children:[{type:'paragraph',blockImage:true,children:[image]}]}
+  const diagnostics = []
+  assert.deepEqual(engineProjection(promoted,{type:'document',children:[image]},diagnostics),{type:'document',children:[image]})
+  assert.deepEqual(diagnostics.map(d => [d.path,d.code]),[['/children/0','block-image-wire']])
+  const withAttrs = {type:'paragraph',blockImage:true,attrs:{classes:['c']},children:[image]}
+  assert.deepEqual(engineProjection(withAttrs,image,[]),withAttrs)
+  assert.deepEqual(engineProjection(promoted.children[0],promoted.children[0],[]),promoted.children[0])
 })
