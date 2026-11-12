@@ -145,12 +145,12 @@ test('generated ordered-list delimiter markers preserve the CommonMark compariso
 
 test('JavaScript measures all CommonMark examples and accounts for every result', () => {
   const report = runCommonmarkSpec(['javascript']), totals = report.totals.javascript
-  assert.deepEqual([totals.match,totals.mismatch,totals.declared,totals.notComparable,totals.failed], [570,12,27,43,0])
+  assert.deepEqual([totals.match,totals.mismatch,totals.declared,totals.notComparable,totals.failed], [570,14,25,43,0])
   assert.equal(report.declaredSha256, createHash('sha256').update(readFileSync('tests/commonmark-spec/declared.json')).digest('hex'))
   assert.deepEqual(report.declarations[0].declared, {javascript:18})
   assert.deepEqual(report.declarations[0].stale, {javascript:[]})
   assert.deepEqual(report.declarations[0].insufficient, {javascript:[]})
-  assert.deepEqual(report.declarations[1].declared, {javascript:9})
+  assert.deepEqual(report.declarations[1].declared, {javascript:7})
   assert.deepEqual(report.declarations[1].insufficient, {javascript:[]})
   assert.equal(report.declarations.length, 2)
   for (const example of [199,200,485,486,487,567]) assert.equal(report.rows.find(row => row.example === example).status, 'match')
@@ -274,7 +274,7 @@ test('CLI baseline defaults require pandoc and --baselines=none needs no binary'
   const disabled = run('--baselines=none')
   assert.equal(disabled.status, 0, disabled.stderr)
   assert.match(disabled.stdout, /javascript: \d+ match/)
-  assert.match(disabled.stdout, /27 declared/)
+  assert.match(disabled.stdout, /25 declared/)
   assert.doesNotMatch(disabled.stdout, /Warning:/)
   assert.doesNotMatch(disabled.stdout, /pandoc-djot/)
   assert.equal(run('--baselines=unknown').status, 1)
@@ -318,9 +318,10 @@ test('three-engine reports agree on the example 40 names loss', t => {
   }
 })
 
-test('the destination-as-written declaration encodes non-ASCII but never a raw backslash', () => {
+test('the destination-as-written declaration encodes non-ASCII but never a raw backslash or bracket', () => {
   const difference = { id:'destination-as-written', normalization:'percent-encode-destination' }
   assert.equal(applyDeclaration(compareHtml('<p><a href="/f%C3%B6%C3%B6">t</a></p>','<p><a href="/föö">t</a></p>'),difference).status,'declared')
   assert.equal(applyDeclaration(compareHtml('<p><a href="foo%5Cbar">t</a></p>','<p><a href="foo\\bar">t</a></p>'),difference).status,'mismatch')
   assert.deepEqual(percentEncodeDestination({type:'link',href:'a\\b ö'}),{type:'link',href:'a\\b%20%C3%B6'})
+  assert.deepEqual(percentEncodeDestination({type:'link',href:'?q=[x]'}),{type:'link',href:'?q=[x]'})
 })

@@ -13,7 +13,7 @@
       "normalization": "percent-encode-destination",
       "reason": "The Markdown importer keeps a destination's characters as Carve reads them, so Carve renders href and src as written where the CommonMark reference HTML percent-encodes them. The two spell the same URL.",
       "reference": "https://github.com/markup-carve/carve-js/pull/3286",
-      "examples": [32, 33, 206, 346, 503, 504, 507, 526, 538]
+      "examples": [32, 33, 206, 346, 503, 504, 507]
     }
   ]
 }

@@ -101,8 +101,8 @@ export function percentEncodeDestinationWhitespace(tree) {
 }
 
 // The character set commonmark.js (mdurl) leaves unencoded in a destination; an existing %XX escape is kept.
-// A raw backslash stays raw: URL parsers read it as `/` in special schemes, so it is not the same URL as `%5C`.
-const destinationKept = /^(?:%[0-9A-Fa-f]{2}|[A-Za-z0-9;/?:@&=+$,\-_.!~*'()#\\])$/u
+// A raw backslash, `[` or `]` stays raw: encoding it changes the URL (RFC 3986 2.2; `\` reads as `/` in special schemes).
+const destinationKept = /^(?:%[0-9A-Fa-f]{2}|[A-Za-z0-9;/?:@&=+$,\-_.!~*'()#\\[\]])$/u
 const encodeDestinationChar = c => { try { return encodeURIComponent(c) } catch { return c } }
 
 export function percentEncodeDestination(tree) {
