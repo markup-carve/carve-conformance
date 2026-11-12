@@ -22,8 +22,7 @@ authored heading IDs, so this lane does not measure them. Code whitespace stays
 significant; rendered HTML whitespace is collapsed outside code.
 
 `declared.json` lists three documented Carve rendering differences: the
-`role="math"` attribute on math spans, a lone image rendered without `<p>` (PHP
-and Rust importers only), and a destination with whitespace written
-percent-encoded.
+`role="math"` attribute on math spans, a lone image rendered without `<p>`,
+and a destination with whitespace written percent-encoded.
 Each one is re-checked through its normalization, applied to both sides, as in
 the CommonMark lane.

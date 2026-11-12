@@ -23,8 +23,9 @@ export function semantics(value) {
   if (value.type === 'text' || value.type === 'escaped_text') return text(value.value.replace(/\n/g, ' '))
   const out = {}
   for (const [key, field] of Object.entries(value)) {
-    if (['pos', 'srcByteLength', 'bulletChar', 'delim', 'order', 'separatorWidths'].includes(key)) continue
+    if (['pos', 'srcByteLength', 'astVersion', 'bulletChar', 'delim', 'order', 'separatorWidths'].includes(key)) continue
     if (key === 'start' && field === 1) continue
+    if (key === 'marker' && value.type === 'thematic_break') continue
     out[key] = semantics(field)
   }
   return out

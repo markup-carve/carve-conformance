@@ -163,8 +163,7 @@ heading IDs, so the lane does not measure them. Divs are kept with their
 attributes on both sides, so a lost or extra fenced div counts as a mismatch.
 [`tests/djot-tests/declared.json`](tests/djot-tests/declared.json) declares three
 documented differences, Carve's `role="math"` on math spans, a lone image
-without `<p>` (PHP and Rust only; the JavaScript importer keeps the paragraph),
-and whitespace in a link or image destination written percent-encoded, with the
+without `<p>`, and whitespace in a link or image destination written percent-encoded, with the
 same re-check as the CommonMark declarations.
 
 ```sh

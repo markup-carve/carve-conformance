@@ -38,7 +38,9 @@ test('the roundtrip export keeps every distinction PART 10 §13 carries over HTM
   assert.equal(carriers.meaning.kept, carriers.meaning.measured)
   // The fence character has no carrier: the tree does not record it (CARVE-P11-013).
   assert.deepEqual(carriers.spelling['code-fence'], { measured: 2, kept: 1, spellings: { backtick: true, tilde: false } })
-  for (const [distinction, cell] of Object.entries(carriers.spelling)) if (distinction !== 'code-fence') assert.equal(cell.kept, cell.measured, distinction)
+  // `data-char` is written only for a marker other than `-`, and a plain `<hr>` imports as the canonical `***` (PART 11 section 6).
+  assert.deepEqual(carriers.spelling['thematic-break'], { measured: 3, kept: 2, spellings: { '-': false, '*': true, '_': true } })
+  for (const [distinction, cell] of Object.entries(carriers.spelling)) if (!['code-fence', 'thematic-break'].includes(distinction)) assert.equal(cell.kept, cell.measured, distinction)
   const plain = report.summary['carve-html'].spelling
   assert.ok(Object.values(plain).some(cell => cell.kept < cell.measured))
   assert.equal(report.rows.filter(row => row.error).length, 0)
@@ -58,7 +60,7 @@ test('each engine runs the same five Carve chains, and a native engine keeps mea
     if (!existsSync(engine === 'php' ? '.cache/engines/php' : '.cache/engines/rust/bin/carve')) { t.diagnostic(`${engine} engine absent`); continue }
     const report = await runRoundtrip([`${engine}-html-carriers`])
     assert.equal(report.rows.filter(row => row.error).length, 0, engine)
-    assert.equal(report.summary[`${engine}-html-carriers`].spelling['thematic-break'].kept, 3, engine)
+    assert.equal(report.summary[`${engine}-html-carriers`].spelling['thematic-break'].kept, 2, engine)
     assert.match(report.versions[engine === 'php' ? 'carve-php' : 'carve-rs'], /^[0-9a-f]{8}$/)
   }
 })

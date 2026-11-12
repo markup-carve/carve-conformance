@@ -39,6 +39,11 @@ export function runEngine(engine, ast, source) {
 export function engineProjection(ast, expected, diagnostics, path = '') {
   if (Array.isArray(ast)) return ast.map((value,i) => engineProjection(value,expected?.[i],diagnostics,`${path}/${i}`))
   if (!ast || typeof ast !== 'object') return ast
+  // CARVE-P12-043: a block-position image travels as a promoted paragraph; the schema also accepts the bare node.
+  if (ast.type === 'paragraph' && ast.blockImage === true && !ast.attrs && ast.children?.length === 1 && ast.children[0].type === 'image' && expected?.type === 'image') {
+    diagnostics.push({path,code:'block-image-wire',fidelity:'normalized',message:'Read a blockImage paragraph as the bare block image of the reference AST.'})
+    return engineProjection(ast.children[0],expected,diagnostics,path)
+  }
   const out = {}
   for (const [key,value] of Object.entries(ast)) {
     if (['n','number'].includes(key) && ['footnote','footnote_ref'].includes(ast.type) && expected?.[key] === undefined) { diagnostics.push({path:`${path}/${key}`,code:'generated-engine-field',fidelity:'normalized',message:'Omitted a computed footnote number absent from the reference AST.'}); continue }
