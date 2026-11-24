@@ -1,8 +1,9 @@
 # Layout ownership model
 
 The model covers boundary transitions from `CARVE-P0-003`, the list ownership
-rules in §24 C3 (`CARVE-P9-051/053`), stored continuation claims and prefix
-consumption. The [specification](https://github.com/markup-carve/carve/blob/d20ebd942f91470485332cec925fa0717f20a58a/resources/spec/01-layout.ebnf) is
+rules in §24 C3 (`CARVE-P9-051`, and a comment-column rule that the one-column
+ruling of markup-carve/carve#3885 later retired), stored continuation claims
+and prefix consumption. The [specification](https://github.com/markup-carve/carve/blob/d20ebd942f91470485332cec925fa0717f20a58a/resources/spec/01-layout.ebnf) is
 pinned by the repository submodule. The [list-specific clauses](https://github.com/markup-carve/carve/blob/d20ebd942f91470485332cec925fa0717f20a58a/resources/spec/16-semantics-comments-security.ebnf)
 define the comment-column qualifications. The approach follows
 [djot.v](https://github.com/hon-gyu/djot.v): state a parser property, check its

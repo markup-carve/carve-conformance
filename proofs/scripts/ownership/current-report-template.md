@@ -13,7 +13,7 @@ The {{expandedCases}} additional inputs come from the pinned normative corpus:
 
 Each copied fixture records its original filename, source and expected HTML. The runner checks those bytes against the pinned corpus before executing all readers. It checks structural agreement and compares every added output with the normative expected HTML. The [observations](ownership-current-results.json) preserve complete rendered output.
 
-The opaque-quote ruling is settled by CARVE-P0-022 and [Carve #2627](https://github.com/markup-carve/carve/issues/2627). The older [ownership report](ownership.md) describes the earlier pins and is retained as historical evidence. Its unresolved-issue passage no longer describes current main.
+These are 0.1 readings. The opaque-quote ruling of [Carve #2627](https://github.com/markup-carve/carve/issues/2627) settled them at the pins above; the one-column ruling of [Carve #3885](https://github.com/markup-carve/carve/issues/3885) later retired the depth-specific lazy rule it added, and in Carve 0.2 ownership is C2-B-025. The older [ownership report](ownership.md) describes the earlier pins and is retained as historical evidence. Its unresolved-issue passage no longer describes current main.
 
 ## Versioned contracts
 
