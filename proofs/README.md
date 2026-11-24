@@ -97,6 +97,10 @@ trace or discrepancy.
 whether it still holds in Carve 0.2 and which 0.2 clauses replace it. The proofs
 still model 0.1; a test fails when the lane cites a rule the file does not list.
 
+The [0.2 layout ownership model](proofs/layout/OWNERSHIP-0.2.md) re-reads the
+seventeen layout traces under the 0.2 block clauses and checks them against
+carve-js `next2`. Run it with `npm run proof:layout:0.2`.
+
 See the [layout model](proofs/layout/README.md) for theorem scope, preconditions,
 recorded differences and trust boundaries. CI runs the tests and compiler check
 on pull requests and pushes to `main`.
