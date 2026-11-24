@@ -86,7 +86,7 @@ jobs:
           CARVE_COMPAT_PYTHON: python
           CARVE_PANDOC: .cache/pandoc/bin/pandoc
         run: npm run compat:check -- --report=reports/latest.json
-      - name: Measure Carve 0.2 reference trees against carve-js, carve-php and carve-rs next2
+      - name: Measure Carve 0.2 reference trees and suites against carve-js, carve-php and carve-rs next2
         env:
           CARVE_COMPAT_PYTHON: python
           CARVE_PANDOC: .cache/pandoc/bin/pandoc
