@@ -125,6 +125,7 @@ test('with no thead, leading rows of unscoped or column-scoped th cells in the f
   assert.deepEqual(await groups('<table><tr><th>A</th><td>x</td></tr></table>'), [['table_body', 1]])
   assert.deepEqual(await groups('<table><tbody><tr><th>A</th></tr></tbody><thead><tr><th>H</th></tr></thead></table>'), [['table_body', 1], ['table_head', 1]])
   assert.deepEqual(await groups('<table><tbody></tbody><tbody><tr><th>A</th></tr></tbody></table>'), [['table_body', 0], ['table_body', 1]])
+  assert.deepEqual(await groups('<table><tbody class="x"><tr><th>H</th></tr><tr><td>V</td></tr></tbody></table>'), [['table_body', 2]])
   const el = (tagName, children = []) => ({ type: 'element', tagName, properties: {}, children })
   const row = el('tr', [el('td', [{ type: 'text', value: 'x' }])])
   assert.deepEqual(fromHast({ type: 'root', children: [el('table', [el('thead'), el('tbody', [row]), el('tfoot')])] }).children[0].children.map(g => g.type), ['table_head', 'table_body', 'table_foot'])
