@@ -108,6 +108,7 @@ export function toHast(root, ctx = context('hast')) {
     if (n.type === 'table') {
       const elements = []
       if (n.caption) elements.push(element('caption', n.caption.children.flatMap((c, i) => map(c, `${path}/caption/children/${i}`))))
+      n.columns.forEach((column, i) => exportFields(column, `${path}/columns/${i}`, ctx, ['align', 'valign', 'width']))
       if (n.columns.some(c => c.align || c.valign || c.width)) elements.push(element('colgroup', n.columns.map(c => element('col', [], { style: [c.align ? `text-align: ${c.align}` : '', c.valign ? `vertical-align: ${c.valign}` : '', c.width ? `width: ${shiftTableWidth(c.width, 2)}%` : ''].filter(Boolean).join('; ') }))))
       for (const [i, group] of n.children.entries()) {
         exportFields(group, `${path}/children/${i}`, ctx, ['attrs', 'rowHeadColumns'])
@@ -163,8 +164,10 @@ export function toDjot(root, ctx = context('djot')) {
       }
       for (const [j, column] of n.columns.entries()) for (const key of ['align', 'valign', 'width']) if (column[key]) ctx.note(`${path}/columns/${j}/${key}`, 'unsupported-field', 'dropped', 'Djot tables carry alignment on cells, and no column widths.')
       const captionInline = n.caption?.children.length === 1 && n.caption.children[0].type === 'paragraph' ? n.caption.children[0].children : []
-      if (n.caption && !captionInline.length && n.caption.children.length) ctx.note(`${path}/caption`, 'unsupported-field', 'degraded', 'Djot table captions hold inline content only.')
-      out = { tag: 'table', children: [{ tag: 'caption', children: captionInline.map((c, i) => map(c, `${path}/caption/children/0/children/${i}`)) }, ...mapped] }
+      const blockCaption = n.caption && !captionInline.length && n.caption.children.length
+      if (blockCaption) ctx.note(`${path}/caption`, 'unsupported-field', 'degraded', 'Djot table captions hold inline content only; retained the readable text of the caption blocks.')
+      const caption = blockCaption ? [{ tag: 'str', text: n.caption.children.map(plain).join(' ') }] : captionInline.map((c, i) => map(c, `${path}/caption/children/0/children/${i}`))
+      out = { tag: 'table', children: [{ tag: 'caption', children: caption }, ...mapped] }
     }
     else if (n.type === 'definition_list') {
       const entries = []

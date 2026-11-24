@@ -129,3 +129,14 @@ test('table exports report a headerless GFM table and cells with several blocks'
   }
   assert.ok(exportForeign('mdast', tree).diagnostics.some(d => d.path === '/children/0/children' && d.fidelity === 'degraded'))
 })
+
+test('a Djot block caption keeps its text, and hast reports column attributes it cannot write', () => {
+  const body = [{ type: 'table_body', children: [{ type: 'table_row', children: [{ type: 'table_cell', header: false, children: [{ type: 'cell_paragraph', children: [{ type: 'text', value: 'x' }] }] }] }] }]
+  const para = value => ({ type: 'paragraph', children: [{ type: 'text', value }] })
+  const captioned = { type: 'document', astVersion: '2.0', children: [{ type: 'table', columns: [{ type: 'table_column' }], caption: { type: 'caption', children: [para('First'), para('Second')] }, children: body }] }
+  validateTree(captioned)
+  assert.match(exportForeign('djot', captioned).source, /First Second/)
+  const columnAttrs = { type: 'document', astVersion: '2.0', children: [{ type: 'table', columns: [{ type: 'table_column', attrs: { id: 'c' } }], children: body }] }
+  validateTree(columnAttrs)
+  assert.ok(exportForeign('hast', columnAttrs).diagnostics.some(d => d.path === '/children/0/columns/0/attrs' && d.fidelity === 'dropped'))
+})
