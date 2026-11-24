@@ -29,6 +29,8 @@ foreach ($requests as $request) {
                 return ['source' => $written->source, 'diagnostics' => $diagnostics($written->diagnostics)];
             })(),
             'render' => Carve::render($tree),
+            'renderSource' => Carve::render($request['source'], $request['options'] ?? []),
+            'format' => Carve::formatWithDiagnostics($request['source'])->source,
             'import' => (static function () use ($request): array {
                 $imported = Carve::importDocument($request['source'], ['from' => $request['from']]);
 

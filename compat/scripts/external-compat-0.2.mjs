@@ -4,6 +4,7 @@ import { reportHeader, runCompat, runLosses } from './compat/check-0.2.mjs'
 import { nativeTools, toolNames } from './compat/tools-0.2.mjs'
 import { compareEngines, nativeEngines02, nativeMetadata } from './compat/engines-native-0.2.mjs'
 import { compareImporters } from './compat/importers-0.2.mjs'
+import { measurements02, runMeasurements02 } from './compat/measurements-0.2.mjs'
 
 const arg = name => process.argv.find(a => a.startsWith(`--${name}=`))?.slice(name.length + 3)
 const tools = arg('tools')?.split(',') ?? (process.argv.includes('--javascript') ? toolNames.filter(t => !nativeTools.includes(t)) : toolNames)
@@ -31,6 +32,17 @@ for (const [engine, result] of Object.entries(report.importers)) {
   for (const c of result.contradictions) console.log(`importer ${engine}/${c.from}: ${c.outcome} ${c.tool}/${c.case} (codes: ${c.report.map(d => d.code).join(', ') || 'none'})`)
   for (const r of result.refused) console.log(`importer ${engine}/${r.from}: refused ${r.tool}/${r.case}: ${r.error}`)
   console.log(`importDocument ${engine}: ${result.imports} imports, ${result.contradictions.length} contradict the rendered structure, ${result.refused.length} refused`)
+}
+// The suites of the 0.1 lane on 0.2; like an engine difference, a disagreement is a measurement and keeps the exit status.
+const selected = arg('measurements') === 'none' ? [] : arg('measurements')?.split(',') ?? measurements02
+report.measurements = runMeasurements02(selected, { engines: ['javascript', ...engines] })
+for (const [name, m] of Object.entries(report.measurements)) {
+  for (const d of m.disagreements) console.log(`${name} ${d.example ?? `${d.mode ?? ''}${d.mode ? ' ' : ''}${d.id}`}: engines disagree`)
+  if (m.totals) for (const [engine, t] of Object.entries(m.totals)) console.log(`${name} ${engine}: ${t.match} match, ${t.mismatch} mismatch, ${t.notComparable} not comparable, ${t.failed} failed`)
+  if (m.honesty) console.log(`${name} importDocument honesty: ${JSON.stringify(m.honesty)}`)
+  if (m.kind === 'source-agreement') console.log(`${name}: ${m.rows.filter(r => r.semanticAgreement && r.htmlAgreement).length} of ${m.rows.length} generated sources agree`)
+  if (m.kind === 'roundtrip') for (const c of m.chains) { const s = m.summary[c.id]; console.log(`${name} ${c.id}: meaning ${s.meaning.kept}/${s.meaning.measured} kept, ${s.meaning.errors} errors; spelling ${Object.entries(s.spelling).map(([d, v]) => `${d} ${v.kept}/${v.measured}`).join(', ')}; ${s.notApplicable.length} not applicable`) }
+  console.log(`${name}: ${m.disagreements.length} engine disagreements`)
 }
 const out = arg('report')
 if (out) { mkdirSync(dirname(out), { recursive: true }); writeFileSync(out, JSON.stringify(report, null, 2) + '\n') }
