@@ -235,6 +235,10 @@ Daily runs test the locked dependencies. Updating an engine, schema or reader
 requires a reviewed dependency change and a new measured report. Keep the
 schema snapshot and its provenance together when updating the contract.
 
+`resources/clauses-0.2.json` records, for every 0.1 rule this lane cites,
+whether it still holds in Carve 0.2 and which 0.2 clauses replace it. The lane
+still measures 0.1; a test fails when the lane cites a rule the file does not list.
+
 The pinned Djot writer cannot serialize hard breaks. A tested adapter workaround
 keeps those cases measurable and emits a diagnostic. [Djot upstream PR #158](https://github.com/jgm/djot.js/pull/158)
 merged the native fix on October 2, 2026. Remove the workaround only after a pinned version

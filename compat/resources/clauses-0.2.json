@@ -1,0 +1,83 @@
+{
+  "description": "Whether each 0.1 rule this lane cites still holds in Carve 0.2. The lane still measures the 0.1 contract; a changed or retired rule is migration work, tracked in its ticket.",
+  "measuredAgainst": "carve next2 e9bb4a7, spec/0.2",
+  "tracking": "markup-carve/carve-conformance#22",
+  "rules": {
+    "CARVE-P11-013": {
+      "status": "holds",
+      "clauses": [
+        "C2-W-041"
+      ],
+      "note": "The writer glues the language to the fence run. The spec/0.2 port table in writer.md lists C2-W-040, which is the title escape; the glue is stated with C2-W-041."
+    },
+    "CARVE-P12-005": {
+      "status": "holds",
+      "clauses": [
+        "C2-A-106"
+      ],
+      "note": "The tree is pre-resolve; a resolution result sits beside the authored construct."
+    },
+    "CARVE-P12-006": {
+      "status": "changed",
+      "clauses": [
+        "C2-A-107"
+      ],
+      "ticket": "markup-carve/carve-conformance#23",
+      "note": "No resolved field: absent href or src means unresolved, the empty string an empty destination."
+    },
+    "CARVE-P12-029": {
+      "status": "changed",
+      "clauses": [
+        "C2-A-077"
+      ],
+      "ticket": "markup-carve/carve-conformance#24",
+      "note": "A parsed definition never holds an empty href; a bare [r]: is paragraph text."
+    },
+    "CARVE-P12-030": {
+      "status": "holds",
+      "clauses": [
+        "C2-A-028",
+        "C2-A-012"
+      ],
+      "note": "Nodes are closed; an envelope field the contract does not name is refused too."
+    },
+    "CARVE-P12-043": {
+      "status": "changed",
+      "clauses": [
+        "C2-A-136"
+      ],
+      "ticket": "markup-carve/carve-conformance#25",
+      "note": "A block image is a paragraph with role image, not blockImage or a bare image."
+    },
+    "CARVE-P12-056": {
+      "status": "changed",
+      "clauses": [
+        "C2-A-008",
+        "C2-A-012",
+        "C2-A-013",
+        "C2-A-014",
+        "C2-A-018"
+      ],
+      "ticket": "markup-carve/carve-conformance#26",
+      "note": "The root always carries astVersion 2.0; a reader refuses only a higher major."
+    },
+    "CARVE-P12-069": {
+      "status": "changed",
+      "clauses": [
+        "C2-A-094"
+      ],
+      "ticket": "markup-carve/carve-conformance#27",
+      "note": "A continuation row leaves no node and no field; the break is source layout."
+    },
+    "CARVE-P9-002": {
+      "status": "changed",
+      "clauses": [
+        "C2-B-172",
+        "C2-B-173",
+        "C2-B-174"
+      ],
+      "ticket": "markup-carve/carve-conformance#28",
+      "note": "No span crosses a table group; a mark that joins nothing is text."
+    }
+  }
+}

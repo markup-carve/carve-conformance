@@ -93,6 +93,10 @@ the runner rejects dependency pins that disagree with that specification.
 Updating the submodule requires rerunning the proofs and reviewing any changed
 trace or discrepancy.
 
+`reports/clauses-0.2.json` records, for every 0.1 rule this lane cites,
+whether it still holds in Carve 0.2 and which 0.2 clauses replace it. The proofs
+still model 0.1; a test fails when the lane cites a rule the file does not list.
+
 See the [layout model](proofs/layout/README.md) for theorem scope, preconditions,
 recorded differences and trust boundaries. CI runs the tests and compiler check
 on pull requests and pushes to `main`.

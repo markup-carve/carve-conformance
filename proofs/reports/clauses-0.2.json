@@ -1,0 +1,52 @@
+{
+  "description": "Whether each 0.1 rule this lane cites still holds in Carve 0.2. The lane still measures the 0.1 contract; a changed or retired rule is migration work, tracked in its ticket.",
+  "measuredAgainst": "carve next2 e9bb4a7, spec/0.2",
+  "tracking": "markup-carve/carve-conformance#22",
+  "rules": {
+    "CARVE-P0-003": {
+      "status": "changed",
+      "clauses": [
+        "C2-B-012",
+        "C2-B-013",
+        "C2-B-014",
+        "C2-B-024",
+        "C2-B-025",
+        "C2-B-138"
+      ],
+      "ticket": "markup-carve/carve-conformance#29",
+      "note": "spec/0.2 has no boundary table; headings, quotes, definitions and comment lines are lazy lines, and ownership is by marker column."
+    },
+    "CARVE-P0-021": {
+      "status": "retired",
+      "clauses": [
+        "C2-B-025"
+      ],
+      "ticket": "markup-carve/carve-conformance#30",
+      "note": "Retired in 0.1 by markup-carve/carve#3885."
+    },
+    "CARVE-P0-022": {
+      "status": "retired",
+      "clauses": [
+        "C2-B-025"
+      ],
+      "ticket": "markup-carve/carve-conformance#30",
+      "note": "Retired in 0.1 by markup-carve/carve#3885."
+    },
+    "CARVE-P9-051": {
+      "status": "holds",
+      "clauses": [
+        "C2-B-012",
+        "C2-B-013"
+      ],
+      "note": "A lazy line continues an open paragraph; with none open the line is read for ownership."
+    },
+    "CARVE-P9-053": {
+      "status": "retired",
+      "clauses": [
+        "C2-B-025"
+      ],
+      "ticket": "markup-carve/carve-conformance#30",
+      "note": "Retired in 0.1 by markup-carve/carve#3885."
+    }
+  }
+}
