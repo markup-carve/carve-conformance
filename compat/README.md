@@ -79,6 +79,7 @@ cc -std=c99 -Wall -Wextra -Werror \
   scripts/compat/md4c-driver.c -lmd4c -lmd4c-html \
   -o .cache/compat/md4c-driver
 npm run compat:provision
+npm run test:engines
 CARVE_PANDOC=.cache/pandoc/bin/pandoc \
 CARVE_COMPAT_PYTHON=.cache/python/bin/python \
   npm run compat:check -- --report=reports/latest.json
@@ -91,6 +92,9 @@ autoload driver. `--engines=javascript` selects the reference engine alone;
 native selections must include JavaScript to provide the mapped baseline.
 `--tools=mdast,djot` measures a narrower selection and records every unmeasured
 target. Missing readers fail the full sweep instead of becoming skips.
+`npm run test:engines` runs the tests in `tests/engines/`, which call carve-php
+and carve-rs next2 directly; an engine that is not provisioned at its pin fails
+them.
 
 ## Carve 0.2 reference trees
 

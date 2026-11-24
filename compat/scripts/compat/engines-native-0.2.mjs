@@ -1,7 +1,7 @@
 // carve-php and carve-rs next2 on the reference trees of the 0.2 lane, compared with carve-js next2.
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { interchange, parseTree, renderHtml, writeReport } from './engines-0.2.mjs'
 import { semantics } from './trees-0.2.mjs'
@@ -14,6 +14,7 @@ const rootOf = engine => process.env[engine === 'php' ? 'CARVE_PHP_NEXT2_ROOT' :
 
 export function nativeMetadata(engine) {
   const root = rootOf(engine), pin = pins[`${engine}-next2`]
+  if (!existsSync(root)) throw new Error(`${engine} next2 is not provisioned at ${root}; run npm run compat:provision`)
   const revision = run('git', ['rev-parse', 'HEAD'], '', root).trim()
   if (run('git', ['status', '--porcelain', '--untracked-files=no', '--ignore-submodules=all'], '', root).trim()) throw new Error(`${engine} next2 source has modified tracked files`)
   if (revision !== pin.revision) throw new Error(`${engine} next2 source revision differs from resources/engines.json`)
