@@ -379,17 +379,16 @@ export function fromHast(root, ctx = context('hast'), options = {}) {
         }
       } else if (['thead', 'tbody', 'tfoot'].includes(child.tagName)) {
         flush()
-        let section = rows(child, cp)
+        let section = rows(child, cp), head = 0
         // carve#6623 (ruling B on C2-M-037): with no thead, the leading rows of the first body whose cells are all th without scope or with scope="col" are the head.
         if (child.tagName === 'tbody' && options.renderer !== 'carve' && !hasHead && !groups.some(g => g.type === 'table_body')) {
           const trs = child.children.filter(c => c.tagName === 'tr')
-          let head = 0
           while (head < trs.length && columnHeaderRow(trs[head])) head++
           if (head) ctx.note(cp, 'implicit-table-head', 'normalized', 'Read the leading header rows of a table without thead as its head.')
           if (head) groups.push(clamp({ type: 'table_head', rows: section.slice(0, head) }))
           section = section.slice(head)
         }
-        groups.push(clamp({ type: { thead: 'table_head', tbody: 'table_body', tfoot: 'table_foot' }[child.tagName], rows: section, attrs: sectionAttrs(child, cp), explicit: !!child.position || section.length > 0 }))
+        groups.push(clamp({ type: { thead: 'table_head', tbody: 'table_body', tfoot: 'table_foot' }[child.tagName], rows: section, attrs: sectionAttrs(child, cp), explicit: !head || !!child.position }))
       } else if (child.tagName === 'tr') direct.push(map(child, `${path}/rows/${i}`, true))
       else if (child.tagName) ctx.note(cp, 'unsupported-field', 'dropped', 'Unsupported child of an HTML table.')
     }
