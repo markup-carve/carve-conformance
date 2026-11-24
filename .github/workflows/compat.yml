@@ -77,6 +77,8 @@ jobs:
           restore-keys: compat-engines-v1-${{ runner.os }}-rust-${{ steps.toolchain.outputs.rust }}-
       - name: Provision pinned Carve engines and Pandoc
         run: npm run compat:provision
+      - name: Native engine tests
+        run: npm run test:engines
       - name: Measure nine targets across three Carve engines
         id: comparison
         continue-on-error: true
