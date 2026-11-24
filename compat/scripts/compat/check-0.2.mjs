@@ -5,6 +5,7 @@ import Ajv2020 from 'ajv/dist/2020.js'
 import { AST_VERSION, context, fromHast, parseHtml, plain, semantics, treeVersion } from './trees-0.2.mjs'
 import { decode, engineMetadata, envelope, interchange, parseTree, renderHtml, writeReport, writeSource } from './engines-0.2.mjs'
 import { readForeign, toolNames } from './tools-0.2.mjs'
+import { exportForeign, toPandoc } from './exporters-0.2.mjs'
 import { corpus, lossCorpus, sourceChanges, sourceFormats } from './check.mjs'
 
 const schemaUrl = new URL('../../resources/ast-schema-0.2.json', import.meta.url)
@@ -96,6 +97,22 @@ export function authoredAttributes(tree) {
   return { authoredIds, authoredClasses, authoredKeyValues }
 }
 
+// Export the mapped tree with the foreign writer, read it back and compare. Pandoc round-trips through its JSON.
+async function foreignRoundtrip(tool, result, expected, progress, fixture) {
+  let exported
+  if (tool === 'pandoc') { const ctx = context(tool); exported = { source: JSON.stringify(toPandoc(result.ast, result.foreignAst['pandoc-api-version'], ctx)), diagnostics: ctx.diagnostics } }
+  else exported = exportForeign(tool, result.ast)
+  progress.evidence.exportedSource = exported.source
+  progress.diagnostics = [...progress.diagnostics, ...exported.diagnostics]
+  assert.deepEqual(lossy(exported.diagnostics), [], `${tool}/${fixture.id}: supported export reported a loss`)
+  const reread = await readForeign(tool, exported.source, tool === 'pandoc' ? 'pandoc-json' : undefined)
+  progress.diagnostics.push(...reread.diagnostics)
+  validateTree(reread.ast)
+  assert.deepEqual(semantics(reread.ast), expected, `${tool}/${fixture.id}: foreign source round trip`)
+  assert.deepEqual(lossy(reread.diagnostics), [], `${tool}/${fixture.id}: foreign source round trip lost structure`)
+  progress.checks.push('foreign-roundtrip')
+}
+
 // Cases with an authored tree: the reference is that tree, and the writer's account of what it cannot spell is pinned.
 export async function checkInterchangeCase(tool, fixture) {
   const pinned = spellings.cases[fixture.id], format = fixture.formats?.[tool], source = fixture[sourceFormats[tool]]
@@ -132,6 +149,7 @@ export async function checkInterchangeCase(tool, fixture) {
     assert.deepEqual(foreign.view, carveView.view, `${tool}/${fixture.id}: independent HTML structure`)
     assert.deepEqual(lossy([...foreign.diagnostics, ...carveView.diagnostics]), [], `${tool}/${fixture.id}: HTML comparison lost fields`)
     progress.checks.push('html-structure')
+    await foreignRoundtrip(tool, result, expected, progress, fixture)
     return { tool, case: fixture.id, status: 'passed', kind: 'supported', ...progress }
   } catch (error) { error.compatibilityEvidence = progress; throw error }
 }
@@ -169,6 +187,7 @@ export async function checkCase(tool, fixture) {
     assert.deepEqual(foreign.view, carveView.view, `${tool}/${fixture.id}: independent HTML structure`)
     assert.deepEqual(lossy([...foreign.diagnostics, ...carveView.diagnostics]), [], `${tool}/${fixture.id}: HTML comparison lost structure`)
     progress.checks.push('html-structure')
+    await foreignRoundtrip(tool, result, expected, progress, fixture)
     return { tool, case: fixture.id, status: 'passed', kind: 'supported', ...progress }
   } catch (error) { error.compatibilityEvidence = progress; throw error }
 }
@@ -205,6 +224,33 @@ export async function checkImportLoss(tool, fixture) {
   } catch (error) { error.compatibilityEvidence = progress; throw error }
 }
 
+// Export losses: the foreign writer names what it cannot hold, and the reread fallback keeps the readable text.
+export async function checkExportLoss(tool, fixture) {
+  const pinned = spellings.losses?.[fixture.id] ?? {}
+  const expected = { ...fixture.expected, ...pinned.expected }
+  const expectedPath = expected.pathsByTool?.[tool] ?? expected.path
+  const carve = pinned.carve ?? fixture.carve
+  const progress = { checks: [], diagnostics: [], evidence: { direction: 'export', sourceFormat: 'carve', source: carve, expected: { ...expected, path: expectedPath }, retained: fixture.retained } }
+  try {
+    assert.ok(pinned.ast || carve, `${fixture.id}: an export loss needs a 0.2 tree or Carve source`)
+    const tree = pinned.ast ?? parseTree(carve)
+    validateTree(tree)
+    const exported = exportForeign(tool, tree)
+    progress.evidence.exportedSource = exported.source
+    const reread = await readForeign(tool, exported.source)
+    const diagnostics = [...exported.diagnostics, ...reread.diagnostics]
+    Object.assign(progress, { version: reread.version, diagnostics })
+    progress.evidence.ast = reread.ast
+    validateTree(reread.ast)
+    progress.checks.push('fallback-schema')
+    assert.ok(diagnostics.some(d => d.code === expected.code && d.fidelity === expected.fidelity && d.path === expectedPath), `${tool}/${fixture.id}: expected loss at ${expectedPath} was not reported`)
+    progress.checks.push('loss-diagnostic')
+    assert.ok(plain(reread.ast).includes(fixture.retained), `${tool}/${fixture.id}: fallback lost readable content`)
+    progress.checks.push('retained-content')
+    return { tool, case: fixture.id, status: 'passed', kind: 'loss', ...progress }
+  } catch (error) { error.compatibilityEvidence = progress; throw error }
+}
+
 // A 0.1 loss the 0.2 tree can hold: the reader keeps the structure and reports no loss.
 export async function checkRetiredLoss(tool, fixture, retired) {
   const result = await readForeign(tool, fixture.source, fixture.formats?.[tool])
@@ -218,12 +264,12 @@ export async function checkRetiredLoss(tool, fixture, retired) {
   return { tool, case: fixture.id, status: 'passed', kind: 'retired-loss', retired, checks: ['ast-schema', 'no-loss', 'retained-content'], diagnostics: result.diagnostics, evidence: { direction: 'import', source: fixture.source, ast: result.ast } }
 }
 
-export async function runLosses({ tools = toolNames, cases = lossCorpus.cases.filter(c => c.direction === 'import') } = {}) {
+export async function runLosses({ tools = toolNames, cases = lossCorpus.cases } = {}) {
   const rows = []
   for (const fixture of cases) for (const tool of fixture.tools) {
     if (!tools.includes(tool)) continue
     const retired = spellings.losses?.[fixture.id]?.retired
-    try { rows.push(retired ? await checkRetiredLoss(tool, fixture, retired) : await checkImportLoss(tool, fixture)) }
+    try { rows.push(retired ? await checkRetiredLoss(tool, fixture, retired) : fixture.direction === 'export' ? await checkExportLoss(tool, fixture) : await checkImportLoss(tool, fixture)) }
     catch (error) { rows.push({ tool, case: fixture.id, kind: 'loss', status: 'failed', error: error.message.split('\n')[0], checks: error.compatibilityEvidence?.checks ?? [], evidence: error.compatibilityEvidence?.evidence }) }
   }
   return rows

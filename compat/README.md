@@ -114,9 +114,13 @@ Tables map to the 0.2 groups (`table_head`, `table_body`, `table_foot`), one
 `cell_paragraph` per inline cell, a `table_column` per column and a block
 `caption`. The cases with an authored tree carry their 0.2 tree in the same
 file, with the writer diagnostics and source changes it produces pinned beside
-it. Import losses from `losses.json` run too. A loss the 0.2 tree can hold, such
-as a caption with blocks (C2-A-081), is listed under `losses` as retired and
-must read without a loss.
+it. `scripts/compat/exporters-0.2.mjs` writes a 0.2 tree back to each foreign
+format, and every supported case reads the exported source again and compares
+it with the reference. The losses in `losses.json` run in both directions.
+Where the 0.1 spelling, tree or path of a loss differs in 0.2, `cases-0.2.json`
+holds the 0.2 one under `losses`. A loss the 0.2 tree can hold, such as a
+caption with blocks (C2-A-081), is listed there as retired and must read
+without a loss while keeping the structure it names.
 
 ```sh
 npm run compat:0.2 -- --report=reports/compat-0.2.json
