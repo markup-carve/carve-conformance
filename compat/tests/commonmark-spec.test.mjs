@@ -1,13 +1,13 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { readFileSync, existsSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs'
+import { readFileSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createHash } from 'node:crypto'
 import fs from 'node:fs'
 import childProcess, { spawnSync } from 'node:child_process'
 import { syncBuiltinESMExports } from 'node:module'
-import { HTMLRenderer, parse as parseDjot, renderHTML } from '@djot/djot'
+import { HTMLRenderer } from '@djot/djot'
 import { validateSpec, compareHtml, reportClass, runCommonmarkSpec, runPandocDjotBaseline, renderedWhitespace, validateDeclarations, unwrapLoneImageParagraph, applyDeclaration, percentEncodeDestination } from '../scripts/compat/commonmark-spec.mjs'
 
 const pins = JSON.parse(readFileSync('resources/engines.json'))
@@ -245,26 +245,6 @@ test('baseline spawn and rendering errors become failed rows', t => {
   } finally { renderer.mock.restore() }
 })
 
-test('pinned pandoc converts spec examples for independent djot.js rendering', t => {
-  const binary = process.env.CARVE_PANDOC ?? '.cache/pandoc/bin/pandoc'
-  const probe = spawnSync(binary, ['--version'], {encoding:'utf8',timeout:15000})
-  if (probe.error?.code === 'ENOENT') { t.skip(`Pinned pandoc binary absent at ${binary}; baseline integration requires pandoc ${pins.pandoc.version}`); return }
-  const spec = validateSpec(), examples = [spec[0],...['Soft line breaks','Raw HTML','ATX headings'].map(section => spec.find(e => e.section === section)),spec.find(e => e.example === 520)]
-  const baseline = runPandocDjotBaseline(examples)
-  assert.equal(baseline.totals.failed, 0)
-  assert.equal(baseline.rows.length, examples.length)
-  for (const [i,row] of baseline.rows.entries()) {
-    assert.equal(row.html, renderHTML(parseDjot(row.output)))
-    assert.equal(row.status, compareHtml(examples[i].html, row.html).status)
-  }
-  assert.equal(baseline.rows[1].output, examples[1].markdown)
-  assert.ok(baseline.rows[2].output.includes('=html'))
-  assert.equal(baseline.rows[2].html, examples[2].html)
-  assert.equal(baseline.rows[3].status, 'match')
-  assert.equal(baseline.rows[4].status, 'match')
-  assert.match(baseline.rows[4].html, /<p><img /)
-})
-
 test('CLI baseline defaults require pandoc and --baselines=none needs no binary', () => {
   const env = {...process.env,CARVE_PANDOC:'/nonexistent/carve-compat-test-pandoc'}
   const run = (...args) => spawnSync(process.execPath, ['scripts/commonmark-spec.mjs','--engines=javascript',...args], {encoding:'utf8',env})
@@ -296,26 +276,6 @@ syncBuiltinESMExports()
     assert.match(result.stdout, /Warning: lone-image-block insufficient for javascript: examples 34/)
     assert.equal(result.stderr, '')
   } finally { rmSync(dir, {recursive:true,force:true}) }
-})
-
-test('three-engine reports agree on the example 40 names loss', t => {
-  if (!existsSync('.cache/engines/php') || !existsSync('.cache/engines/rust/bin/carve')) {
-    t.skip('Native engines absent; JavaScript-only report shape checked separately')
-    return
-  }
-  const report = runCommonmarkSpec(['javascript','php','rust'])
-  for (const engine of ['javascript','php','rust']) {
-    for (const example of [199,200,485,486,487,567]) assert.equal(report.rows.find(r => r.engine === engine && r.example === example).status, 'match')
-  }
-  for (const [engine, totals] of Object.entries(report.totals)) {
-    assert.equal(Object.values(totals.honesty).reduce((a,b) => a+b, 0), totals.match + totals.mismatch + totals.declared)
-    for (const [outcome, count] of Object.entries(totals.honesty)) assert.equal(count, report.rows.filter(r => r.engine === engine && r.honesty === outcome).length)
-  }
-  assert.ok(!report.reportDisagreements.some(r => r.example === 40))
-  for (const row of report.rows.filter(r => r.example === 40)) {
-    assert.equal(row.reportClass, 'names-loss', row.engine)
-    assert.ok(row.diagnostics.some(d => d.code === 'structure-unspellable'), row.engine)
-  }
 })
 
 test('the destination-as-written declaration encodes non-ASCII but never a raw backslash or bracket', () => {

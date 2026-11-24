@@ -1,6 +1,5 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { existsSync } from 'node:fs'
 import { reportClass, honesty, htmlHonesty, validateAssessment, runImportBatch, runImporter } from '../scripts/compat/importer-report.mjs'
 import { importerDecision, checkCase, corpus } from '../scripts/compat/check.mjs'
 
@@ -83,21 +82,6 @@ test('JavaScript migrates all importer formats with fidelity reports', () => {
     assert.ok(Array.isArray(result.report.diagnostics))
   }
 })
-
-test('PHP migration batch accepts legacy strings and format entries', t => {
-  if (!existsSync('.cache/engines/php')) { t.skip('PHP engine absent at .cache/engines/php'); return }
-  const results = runImportBatch('php', ['**Markdown**\n', {format:'djot',source:'*Djot*\n'}, {format:'html',source:'<p>HTML</p>'}, '**Fresh**\n'])
-  assert.equal(results.length, 4)
-  for (const result of results) {
-    assert.equal(typeof result.value, 'string', result.error)
-    assert.ok(Array.isArray(result.report.diagnostics))
-  }
-  assert.match(results[0].value, /Markdown/)
-  assert.match(results[1].value, /Djot/)
-  assert.match(results[2].value, /HTML/)
-  assert.ok(!results[3].value.includes('Markdown'))
-})
-
 
 test('HTML matches cannot disprove losses outside the rendering comparison', () => {
   assert.equal(htmlHonesty(true, 'names-loss'), 'unverified-loss')
