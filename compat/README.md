@@ -140,9 +140,8 @@ change the exit status. An engine that cannot run does.
 The lane also checks the report of `importDocument` against the structure the
 import renders (`scripts/compat/importers-0.2.mjs`). Every passed supported
 case without an authored tree, as in the 0.1 lane, of mdast (`gfm`), commonmark, cmark and md4c (`markdown`), djot and hast
-(`html`) is imported from its foreign source by carve-js `next2`; carve-php and
-carve-rs `next2` import the hast cases, since HTML is their only importer. The
-imported Carve source is rendered by carve-js `next2` and compared with the
+(`html`) is imported from its foreign source by carve-js, carve-php and
+carve-rs `next2`, each with its own importer. The imported Carve source is rendered by carve-js `next2` and compared with the
 foreign rendering. An entry other than a hint names a loss (C2-M-080,
 C2-M-083). A loss nobody reported (`silent-loss`) and a reported loss with the
 structure intact (`false-loss`) are listed under `importers` in the report with
@@ -159,9 +158,10 @@ The lane also runs the four measurements of the 0.1 lane below on `next2`
   (`nativeTotals`). Every render is compared with the suite's HTML through the
   0.2 HTML reader, and the honesty outcome of the carve-js import report is
   counted as above. An engine that refuses a format is counted under `refused`
-  with its message: carve-php `next2` reads Markdown and Djot only with the
-  optional `league/commonmark` and `php-collective/djot` packages, which the
-  provisioned install leaves out. The 0.1 declarations are not applied: their
+  with its message. carve-php `next2` reads Markdown and Djot through the
+  optional `league/commonmark` and `php-collective/djot` packages, so the
+  provisioner installs those two at the constraints of carve-php's
+  `require-dev` and leaves the other dev packages out. The 0.1 declarations are not applied: their
   normalizations are written against 0.1 trees.
 - **Source agreement.** The generated sources of the 0.1 lane are parsed and
   rendered by each engine. Trees are checked against the 0.2 schema, and their
