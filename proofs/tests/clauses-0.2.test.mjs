@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url'
 const root = fileURLToPath(new URL('..', import.meta.url))
 const mapPath = 'reports/clauses-0.2.json'
 const map = JSON.parse(readFileSync(join(root, mapPath), 'utf8'))
-const skip = new Set(['node_modules', 'spec', 'dist', '_site', '.git'])
+const skip = new Set(['node_modules', 'spec', 'dist', '_site', '.git', '.cache', '.claude', '.venv', 'test-results', 'playwright-report'])
 
 function* files(dir) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
