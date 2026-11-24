@@ -3,6 +3,7 @@ import { dirname } from 'node:path'
 import { reportHeader, runCompat, runLosses } from './compat/check-0.2.mjs'
 import { nativeTools, toolNames } from './compat/tools-0.2.mjs'
 import { compareEngines, nativeEngines02, nativeMetadata } from './compat/engines-native-0.2.mjs'
+import { compareImporters } from './compat/importers-0.2.mjs'
 
 const arg = name => process.argv.find(a => a.startsWith(`--${name}=`))?.slice(name.length + 3)
 const tools = arg('tools')?.split(',') ?? (process.argv.includes('--javascript') ? toolNames.filter(t => !nativeTools.includes(t)) : toolNames)
@@ -23,6 +24,13 @@ if (engines.length) {
     console.log(`${metadata[engine].name} against carve-js next2: ${result.agrees} agree, ${result.differs} differ (${compared.requests} calls)`)
   }
   report.engines = compared
+}
+// Importer honesty: a contradiction between report and rendered structure is a measurement and keeps the exit status.
+report.importers = compareImporters(rows, { engines: ['javascript', ...engines] })
+for (const [engine, result] of Object.entries(report.importers)) {
+  for (const c of result.contradictions) console.log(`importer ${engine}/${c.from}: ${c.outcome} ${c.tool}/${c.case} (codes: ${c.report.map(d => d.code).join(', ') || 'none'})`)
+  for (const r of result.refused) console.log(`importer ${engine}/${r.from}: refused ${r.tool}/${r.case}: ${r.error}`)
+  console.log(`importDocument ${engine}: ${result.imports} imports, ${result.contradictions.length} contradict the rendered structure, ${result.refused.length} refused`)
 }
 const out = arg('report')
 if (out) { mkdirSync(dirname(out), { recursive: true }); writeFileSync(out, JSON.stringify(report, null, 2) + '\n') }
