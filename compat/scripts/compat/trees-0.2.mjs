@@ -5,7 +5,18 @@ import { coalesce, context, parseHtml, plain, text } from './trees.mjs'
 export { coalesce, context, parseHtml, plain, text }
 export const AST_VERSION = '2.0'
 
-export const document = children => softBreaks({ type: 'document', astVersion: AST_VERSION, children })
+export const document = children => blockImages(softBreaks({ type: 'document', astVersion: AST_VERSION, children }))
+
+const blockSlots = new Set(['document', 'block_quote', 'list_item', 'footnote', 'definition_description', 'div'])
+
+// C2-A-136: an image standing where a block stands is the image role of a paragraph.
+export function blockImages(node) {
+  if (!node || typeof node !== 'object') return node
+  if (Array.isArray(node)) { node.forEach(blockImages); return node }
+  if (blockSlots.has(node.type) && Array.isArray(node.children)) node.children = node.children.map(c => c?.type === 'image' ? { type: 'paragraph', role: 'image', children: [c] } : c)
+  for (const [key, value] of Object.entries(node)) if (key !== 'attrs' && typeof value === 'object') blockImages(value)
+  return node
+}
 
 // A line break inside foreign text is the soft_break node of the 0.2 tree, never a newline in text.
 export function softBreaks(node) {
@@ -242,7 +253,7 @@ export function imageParagraph(node) {
 
 export function fromMdast(root, ctx = context('mdast')) {
   const definitions = new Map()
-  const collect = n => { if (n.type === 'definition') definitions.set(n.identifier, n); n.children?.forEach(collect) }
+  const collect = n => { if (n.type === 'definition' && !definitions.has(n.identifier)) definitions.set(n.identifier, n); n.children?.forEach(collect) }
   collect(root)
   const map = (n, path) => {
     const children = () => coalesce((n.children ?? []).flatMap((c, i) => map(c, `${path}/children/${i}`)))
@@ -378,8 +389,7 @@ export function fromDocutils(root, ctx = context('docutils')) {
     if (n.type === 'literal') return { type: 'code', value: plain(n) }
     if (n.type === 'literal_block') return codeBlock(plain(n) + '\n', a.classes?.includes('code') ? a.classes.find(c => c !== 'code') : undefined)
     if (n.type === 'reference' && a.refuri) return link(a.refuri, children())
-    // A standalone reStructuredText image is a block: the paragraph role of C2-A-136.
-    if (n.type === 'image') return { type: 'paragraph', role: 'image', children: [image(a.uri, a.alt ?? '')] }
+    if (n.type === 'image') return image(a.uri, a.alt ?? '')
     if (n.type === 'transition') return { type: 'thematic_break' }
     if (n.type === 'bullet_list' || n.type === 'enumerated_list') {
       if (a.enumtype && a.enumtype !== 'arabic') ctx.note(`${path}/attributes/enumtype`, 'unsupported-field', 'dropped', 'Lettered and roman numbering styles are outside this adapter subset.')

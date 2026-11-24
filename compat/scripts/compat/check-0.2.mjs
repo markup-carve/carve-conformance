@@ -100,6 +100,9 @@ export async function checkCase(tool, fixture) {
   } catch (error) { error.compatibilityEvidence = progress; throw error }
 }
 
+// A declaration covers only the mapping comparison; a crash, schema error or later check still fails.
+export const coveredByDeclaration = (declared, checks = [], message = '') => !!declared && checks.join() === 'ast-schema' && message.includes(': foreign tree mapping')
+
 export const cases02 = () => [...corpus.cases.filter(c => !c.ast), ...spellings.added]
 
 export async function runCompat({ tools = toolNames, cases = cases02() } = {}) {
@@ -115,7 +118,8 @@ export async function runCompat({ tools = toolNames, cases = cases02() } = {}) {
       rows.push(declared ? { ...row, status: 'failed', error: `${tool}/${fixture.id}: declared difference no longer reproduces (${declared.clause})` } : row)
     } catch (error) {
       const evidence = error.compatibilityEvidence ?? {}
-      rows.push({ tool, case: fixture.id, kind: 'supported', status: declared ? 'declared' : 'failed', ...(declared ? { declared } : {}), error: `${tool}/${fixture.id}: ${error.message.split('\n')[0].replace(`${tool}/${fixture.id}: `, '')}`, checks: evidence.checks ?? [], evidence: evidence.evidence })
+      const expected = coveredByDeclaration(declared, evidence.checks, error.message)
+      rows.push({ tool, case: fixture.id, kind: 'supported', status: expected ? 'declared' : 'failed', ...(expected ? { declared } : {}), error: `${tool}/${fixture.id}: ${error.message.split('\n')[0].replace(`${tool}/${fixture.id}: `, '')}`, checks: evidence.checks ?? [], evidence: evidence.evidence })
     }
   }
   return rows
