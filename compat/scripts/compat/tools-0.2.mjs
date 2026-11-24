@@ -12,7 +12,8 @@ import * as djot from '@djot/djot'
 import { load as loadAscii, getVersion as asciiVersion } from '@asciidoctor/core'
 import { XMLParser } from 'fast-xml-parser'
 import { cmarkTree, toolNames, nativeTools } from './tools.mjs'
-import { context, document, coalesce, text, plain, parseHtml, paragraph, imageParagraph, list, listItem, codeBlock, link, image, footnote, footnoteRef, attrs, fromHast, fromMdast, fromCommonmark, fromDjot, fromDocutils, fromMd4c } from './trees-0.2.mjs'
+import { alignment } from './tables.mjs'
+import { context, document, coalesce, text, plain, parseHtml, paragraph, imageParagraph, list, listItem, codeBlock, link, image, footnote, footnoteRef, attrs, table, tableRow, tableCell, blockTypes, fromHast, fromMdast, fromCommonmark, fromDjot, fromDocutils, fromMd4c } from './trees-0.2.mjs'
 
 export { toolNames, nativeTools }
 const md = unified().use(remarkParse).use(remarkGfm)
@@ -30,7 +31,8 @@ export async function readForeign(tool, source, format) {
   } else if (tool === 'hast') {
     raw = parseHtml(source)
     ast = fromHast(raw, ctx)
-    html = hastWriter.stringify(raw)
+    // The source itself, not a reserialization: that would spell out the body the parser inserted.
+    html = source
   } else if (tool === 'commonmark') {
     raw = new commonmark.Parser().parse(source)
     ast = fromCommonmark(raw, ctx)
@@ -108,10 +110,10 @@ async function fromAscii(root, ctx) {
     if (type === 'listing' || type === 'literal') return codeBlock(n.getSource() + '\n', n.getAttribute('language'))
     if (type === 'thematic_break') return { type: 'thematic_break' }
     if (type === 'ulist' || type === 'olist') {
-      ctx.note(`${path}/spacing`, 'list-layout-unavailable', 'normalized', 'AsciiDoc list rendering uses paragraph wrappers; this adapter uses loose lists.')
+      ctx.note(`${path}/tight`, 'list-layout-unavailable', 'normalized', 'AsciiDoc list rendering uses paragraph wrappers; this adapter uses loose lists.')
       const items = await Promise.all(n.getItems().map(async (item, i) => {
-        if (Object.hasOwn(item.getAttributes(), 'checkbox')) ctx.note(`${path}/children/${i}/checkbox`, 'unsupported-field', 'dropped', 'AsciiDoc task state is outside this adapter subset.')
-        return listItem([paragraph(await inline(await item.getText(), `${path}/children/${i}/text`)), ...await mapItem(item, `${path}/children/${i}`)])
+        if (Object.hasOwn(item.getAttributes(), 'checkbox')) ctx.note(`${path}/items/${i}/checkbox`, 'unsupported-field', 'dropped', 'AsciiDoc task state is outside this adapter subset.')
+        return listItem([paragraph(await inline(await item.getText(), `${path}/items/${i}/text`)), ...await mapItem(item, `${path}/items/${i}`)])
       }))
       return list({ ordered: type === 'olist', start: type === 'olist' ? Number(n.getAttribute('start') ?? 1) : undefined, tight: false }, items)
     }
@@ -174,7 +176,29 @@ export function fromPandoc(root, ctx = context('pandoc')) {
       notes.push(note); note.children = children(c)
       ctx.note(path, 'footnote-label-normalization', 'normalized', 'Pandoc publishes note bodies without source labels; assigned numeric document-order keys.')
       return footnoteRef(key)
-    } else return ctx.unsupported({ type: n.t, value: readable(c) }, path, ['Div', 'RawBlock', 'Table'].includes(n.t))
+    } else if (n.t === 'Table') {
+      a = pandocAttrs(c[0])
+      const columns = c[2].map(col => ({ ...(alignment[col[0].t] ? { align: alignment[col[0].t] } : {}), ...(col[1].t === 'ColWidth' ? { width: col[1].c } : {}) }))
+      const row = (r, rp, header, rowHeads = 0) => {
+        const built = tableRow(r[1].map((cell, i) => {
+          const content = children(cell[4], `${rp.slice(path.length)}/1/${i}/4`)
+          const single = content.length === 1 && content[0].type === 'paragraph' && !content[0].role
+          const out = tableCell(header || i < rowHeads, single || !content.length ? { inline: content[0]?.children ?? [] } : { blocks: content }, { align: alignment[cell[1].t], rowspan: cell[2], colspan: cell[3] })
+          const cellAttrs = pandocAttrs(cell[0])
+          if (cellAttrs) out.attrs = cellAttrs
+          return out
+        }))
+        const rowAttrs = pandocAttrs(r[0])
+        if (rowAttrs) built.attrs = rowAttrs
+        return built
+      }
+      const groups = [{ type: 'table_head', rows: c[3][1].map((r, i) => row(r, `${path}/c/3/1/${i}`, true)), attrs: pandocAttrs(c[3][0]) }]
+      for (const [j, body] of c[4].entries()) groups.push({ type: 'table_body', explicit: true, rowHeadColumns: body[1], attrs: pandocAttrs(body[0]), rows: [...body[2].map((r, i) => row(r, `${path}/c/4/${j}/2/${i}`, true)), ...body[3].map((r, i) => row(r, `${path}/c/4/${j}/3/${i}`, false, body[1]))] })
+      groups.push({ type: 'table_foot', rows: c[5][1].map((r, i) => row(r, `${path}/c/5/1/${i}`, false)), attrs: pandocAttrs(c[5][0]) })
+      const captionBlocks = children(c[1][1], '/c/1/1')
+      const caption = captionBlocks.length || c[1][0] ? { type: 'caption', children: captionBlocks, ...(c[1][0] ? { short: children(c[1][0], '/c/1/0') } : {}) } : undefined
+      out = table({ groups, columns, caption })
+    } else return ctx.unsupported({ type: n.t, value: readable(c) }, path, ['Div', 'RawBlock'].includes(n.t))
     if (a) out.attrs = a
     return out
   }

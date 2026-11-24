@@ -110,6 +110,14 @@ spelling. A reader that cannot reach the 0.2 reading is declared there with the
 clause that decides it, and a declaration fails once the difference stops
 reproducing. Cases that only this lane measures are listed there as `added`.
 
+Tables map to the 0.2 groups (`table_head`, `table_body`, `table_foot`), one
+`cell_paragraph` per inline cell, a `table_column` per column and a block
+`caption`. The cases with an authored tree carry their 0.2 tree in the same
+file, with the writer diagnostics and source changes it produces pinned beside
+it. Import losses from `losses.json` run too. A loss the 0.2 tree can hold, such
+as a caption with blocks (C2-A-081), is listed under `losses` as retired and
+must read without a loss.
+
 ```sh
 npm run compat:0.2 -- --report=reports/compat-0.2.json
 ```

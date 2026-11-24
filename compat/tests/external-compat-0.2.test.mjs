@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { cases02, checkCase, coveredByDeclaration, declaredDifference, runCompat, spellings, validateSpellings, validateTree } from '../scripts/compat/check-0.2.mjs'
+import { cases02, checkCase, coveredByDeclaration, declaredDifference, runCompat, runLosses, spellings, validateSpellings, validateTree } from '../scripts/compat/check-0.2.mjs'
 import { envelope, parseTree } from '../scripts/compat/engines-0.2.mjs'
 import { document, fromMdast, semantics } from '../scripts/compat/trees-0.2.mjs'
 import { readForeign } from '../scripts/compat/tools-0.2.mjs'
@@ -63,6 +63,9 @@ test('a declaration does not cover a failure outside the mapping comparison', ()
   assert.equal(coveredByDeclaration(declared, [], 'mdast/x: foreign tree mapping'), false)
   assert.equal(coveredByDeclaration(declared, ['ast-schema', 'ast-mapping'], 'mdast/x: JSON interchange round trip'), false)
   assert.equal(coveredByDeclaration(undefined, ['ast-schema'], 'mdast/x: foreign tree mapping'), false)
+  const html = { ...declared, check: 'html-structure' }
+  assert.equal(coveredByDeclaration(html, ['ast-schema', 'ast-mapping', 'json-roundtrip'], 'hast/x: independent HTML structure'), true)
+  assert.equal(coveredByDeclaration(html, ['ast-schema'], 'hast/x: foreign tree mapping'), false)
 })
 
 test('a declared difference fails once it stops reproducing', async () => {
@@ -77,4 +80,28 @@ test('a declared difference fails once it stops reproducing', async () => {
     else delete spellings.cases[fixture.id]
   }
   assert.equal((await checkCase('mdast', fixture)).status, 'passed')
+})
+
+test('import losses name their path and keep a valid fallback; retired losses keep the structure', async () => {
+  const rows = await runLosses({ tools: javascriptTools })
+  assert.deepEqual(rows.filter(r => r.status !== 'passed').map(r => r.error), [])
+  assert.ok(rows.some(r => r.kind === 'retired-loss' && r.case === 'html-block-caption'))
+  const fixture = { id: 'html-block-caption', tools: ['hast'], source: '<table><caption>Cap Second</caption><tr><td>x</td></tr></table>', retained: 'Cap Second', expected: {} }
+  const [flattened] = await runLosses({ tools: ['hast'], cases: [fixture] })
+  assert.equal(flattened.status, 'failed')
+})
+
+test('a table maps to its groups, cell paragraphs and columns, and a covered cell is never a header', async () => {
+  const { ast } = await readForeign('hast', '<table><thead><tr><th colspan="2">A</th></tr></thead><tbody><tr><td>x</td><td>y</td></tr></tbody></table>')
+  validateTree(ast)
+  const [head, body] = ast.children[0].children
+  assert.deepEqual([head.type, body.type, ast.children[0].columns.length], ['table_head', 'table_body', 2])
+  assert.deepEqual(head.children[0].children[1], { type: 'table_cell', header: false, span: 'colspan', children: [] })
+  assert.deepEqual(body.children[0].children[0].children, [{ type: 'cell_paragraph', children: [{ type: 'text', value: 'x' }] }])
+})
+
+test('a continuation row leaves no field: the cell holds its fragments joined by a space', async () => {
+  const fixture = cases02().find(c => c.id === 'continuation-row')
+  assert.equal((await checkCase('hast', fixture)).status, 'passed')
+  assert.ok(!JSON.stringify(parseTree(fixture.carve)).includes('cellWraps'))
 })
