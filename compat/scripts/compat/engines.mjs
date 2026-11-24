@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
 import { fromAstJson, toAstJson, parse, renderCarve, renderHtml, resolve } from '@markup-carve/carve'
@@ -16,6 +16,7 @@ export function engineMetadata(engine) {
     meta = { name:'Carve JavaScript', version:pkg.version, revision:dependency.split('#')[1], dependency }
   } else {
     const root = process.env[engine === 'php' ? 'CARVE_PHP_ROOT' : 'CARVE_RUST_ROOT'] ?? fileURLToPath(new URL(`../../.cache/engines/${engine}`,import.meta.url))
+    if (!existsSync(root)) throw new Error(`${engine} is not provisioned at ${root}; run npm run compat:provision`)
     const revision = native('git',['rev-parse','HEAD'],'',root).trim()
     if (native('git',['status','--porcelain','--untracked-files=no','--ignore-submodules=all'],'',root).trim()) throw new Error(`${engine} source has modified tracked files`)
     if (revision !== pins[engine].revision) throw new Error(`${engine} source revision differs from resources/engines.json`)
