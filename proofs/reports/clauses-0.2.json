@@ -11,10 +11,14 @@
         "C2-B-014",
         "C2-B-024",
         "C2-B-025",
-        "C2-B-138"
+        "C2-B-026",
+        "C2-B-111",
+        "C2-B-137",
+        "C2-B-138",
+        "C2-B-228"
       ],
       "ticket": "markup-carve/carve-conformance#29",
-      "note": "spec/0.2 has no boundary table; headings, quotes, definitions and comment lines are lazy lines, and ownership is by marker column."
+      "note": "spec/0.2 has no boundary table; headings, quotes, definitions and comment lines are lazy lines, and ownership is by marker column. Modeled in proofs/layout/Ownership02.v."
     },
     "CARVE-P0-021": {
       "status": "retired",

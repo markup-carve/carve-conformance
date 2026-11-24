@@ -124,6 +124,9 @@ jobs:
       - name: Check model proofs and recorded evidence
         working-directory: .
         run: opam exec -- npm --prefix proofs run proof:layout
+      - name: Check the Carve 0.2 ownership model against carve-js next2
+        working-directory: .
+        run: opam exec -- npm --prefix proofs run proof:layout:0.2
       - name: Check candidate-stack selection and extracted helper
         working-directory: .
         run: opam exec -- npm --prefix proofs run proof:stack
