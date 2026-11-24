@@ -3672,13 +3672,29 @@
     "pandoc-block-caption": {
       "retired": {
         "clause": "C2-A-081",
-        "reason": "A caption holds blocks in 0.2 (C2-A-081), so the block caption is kept and no loss is reported."
+        "reason": "A caption holds blocks in 0.2 (C2-A-081), so the block caption is kept and no loss is reported.",
+        "keeps": {
+          "path": "/children/0/caption",
+          "type": "caption",
+          "children": [
+            "paragraph",
+            "list"
+          ]
+        }
       }
     },
     "html-block-caption": {
       "retired": {
         "clause": "C2-A-081",
-        "reason": "A caption holds blocks in 0.2 (C2-A-081), so the block caption is kept and no loss is reported."
+        "reason": "A caption holds blocks in 0.2 (C2-A-081), so the block caption is kept and no loss is reported.",
+        "keeps": {
+          "path": "/children/0/caption",
+          "type": "caption",
+          "children": [
+            "paragraph",
+            "paragraph"
+          ]
+        }
       }
     }
   }

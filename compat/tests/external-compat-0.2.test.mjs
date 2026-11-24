@@ -86,6 +86,9 @@ test('import losses name their path and keep a valid fallback; retired losses ke
   const rows = await runLosses({ tools: javascriptTools })
   assert.deepEqual(rows.filter(r => r.status !== 'passed').map(r => r.error), [])
   assert.ok(rows.some(r => r.kind === 'retired-loss' && r.case === 'html-block-caption'))
+  const fixture = { id: 'html-block-caption', tools: ['hast'], source: '<table><caption>Cap Second</caption><tr><td>x</td></tr></table>', retained: 'Cap Second', expected: {} }
+  const [flattened] = await runLosses({ tools: ['hast'], cases: [fixture] })
+  assert.equal(flattened.status, 'failed')
 })
 
 test('a table maps to its groups, cell paragraphs and columns, and a covered cell is never a header', async () => {

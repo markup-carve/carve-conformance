@@ -24,7 +24,10 @@ export function validateSpellings(data = spellings) {
   const lossIds = new Set(lossCorpus.cases.map(c => c.id))
   for (const [id, entry] of Object.entries(data.losses ?? {})) {
     assert.ok(lossIds.has(id), `${id}: no such loss case`)
-    if (entry.retired) assert.match(entry.retired.clause, /^C2-[A-Z]-\d{3}$/, `${id}: a retired loss cites its clause`)
+    if (entry.retired) {
+      assert.match(entry.retired.clause, /^C2-[A-Z]-\d{3}$/, `${id}: a retired loss cites its clause`)
+      assert.ok(entry.retired.keeps?.path && entry.retired.keeps.type && Array.isArray(entry.retired.keeps.children), `${id}: a retired loss names the structure it keeps`)
+    }
   }
   for (const c of data.added) {
     assert.match(c.id, /^[a-z0-9-]+$/)
@@ -207,7 +210,10 @@ export async function checkRetiredLoss(tool, fixture, retired) {
   const result = await readForeign(tool, fixture.source, fixture.formats?.[tool])
   validateTree(result.ast)
   assert.deepEqual(lossy(result.diagnostics), [], `${tool}/${fixture.id}: a retired loss is still reported (${retired.clause})`)
-  const kept = plain(result.ast)
+  const node = retired.keeps.path.split('/').slice(1).reduce((at, key) => at?.[key], result.ast)
+  assert.equal(node?.type, retired.keeps.type, `${tool}/${fixture.id}: no ${retired.keeps.type} at ${retired.keeps.path}`)
+  assert.deepEqual(node.children.map(c => c.type), retired.keeps.children, `${tool}/${fixture.id}: the kept ${retired.keeps.type} lost its blocks`)
+  const kept = plain(node)
   assert.ok(fixture.retained.split(/\s+/).every(word => kept.includes(word)), `${tool}/${fixture.id}: the kept structure lost readable content`)
   return { tool, case: fixture.id, status: 'passed', kind: 'retired-loss', retired, checks: ['ast-schema', 'no-loss', 'retained-content'], diagnostics: result.diagnostics, evidence: { direction: 'import', source: fixture.source, ast: result.ast } }
 }
