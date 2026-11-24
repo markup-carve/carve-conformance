@@ -22,13 +22,17 @@ test('an HTML suite imports with carve-js and lists an engine disagreement with 
   const call = fakeCalls((engine, request) => engine === 'rust' && request.call === 'renderSource' && request.source.startsWith('C') ? { ok: '<p>D</p>' } : undefined)
   const seen = []
   const result = runHtmlSuite02({ kind: 'commonmark-spec', examples, from: 'markdown', sourceKey: 'markdown', call: (engine, requests) => { seen.push([engine, requests.map(r => r.call)]); return call(engine, requests) } })
-  assert.deepEqual(seen[0], ['javascript', ['import', 'import']])
+  assert.deepEqual(seen.map(([engine, calls]) => [engine, calls[0]]), [['javascript', 'import'], ['javascript', 'renderSource'], ['php', 'renderSource'], ['rust', 'renderSource'], ['php', 'import'], ['rust', 'import'], ['php', 'renderSource'], ['rust', 'renderSource']])
   assert.deepEqual(result.totals.javascript, { match: 2, mismatch: 0, notComparable: 0, failed: 0 })
   assert.deepEqual(result.totals.rust, { match: 1, mismatch: 1, notComparable: 0, failed: 0 })
   assert.deepEqual(result.honesty, { ok: 2, reported: 0, 'silent-loss': 0, 'false-loss': 0 })
-  const [d] = result.disagreements
-  assert.deepEqual([d.example, d.input, d.carve, d.outputs.rust, d.status.rust], [2, 'C\n', 'C\n', '<p>D</p>', 'mismatch'])
+  // The fake rust renders its own import of C the same way, so the import stage differs too.
+  assert.deepEqual(result.disagreements.map(d => [d.example, d.stage]), [[2, 'render'], [2, 'import']])
+  const [d, own] = result.disagreements
+  assert.deepEqual([d.input, d.carve, d.outputs.rust, d.status.rust], ['C\n', 'C\n', '<p>D</p>', 'mismatch'])
   assert.deepEqual(Object.keys(d.outputs), ['javascript', 'php', 'rust'])
+  assert.deepEqual(own.outputs.rust, { carve: 'C\n', html: '<p>D</p>' })
+  assert.deepEqual(result.nativeTotals.php, { match: 2, mismatch: 0, notComparable: 0, failed: 0 })
 })
 
 test('an engine that cannot render is a failed row and a disagreement', () => {
@@ -36,6 +40,15 @@ test('an engine that cannot render is a failed row and a disagreement', () => {
   const result = runHtmlSuite02({ kind: 'k', examples, from: 'markdown', sourceKey: 'markdown', call: fakeCalls((engine, request) => engine === 'php' && request.call === 'renderSource' ? { error: 'E: no' } : undefined) })
   assert.equal(result.rows[0].results.php.status, 'failed')
   assert.deepEqual(result.disagreements[0].outputs.php, { error: 'E: no' })
+})
+
+test('a refused import format is counted per message, not listed per example', () => {
+  const examples = [1, 2].map(n => ({ example: n, section: 'S', source: `x${n}\n`, html: `<p>x${n}</p>\n` }))
+  const result = runHtmlSuite02({ kind: 'djot-tests', examples, from: 'djot', sourceKey: 'source', call: fakeCalls((engine, request) => engine === 'php' && request.call === 'import' ? { error: 'ImportInputError: no djot' } : undefined) })
+  assert.deepEqual(result.refused, { php: { 'ImportInputError: no djot': 2 } })
+  assert.equal(result.nativeTotals.php.failed, 2)
+  assert.equal(result.totals.php.match, 2)
+  assert.deepEqual(result.disagreements, [])
 })
 
 test('0.2 positions count UTF-8 bytes', () => {
@@ -64,7 +77,7 @@ test('the 0.2 spelling inventory reads the tree and source slices', () => {
 test('the roundtrip lists 0.2 readings without the spelling and a chain that differs across engines', () => {
   const call = fakeCalls((engine, request) => engine === 'rust' && request.call === 'format' ? { ok: 'Other.\n' } : undefined)
   const result = runRoundtrip02({ call })
-  assert.deepEqual(result.chains.map(c => c.id), ['javascript-html', 'php-html', 'rust-html', 'javascript-html-carriers', 'php-html-carriers', 'rust-html-carriers', 'javascript-markdown', 'javascript-fmt', 'php-fmt', 'rust-fmt'])
+  assert.deepEqual(result.chains.map(c => c.id), ['html', 'html-carriers', 'markdown', 'fmt'].flatMap(mode => ['javascript', 'php', 'rust'].map(engine => `${engine}-${mode}`)))
   assert.ok(result.summary['javascript-fmt'].notApplicable.includes('code-fence/tilde'))
   assert.equal(result.summary['javascript-fmt'].meaning.kept, result.summary['javascript-fmt'].meaning.measured)
   assert.equal(result.summary['rust-fmt'].meaning.kept, 0)

@@ -41,7 +41,15 @@ function javascriptCall(request) {
 
 function rustCall(binary, request) {
   const call = { parse: { call: 'parse', source: request.source }, renderSource: { call: 'render', source: request.source, ...(request.options ? { options: request.options } : {}) }, format: { call: 'formatWithDiagnostics', source: request.source }, import: { call: 'importDocument', from: request.from, source: request.source } }[request.call]
-  if (!call) return { error: `carve-rs next2 has no ${request.call} call on this lane` }
+  if (request.call === 'exportMarkdown') {
+    const tree = rustCall(binary, { call: 'parse', source: request.source })
+    return tree.error ? tree : rustResponse(binary, { call: 'writeWithDiagnostics', target: 'markdown', tree: tree.ok }, ok => ok.output)
+  }
+  if (!call) throw new Error(`Unknown call ${request.call}`)
+  return rustResponse(binary, call, ok => ({ parse: ok.tree, renderSource: ok.html, format: ok.source, import: { source: ok.source, diagnostics: (ok.diagnostics ?? []).map(entry) } }[request.call]))
+}
+
+function rustResponse(binary, call, value) {
   let response
   // An error response exits non-zero; a crash, timeout or anything but a response stops the lane.
   try { response = JSON.parse(run(binary, ['call'], JSON.stringify(call))) } catch (error) {
@@ -49,8 +57,7 @@ function rustCall(binary, request) {
     if (!response?.error) throw error
   }
   if (response.error) return { error: `${response.error.name ?? 'error'}: ${response.error.message}` }
-  const ok = response.ok
-  return { ok: { parse: ok.tree, renderSource: ok.html, format: ok.source, import: ok.source === undefined ? ok : { source: ok.source, diagnostics: (ok.diagnostics ?? []).map(entry) } }[request.call] }
+  return { ok: value(response.ok) }
 }
 
 export function measurementCalls(engine, requests) {
@@ -58,15 +65,8 @@ export function measurementCalls(engine, requests) {
   if (engine === 'javascript') return requests.map(javascriptCall)
   if (engine === 'php') {
     nativeMetadata('php')
-    const unsupported = requests.map(r => r.call === 'exportMarkdown')
-    const sent = requests.filter((_, i) => !unsupported[i])
-    const answers = sent.length ? JSON.parse(run(process.env.CARVE_PHP ?? 'php', ['-d', 'memory_limit=2G', fileURLToPath(new URL('./php-next2-driver.php', import.meta.url))], JSON.stringify(sent))) : []
-    let next = 0
-    return requests.map((r, i) => {
-      if (unsupported[i]) return { error: `carve-php next2 has no ${r.call} call on this lane` }
-      const answer = answers[next++]
-      return answer.ok && r.call === 'import' ? { ok: { source: answer.ok.source, diagnostics: answer.ok.diagnostics.map(entry) } } : answer
-    })
+    const answers = JSON.parse(run(process.env.CARVE_PHP ?? 'php', ['-d', 'memory_limit=2G', fileURLToPath(new URL('./php-next2-driver.php', import.meta.url))], JSON.stringify(requests)))
+    return requests.map((r, i) => answers[i].ok && r.call === 'import' ? { ok: { source: answers[i].ok.source, diagnostics: answers[i].ok.diagnostics.map(entry) } } : answers[i])
   }
   const { binary } = nativeMetadata('rust')
   return requests.map(r => rustCall(binary, r))
@@ -104,7 +104,8 @@ export const sameHtml = (a, b) => isDeepStrictEqual(engineView(a), engineView(b)
 const counts = () => ({ match: 0, mismatch: 0, notComparable: 0, failed: 0 })
 const countKey = status => status === 'not-comparable' ? 'notComparable' : status
 
-// carve-js imports each example; every engine renders that Carve source, and each render is compared with the suite's HTML.
+// carve-js imports each example and every engine renders that Carve source (`results`). Each engine also imports and
+// renders the example itself (`native`). Every render is compared with the suite's HTML.
 export function runHtmlSuite02({ kind, examples, from, sourceKey, expectedGenerated = false, engines = measuredEngines02, call = measurementCalls }) {
   const imports = call('javascript', examples.map(e => ({ call: 'import', from, source: e[sourceKey] })))
   const imported = imports.map((r, i) => r.ok ? i : -1).filter(i => i >= 0)
@@ -113,7 +114,17 @@ export function runHtmlSuite02({ kind, examples, from, sourceKey, expectedGenera
     const byExample = new Map(imported.map((i, k) => [i, answers[k]]))
     return [engine, byExample]
   }))
+  const nativeImports = Object.fromEntries(engines.map(engine => [engine, engine === 'javascript' ? imports : call(engine, examples.map(e => ({ call: 'import', from, source: e[sourceKey] })))]))
+  const nativeRenders = Object.fromEntries(engines.map(engine => {
+    if (engine === 'javascript') return [engine, renders.javascript]
+    const done = nativeImports[engine].map((r, i) => r.ok ? i : -1).filter(i => i >= 0)
+    const answers = call(engine, done.map(i => ({ call: 'renderSource', source: nativeImports[engine][i].ok.source })))
+    return [engine, new Map(done.map((i, k) => [i, answers[k]]))]
+  }))
+  // An engine that refuses an import format is counted once per message, not listed per example.
+  const refused = {}
   const totals = Object.fromEntries(engines.map(engine => [engine, counts()]))
+  const nativeTotals = Object.fromEntries(engines.map(engine => [engine, counts()]))
   const honesty = { ok: 0, reported: 0, 'silent-loss': 0, 'false-loss': 0 }
   const sections = new Map()
   const rows = [], disagreements = []
@@ -130,16 +141,32 @@ export function runHtmlSuite02({ kind, examples, from, sourceKey, expectedGenera
       row.results[engine] = result
       totals[engine][countKey(result.status)]++
       section.results[engine][countKey(result.status)]++
+      const own = nativeImports[engine][i]
+      if (own.error) {
+        row.native = { ...row.native, [engine]: { status: 'failed', error: own.error } }
+        ;(refused[engine] ??= {})[own.error] = (refused[engine][own.error] ?? 0) + 1
+      } else {
+        const html = nativeRenders[engine].get(i)
+        row.native = { ...row.native, [engine]: html.error ? { status: 'failed', carve: own.ok.source, error: html.error } : { status: compareHtml02(e.html, html.ok, { expectedGenerated }).status, carve: own.ok.source, diagnostics: own.ok.diagnostics, html: html.ok } }
+      }
+      nativeTotals[engine][countKey(row.native[engine].status)]++
     }
     const js = row.results.javascript
     if (js && ['match', 'mismatch'].includes(js.status)) { row.honesty = honesty02(js.status === 'match', row.reportClass); honesty[row.honesty]++ }
     const others = engines.filter(engine => engine !== 'javascript')
-    if (js?.html !== undefined && others.some(engine => row.results[engine].html === undefined || !sameHtml(js.html, row.results[engine].html))) {
-      disagreements.push({ example: e.example, section: e.section, input: row.input, carve: row.carve, outputs: Object.fromEntries(engines.map(engine => [engine, row.results[engine].html ?? { error: row.results[engine].error }])), status: Object.fromEntries(engines.map(engine => [engine, row.results[engine].status])) })
+    const differs = engine => row.results[engine].html === undefined || !sameHtml(js.html, row.results[engine].html)
+    const ownJs = row.native.javascript
+    // Refused imports are counted under `refused`; an import that ran is compared on its source and its render.
+    const ownDiffers = engine => !nativeImports[engine][i].error && (row.native[engine].carve !== ownJs.carve || row.native[engine].html === undefined || ownJs.html === undefined || !sameHtml(ownJs.html, row.native[engine].html))
+    if (js?.html !== undefined && others.some(differs)) {
+      disagreements.push({ example: e.example, section: e.section, stage: 'render', input: row.input, carve: row.carve, outputs: Object.fromEntries(engines.map(engine => [engine, row.results[engine].html ?? { error: row.results[engine].error }])), status: Object.fromEntries(engines.map(engine => [engine, row.results[engine].status])) })
+    }
+    if (ownJs && others.some(ownDiffers)) {
+      disagreements.push({ example: e.example, section: e.section, stage: 'import', input: row.input, outputs: Object.fromEntries(engines.map(engine => [engine, row.native[engine].error ? { error: row.native[engine].error } : { carve: row.native[engine].carve, html: row.native[engine].html ?? { error: row.native[engine].error } }])), status: Object.fromEntries(engines.map(engine => [engine, row.native[engine].status])) })
     }
     rows.push(row)
   })
-  return { kind, importer: { engine: 'javascript', from }, engines, totals, honesty, sections: [...sections.values()], disagreements, rows }
+  return { kind, importer: { engine: 'javascript', from }, engines, totals, nativeTotals, refused, honesty, sections: [...sections.values()], disagreements, rows }
 }
 
 export function runCommonmark02(options = {}) {
@@ -202,8 +229,8 @@ export function runSourceAgreement02({ engines = measuredEngines02, call = measu
   return { kind: 'source-agreement', referenceEngine: 'javascript', engines, suiteSha256: createHash('sha256').update(JSON.stringify(inputs)).digest('hex'), scope: 'Generated observations without a normative oracle. The semantic comparison removes positions and source byte length; HTML is compared on every element and attribute.', disagreements, rows }
 }
 
-// Roundtrip chains per engine. Markdown runs on carve-js only: carve-php and carve-rs next2 import HTML alone.
-export const roundtripModes02 = { html: ['javascript', 'php', 'rust'], 'html-carriers': ['javascript', 'php', 'rust'], markdown: ['javascript'], fmt: ['javascript', 'php', 'rust'] }
+// Roundtrip chains, each run on every engine.
+export const roundtripModes = ['html', 'html-carriers', 'markdown', 'fmt']
 
 function chainRun(engine, mode, sources, call) {
   const fail = (answers) => answers.map(a => a.error ? { error: a.error } : null)
@@ -265,7 +292,7 @@ export function runRoundtrip02({ engines = measuredEngines02, call = measurement
   // A variant whose source reads differently in 0.2 does not hold its spelling: it is listed, not measured.
   const applicable = variants.map(item => { const before = spellingOf(item.carve, item.distinction); return { item, before, applicable: before.length > 0 && before.every(s => s === item.spelling) } })
   const chains = [], summary = {}, rows = [], returned = {}
-  for (const [mode, modeEngines] of Object.entries(roundtripModes02)) for (const engine of modeEngines.filter(e => engines.includes(e))) {
+  for (const mode of roundtripModes) for (const engine of engines) {
     const id = `${engine}-${mode}`
     chains.push({ id, engine, mode, viaHtml: mode.startsWith('html') })
     const sources = [...inputs.map(i => i.source), ...variants.map(v => v.carve)]
@@ -294,8 +321,11 @@ export function runRoundtrip02({ engines = measuredEngines02, call = measurement
     })
   }
   // The same chain on different engines returns different sources: the input and every engine's output.
-  const disagreements = Object.values(returned).filter(r => Object.keys(r.outputs).length > 1 && new Set(Object.values(r.outputs).map(o => JSON.stringify(o))).size > 1)
-  return { kind: 'roundtrip', chains, scope: 'Meaning compares the 0.2 semantic projection of the original and the returned Carve source, both read by carve-js next2; list spacing, code group labels and reference spelling stay out of it. Spelling compares, per variant case, the spellings of its distinction. A variant whose source no longer holds its spelling in 0.2 is listed as not applicable.', summary, disagreements, rows }
+  // A refusal is counted in the chain's meaning errors and its message in `refused`, not listed per input.
+  const disagreements = Object.values(returned).filter(r => new Set(Object.values(r.outputs).filter(o => typeof o === 'string')).size > 1)
+  const refused = {}
+  for (const row of rows) if (row.error) (refused[row.chain] ??= {})[row.error] = (refused[row.chain][row.error] ?? 0) + 1
+  return { kind: 'roundtrip', chains, scope: 'Meaning compares the 0.2 semantic projection of the original and the returned Carve source, both read by carve-js next2; list spacing, code group labels and reference spelling stay out of it. Spelling compares, per variant case, the spellings of its distinction. A variant whose source no longer holds its spelling in 0.2 is listed as not applicable.', summary, refused, disagreements, rows }
 }
 
 export function runMeasurements02(selected = measurements02, options = {}) {

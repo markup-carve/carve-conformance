@@ -154,22 +154,26 @@ The lane also runs the four measurements of the 0.1 lane below on `next2`
 
 - **CommonMark spec and djot.js tests.** carve-js `next2` imports every example
   with `importDocument` (`markdown` or `djot`). carve-js, carve-php and carve-rs
-  `next2` each render that Carve source, and each render is compared with the
-  suite's HTML through the 0.2 HTML reader. The honesty outcome of the import
-  report is counted as above. The 0.1 declarations are not applied: their
+  `next2` each render that Carve source (`totals`). Each engine also imports
+  the example with its own `importDocument` and renders the result
+  (`nativeTotals`). Every render is compared with the suite's HTML through the
+  0.2 HTML reader, and the honesty outcome of the carve-js import report is
+  counted as above. An engine that refuses a format is counted under `refused`
+  with its message: carve-php `next2` reads Markdown and Djot only with the
+  optional `league/commonmark` and `php-collective/djot` packages, which the
+  provisioned install leaves out. The 0.1 declarations are not applied: their
   normalizations are written against 0.1 trees.
 - **Source agreement.** The generated sources of the 0.1 lane are parsed and
   rendered by each engine. Trees are checked against the 0.2 schema, and their
   positions against the source length in UTF-8 bytes, the 0.2 offset unit.
-- **Source roundtrip.** Carve goes through HTML, HTML with roundtrip carriers
-  and the canonical writer (`format`) on each engine, and through Markdown on
-  carve-js alone, since carve-php and carve-rs `next2` import HTML only. The
-  returned source is read by carve-js `next2`. A variant case whose source no
+- **Source roundtrip.** Carve goes through HTML, HTML with roundtrip carriers,
+  Markdown (the `markdown` export, read back as `gfm`) and the canonical writer
+  (`format`) on each engine. The returned source is read by carve-js `next2`. A variant case whose source no
   longer holds its spelling in 0.2, such as `~~~` fences, is listed as not
   applicable instead of being measured.
 
 Each measurement lists under `disagreements` every input on which the engines
-differ, with each engine's output. HTML is compared there on every element and
+that answered differ, with each engine's output. HTML is compared there on every element and
 attribute an engine writes. Like the other engine differences, a disagreement
 does not change the exit status. `--measurements=commonmark,djot` selects
 measurements, and `--measurements=none` skips them.

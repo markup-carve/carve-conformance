@@ -37,8 +37,10 @@ for (const [engine, result] of Object.entries(report.importers)) {
 const selected = arg('measurements') === 'none' ? [] : arg('measurements')?.split(',') ?? measurements02
 report.measurements = runMeasurements02(selected, { engines: ['javascript', ...engines] })
 for (const [name, m] of Object.entries(report.measurements)) {
-  for (const d of m.disagreements) console.log(`${name} ${d.example ?? `${d.mode ?? ''}${d.mode ? ' ' : ''}${d.id}`}: engines disagree`)
+  for (const d of m.disagreements) console.log(`${name} ${d.example ?? `${d.mode ?? ''}${d.mode ? ' ' : ''}${d.id}`}${d.stage ? ` (${d.stage})` : ''}: engines disagree`)
   if (m.totals) for (const [engine, t] of Object.entries(m.totals)) console.log(`${name} ${engine}: ${t.match} match, ${t.mismatch} mismatch, ${t.notComparable} not comparable, ${t.failed} failed`)
+  if (m.nativeTotals) for (const [engine, t] of Object.entries(m.nativeTotals)) console.log(`${name} ${engine} own import: ${t.match} match, ${t.mismatch} mismatch, ${t.notComparable} not comparable, ${t.failed} failed`)
+  for (const [engine, messages] of Object.entries(m.refused ?? {})) for (const [message, count] of Object.entries(messages)) console.log(`${name} ${engine} refused ${count} imports: ${message}`)
   if (m.honesty) console.log(`${name} importDocument honesty: ${JSON.stringify(m.honesty)}`)
   if (m.kind === 'source-agreement') console.log(`${name}: ${m.rows.filter(r => r.semanticAgreement && r.htmlAgreement).length} of ${m.rows.length} generated sources agree`)
   if (m.kind === 'roundtrip') for (const c of m.chains) { const s = m.summary[c.id]; console.log(`${name} ${c.id}: meaning ${s.meaning.kept}/${s.meaning.measured} kept, ${s.meaning.errors} errors; spelling ${Object.entries(s.spelling).map(([d, v]) => `${d} ${v.kept}/${v.measured}`).join(', ')}; ${s.notApplicable.length} not applicable`) }

@@ -18,6 +18,6 @@ for (const engine of ['php', 'rust']) {
     assert.equal(typeof carriers.ok, 'string')
     assert.equal(formatted.ok, 'A *b*\n')
     assert.equal(imported.ok.source, 'A *b*\n')
-    assert.match(markdown.error, /has no exportMarkdown call/)
+    assert.equal(markdown.ok, 'A\n')
   })
 }
