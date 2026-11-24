@@ -77,7 +77,7 @@
         "C2-B-174"
       ],
       "ticket": "markup-carve/carve-conformance#28",
-      "note": "No span crosses a table group; a mark that joins nothing is text."
+      "note": "No span crosses a table group; a mark that joins nothing is text. resources/spans-0.2.json measures the span cases under these rules."
     }
   }
 }

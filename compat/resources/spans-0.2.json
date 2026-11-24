@@ -1,0 +1,149 @@
+{
+  "description": "The span cases of tests/external-compat/cases.json under Carve 0.2: each authored 0.1 tree, migrated, and each HTML input, imported, is written to Carve source and parsed again. The lane still measures 0.1; this records what its span expectations become.",
+  "measuredAgainst": "carve next2 9a0ee00 (spec/0.2), carve-js next2 42644b7",
+  "ticket": "markup-carve/carve-conformance#28",
+  "clauses": [
+    "C2-B-172",
+    "C2-B-173",
+    "C2-B-174"
+  ],
+  "findings": [
+    "No case holds a span mark in Carve source, so none reaches a mark that joins nothing (C2-B-172, C2-B-173). No expectation depends on the 0.1 empty cell for a mark with no origin.",
+    "Every span in the cases stays inside its row group (C2-B-174). scripts/compat/tables.mjs already refuses a rowspan past its group, and the HTML adapter clamps one.",
+    "multiple-bodies-caption-widths-and-spans: the authored tree sets header on two placeholder cells. A mark that joins keeps its prefix for nothing else (C2-B-174), so the 0.2 writer reports field-unspellable; the 0.2 expectation keeps header on the origin cells only. The HTML input keeps both spans.",
+    "rich-table-combinations and fractional-widths-with-rich-table-fields are refused for the two-paragraph cell and the group attributes and columns, not for a span."
+  ],
+  "measured": {
+    "html-spanned-table": {
+      "tree": {
+        "spans": [
+          "table_body 0 row 0 cell 0 2x1"
+        ],
+        "result": "same spans"
+      },
+      "html": {
+        "spans": [
+          "table_body 0 row 0 cell 0 2x1"
+        ],
+        "result": "same spans"
+      }
+    },
+    "html-rowspan-table": {
+      "tree": {
+        "spans": [
+          "table_body 0 row 0 cell 0 1x2"
+        ],
+        "result": "same spans"
+      },
+      "html": {
+        "spans": [
+          "table_body 0 row 0 cell 0 1x2"
+        ],
+        "result": "same spans"
+      }
+    },
+    "rich-table-combinations": {
+      "tree": {
+        "spans": [
+          "table_body 1 row 0 cell 0 1x2"
+        ],
+        "result": "refused",
+        "diagnostics": [
+          "structure-unspellable /children/0/children/1/children/1/children/1",
+          "field-unspellable /children/0/children/0/attrs",
+          "field-unspellable /children/0/children/1/attrs",
+          "field-unspellable /children/0/children/2/attrs"
+        ]
+      },
+      "html": {
+        "spans": [
+          "table_body 1 row 0 cell 0 1x2"
+        ],
+        "result": "refused",
+        "diagnostics": [
+          "structure-unspellable /children/0/children/1/children/1/children/0",
+          "field-unspellable /children/0/children/0/attrs",
+          "field-unspellable /children/0/children/1/attrs",
+          "field-unspellable /children/0/children/2/attrs"
+        ]
+      }
+    },
+    "footer-caption-widths-and-rowspan": {
+      "tree": {
+        "spans": [
+          "table_body 1 row 0 cell 0 1x2"
+        ],
+        "result": "same spans"
+      },
+      "html": {
+        "spans": [
+          "table_body 1 row 0 cell 0 1x2"
+        ],
+        "result": "same spans"
+      }
+    },
+    "footer-caption-widths-without-head": {
+      "tree": {
+        "spans": [
+          "table_body 0 row 0 cell 0 1x2"
+        ],
+        "result": "same spans"
+      },
+      "html": {
+        "spans": [
+          "table_body 0 row 0 cell 0 1x2"
+        ],
+        "result": "same spans"
+      }
+    },
+    "footer-caption-widths-and-colspan": {
+      "tree": {
+        "spans": [
+          "table_body 1 row 0 cell 0 2x1"
+        ],
+        "result": "same spans"
+      },
+      "html": {
+        "spans": [
+          "table_body 1 row 0 cell 0 2x1"
+        ],
+        "result": "same spans"
+      }
+    },
+    "fractional-widths-with-rich-table-fields": {
+      "tree": {
+        "spans": [
+          "table_body 1 row 0 cell 0 1x2"
+        ],
+        "result": "refused",
+        "diagnostics": [
+          "structure-unspellable /children/0/children/1/children/1/children/1",
+          "field-unspellable /children/0/columns",
+          "field-unspellable /children/0/children/0/attrs",
+          "field-unspellable /children/0/children/1/attrs",
+          "field-unspellable /children/0/children/2/attrs"
+        ]
+      }
+    },
+    "multiple-bodies-caption-widths-and-spans": {
+      "tree": {
+        "spans": [
+          "table_head 0 row 0 cell 0 2x1",
+          "table_body 2 row 1 cell 0 1x2"
+        ],
+        "result": "refused",
+        "diagnostics": [
+          "field-unspellable /children/0/children/0/children/0/children/1/header",
+          "field-unspellable /children/0/children/2/children/2/children/0/header"
+        ]
+      },
+      "html": {
+        "spans": [
+          "table_head 0 row 0 cell 0 2x1",
+          "table_body 2 row 1 cell 0 1x2"
+        ],
+        "result": "same spans"
+      }
+    }
+  }
+}
