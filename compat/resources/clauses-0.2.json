@@ -23,7 +23,8 @@
         "C2-A-107"
       ],
       "ticket": "markup-carve/carve-conformance#23",
-      "note": "No resolved field: absent href or src means unresolved, the empty string an empty destination."
+      "note": "No resolved field: absent href or src means unresolved, the empty string an empty destination.",
+      "portedIn": "markup-carve/carve-conformance#36"
     },
     "CARVE-P12-029": {
       "status": "changed",
@@ -31,7 +32,8 @@
         "C2-A-077"
       ],
       "ticket": "markup-carve/carve-conformance#24",
-      "note": "A parsed definition never holds an empty href; a bare [r]: is paragraph text."
+      "note": "A parsed definition never holds an empty href; a bare [r]: is paragraph text.",
+      "portedIn": "markup-carve/carve-conformance#36"
     },
     "CARVE-P12-030": {
       "status": "holds",
@@ -47,7 +49,8 @@
         "C2-A-136"
       ],
       "ticket": "markup-carve/carve-conformance#25",
-      "note": "A block image is a paragraph with role image, not blockImage or a bare image."
+      "note": "A block image is a paragraph with role image, not blockImage or a bare image.",
+      "portedIn": "markup-carve/carve-conformance#36"
     },
     "CARVE-P12-056": {
       "status": "changed",
@@ -59,7 +62,8 @@
         "C2-A-018"
       ],
       "ticket": "markup-carve/carve-conformance#26",
-      "note": "The root always carries astVersion 2.0; a reader refuses only a higher major."
+      "note": "The root always carries astVersion 2.0; a reader refuses only a higher major.",
+      "portedIn": "markup-carve/carve-conformance#36"
     },
     "CARVE-P12-069": {
       "status": "changed",
@@ -67,7 +71,8 @@
         "C2-A-094"
       ],
       "ticket": "markup-carve/carve-conformance#27",
-      "note": "A continuation row leaves no node and no field; the break is source layout."
+      "note": "A continuation row leaves no node and no field; the break is source layout.",
+      "portedIn": "markup-carve/carve-conformance#37"
     },
     "CARVE-P9-002": {
       "status": "changed",

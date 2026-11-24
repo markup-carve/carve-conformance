@@ -4,6 +4,7 @@ import { cases02, checkCase, coveredByDeclaration, declaredDifference, runCompat
 import { envelope, parseTree } from '../scripts/compat/engines-0.2.mjs'
 import { document, fromMdast, semantics } from '../scripts/compat/trees-0.2.mjs'
 import { readForeign } from '../scripts/compat/tools-0.2.mjs'
+import { exportForeign } from '../scripts/compat/exporters-0.2.mjs'
 
 const javascriptTools = ['mdast', 'hast', 'commonmark', 'djot', 'asciidoctor']
 
@@ -82,7 +83,7 @@ test('a declared difference fails once it stops reproducing', async () => {
   assert.equal((await checkCase('mdast', fixture)).status, 'passed')
 })
 
-test('import losses name their path and keep a valid fallback; retired losses keep the structure', async () => {
+test('losses name their path and keep a valid fallback; retired losses keep the structure', async () => {
   const rows = await runLosses({ tools: javascriptTools })
   assert.deepEqual(rows.filter(r => r.status !== 'passed').map(r => r.error), [])
   assert.ok(rows.some(r => r.kind === 'retired-loss' && r.case === 'html-block-caption'))
@@ -104,4 +105,38 @@ test('a continuation row leaves no field: the cell holds its fragments joined by
   const fixture = cases02().find(c => c.id === 'continuation-row')
   assert.equal((await checkCase('hast', fixture)).status, 'passed')
   assert.ok(!JSON.stringify(parseTree(fixture.carve)).includes('cellWraps'))
+})
+
+test('the exporters write 0.2 trees back and report what a format cannot hold', async () => {
+  const tree = parseTree('A {_marked_} and [link](/u "t").\n\n- [x] done\n')
+  const md = exportForeign('mdast', tree)
+  assert.deepEqual(md.diagnostics.filter(d => d.fidelity !== 'normalized').map(d => d.path), ['/children/0/children/1'])
+  assert.match(md.source, /\[link\]\(\/u "t"\)/)
+  assert.match(exportForeign('djot', parseTree('- [x] done\n')).source, /\[[xX]\] done/)
+  const html = exportForeign('hast', parseTree('|= a |\n| b |\n')).source
+  assert.match(html, /<thead><tr><th>a<\/th><\/tr><\/thead><tbody><tr><td>b<\/td><\/tr><\/tbody>/)
+})
+
+test('table exports report a headerless GFM table and cells with several blocks', () => {
+  const cell = children => ({ type: 'table_cell', header: false, children })
+  const para = value => ({ type: 'paragraph', children: [{ type: 'text', value }] })
+  const tree = { type: 'document', astVersion: '2.0', children: [{ type: 'table', columns: [{ type: 'table_column' }], children: [{ type: 'table_body', children: [{ type: 'table_row', children: [cell([para('one'), para('two')])] }, { type: 'table_row', children: [cell([{ type: 'cell_paragraph', children: [] }])] }] }] }] }
+  validateTree(tree)
+  for (const tool of ['mdast', 'djot']) {
+    const out = exportForeign(tool, tree)
+    assert.ok(out.diagnostics.some(d => d.fidelity === 'degraded' && d.path === '/children/0/children/0/children/0/children/0/children'), tool)
+    assert.match(out.source, /one two/, tool)
+  }
+  assert.ok(exportForeign('mdast', tree).diagnostics.some(d => d.path === '/children/0/children' && d.fidelity === 'degraded'))
+})
+
+test('a Djot block caption keeps its text, and hast reports column attributes it cannot write', () => {
+  const body = [{ type: 'table_body', children: [{ type: 'table_row', children: [{ type: 'table_cell', header: false, children: [{ type: 'cell_paragraph', children: [{ type: 'text', value: 'x' }] }] }] }] }]
+  const para = value => ({ type: 'paragraph', children: [{ type: 'text', value }] })
+  const captioned = { type: 'document', astVersion: '2.0', children: [{ type: 'table', columns: [{ type: 'table_column' }], caption: { type: 'caption', children: [para('First'), para('Second')] }, children: body }] }
+  validateTree(captioned)
+  assert.match(exportForeign('djot', captioned).source, /First Second/)
+  const columnAttrs = { type: 'document', astVersion: '2.0', children: [{ type: 'table', columns: [{ type: 'table_column', attrs: { id: 'c' } }], children: body }] }
+  validateTree(columnAttrs)
+  assert.ok(exportForeign('hast', columnAttrs).diagnostics.some(d => d.path === '/children/0/columns/0/attrs' && d.fidelity === 'dropped'))
 })

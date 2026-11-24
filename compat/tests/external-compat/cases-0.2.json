@@ -3696,6 +3696,172 @@
           ]
         }
       }
+    },
+    "underline-export": {
+      "carve": "A {_marked_} word.\n"
+    },
+    "commonmark-strike-export": {
+      "carve": "A {~removed~} word.\n"
+    },
+    "pandoc-named-footnote-export": {
+      "expected": {
+        "path": "/children/0/children/1/key"
+      }
+    },
+    "pandoc-repeated-note-export": {
+      "expected": {
+        "path": "/children/0/children/3/key"
+      }
+    },
+    "pandoc-out-of-order-notes-export": {
+      "expected": {
+        "path": "/children/0/children/1/key"
+      }
+    },
+    "pandoc-repeated-note-shifts-later-label": {
+      "expected": {
+        "path": "/children/0/children/5/key"
+      }
+    },
+    "djot-multiple-descriptions-export": {
+      "expected": {
+        "path": "/children/0/children/2"
+      }
+    },
+    "gfm-column-width-export": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "width": 0.5
+              }
+            ],
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "x"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "gfm-column-valign-export": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "valign": "top"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "x"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "djot-headerless-alignment-export": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "x"
+                              }
+                            ]
+                          }
+                        ],
+                        "align": "right"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "path": "/children/0/children/0/children/0/children/0/align"
+      }
     }
   }
 }
