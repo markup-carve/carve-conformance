@@ -33,7 +33,11 @@ export function nativeCalls(engine, requests) {
   return requests.map(request => {
     const call = { parse: { call: 'parse', source: request.source }, decodeTree: { call: 'decodeTree', json: JSON.stringify(request.tree) }, write: { call: 'writeWithDiagnostics', tree: request.tree }, render: { call: 'render', tree: request.tree } }[request.call]
     let response
-    try { response = JSON.parse(run(binary, ['call'], JSON.stringify(call))) } catch (error) { response = JSON.parse(error.stdout || 'null') ?? { error: { message: error.message.split('\n')[0] } } }
+    // An error response exits non-zero; a crash, timeout or anything but a response stops the lane.
+    try { response = JSON.parse(run(binary, ['call'], JSON.stringify(call))) } catch (error) {
+      try { response = JSON.parse(error.stdout) } catch { throw error }
+      if (!response?.error) throw error
+    }
     if (response.error) return { error: `${response.error.name ?? 'error'}: ${response.error.message}` }
     const ok = response.ok
     return { ok: { parse: ok.tree, decodeTree: ok.tree, write: { source: ok.output, diagnostics: diagnosticPairs(ok.diagnostics) }, render: ok.html }[request.call] }
