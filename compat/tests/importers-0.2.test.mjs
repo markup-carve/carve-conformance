@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { existsSync } from 'node:fs'
 import test from 'node:test'
 import { checkImport, compareImporters, honesty02, importCalls, importInputs, reportClass02 } from '../scripts/compat/importers-0.2.mjs'
 import { parseTree } from '../scripts/compat/engines-0.2.mjs'
@@ -48,4 +49,13 @@ test('carve-php and carve-rs import HTML only; a contradiction keeps input, repo
   const [c] = result.rust.contradictions
   assert.deepEqual([c.tool, c.case, c.from, c.outcome, c.input, c.source, c.report], ['hast', 'one', 'html', 'silent-loss', '<p>A <strong>b</strong>.</p>', 'Lost.\n', []])
   assert.notDeepEqual(c.structure.foreign, c.structure.imported)
+})
+
+test('carve-php and carve-rs next2 answer importDocument for HTML', t => {
+  for (const engine of ['php', 'rust']) {
+    if (!existsSync(`.cache/engines/${engine}-next2`)) { t.diagnostic(`${engine} next2 absent`); continue }
+    const [ok, mapped] = importCalls(engine, [{ from: 'html', source: '<p>A <strong>b</strong>.</p>' }, { from: 'html', source: '<p><marquee>m</marquee></p>' }])
+    assert.equal(ok.ok.source, 'A *b*.\n')
+    assert.ok(mapped.ok.diagnostics.some(d => d.code === 'import-element-mapped' && d.foreignType === 'marquee'))
+  }
 })

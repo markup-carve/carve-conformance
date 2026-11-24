@@ -135,7 +135,7 @@ change the exit status. An engine that cannot run does.
 
 The lane also checks the report of `importDocument` against the structure the
 import renders (`scripts/compat/importers-0.2.mjs`). Every passed supported
-case of mdast (`gfm`), commonmark, cmark and md4c (`markdown`), djot and hast
+case without an authored tree, as in the 0.1 lane, of mdast (`gfm`), commonmark, cmark and md4c (`markdown`), djot and hast
 (`html`) is imported from its foreign source by carve-js `next2`; carve-php and
 carve-rs `next2` import the hast cases, since HTML is their only importer. The
 imported Carve source is rendered by carve-js `next2` and compared with the
