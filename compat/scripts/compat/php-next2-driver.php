@@ -29,6 +29,11 @@ foreach ($requests as $request) {
                 return ['source' => $written->source, 'diagnostics' => $diagnostics($written->diagnostics)];
             })(),
             'render' => Carve::render($tree),
+            'import' => (static function () use ($request): array {
+                $imported = Carve::importDocument($request['source'], ['from' => $request['from']]);
+
+                return ['source' => $imported->source, 'diagnostics' => array_map(static fn ($d): array => ['code' => $d->code, 'severity' => $d->severity, 'channel' => $d->channel, 'foreignType' => $d->foreignType], $imported->diagnostics)];
+            })(),
         }];
     } catch (Throwable $error) {
         $responses[] = ['error' => get_class($error) . ': ' . $error->getMessage()];

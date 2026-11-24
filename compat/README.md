@@ -133,6 +133,18 @@ the input, both outputs and every case that produced the input. A difference
 is a measurement, not a failure: it is never declared away, and it does not
 change the exit status. An engine that cannot run does.
 
+The lane also checks the report of `importDocument` against the structure the
+import renders (`scripts/compat/importers-0.2.mjs`). Every passed supported
+case of mdast (`gfm`), commonmark, cmark and md4c (`markdown`), djot and hast
+(`html`) is imported from its foreign source by carve-js `next2`; carve-php and
+carve-rs `next2` import the hast cases, since HTML is their only importer. The
+imported Carve source is rendered by carve-js `next2` and compared with the
+foreign rendering. An entry other than a hint names a loss (C2-M-080,
+C2-M-083). A loss nobody reported (`silent-loss`) and a reported loss with the
+structure intact (`false-loss`) are listed under `importers` in the report with
+the input, the report, the written source and both structures. Like an engine
+difference, they do not change the exit status.
+
 ```sh
 npm run compat:provision
 npm run compat:0.2 -- --report=reports/compat-0.2.json
