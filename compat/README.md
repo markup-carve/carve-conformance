@@ -122,8 +122,22 @@ holds the 0.2 one under `losses`. A loss the 0.2 tree can hold, such as a
 caption with blocks (C2-A-081), is listed there as retired and must read
 without a loss while keeping the structure it names.
 
+carve-php and carve-rs `next2` run on the same inputs, with carve-js `next2` as
+the oracle. Every distinct reference tree goes through `decodeTree` and
+`encodeTree`, `write` (with its diagnostics) and `render`, and every Carve
+source of a case goes through `parse` and `encodeTree`. carve-php is called
+through `scripts/compat/php-next2-driver.php`, carve-rs through `carve call`,
+both at the `php-next2` and `rust-next2` pins in `resources/engines.json`. An
+output that differs from carve-js is listed under `engines` in the report with
+the input, both outputs and every case that produced the input. A difference
+is a measurement, not a failure: it is never declared away, and it does not
+change the exit status. An engine that cannot run does.
+
 ```sh
+npm run compat:provision
 npm run compat:0.2 -- --report=reports/compat-0.2.json
+# carve-js only
+npm run compat:0.2 -- --engines=javascript
 ```
 
 The 0.1 lane, the website and the other measurements keep using the released

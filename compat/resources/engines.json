@@ -7,6 +7,16 @@
     "repository": "https://github.com/markup-carve/carve-rs.git",
     "revision": "0a56283f1e745643bc78cdd6fb11ac7344fb88c7"
   },
+  "php-next2": {
+    "repository": "https://github.com/markup-carve/carve-php.git",
+    "branch": "next2",
+    "revision": "9d782d2b778dc93ac6c39131fa448cfd5f97df72"
+  },
+  "rust-next2": {
+    "repository": "https://github.com/markup-carve/carve-rs.git",
+    "branch": "next2",
+    "revision": "bd95dbe6fa47bc21e9438867c32ca370ddfce5a1"
+  },
   "pandoc": {
     "version": "3.11",
     "archive": "https://github.com/jgm/pandoc/releases/download/3.11/pandoc-3.11-linux-amd64.tar.gz",

@@ -52,7 +52,7 @@ jobs:
       - name: Provision native readers
         run: |
           sudo apt-get update
-          sudo apt-get install -y php-cli php-xml cmark libmd4c-dev libmd4c-html0-dev
+          sudo apt-get install -y php-cli php-xml php-mbstring cmark libmd4c-dev libmd4c-html0-dev
           python -m pip install -r scripts/compat/requirements.txt
           mkdir -p .cache/compat reports
           cc -std=c99 -Wall -Wextra -Werror \
@@ -84,7 +84,7 @@ jobs:
           CARVE_COMPAT_PYTHON: python
           CARVE_PANDOC: .cache/pandoc/bin/pandoc
         run: npm run compat:check -- --report=reports/latest.json
-      - name: Measure Carve 0.2 reference trees against carve-js next2
+      - name: Measure Carve 0.2 reference trees against carve-js, carve-php and carve-rs next2
         env:
           CARVE_COMPAT_PYTHON: python
           CARVE_PANDOC: .cache/pandoc/bin/pandoc

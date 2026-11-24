@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto'
 const config = JSON.parse(readFileSync('resources/engines.json'))
 const run = (command, args, cwd = process.cwd()) => execFileSync(command, args, { cwd, stdio:'inherit', timeout:600000 })
 mkdirSync('.cache/engines', { recursive:true })
-for (const engine of ['php','rust']) {
+for (const engine of ['php','rust','php-next2','rust-next2']) {
   const root = resolve(`.cache/engines/${engine}`), pin = config[engine]
   const existing = existsSync(root)
   if (!existing) {
@@ -23,7 +23,8 @@ for (const engine of ['php','rust']) {
     run('git', ['fetch','--depth=1','origin',pin.revision], root)
     run('git', ['checkout','--detach',pin.revision], root)
   }
-  if (engine === 'rust') {
+  if (engine === 'php-next2') run('composer',['install','--no-dev','--no-interaction','--no-progress'],root)
+  if (engine.startsWith('rust')) {
     const target = resolve(process.env.CARGO_TARGET_DIR ?? '.cache/cargo-target')
     execFileSync('cargo', ['build','--release','--locked','--bin','carve'], { cwd:root, stdio:'inherit', timeout:600000, env:{...process.env,CARGO_TARGET_DIR:target} })
     mkdirSync(`${root}/bin`, {recursive:true}); copyFileSync(`${target}/release/carve`, `${root}/bin/carve`)
