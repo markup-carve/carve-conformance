@@ -22,7 +22,7 @@
         "C2-B-025"
       ],
       "ticket": "markup-carve/carve-conformance#30",
-      "note": "Retired in 0.1 by markup-carve/carve#3885."
+      "note": "Retired in 0.1 by markup-carve/carve#3885. The 0.1 reports name that ruling instead of the id."
     },
     "CARVE-P0-022": {
       "status": "retired",
@@ -30,7 +30,7 @@
         "C2-B-025"
       ],
       "ticket": "markup-carve/carve-conformance#30",
-      "note": "Retired in 0.1 by markup-carve/carve#3885."
+      "note": "Retired in 0.1 by markup-carve/carve#3885. The 0.1 reports name that ruling instead of the id."
     },
     "CARVE-P9-051": {
       "status": "holds",
@@ -46,7 +46,7 @@
         "C2-B-025"
       ],
       "ticket": "markup-carve/carve-conformance#30",
-      "note": "Retired in 0.1 by markup-carve/carve#3885."
+      "note": "Retired in 0.1 by markup-carve/carve#3885. The 0.1 reports name that ruling instead of the id."
     }
   }
 }

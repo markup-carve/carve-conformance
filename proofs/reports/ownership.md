@@ -34,7 +34,8 @@ the enclosing body's column, preserving indentation for the child parser.
 
 A quote opened on a list marker line with an open paragraph keeps its lazy
 continuation until the quote ends. Its over-indented continuation cannot
-independently establish an authored block base (CARVE-P0-021). A comment ends that quote paragraph, allowing a later opener to
+independently establish an authored block base. That 0.1 rule was retired by the
+one-column ruling of [Carve #3885](https://github.com/markup-carve/carve/issues/3885); in Carve 0.2 ownership is C2-B-025. A comment ends that quote paragraph, allowing a later opener to
 start a block in the surviving item. The [checker](https://github.com/markup-carve/carve/pull/2624),
 [JavaScript](https://github.com/markup-carve/carve-js/pull/2382) and
 [PHP](https://github.com/markup-carve/carve-php/pull/2752) changes account for the
