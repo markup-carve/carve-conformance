@@ -19,12 +19,14 @@
     "compat:provision": "node scripts/provision-engines.mjs && node scripts/provision-pandoc.mjs",
     "compat:source-agreement": "node scripts/source-agreement.mjs",
     "compat:published-mcp-receipt": "node scripts/published-mcp-receipt.mjs",
-    "compat:roundtrip": "node scripts/roundtrip.mjs"
+    "compat:roundtrip": "node scripts/roundtrip.mjs",
+    "compat:0.2": "node scripts/external-compat-0.2.mjs"
   },
   "devDependencies": {
     "@asciidoctor/core": "4.1.0",
     "@djot/djot": "0.3.2",
     "@markup-carve/carve": "github:markup-carve/carve-js#130a0423658b742ba9bda08e3ebf1ec31498072c",
+    "@markup-carve/carve-next2": "github:markup-carve/carve-js#42644b716ea55e55842953a2733fcccfea3718b6",
     "@playwright/test": "1.63.0",
     "ajv": "8.20.0",
     "commonmark": "0.31.2",

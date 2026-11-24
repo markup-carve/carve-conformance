@@ -84,6 +84,11 @@ jobs:
           CARVE_COMPAT_PYTHON: python
           CARVE_PANDOC: .cache/pandoc/bin/pandoc
         run: npm run compat:check -- --report=reports/latest.json
+      - name: Measure Carve 0.2 reference trees against carve-js next2
+        env:
+          CARVE_COMPAT_PYTHON: python
+          CARVE_PANDOC: .cache/pandoc/bin/pandoc
+        run: npm run compat:0.2 -- --report=reports/compat-0.2.json
       - name: Measure CommonMark spec examples (measurement, no gate)
         env:
           CARVE_PANDOC: .cache/pandoc/bin/pandoc
@@ -118,6 +123,7 @@ jobs:
           name: compatibility-evidence
           path: |
             compat/reports/latest.json
+            compat/reports/compat-0.2.json
             compat/reports/source-agreement.json
             compat/reports/commonmark.json
             compat/reports/djot.json

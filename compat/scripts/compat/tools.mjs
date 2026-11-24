@@ -92,7 +92,7 @@ export async function readForeign(tool, source, format) {
   return { ast, html, diagnostics: ctx.diagnostics, version, ...(tool==='pandoc'?{foreignAst:raw}:{}), ...(independentAst ? {independentAst,independentSource,independentDiagnostics} : {}) }
 }
 
-function cmarkTree(records) {
+export function cmarkTree(records) {
   const map = record => {
     const kind = Object.keys(record).find(k => k !== ':@')
     if (!kind || kind.startsWith('?')) return null

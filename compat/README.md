@@ -92,6 +92,31 @@ native selections must include JavaScript to provide the mapped baseline.
 `--tools=mdast,djot` measures a narrower selection and records every unmeasured
 target. Missing readers fail the full sweep instead of becoming skips.
 
+## Carve 0.2 reference trees
+
+A second lane measures the same supported cases against the Carve 0.2 tree
+contract. Its adapters (`scripts/compat/trees-0.2.mjs`, `tools-0.2.mjs`) build
+0.2 trees straight from the foreign parsers. They never call an engine's
+migration code, so a migration bug cannot hide in the reference tree
+([ruling on #22](https://github.com/markup-carve/carve-conformance/issues/22)). Every tree validates against `resources/ast-schema-0.2.json`,
+vendored from the carve `next2` revision in `resources/provenance-0.2.json`, and
+its root carries `astVersion` `"2.0"`.
+
+For each case and reader the lane compares the mapped tree with the carve-js
+`next2` parse of the case's Carve source, then checks JSON interchange, the
+envelope, the written Carve source and the rendered HTML. Where a 0.1 source
+reads differently in 0.2, `tests/external-compat/cases-0.2.json` holds the 0.2
+spelling. A reader that cannot reach the 0.2 reading is declared there with the
+clause that decides it, and a declaration fails once the difference stops
+reproducing. Cases that only this lane measures are listed there as `added`.
+
+```sh
+npm run compat:0.2 -- --report=reports/compat-0.2.json
+```
+
+The 0.1 lane, the website and the other measurements keep using the released
+engines until Carve 0.2.0 ships.
+
 ## CommonMark spec examples
 
 This measurement lane imports all 652 CommonMark 0.31.2 spec examples with each

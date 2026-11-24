@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "cases": {
+    "thematic-break": {
+      "carve": "Before.\n\n***\n\nAfter.\n"
+    },
+    "gfm-strike": {
+      "carve": "A {~deleted~} word.\n"
+    },
+    "adjacent-sibling-lists": {
+      "declared": {
+        "docutils": {
+          "clause": "C2-B-062",
+          "reason": "Docutils and AsciiDoc do not encode list spacing, so their adapters read loose lists; a list is loose only when a blank line stands between two of its items, so these one-item lists are tight in 0.2 and no Carve source spells them loose."
+        },
+        "asciidoctor": {
+          "clause": "C2-B-062",
+          "reason": "Docutils and AsciiDoc do not encode list spacing, so their adapters read loose lists; a list is loose only when a blank line stands between two of its items, so these one-item lists are tight in 0.2 and no Carve source spells them loose."
+        }
+      }
+    },
+    "bare-reference-definition": {
+      "declared": {
+        "*": {
+          "clause": "C2-A-107",
+          "reason": "A bare [r]: is paragraph text (C2-A-077), and the unresolved use stays a link node without href in the 0.2 tree; Markdown readers keep the use as plain text. Both render the same text."
+        }
+      }
+    },
+    "list-before-quote": {
+      "declared": {
+        "docutils": {
+          "clause": "C2-B-062",
+          "reason": "Docutils and AsciiDoc do not encode list spacing, so their adapters read loose lists; a list is loose only when a blank line stands between two of its items, so these one-item lists are tight in 0.2 and no Carve source spells them loose."
+        }
+      }
+    },
+    "basic-table": {
+      "pending": {
+        "ticket": "markup-carve/carve-conformance#27",
+        "reason": "Table adapters move to the 0.2 table groups, cell paragraphs and columns in the table stage."
+      }
+    },
+    "table-inline-combinations": {
+      "pending": {
+        "ticket": "markup-carve/carve-conformance#27",
+        "reason": "Table adapters move to the 0.2 table groups, cell paragraphs and columns in the table stage."
+      }
+    },
+    "note-in-table-cell": {
+      "pending": {
+        "ticket": "markup-carve/carve-conformance#27",
+        "reason": "Table adapters move to the 0.2 table groups, cell paragraphs and columns in the table stage."
+      }
+    }
+  },
+  "added": [
+    {
+      "id": "empty-destination-link",
+      "clause": "C2-A-107",
+      "carve": "A [x]() link.\n",
+      "markdown": "A [x]() link.\n",
+      "djot": "A [x]() link.\n",
+      "html": "<p>A <a href=\"\">x</a> link.</p>",
+      "pandocMarkdown": "A [x]() link.\n",
+      "tools": [
+        "mdast",
+        "hast",
+        "commonmark",
+        "cmark",
+        "djot",
+        "md4c",
+        "pandoc"
+      ]
+    },
+    {
+      "id": "block-image",
+      "clause": "C2-A-136",
+      "carve": "![alt](a.png)\n",
+      "markdown": "![alt](a.png)\n",
+      "djot": "![alt](a.png)\n",
+      "html": "<p><img src=\"a.png\" alt=\"alt\"></p>",
+      "rst": ".. image:: a.png\n   :alt: alt\n",
+      "asciidoc": "image::a.png[alt]\n",
+      "pandocMarkdown": "![alt](a.png)\n",
+      "tools": [
+        "mdast",
+        "hast",
+        "commonmark",
+        "cmark",
+        "djot",
+        "docutils",
+        "asciidoctor",
+        "md4c",
+        "pandoc"
+      ]
+    },
+    {
+      "id": "block-image-empty-source",
+      "clause": "C2-A-107",
+      "carve": "![alt]()\n",
+      "markdown": "![alt]()\n",
+      "djot": "![alt]()\n",
+      "html": "<p><img src=\"\" alt=\"alt\"></p>",
+      "tools": [
+        "mdast",
+        "hast",
+        "commonmark",
+        "cmark",
+        "djot",
+        "md4c"
+      ]
+    },
+    {
+      "id": "defined-reference-link",
+      "clause": "C2-A-106",
+      "carve": "A [x][r] b.\n\n[r]: /u\n",
+      "markdown": "A [x][r] b.\n\n[r]: /u\n",
+      "djot": "A [x][r] b.\n\n[r]: /u\n",
+      "tools": [
+        "mdast",
+        "commonmark",
+        "cmark",
+        "djot",
+        "md4c"
+      ]
+    },
+    {
+      "id": "bare-reference-definition",
+      "clause": "C2-A-077",
+      "carve": "A [x][r] b.\n\n[r]:\n",
+      "markdown": "A [x][r] b.\n\n[r]:\n",
+      "tools": [
+        "mdast",
+        "commonmark",
+        "cmark",
+        "md4c"
+      ]
+    }
+  ]
+}
