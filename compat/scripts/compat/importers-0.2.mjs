@@ -9,7 +9,8 @@ import { authoredAttributes, htmlView } from './check-0.2.mjs'
 
 // mdast reads with remark-gfm; the other Markdown readers are CommonMark.
 export const importFormats02 = { mdast: 'gfm', commonmark: 'markdown', cmark: 'markdown', md4c: 'markdown', djot: 'djot', hast: 'html' }
-export const importerEngines02 = { javascript: ['gfm', 'markdown', 'djot', 'html'], php: ['html'], rust: ['html'] }
+const allFormats = ['gfm', 'markdown', 'djot', 'html']
+export const importerEngines02 = { javascript: allFormats, php: allFormats, rust: allFormats }
 export const honestyOutcomes02 = ['ok', 'reported', 'silent-loss', 'false-loss', 'refused']
 
 // C2-M-080, C2-M-083: every importer code is a render-loss entry; only `import-whitespace-normalized` (a hint) changes no visible text.

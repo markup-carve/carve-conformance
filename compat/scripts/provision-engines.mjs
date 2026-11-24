@@ -23,7 +23,17 @@ for (const engine of ['php','rust','php-next2','rust-next2']) {
     run('git', ['fetch','--depth=1','origin',pin.revision], root)
     run('git', ['checkout','--detach',pin.revision], root)
   }
-  if (engine === 'php-next2') run('composer',['install','--no-dev','--no-interaction','--no-progress'],root)
+  if (engine === 'php-next2') {
+    // The Markdown and Djot importers need these optional packages; the rest stays no-dev.
+    const manifest = JSON.parse(readFileSync(`${root}/composer.json`))
+    for (const name of ['league/commonmark','php-collective/djot']) {
+      const constraint = manifest['require-dev']?.[name]
+      if (!constraint) throw new Error(`carve-php composer.json has no require-dev constraint for ${name}`)
+      manifest.require[name] = constraint
+    }
+    writeFileSync(`${root}/_composer.provision.json`, JSON.stringify(manifest, null, 2)+'\n')
+    execFileSync('composer', ['update','--no-dev','--no-interaction','--no-progress'], { cwd:root, stdio:'inherit', timeout:600000, env:{...process.env,COMPOSER:'_composer.provision.json'} })
+  }
   if (engine.startsWith('rust')) {
     const target = resolve(process.env.CARGO_TARGET_DIR ?? '.cache/cargo-target')
     execFileSync('cargo', ['build','--release','--locked','--bin','carve'], { cwd:root, stdio:'inherit', timeout:600000, env:{...process.env,CARGO_TARGET_DIR:target} })
