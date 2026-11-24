@@ -239,6 +239,11 @@ schema snapshot and its provenance together when updating the contract.
 whether it still holds in Carve 0.2 and which 0.2 clauses replace it. The lane
 still measures 0.1; a test fails when the lane cites a rule the file does not list.
 
+`resources/spans-0.2.json` records what the table span cases become under the
+0.2 span rules (C2-B-172 to C2-B-174), measured through carve-js `next2`.
+Refresh it with `node scripts/spans-0.2.mjs <built carve-js next2 checkout>`,
+or add `--check` to compare. A test fails when a span case has no entry.
+
 The pinned Djot writer cannot serialize hard breaks. A tested adapter workaround
 keeps those cases measurable and emits a diagnostic. [Djot upstream PR #158](https://github.com/jgm/djot.js/pull/158)
 merged the native fix on October 2, 2026. Remove the workaround only after a pinned version
