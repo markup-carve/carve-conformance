@@ -36,21 +36,3542 @@
       }
     },
     "basic-table": {
-      "pending": {
-        "ticket": "markup-carve/carve-conformance#27",
-        "reason": "Table adapters move to the 0.2 table groups, cell paragraphs and columns in the table stage."
-      }
+      "carve": "|= Name |= Value |\n| Alpha | *bold* |\n| Empty | |\n"
     },
     "table-inline-combinations": {
-      "pending": {
-        "ticket": "markup-carve/carve-conformance#27",
-        "reason": "Table adapters move to the 0.2 table groups, cell paragraphs and columns in the table stage."
-      }
+      "carve": "|= Name |= Detail |\n| Café 😀 | [link](/path?q=1) |\n| `x < y` | /soft/ and *bold* |\n"
     },
     "note-in-table-cell": {
-      "pending": {
-        "ticket": "markup-carve/carve-conformance#27",
-        "reason": "Table adapters move to the 0.2 table groups, cell paragraphs and columns in the table stage."
+      "carve": "|= Name |= Note |\n| Alpha | word[^1] |\n\n[^1]: Table note.\n"
+    },
+    "html-spanned-table": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              },
+              {
+                "type": "table_column"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Wide cell"
+                              }
+                            ]
+                          }
+                        ],
+                        "colspan": 2
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "span": "colspan",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "html-table-caption": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              }
+            ],
+            "caption": {
+              "type": "caption",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "Caption."
+                    }
+                  ]
+                }
+              ]
+            },
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "x"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "html-rowspan-table": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              },
+              {
+                "type": "table_column"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Merged"
+                              }
+                            ]
+                          }
+                        ],
+                        "rowspan": 2
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "first"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "span": "rowspan",
+                        "children": []
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "second"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "html-table-section-attributes": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "id": "head"
+                }
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "x"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [
+        {
+          "code": "field-unspellable",
+          "path": "/children/0/children/0/attrs"
+        }
+      ],
+      "sourceChanges": [
+        {
+          "path": "/children/0/children/0/attrs",
+          "before": {
+            "id": "head"
+          }
+        }
+      ]
+    },
+    "html-table-footer-partition": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "x"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_foot",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "html-block-table-cell": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "One"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "list",
+                            "marker": {
+                              "kind": "bullet",
+                              "char": "-"
+                            },
+                            "spacing": "tight",
+                            "children": [
+                              {
+                                "type": "list_item",
+                                "children": [
+                                  {
+                                    "type": "paragraph",
+                                    "children": [
+                                      {
+                                        "type": "text",
+                                        "value": "item"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [
+        {
+          "code": "structure-unspellable",
+          "path": "/children/0/children/0/children/0/children/0"
+        },
+        {
+          "code": "structure-unspellable",
+          "path": "/children/0/children/0/children/0/children/0/children/1/children/0"
+        },
+        {
+          "code": "structure-unspellable",
+          "path": "/children/0/children/0/children/0/children/0/children/1/children/0/children/0"
+        }
+      ],
+      "sourceChanges": [
+        {
+          "path": "/children/0/children/0/children/0/children/0/children/0/children/0/value",
+          "before": "One",
+          "after": "One item"
+        },
+        {
+          "path": "/children/0/children/0/children/0/children/0/children/0/type",
+          "before": "paragraph",
+          "after": "cell_paragraph"
+        },
+        {
+          "path": "/children/0/children/0/children/0/children/0/children/1",
+          "before": {
+            "type": "list",
+            "marker": {
+              "kind": "bullet"
+            },
+            "spacing": "tight",
+            "children": [
+              {
+                "type": "list_item",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "item"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "pandoc-table-caption": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              },
+              {
+                "type": "table_column"
+              }
+            ],
+            "caption": {
+              "type": "caption",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "Caption."
+                    }
+                  ]
+                }
+              ]
+            },
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "B"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "x"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "y"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "pandoc-table-alignment": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "align": "left"
+              },
+              {
+                "type": "table_column",
+                "align": "right"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "B"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "x"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "y"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "pandoc-table-widths": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "width": 0.4
+              },
+              {
+                "type": "table_column",
+                "width": 0.6
+              }
+            ],
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "B"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "x"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "y"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "pandoc-block-table-cell": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "width": 0.1111111111111111
+              },
+              {
+                "type": "table_column",
+                "width": 0.1111111111111111
+              }
+            ],
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "B"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "one"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "two"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "x"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "y"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [
+        {
+          "code": "structure-unspellable",
+          "path": "/children/0/children/1/children/0/children/0"
+        },
+        {
+          "code": "structure-unspellable",
+          "path": "/children/0/children/1/children/0/children/1"
+        }
+      ],
+      "sourceChanges": [
+        {
+          "path": "/children/0/children/1/children/0/children/0/children/0/children/0/value",
+          "before": "one",
+          "after": "one two"
+        },
+        {
+          "path": "/children/0/children/1/children/0/children/0/children/0/type",
+          "before": "paragraph",
+          "after": "cell_paragraph"
+        },
+        {
+          "path": "/children/0/children/1/children/0/children/0/children/1",
+          "before": {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "text",
+                "value": "two"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/children/0/children/1/children/0/children/1/children/0/children/0/value",
+          "before": "x",
+          "after": "x y"
+        },
+        {
+          "path": "/children/0/children/1/children/0/children/1/children/0/type",
+          "before": "paragraph",
+          "after": "cell_paragraph"
+        },
+        {
+          "path": "/children/0/children/1/children/0/children/1/children/1",
+          "before": {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "text",
+                "value": "y"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "rich-table-combinations": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "width": 0.4
+              },
+              {
+                "type": "table_column",
+                "width": 0.6
+              }
+            ],
+            "caption": {
+              "type": "caption",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "A "
+                    },
+                    {
+                      "type": "strong",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "rich"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "value": " table"
+                    }
+                  ]
+                }
+              ]
+            },
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "B"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "id": "head"
+                }
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Merged"
+                              }
+                            ]
+                          }
+                        ],
+                        "rowspan": 2,
+                        "attrs": {
+                          "id": "value",
+                          "classes": [
+                            "token"
+                          ]
+                        }
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "one"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "span": "rowspan",
+                        "children": []
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Two paragraphs."
+                              }
+                            ]
+                          },
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "emphasis",
+                                "children": [
+                                  {
+                                    "type": "text",
+                                    "value": "Second"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "classes": [
+                    "measurements"
+                  ],
+                  "keyValues": [
+                    [
+                      "foo",
+                      "bar"
+                    ]
+                  ]
+                }
+              },
+              {
+                "type": "table_foot",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "id": "foot"
+                }
+              }
+            ],
+            "attrs": {
+              "id": "data"
+            }
+          }
+        ]
+      },
+      "sourceDiagnostics": [
+        {
+          "code": "structure-unspellable",
+          "path": "/children/0/children/1/children/1/children/1"
+        },
+        {
+          "code": "field-unspellable",
+          "path": "/children/0/children/0/attrs"
+        },
+        {
+          "code": "field-unspellable",
+          "path": "/children/0/children/1/attrs"
+        },
+        {
+          "code": "field-unspellable",
+          "path": "/children/0/children/2/attrs"
+        }
+      ],
+      "sourceChanges": [
+        {
+          "path": "/children/0/children/0/attrs",
+          "before": {
+            "id": "head"
+          }
+        },
+        {
+          "path": "/children/0/children/1/attrs",
+          "before": {
+            "classes": [
+              "measurements"
+            ],
+            "keyValues": [
+              [
+                "foo",
+                "bar"
+              ]
+            ]
+          }
+        },
+        {
+          "path": "/children/0/children/1/children/1/children/1/children/0/children/0/value",
+          "before": "Two paragraphs.",
+          "after": "Two paragraphs. "
+        },
+        {
+          "path": "/children/0/children/1/children/1/children/1/children/0/children/1",
+          "after": {
+            "children": [
+              {
+                "type": "text",
+                "value": "Second"
+              }
+            ],
+            "type": "emphasis"
+          }
+        },
+        {
+          "path": "/children/0/children/1/children/1/children/1/children/0/type",
+          "before": "paragraph",
+          "after": "cell_paragraph"
+        },
+        {
+          "path": "/children/0/children/1/children/1/children/1/children/1",
+          "before": {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "emphasis",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Second"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "path": "/children/0/children/2/attrs",
+          "before": {
+            "id": "foot"
+          }
+        }
+      ]
+    },
+    "gfm-table-alignment": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "align": "left"
+              },
+              {
+                "type": "table_column",
+                "align": "right"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Header Alpha"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Header Beta"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Cell Gamma"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Cell Delta"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "djot-caption-and-alignment": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              },
+              {
+                "type": "table_column"
+              }
+            ],
+            "caption": {
+              "type": "caption",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "A "
+                    },
+                    {
+                      "type": "strong",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "caption"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ],
+                        "align": "left"
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "B"
+                              }
+                            ]
+                          }
+                        ],
+                        "align": "right"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "x"
+                              }
+                            ]
+                          }
+                        ],
+                        "align": "left"
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "y"
+                              }
+                            ]
+                          }
+                        ],
+                        "align": "right"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "pandoc-multiple-body-groups": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              },
+              {
+                "type": "table_column"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Name"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Value"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "First group"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Unit"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Alpha"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "rowHeadColumns": 1
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Second group"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Unit"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Beta"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "2"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "rowHeadColumns": 1
+              },
+              {
+                "type": "table_foot",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "footer-caption-widths-and-rowspan": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "width": 0.4
+              },
+              {
+                "type": "table_column",
+                "width": 0.6
+              }
+            ],
+            "caption": {
+              "type": "caption",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "A "
+                    },
+                    {
+                      "type": "strong",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "rich"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "value": " table"
+                    }
+                  ]
+                }
+              ]
+            },
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "B"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Merged"
+                              }
+                            ]
+                          }
+                        ],
+                        "rowspan": 2,
+                        "attrs": {
+                          "id": "value",
+                          "classes": [
+                            "token"
+                          ]
+                        }
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "one"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "span": "rowspan",
+                        "children": []
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Two paragraphs. "
+                              },
+                              {
+                                "type": "emphasis",
+                                "children": [
+                                  {
+                                    "type": "text",
+                                    "value": "Second"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_foot",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "attrs": {
+              "id": "data"
+            }
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "footer-caption-widths-without-head": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "width": 0.4
+              },
+              {
+                "type": "table_column",
+                "width": 0.6
+              }
+            ],
+            "caption": {
+              "type": "caption",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "A "
+                    },
+                    {
+                      "type": "strong",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "rich"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "value": " table"
+                    }
+                  ]
+                }
+              ]
+            },
+            "children": [
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Merged"
+                              }
+                            ]
+                          }
+                        ],
+                        "rowspan": 2,
+                        "attrs": {
+                          "id": "value",
+                          "classes": [
+                            "token"
+                          ]
+                        }
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "one"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "span": "rowspan",
+                        "children": []
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Two paragraphs. "
+                              },
+                              {
+                                "type": "emphasis",
+                                "children": [
+                                  {
+                                    "type": "text",
+                                    "value": "Second"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_foot",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "attrs": {
+              "id": "data"
+            }
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "footer-caption-widths-and-colspan": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "width": 0.4
+              },
+              {
+                "type": "table_column",
+                "width": 0.6
+              }
+            ],
+            "caption": {
+              "type": "caption",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "A "
+                    },
+                    {
+                      "type": "strong",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "rich"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "value": " table"
+                    }
+                  ]
+                }
+              ]
+            },
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "B"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Merged"
+                              }
+                            ]
+                          }
+                        ],
+                        "colspan": 2,
+                        "attrs": {
+                          "id": "value",
+                          "classes": [
+                            "token"
+                          ]
+                        }
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "span": "colspan",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "next"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Two paragraphs. "
+                              },
+                              {
+                                "type": "emphasis",
+                                "children": [
+                                  {
+                                    "type": "text",
+                                    "value": "Second"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_foot",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "attrs": {
+              "id": "data"
+            }
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "fractional-widths-with-rich-table-fields": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "width": 0.013
+              },
+              {
+                "type": "table_column",
+                "width": 0.987
+              }
+            ],
+            "caption": {
+              "type": "caption",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "A "
+                    },
+                    {
+                      "type": "strong",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "rich"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "value": " table"
+                    }
+                  ]
+                }
+              ]
+            },
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "B"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "id": "head"
+                }
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Merged"
+                              }
+                            ]
+                          }
+                        ],
+                        "rowspan": 2,
+                        "attrs": {
+                          "id": "value",
+                          "classes": [
+                            "token"
+                          ]
+                        }
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "one"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "span": "rowspan",
+                        "children": []
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Two paragraphs."
+                              }
+                            ]
+                          },
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "emphasis",
+                                "children": [
+                                  {
+                                    "type": "text",
+                                    "value": "Second"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "classes": [
+                    "measurements"
+                  ],
+                  "keyValues": [
+                    [
+                      "foo",
+                      "bar"
+                    ]
+                  ]
+                }
+              },
+              {
+                "type": "table_foot",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "attrs": {
+                  "id": "foot"
+                }
+              }
+            ],
+            "attrs": {
+              "id": "data"
+            }
+          }
+        ]
+      },
+      "sourceDiagnostics": [
+        {
+          "code": "structure-unspellable",
+          "path": "/children/0/children/1/children/1/children/1"
+        },
+        {
+          "code": "field-unspellable",
+          "path": "/children/0/columns"
+        },
+        {
+          "code": "field-unspellable",
+          "path": "/children/0/children/0/attrs"
+        },
+        {
+          "code": "field-unspellable",
+          "path": "/children/0/children/1/attrs"
+        },
+        {
+          "code": "field-unspellable",
+          "path": "/children/0/children/2/attrs"
+        }
+      ],
+      "sourceChanges": [
+        {
+          "path": "/children/0/children/0/attrs",
+          "before": {
+            "id": "head"
+          }
+        },
+        {
+          "path": "/children/0/children/1/attrs",
+          "before": {
+            "classes": [
+              "measurements"
+            ],
+            "keyValues": [
+              [
+                "foo",
+                "bar"
+              ]
+            ]
+          }
+        },
+        {
+          "path": "/children/0/children/1/children/1/children/1/children/0/children/0/value",
+          "before": "Two paragraphs.",
+          "after": "Two paragraphs. "
+        },
+        {
+          "path": "/children/0/children/1/children/1/children/1/children/0/children/1",
+          "after": {
+            "children": [
+              {
+                "type": "text",
+                "value": "Second"
+              }
+            ],
+            "type": "emphasis"
+          }
+        },
+        {
+          "path": "/children/0/children/1/children/1/children/1/children/0/type",
+          "before": "paragraph",
+          "after": "cell_paragraph"
+        },
+        {
+          "path": "/children/0/children/1/children/1/children/1/children/1",
+          "before": {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "emphasis",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Second"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "path": "/children/0/children/2/attrs",
+          "before": {
+            "id": "foot"
+          }
+        },
+        {
+          "path": "/children/0/columns/0/width",
+          "before": 0.013,
+          "after": 0.013000000000000001
+        }
+      ]
+    },
+    "multiple-bodies-caption-widths-and-spans": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "width": 0.333
+              },
+              {
+                "type": "table_column",
+                "width": 0.667
+              }
+            ],
+            "caption": {
+              "type": "caption",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "Groups"
+                    }
+                  ]
+                }
+              ]
+            },
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "All"
+                              }
+                            ]
+                          }
+                        ],
+                        "colspan": 2
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "span": "colspan",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "First"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Unit"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "rowHeadColumns": 1
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Second"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Unit"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "B"
+                              }
+                            ]
+                          }
+                        ],
+                        "rowspan": 2
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "2"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "span": "rowspan",
+                        "children": []
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "3"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "rowHeadColumns": 1
+              },
+              {
+                "type": "table_foot",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Total"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "6"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "empty-body-before-intermediate-header": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              },
+              {
+                "type": "table_column"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_body",
+                "children": []
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Group"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Unit"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "a"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "b"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": [],
+      "declared": {
+        "hast": {
+          "clause": "C2-H-055",
+          "check": "html-structure",
+          "reason": "An empty table group is not written (C2-H-055), so Carve HTML has no empty tbody where the source HTML has one; the tree keeps the group."
+        }
+      }
+    },
+    "head-and-foot-with-no-bodies": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              },
+              {
+                "type": "table_column"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_head",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "H"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": true,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "G"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_foot",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "F"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "T"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "plain-adjacent-bodies-with-precise-widths": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column",
+                "width": 0.333
+              },
+              {
+                "type": "table_column",
+                "width": 0.667
+              }
+            ],
+            "children": [
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "a"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "b"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "c"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "d"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [],
+      "sourceChanges": []
+    },
+    "middle-and-trailing-empty-table-bodies": {
+      "ast": {
+        "type": "document",
+        "astVersion": "2.0",
+        "children": [
+          {
+            "type": "table",
+            "columns": [
+              {
+                "type": "table_column"
+              },
+              {
+                "type": "table_column"
+              }
+            ],
+            "children": [
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "A"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": [],
+                "attrs": {
+                  "classes": [
+                    "gap"
+                  ]
+                }
+              },
+              {
+                "type": "table_body",
+                "children": [
+                  {
+                    "type": "table_row",
+                    "children": [
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "B"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "table_cell",
+                        "header": false,
+                        "children": [
+                          {
+                            "type": "cell_paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "2"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "table_body",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "sourceDiagnostics": [
+        {
+          "code": "field-unspellable",
+          "path": "/children/0/children/1/attrs"
+        }
+      ],
+      "sourceChanges": [
+        {
+          "path": "/children/0/children/1/attrs",
+          "before": {
+            "classes": [
+              "gap"
+            ]
+          }
+        }
+      ],
+      "declared": {
+        "hast": {
+          "clause": "C2-H-055",
+          "check": "html-structure",
+          "reason": "An empty table group is not written (C2-H-055), so Carve HTML has no empty tbody where the source HTML has one; the tree keeps the group."
+        }
       }
     }
   },
@@ -136,6 +3657,29 @@
         "cmark",
         "md4c"
       ]
+    },
+    {
+      "id": "continuation-row",
+      "clause": "C2-A-094",
+      "carve": "| a | b |\n+ c | d |\n",
+      "html": "<table><tr><td>a c</td><td>b d</td></tr></table>",
+      "tools": [
+        "hast"
+      ]
     }
-  ]
+  ],
+  "losses": {
+    "pandoc-block-caption": {
+      "retired": {
+        "clause": "C2-A-081",
+        "reason": "A caption holds blocks in 0.2 (C2-A-081), so the block caption is kept and no loss is reported."
+      }
+    },
+    "html-block-caption": {
+      "retired": {
+        "clause": "C2-A-081",
+        "reason": "A caption holds blocks in 0.2 (C2-A-081), so the block caption is kept and no loss is reported."
+      }
+    }
+  }
 }

@@ -1,8 +1,29 @@
 // Carve 0.2 reference trees, built from the foreign parsers without any engine code.
 import { find, html } from 'property-information'
-import { coalesce, context, parseHtml, plain, text } from './trees.mjs'
+import { coalesce, context as foreignContext, parseHtml, text } from './trees.mjs'
+import { htmlLayout } from './tables.mjs'
 
-export { coalesce, context, parseHtml, plain, text }
+export { coalesce, parseHtml, text }
+
+export function context(tool) {
+  const ctx = foreignContext(tool)
+  ctx.unsupported = (node, path, block = false) => {
+    ctx.note(path, 'unsupported-node', 'degraded', `Unsupported ${node.type ?? node.tag ?? node.tagName ?? node.context}; retained readable text.`)
+    const value = plain(node)
+    return block ? paragraph([text(value)]) : text(value)
+  }
+  return ctx
+}
+
+// Readable text of a foreign node or a 0.2 tree, slots included.
+export function plain(node) {
+  if (typeof node === 'string') return node
+  if (Array.isArray(node)) return node.map(plain).join('')
+  if (!node || typeof node !== 'object') return ''
+  const own = node.value ?? node.text ?? node.literal ?? node.content ?? node.alt ?? node.properties?.alt
+  if (own !== undefined && typeof own !== 'object') return String(own)
+  return [node.caption, node.short, node.children ?? node.items ?? node.rows ?? node.cells ?? node.blocks].map(plain).join('')
+}
 export const AST_VERSION = '2.0'
 
 export const document = children => blockImages(softBreaks({ type: 'document', astVersion: AST_VERSION, children }))
@@ -63,9 +84,10 @@ export function semantics(value, parent) {
   if (!value || typeof value !== 'object') return value
   if (value.type === 'soft_break') return text(' ')
   if (value.type === 'text') return text(value.value.replace(/\n/g, ' '))
+  if (value.type === 'table' && !value.alignmentResolved) value = { ...tableAlignment(value), alignmentResolved: true }
   const out = {}
   for (const [key, field] of Object.entries(value)) {
-    if (['pos', 'srcByteLength', 'astVersion', 'stages', 'segments', 'generatedId', 'refForm'].includes(key)) continue
+    if (['pos', 'srcByteLength', 'astVersion', 'stages', 'segments', 'generatedId', 'refForm', 'alignmentResolved'].includes(key)) continue
     if (key === 'number' && value.type === 'footnote_ref') continue
     if (['key', 'namespace'].includes(key) && value.namespace === 'link' && (value.href ?? value.src) !== undefined) continue
     if (key === 'marker' && value.type === 'list') {
@@ -74,6 +96,61 @@ export function semantics(value, parent) {
     }
     out[key] = key === 'attrs' ? structuredClone(field) : semantics(field, value)
   }
+  return out
+}
+
+export const cellParagraph = children => ({ type: 'cell_paragraph', children })
+export const tableRow = children => ({ type: 'table_row', children })
+export function tableCell(header, { inline, blocks }, layout = {}) {
+  const { align, valign, colspan, rowspan } = layout
+  return { type: 'table_cell', header, children: blocks ?? [cellParagraph(inline ?? [])], ...(align ? { align } : {}), ...(valign ? { valign } : {}), ...(colspan > 1 ? { colspan } : {}), ...(rowspan > 1 ? { rowspan } : {}) }
+}
+
+// Covered positions are explicit cells that carry `span`, so every row of a group has one cell per column.
+export function expandSpans(rows) {
+  const grid = rows.map(() => [])
+  for (let r = 0; r < rows.length; r++) {
+    let column = 0
+    for (const cell of rows[r].children) {
+      while (grid[r][column]) column++
+      const width = cell.colspan ?? 1, height = cell.rowspan ?? 1
+      if (r + height > rows.length) throw new Error('Table rowspan exceeds its row group')
+      grid[r][column] = cell
+      for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+        if (x === 0 && y === 0) continue
+        if (grid[r + y][column + x]) throw new Error('Overlapping table spans')
+        // C2-B-174: the prefix of a joining mark counts for nothing, so a covered cell is never a header.
+        grid[r + y][column + x] = { type: 'table_cell', header: false, span: y ? 'rowspan' : 'colspan', children: [] }
+      }
+      column += width
+    }
+  }
+  return rows.map((row, r) => ({ ...row, children: Array.from({ length: grid[r].length }, (_, c) => grid[r][c] ?? tableCell(false, {})) }))
+}
+
+export function table({ groups, columns = [], caption }) {
+  const built = groups.filter(g => g.rows.length || g.attrs || g.explicit).map(g => ({ type: g.type, children: expandSpans(g.rows), ...(g.rowHeadColumns ? { rowHeadColumns: g.rowHeadColumns } : {}), ...(g.attrs && Object.keys(g.attrs).length ? { attrs: g.attrs } : {}) }))
+  const width = Math.max(columns.length, ...built.flatMap(g => g.children.map(r => r.children.length)))
+  return {
+    type: 'table',
+    columns: Array.from({ length: width }, (_, i) => ({ type: 'table_column', ...(columns[i] ?? {}) })),
+    ...(caption ? { caption } : {}),
+    children: built,
+  }
+}
+
+// Alignment as each cell renders it: an authored cell value, else its column's authored or resolved value.
+function tableAlignment(node) {
+  const columns = node.columns ?? []
+  const out = structuredClone(node)
+  for (const group of out.children ?? []) for (const row of group.children ?? []) row.children?.forEach((cell, i) => {
+    if (cell.type !== 'table_cell' || cell.span) return
+    for (const [key, resolved] of [['align', 'resolvedAlign'], ['valign', 'resolvedValign']]) {
+      const value = cell[key] ?? columns[i]?.[key] ?? columns[i]?.[resolved]
+      if (value) cell[key] = value
+    }
+  })
+  out.columns = columns.map(({ align, valign, resolvedAlign, resolvedValign, ...rest }) => rest)
   return out
 }
 
@@ -100,7 +177,7 @@ export function foreignAttrs(source) {
 
 export function fromHast(root, ctx = context('hast'), options = {}) {
   const generatedClasses = new Set(['docutils', 'arabic', 'reference', 'external', 'literal', 'simple', 'code', 'text', 'literal-block', 'highlight', 'sectionbody', 'paragraph', 'ulist', 'olist', 'listingblock', 'content', 'quoteblock', 'sect1', 'sect2', 'contains-task-list', 'task-list-item', 'task-list', 'imageblock'])
-  const noteSections = new Map(), noteIds = new Map(), noteBodies = new Set()
+  const noteSections = new Map(), noteIds = new Map(), noteBodies = new Set(), spanOrigins = new WeakMap()
   const walk = (n, visit) => { visit(n); n.children?.forEach(c => walk(c, visit)) }
   walk(root, n => {
     if (n.type !== 'element' || !(n.properties?.role === 'doc-endnotes' || n.properties?.dataFootnotes !== undefined)) return
@@ -118,6 +195,9 @@ export function fromHast(root, ctx = context('hast'), options = {}) {
       if (options.generated && options.renderer === 'carve' && tag === 'li' && taskItem && ((key === 'className' && value.length === 1 && value[0] === 'task' && !options.authoredClasses?.has('task')) || (key === 'style' && value === 'list-style: none' && !options.authoredKeyValues?.has(`style=${value}`)))) { ctx.note(`${path}/properties/${key}`, 'generated-html-attribute', 'normalized', 'Omitted the task item styling every Carve render writes.'); continue }
       if (options.generated && options.renderer === 'pandoc' && key.startsWith('data') && key.length > 4) { const original = key[4].toLowerCase() + key.slice(5); if (options.authoredKeyValues?.has(`${original}=${value}`)) { pairs.push([original, String(value)]); ctx.note(`${path}/properties/${key}`, 'generated-html-attribute', 'normalized', 'Restored an authored attribute renamed by Pandoc HTML output.'); continue } }
       if (options.renderer === 'pandoc' && tag === 'ol' && key === 'type' && String(value) === '1') { ctx.note(`${path}/properties/type`, 'generated-html-attribute', 'normalized', 'Omitted the Pandoc decimal-list type attribute.'); continue }
+      if (options.generated && tag === 'th' && key === 'scope' && ['col', 'row'].includes(value) && !options.authoredKeyValues?.has(`scope=${value}`)) { ctx.note(`${path}/properties/scope`, 'generated-html-attribute', 'normalized', 'Omitted generated header scope.'); continue }
+      if (['td', 'th'].includes(tag) && ['align', 'vAlign', 'colSpan', 'rowSpan', 'style'].includes(key)) continue
+      if (tag === 'col' || tag === 'colgroup') continue
       if ((tag === 'a' && ['href', 'title'].includes(key)) || (tag === 'img' && ['src', 'alt', 'title'].includes(key)) || (tag === 'ol' && (key === 'start' || (key === 'type' && ['1', 'a', 'A', 'i', 'I'].includes(String(value)))))) continue
       if (options.generated && key === 'className') {
         const retained = value.filter(c => (!generatedClasses.has(c) && c !== generatedLang) || options.authoredClasses?.has(c))
@@ -178,6 +258,21 @@ export function fromHast(root, ctx = context('hast'), options = {}) {
     else if (tag === 'dl') result = { type: 'definition_list', children: blocks(n.children, path) }
     else if (tag === 'dt') result = { type: 'definition_term', children: children() }
     else if (tag === 'dd') { const hasBlocks = n.children.some(c => ['p', 'ul', 'ol', 'pre', 'blockquote', 'dl'].includes(c.tagName)); result = { type: 'definition_description', children: hasBlocks ? blocks(n.children, path) : [paragraph(children())] } }
+    else if (tag === 'table') result = hastTable(n, path)
+    else if (tag === 'tr') result = tableRow(n.children.filter(c => ['td', 'th'].includes(c.tagName)).map((c, i) => map(c, `${path}/cells/${i}`)))
+    else if (tag === 'td' || tag === 'th') {
+      const parts = children(), { residualStyle, width, ...layout } = htmlLayout(props)
+      const content = parts.filter(c => c.type !== 'text' || !/^\s*$/.test(c.value))
+      const hasBlocks = content.some(c => blockTypes.has(c.type))
+      const rowspan = props.rowSpan === undefined ? undefined : Number(props.rowSpan)
+      result = tableCell(tag === 'th', hasBlocks ? (content.length === 1 && content[0].type === 'paragraph' ? { inline: content[0].children } : { blocks: blocks(n.children, path) }) : { inline: trimInline(parts) }, { ...layout, colspan: Number(props.colSpan ?? 1), rowspan: rowspan === 0 ? 0 : rowspan })
+      if (rowspan === 0) result.rowspan = 0
+      if (residualStyle) { result.attrs = { keyValues: [['style', residualStyle]] } }
+      for (const key of ['align', 'vAlign']) if (props[key] !== undefined && !['left', 'right', 'center', 'top', 'middle', 'bottom'].includes(props[key])) (result.attrs ??= {}, result.attrs.keyValues ??= []).push([key.toLowerCase(), String(props[key])])
+      if (width) ctx.note(`${path}/properties/style`, 'unsupported-field', 'dropped', 'A cell width cannot be represented as a column width without changing other cells.')
+      spanOrigins.set(result, path)
+      for (const key of ['align', 'vAlign', 'colSpan', 'rowSpan', 'style']) delete props[key]
+    }
     else if (['em', 'strong', 'del', 's', 'u', 'mark', 'sup', 'sub'].includes(tag)) {
       result = { type: ({ em: 'emphasis', del: 'strike', s: 'strike', u: 'underline', mark: 'highlight', sup: 'superscript', sub: 'subscript' })[tag] ?? tag, children: children() }
     } else if (tag === 'a') result = link(props.href ?? '', children(), props.title)
@@ -226,8 +321,84 @@ export function fromHast(root, ctx = context('hast'), options = {}) {
       ctx.note(path, 'generated-html-wrapper', 'normalized', `Removed foreign renderer ${tag} wrapper.`)
       return blocks(n.children, path)
     } else return ctx.unsupported(n, path, block)
-    if (Object.keys(nodeAttrs).length) result.attrs = nodeAttrs
+    if (result.type === 'table' && options.generated && options.renderer === 'pandoc') {
+      const style = nodeAttrs.keyValues?.find(([key]) => key === 'style')?.[1]
+      const layout = style && !options.authoredKeyValues?.has(`style=${style}`) ? htmlLayout({ style }) : {}
+      const total = result.columns.reduce((sum, c) => sum + (c.width ?? 0), 0)
+      if (layout.width && !layout.residualStyle && Math.abs(layout.width - total) < 0.000001) {
+        nodeAttrs.keyValues = nodeAttrs.keyValues.filter(([key]) => key !== 'style')
+        if (!nodeAttrs.keyValues.length) delete nodeAttrs.keyValues
+        ctx.note(`${path}/properties/style`, 'generated-table-width', 'normalized', 'Omitted the total table width computed by Pandoc from its column widths.')
+      }
+    }
+    if (Object.keys(nodeAttrs).length) result.attrs = { ...nodeAttrs, ...(result.attrs?.keyValues ? { keyValues: [...(nodeAttrs.keyValues ?? []), ...result.attrs.keyValues] } : {}) }
     return result
+  }
+  const trimInline = parts => {
+    const out = coalesce(parts.map(p => ({ ...p })))
+    if (out[0]?.type === 'text') out[0].value = out[0].value.replace(/^\s+/, '')
+    if (out.at(-1)?.type === 'text') out.at(-1).value = out.at(-1).value.replace(/\s+$/, '')
+    return out.filter(p => p.type !== 'text' || p.value !== '')
+  }
+  const hastTable = (n, path) => {
+    const groups = [], columns = []
+    let caption, direct = []
+    const sectionAttrs = (child, cp) => { const a = readAttrs(child.properties ?? {}, child.tagName, cp); return Object.keys(a).length ? a : undefined }
+    const rows = (section, sp) => section.children.filter(c => c.tagName === 'tr').map((r, i) => map(r, `${sp}/rows/${i}`, true))
+    const clamp = group => {
+      group.rows.forEach((row, r) => row.children.forEach(cell => {
+        const remaining = group.rows.length - r
+        if (cell.rowspan === 0 || cell.rowspan > remaining) {
+          ctx.note(`${spanOrigins.get(cell)}/properties/rowSpan`, 'html-rowspan-clamped', 'normalized', cell.rowspan === 0 ? 'Expanded HTML rowspan zero to the end of its row group.' : 'Clamped HTML rowspan to the remaining rows of its group.')
+          if (remaining > 1) cell.rowspan = remaining
+          else delete cell.rowspan
+        }
+      }))
+      return group
+    }
+    const flush = () => { if (direct.length) groups.push(clamp({ type: 'table_body', rows: direct })); direct = [] }
+    for (const [i, child] of n.children.entries()) {
+      const cp = `${path}/children/${i}`
+      if (child.tagName === 'caption') {
+        const content = coalesce(child.children.flatMap((c, j) => map(c, `${cp}/children/${j}`)))
+        caption = { type: 'caption', children: content.some(c => blockTypes.has(c.type)) ? blocks(child.children, cp) : [paragraph(trimInline(content))] }
+        if (Object.keys(child.properties ?? {}).length) ctx.note(`${cp}/properties`, 'unsupported-field', 'dropped', 'Carve has no attribute slot on table captions.')
+      } else if (child.tagName === 'colgroup') {
+        const { residualStyle: groupResidual, ...inherited } = htmlLayout(child.properties ?? {})
+        if (groupResidual || Object.keys(child.properties ?? {}).some(k => !['span', 'style'].includes(k) && !(k === 'align' && ['left', 'right', 'center'].includes(child.properties.align)) && !(k === 'vAlign' && ['top', 'middle', 'bottom'].includes(child.properties.vAlign)))) ctx.note(`${cp}/properties`, 'unsupported-field', 'dropped', 'Column-group attributes outside alignment and percentage width have no Carve slot.')
+        const cols = child.children.filter(c => c.tagName === 'col')
+        if (!cols.length) columns.push(...Array.from({ length: Number(child.properties?.span ?? 1) }, () => ({ ...inherited })))
+        for (const [j, col] of cols.entries()) {
+          const { residualStyle, ...column } = htmlLayout(col.properties ?? {})
+          columns.push(...Array.from({ length: Number(col.properties?.span ?? 1) }, () => ({ ...inherited, ...column })))
+          const extras = Object.keys(col.properties ?? {}).filter(k => !['style', 'span'].includes(k) && !(k === 'align' && ['left', 'right', 'center'].includes(col.properties.align)) && !(k === 'vAlign' && ['top', 'middle', 'bottom'].includes(col.properties.vAlign)))
+          if (residualStyle || extras.length) ctx.note(`${cp}/children/${j}/properties`, 'unsupported-field', 'dropped', 'Column attributes outside alignment and percentage width have no Carve column slot.')
+        }
+      } else if (child.tagName === 'tbody' && !child.position && options.renderer !== 'carve' && !groups.length) {
+        // The HTML parser inserted this body; its leading all-header rows are the head, as in Carve (C2-B-178).
+        const all = rows(child, cp)
+        let head = 0
+        while (head < all.length && all[head].children.length && all[head].children.every(c => c.header)) head++
+        if (head) ctx.note(cp, 'implicit-table-head', 'normalized', 'Read the leading header rows of a table without thead as its head.')
+        if (head) groups.push(clamp({ type: 'table_head', rows: all.slice(0, head) }))
+        direct.push(...all.slice(head))
+      } else if (['thead', 'tbody', 'tfoot'].includes(child.tagName)) {
+        flush()
+        groups.push(clamp({ type: { thead: 'table_head', tbody: 'table_body', tfoot: 'table_foot' }[child.tagName], rows: rows(child, cp), attrs: sectionAttrs(child, cp), explicit: true }))
+      } else if (child.tagName === 'tr') direct.push(map(child, `${path}/rows/${i}`, true))
+      else if (child.tagName) ctx.note(cp, 'unsupported-field', 'dropped', 'Unsupported child of an HTML table.')
+    }
+    flush()
+    for (const group of groups.filter(g => g.type === 'table_body')) {
+      const expanded = expandSpans(group.rows)
+      // A covered cell is a header for this count when the cell it belongs to is one.
+      const origin = (r, c) => { const cell = expanded[r].children[c]; return cell.span === 'rowspan' ? origin(r - 1, c) : cell.span === 'colspan' ? origin(r, c - 1) : cell }
+      const leading = row => { const r = expanded.indexOf(row); let count = 0; for (let c = 0; c < row.children.length; c++) { if (!origin(r, c).header) break; count++ } return count }
+      const bodyRows = expanded.filter(row => !row.children.every(c => c.header))
+      const rowHeadColumns = bodyRows.length ? Math.min(...bodyRows.map(leading)) : 0
+      if (rowHeadColumns) group.rowHeadColumns = rowHeadColumns
+    }
+    return table({ groups, columns, caption })
   }
   const blockImage = (node, path) => {
     if (node?.type !== 'image') return node
@@ -284,7 +455,11 @@ export function fromMdast(root, ctx = context('mdast')) {
     if (n.type === 'footnoteReference') return footnoteRef(n.identifier)
     if (n.type === 'footnoteDefinition') return footnote(n.identifier, children())
     if (n.type === 'delete') return { type: 'strike', children: children() }
-    return ctx.unsupported(n, path, ['html', 'table', 'footnoteDefinition'].includes(n.type))
+    if (n.type === 'table') {
+      const rows = n.children.map((r, i) => tableRow(r.children.map((cell, j) => tableCell(i === 0, { inline: coalesce(cell.children.flatMap((c, k) => map(c, `${path}/children/${i}/children/${j}/children/${k}`))) }))))
+      return table({ groups: [{ type: 'table_head', rows: rows.slice(0, 1) }, { type: 'table_body', rows: rows.slice(1) }], columns: (n.align ?? []).map(align => align ? { align } : {}) })
+    }
+    return ctx.unsupported(n, path, ['html', 'footnoteDefinition'].includes(n.type))
   }
   return map(root, '')
 }
@@ -337,6 +512,19 @@ export function fromDjot(root, ctx = context('djot')) {
     else if (n.tag === 'definition_list') result = { type: 'definition_list', children: children() }
     else if (n.tag === 'definition_list_item') return children()
     else if (n.tag === 'term' || n.tag === 'definition') result = { type: n.tag === 'term' ? 'definition_term' : 'definition_description', children: children() }
+    else if (n.tag === 'table') {
+      const caption = n.children.find(c => c.tag === 'caption')
+      if (caption?.attributes) ctx.note(`${path}/caption/attributes`, 'unsupported-field', 'dropped', 'Carve has no attribute slot on table captions.')
+      const rows = n.children.filter(c => c.tag === 'row').map((r, i) => ({ head: r.head, row: map(r, `${path}/rows/${i}`) }))
+      let headRows = 0
+      while (headRows < rows.length && rows[headRows].head) headRows++
+      result = table({
+        groups: [{ type: 'table_head', rows: rows.slice(0, headRows).map(r => r.row) }, { type: 'table_body', rows: rows.slice(headRows).map(r => r.row) }],
+        caption: caption?.children.length ? { type: 'caption', children: [paragraph(coalesce(caption.children.map((c, i) => map(c, `${path}/caption/${i}`))))] } : undefined,
+      })
+    }
+    else if (n.tag === 'row') result = tableRow(children())
+    else if (n.tag === 'cell') result = tableCell(n.head, { inline: children() }, { align: n.align && n.align !== 'default' ? n.align : undefined })
     else if (n.tag === 'heading') result = { type: 'heading', level: n.level, children: children() }
     else if (n.tag === 'soft_break') result = text(' ')
     else if (['hard_break', 'thematic_break'].includes(n.tag)) result = { type: n.tag }
@@ -350,7 +538,7 @@ export function fromDjot(root, ctx = context('djot')) {
       const ordered = n.tag === 'ordered_list'
       result = list({ ordered, style: ordered ? n.style?.match(/[aAiI]/)?.[0] : undefined, start: ordered ? n.start ?? 1 : undefined, tight: n.tight }, children())
     }
-    else return ctx.unsupported(n, path, ['div', 'table', 'raw_block', 'definition_list'].includes(n.tag))
+    else return ctx.unsupported(n, path, ['div', 'raw_block', 'definition_list'].includes(n.tag))
     if (n.attributes) result.attrs = foreignAttrs(n.attributes)
     if (result.type === 'paragraph') result = imageParagraph(result)
     return result
