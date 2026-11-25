@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { cases02, checkCase, coveredByDeclaration, declaredDifference, runCompat, runLosses, spellings, validateSpellings, validateTree } from '../scripts/compat/check-0.2.mjs'
 import { envelope, parseTree } from '../scripts/compat/engines-0.2.mjs'
-import { document, fromMdast, semantics } from '../scripts/compat/trees-0.2.mjs'
+import { document, fromHast, fromMdast, semantics } from '../scripts/compat/trees-0.2.mjs'
 import { readForeign } from '../scripts/compat/tools-0.2.mjs'
 import { exportForeign } from '../scripts/compat/exporters-0.2.mjs'
 
@@ -115,6 +115,20 @@ test('the exporters write 0.2 trees back and report what a format cannot hold', 
   assert.match(exportForeign('djot', parseTree('- [x] done\n')).source, /\[[xX]\] done/)
   const html = exportForeign('hast', parseTree('|= a |\n| b |\n')).source
   assert.match(html, /<thead><tr><th>a<\/th><\/tr><\/thead><tbody><tr><td>b<\/td><\/tr><\/tbody>/)
+})
+
+test('with no thead, leading rows of unscoped or column-scoped th cells in the first body are the head (carve#6623)', async () => {
+  const groups = async html => (await readForeign('hast', html)).ast.children[0].children.map(g => [g.type, g.children.length])
+  assert.deepEqual(await groups('<table><tr><th>A</th><th>B</th></tr><tr><td>1</td><td>2</td></tr></table>'), [['table_head', 1], ['table_body', 1]])
+  assert.deepEqual(await groups('<table><tbody><tr><th scope="col">A</th></tr><tr><th>B</th></tr><tr><td>1</td></tr></tbody></table>'), [['table_head', 2], ['table_body', 1]])
+  assert.deepEqual(await groups('<table><tr><th scope="row">A</th><th>B</th></tr><tr><td>1</td><td>2</td></tr></table>'), [['table_body', 2]])
+  assert.deepEqual(await groups('<table><tr><th>A</th><td>x</td></tr></table>'), [['table_body', 1]])
+  assert.deepEqual(await groups('<table><tbody><tr><th>A</th></tr></tbody><thead><tr><th>H</th></tr></thead></table>'), [['table_body', 1], ['table_head', 1]])
+  assert.deepEqual(await groups('<table><tbody></tbody><tbody><tr><th>A</th></tr></tbody></table>'), [['table_body', 0], ['table_body', 1]])
+  assert.deepEqual(await groups('<table><tbody class="x"><tr><th>H</th></tr><tr><td>V</td></tr></tbody></table>'), [['table_body', 2]])
+  const el = (tagName, children = []) => ({ type: 'element', tagName, properties: {}, children })
+  const row = el('tr', [el('td', [{ type: 'text', value: 'x' }])])
+  assert.deepEqual(fromHast({ type: 'root', children: [el('table', [el('thead'), el('tbody', [row]), el('tfoot')])] }).children[0].children.map(g => g.type), ['table_head', 'table_body', 'table_foot'])
 })
 
 test('table exports report a headerless GFM table and cells with several blocks', () => {

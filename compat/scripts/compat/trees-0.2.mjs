@@ -356,6 +356,9 @@ export function fromHast(root, ctx = context('hast'), options = {}) {
       }))
       return group
     }
+    const hasHead = n.children.some(c => c.tagName === 'thead')
+    const columnHeader = c => c.tagName === 'th' && (c.properties?.scope === undefined || String(c.properties.scope).toLowerCase() === 'col')
+    const columnHeaderRow = tr => { const cells = tr.children.filter(c => ['th', 'td'].includes(c.tagName)); return cells.length > 0 && cells.every(columnHeader) }
     const flush = () => { if (direct.length) groups.push(clamp({ type: 'table_body', rows: direct })); direct = [] }
     for (const [i, child] of n.children.entries()) {
       const cp = `${path}/children/${i}`
@@ -374,17 +377,20 @@ export function fromHast(root, ctx = context('hast'), options = {}) {
           const extras = Object.keys(col.properties ?? {}).filter(k => !['style', 'span'].includes(k) && !(k === 'align' && ['left', 'right', 'center'].includes(col.properties.align)) && !(k === 'vAlign' && ['top', 'middle', 'bottom'].includes(col.properties.vAlign)))
           if (residualStyle || extras.length) ctx.note(`${cp}/children/${j}/properties`, 'unsupported-field', 'dropped', 'Column attributes outside alignment and percentage width have no Carve column slot.')
         }
-      } else if (child.tagName === 'tbody' && !child.position && options.renderer !== 'carve' && !groups.length) {
-        // The HTML parser inserted this body; its leading all-header rows are the head, as in Carve (C2-B-178).
-        const all = rows(child, cp)
-        let head = 0
-        while (head < all.length && all[head].children.length && all[head].children.every(c => c.header)) head++
-        if (head) ctx.note(cp, 'implicit-table-head', 'normalized', 'Read the leading header rows of a table without thead as its head.')
-        if (head) groups.push(clamp({ type: 'table_head', rows: all.slice(0, head) }))
-        direct.push(...all.slice(head))
       } else if (['thead', 'tbody', 'tfoot'].includes(child.tagName)) {
         flush()
-        groups.push(clamp({ type: { thead: 'table_head', tbody: 'table_body', tfoot: 'table_foot' }[child.tagName], rows: rows(child, cp), attrs: sectionAttrs(child, cp), explicit: true }))
+        const attrs = sectionAttrs(child, cp)
+        let section = rows(child, cp), head = 0
+        // carve#6623 (ruling B on C2-M-037): with no thead, the leading rows of the first body whose cells are all th without scope or with scope="col" are the head.
+        // A body with attributes keeps its rows: the ruling does not say which group the attributes would follow.
+        if (child.tagName === 'tbody' && options.renderer !== 'carve' && !hasHead && !groups.some(g => g.type === 'table_body') && !attrs) {
+          const trs = child.children.filter(c => c.tagName === 'tr')
+          while (head < trs.length && columnHeaderRow(trs[head])) head++
+          if (head) ctx.note(cp, 'implicit-table-head', 'normalized', 'Read the leading header rows of a table without thead as its head.')
+          if (head) groups.push(clamp({ type: 'table_head', rows: section.slice(0, head) }))
+          section = section.slice(head)
+        }
+        groups.push(clamp({ type: { thead: 'table_head', tbody: 'table_body', tfoot: 'table_foot' }[child.tagName], rows: section, attrs, explicit: !head || !!child.position }))
       } else if (child.tagName === 'tr') direct.push(map(child, `${path}/rows/${i}`, true))
       else if (child.tagName) ctx.note(cp, 'unsupported-field', 'dropped', 'Unsupported child of an HTML table.')
     }
